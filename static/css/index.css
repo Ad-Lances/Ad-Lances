@@ -18,4 +18,122 @@
     font-family: "Poppins", sans-serif;
     font-weight: 400;
     font-style: normal;
+    display: flex;
+    position: fixed;
+    overflow: hidden;
+    top: 0;
+    padding: 5px;
+    gap: 5px;
 }
+
+#nav ul{
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 20px;
+    gap: 20px;
+}
+
+#nav a {
+    color: inherit;
+    text-decoration: none;
+    font-weight: normal;
+    font-size: inherit;
+    padding: 0;
+    margin: 0;
+  }
+
+#nav #logo {
+    height: 60px;
+    width: auto;
+    object-fit: contain;
+}
+  
+#nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+#nav input[type=text] {
+    width: 170px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: auto;
+    background-color: white;
+    background-position: 10px 10px; 
+    background-repeat: no-repeat;
+    padding: 12px 20px 12px 40px;
+  }
+  
+#nav button {
+    display: inline-flex;
+    border-radius: 4px;
+    background-color: #335e7d;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 15px;
+    padding: 20px;
+    width: 110px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+}
+
+#nav-categorias{
+    margin-top: 10px;
+    background-color: #FFFFFF;
+    width: 100%;
+    height: auto;
+    color: black;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+#nav-categorias ul{
+    list-style-type: none;
+    margin: 10px;
+    padding: 10px;
+}
+
+#nav-categorias ul li{
+    float: left;
+}
+
+#nav-categorias ul li a{
+    display: block;
+    padding: 14px 16px;
+    text-decoration: none;
+    gap: 10px;
+}
+
+#nav-categorias ul li a:hover{
+    background-color: #034660;
+    color: white;
+}
+
+#encerrando-em-breve{
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 400px;
+    padding: 20px;
+}
+
+#encerrando-em-breve #item{
+    width: 50px;
+    height: auto;
+}
+
+#item img{
+    width: 310px;
+    height: auto;
+    border-radius: 10px;
+}
+

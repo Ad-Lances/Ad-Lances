@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="style-sheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">    
     <title>Ad-Lances</title>
 </head>
 <body>
@@ -11,7 +11,7 @@
         <ul>
             <li>
                 <div class="nav-item">
-                <img class="logo">
+                <img id="logo" src="{{ url_for('static', filename='img/logo.png') }}">
                 </div>
             </li>
 
@@ -57,5 +57,23 @@
         </ul>
     </div>
 
+    <br><br>
+
+    <div id="carrossel">
+        <img src="{{ url_for('static', filename='img/slide1.png')}}">
+    </div>
+
+    <br><br>
+
+    <div id="encerrando-em-breve">
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/image.png')}}"><br>
+            Itens de escritório
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/predio.png' )}}"
+        </div>
+    </div>
 </body>
 </html>
