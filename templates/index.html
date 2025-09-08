@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="style-sheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <title>Ad-Lances</title>
+</head>
+<body>
+    <nav id="nav">
+        <ul>
+            <li>
+                <div class="nav-item">
+                <img class="logo">
+                </div>
+            </li>
+
+            <li>
+                <div id="search-container">
+                    <form>
+                        <input type="text" placeholder="Digite aqui...">
+                        <button type="submit"><img src="{{ url_for('static', filename='img/search-icon') }}"></button>
+                    </form>
+                </div>
+            </li>
+
+            <li>
+                <div id="nav-item">
+                    Como vender
+                </div>
+            </li>
+
+            <li>
+                <div id="nav-item">
+                    Fale conosco
+                </div>
+            </li>
+
+            <li>
+                <div class="nav-item">
+                <img src="{{ url_for('static', filename='img/profile-icon') }}">
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <div id="nav-categorias">
+        <ul>
+            <li>Categorias</li>
+            <li><img src="{{ url_for('static', filename='img/house-icon') }}"></li>
+            <li><img src="{{ url_for('static', filename='img/car-icon') }}"></li>
+            <li><img src="{{ url_for('static', filename='img/monitor-icon') }}"></li>
+            <li><img src="{{ url_for('static', filename='img/houseitens-icon') }}"></li>
+            <li><img src="{{ url_for('static', filename='img/office-icon') }}"></li>
+            <li><img src="{{ url_for('static', filename='img/machinery-icon') }}"></li>
+            <li><img src="{{ url_for('static', filename='img/houseitems-icon') }}"></li>
+        </ul>
+    </div>
+
+</body>
+</html>
