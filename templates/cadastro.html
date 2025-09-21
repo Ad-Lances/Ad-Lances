@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cadastro.css') }}">
+</head>
+<body>
+    <nav id="nav">
+        <ul>
+            <li>
+                <div id="nav-item">
+                <img id="logo" src="{{ url_for('static', filename='img/logo.png') }}">
+                </div>
+            </li>
+
+            <li>
+                <div id="search-container">
+                    <form>
+                        <input type="text" placeholder="Digite aqui...">
+                        <button type="submit"><img src="{{ url_for('static', filename='img/search-icon.png') }}" id="searchimg"></button>
+                    </form>
+                </div>
+            </li>
+
+            <li>
+                <div id="nav-item">
+                    Como vender
+                </div>
+            </li>
+
+            <li>
+                <div id="nav-item">
+                    Fale conosco
+                </div>
+            </li>
+
+            <li>
+                <div id="nav-item">
+                    <div id="img-nav">
+                        <a href="cadastro.html"><img src="{{ url_for('static', filename='img/icons-img/profile-icon.png') }}"></a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <form>
+        <label for="name">Nome completo:</label><br>
+        <input type="text" id="nome" name="nomecoompleto" placeholder="Digite seu nome completo aqui..."><br>
+        <label for="birth-date">Data de nascimento:</label><br>
+        <input type="date" id="datanasc" name="datanasc"><br>
+        <label for="CPF">CPF</label><br>
+        <input type="text" name="cpf" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" \
+			title="Digite um CPF no formato: xxx.xxx.xxx-xx"><br>
+    </form>
+</body>
+</html>

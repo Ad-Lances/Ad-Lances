@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
     <title>Ad-Lances</title>
 </head>
 <body>
@@ -37,8 +37,10 @@
             </li>
 
             <li>
-                <div class="nav-item">
-                <img src="{{ url_for('static', filename='img/profile-icon') }}">
+                <div id="nav-item">
+                    <div id="img-nav">
+                        <a href="cadastro.html"><img src="{{ url_for('static', filename='img/icons-img/profile-icon.png') }}"></a>
+                    </div>
                 </div>
             </li>
         </ul>
@@ -60,8 +62,15 @@
     <br><br>
 
     <div id="carrossel">
-        <img src="{{ url_for('static', filename='img/slide1.png')}}">
+    <div class="slides">
+        <img src="{{ url_for('static', filename='img/banners/slide1.png')}}" class="active">
+        <img src="{{ url_for('static', filename='img/banners/slide2.png') }}">
+        <img src="{{ url_for('static', filename='img/banners/slide3.png') }}">
     </div>
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+</div>
+
 
     <br><br>
 
@@ -247,8 +256,8 @@
     </div>
 
 <footer id="footer">
-    <div class="footer-container">
-        <div class="footer-section">
+    <div id="footer-container">
+        <div id="footer-section">
             <h4>Sobre nós</h4>
             <ul>
                 <li><a href="#">A empresa</a></li>
@@ -258,16 +267,16 @@
             </ul>
         </div>
 
-        <div class="footer-section">
+        <div id="footer-section">
             <h4>Contato</h4>
-            <p><strong>E-mail:</strong> nomea@gmail.com</p>
+            <p><strong>E-mail:</strong> adlances@gmail.com</p>
             <p><strong>Telefone:</strong> (11) 5567-3452</p>
             <p><a href="#">Perguntas frequentes</a></p>
         </div>
 
-        <div class="footer-section">
+        <div id="footer-section">
     <h4>Redes sociais</h4>
-    <div class="social-icons">
+    <div id="social-icons">
         <a href="#" aria-label="Instagram">
             <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="24" height="24">
                 <path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9a5.5 5.5 0 0 1-5.5 5.5h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2zm0 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4h-9zm4.5 3a5.5 5.5 0 1 1 0 11a5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7zm5.25-.75a.75.75 0 1 1 0 1.5a.75.75 0 0 1 0-1.5z"/>
@@ -286,14 +295,15 @@
     </div>
 </div>
 
-        <div class="footer-section">
+        <div id="footer-section">
             <h4>Localização</h4>
             <p>Av. Paulista, 1167 - Bela Vista</p>
         </div>
     </div>
-    <div class="footer-bottom">
+    <div id="footer-bottom">
         <p>© AdLances. Todos os direitos reservados.</p>
     </div>
 </footer>
 </body>
+<script src="{{ url_for('static', filename='script/script.js') }}"></script>
 </html>
