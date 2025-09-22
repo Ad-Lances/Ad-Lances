@@ -10,5 +10,9 @@ def index():
 def pagina_cadastro():
     return render_template('cadastro.html')
 
+@app.route('/login')
+def pagina_login():
+    return render_template('login.html')
+
 if __name__ == '__main__':
     app.run(debug=True)

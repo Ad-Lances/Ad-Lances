@@ -11,10 +11,9 @@
         <ul>
             <li>
                 <div id="nav-item">
-                <img id="logo" src="{{ url_for('static', filename='img/logo.png') }}">
+                    <img id="logo" src="{{ url_for('static', filename='img/logo.png') }}">
                 </div>
             </li>
-
             <li>
                 <div id="search-container">
                     <form>
@@ -23,19 +22,12 @@
                     </form>
                 </div>
             </li>
-
             <li>
-                <div id="nav-item">
-                    Como vender
-                </div>
+                <div id="nav-item">Como vender</div>
             </li>
-
             <li>
-                <div id="nav-item">
-                    Fale conosco
-                </div>
+                <div id="nav-item">Fale conosco</div>
             </li>
-
             <li>
                 <div id="nav-item">
                     <div id="img-nav">
@@ -46,14 +38,74 @@
         </ul>
     </nav>
 
-    <form>
-        <label for="name">Nome completo:</label><br>
-        <input type="text" id="nome" name="nomecoompleto" placeholder="Digite seu nome completo aqui..."><br>
-        <label for="birth-date">Data de nascimento:</label><br>
-        <input type="date" id="datanasc" name="datanasc"><br>
-        <label for="CPF">CPF</label><br>
-        <input type="text" name="cpf" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" \
-			title="Digite um CPF no formato: xxx.xxx.xxx-xx"><br>
-    </form>
+    <h1>Faça seu cadastro</h1>
+
+    <div id="formulario">
+        <form>
+            <label for="name">Nome completo:</label>
+            <input type="text" id="nome" name="nomecompleto" placeholder="Digite seu nome completo aqui...">
+            
+            <label for="birth-date">Data de nascimento:</label>
+            <input type="date" id="datanasc" name="datanasc">
+
+            <label for="CPF">CPF</label>
+            <input type="text" name="cpf" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" title="Digite um CPF no formato: xxx.xxx.xxx-xx">
+
+            <label for="estado">Unidade Federativa (UF):</label>
+            <select name="estado" id="estado">
+                <option>Selecione um estado</option>
+                <option>Acre - AC</option>
+                <option>Alagoas - AL</option>
+                <option>Amapá - AP</option>
+                <option>Amazonas - AM</option>
+                <option>Bahia - BA</option>
+                <option>Ceará - CE</option>
+                <option>Brasília - DF</option>
+                <option>Espírito Santo - ES</option>
+                <option>Goiás - GO</option>
+                <option>Maranhão - MA</option>
+                <option>Mato Grosso - MT</option>
+                <option>Mato Grosso do Sul - MS</option>
+                <option>Minas Gerais - MG</option>
+                <option>Pará - PA</option>
+                <option>Paraíba - PB</option>
+                <option>Paraná - PA</option>
+                <option>Pernambuco - PE</option>
+                <option>Piauí - PI</option>
+                <option>Rio de Janeiro - RJ</option>
+                <option>Rio Grande do Norte - RN</option>
+                <option>Rio Grande do Sul - RS</option>
+                <option>Rondônia - RO</option>
+                <option>Roraima - RR</option>
+                <option>Santa Catarina - SC</option>
+                <option>São Paulo - SP</option>
+                <option>Sergipe - SE</option>
+                <option>Tocantins - TO</option>
+            </select>
+
+            <label for="cidade" name="cidade">Cidade:</label>
+            <input type="text" name="cidade" placeholder="Digite sua cidade">
+
+            <label for="email" name="email">E-mail:</label>
+            <input type="email" placeholder="Digite seu email aqui">
+
+            <label for="senha" id="senha" name="senha">Digite sua senha:</label>
+            <input type="password" name="password" placeholder="Digite sua senha">
+            <span id="orientacao-senha">
+                <ul>
+                    <li>Mínimo de 6 caracteres</li>
+                    <li>Um caractere maiúsculo</li>
+                    <li>Caracteres minúsculos</li>
+                    <li>Um caractere especial (#, @, _)</li>
+                </ul>
+            </span>
+
+            <button id="botao-enviar" type="submit">Cadastrar</button>
+        </form><br>
+
+    </div>
+
+    <span id="mensagem"></span>
+    <script src="{{ url_for('static', filename='script/script.js') }}"></script>
 </body>
 </html>
