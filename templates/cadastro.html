@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Cadastro</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/cadastro.css') }}">
 </head>
 <body>
@@ -40,70 +40,78 @@
 
     <h1>Faça seu cadastro</h1>
 
-    <div id="formulario">
-        <form>
-            <label for="name">Nome completo:</label>
-            <input type="text" id="nome" name="nomecompleto" placeholder="Digite seu nome completo aqui...">
-            
-            <label for="birth-date">Data de nascimento:</label>
-            <input type="date" id="datanasc" name="datanasc">
+   <div id="formulario">
+    <form>
+        <label for="nome" class="label-nome">Nome completo:</label>
+        <input type="text" id="nome" name="nomecompleto" placeholder="Digite seu nome completo aqui..." class="input-nome">
 
-            <label for="CPF">CPF</label>
-            <input type="text" name="cpf" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" title="Digite um CPF no formato: xxx.xxx.xxx-xx">
+        <label for="datanasc" class="label-data">Data de nascimento:</label>
+        <input type="date" id="datanasc" name="datanasc" class="input-data">
 
-            <label for="estado">Unidade Federativa (UF):</label>
-            <select name="estado" id="estado">
-                <option>Selecione um estado</option>
-                <option>Acre - AC</option>
-                <option>Alagoas - AL</option>
-                <option>Amapá - AP</option>
-                <option>Amazonas - AM</option>
-                <option>Bahia - BA</option>
-                <option>Ceará - CE</option>
-                <option>Brasília - DF</option>
-                <option>Espírito Santo - ES</option>
-                <option>Goiás - GO</option>
-                <option>Maranhão - MA</option>
-                <option>Mato Grosso - MT</option>
-                <option>Mato Grosso do Sul - MS</option>
-                <option>Minas Gerais - MG</option>
-                <option>Pará - PA</option>
-                <option>Paraíba - PB</option>
-                <option>Paraná - PA</option>
-                <option>Pernambuco - PE</option>
-                <option>Piauí - PI</option>
-                <option>Rio de Janeiro - RJ</option>
-                <option>Rio Grande do Norte - RN</option>
-                <option>Rio Grande do Sul - RS</option>
-                <option>Rondônia - RO</option>
-                <option>Roraima - RR</option>
-                <option>Santa Catarina - SC</option>
-                <option>São Paulo - SP</option>
-                <option>Sergipe - SE</option>
-                <option>Tocantins - TO</option>
-            </select>
+        <label for="cpf" class="label-cpf">CPF</label>
+        <input type="text" id="cpf" name="cpf" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" title="Digite um CPF no formato: xxx.xxx.xxx-xx" class="input-cpf">
 
-            <label for="cidade" name="cidade">Cidade:</label>
-            <input type="text" name="cidade" placeholder="Digite sua cidade">
+        <label for="estado" class="label-estado">Unidade Federativa (UF):</label>
+        <select name="estado" id="estado" class="input-estado">
+            <option>Selecione um estado</option>
+            <option>Acre - AC</option>
+            <option>Alagoas - AL</option>
+            <option>Amapá - AP</option>
+            <option>Amazonas - AM</option>
+            <option>Bahia - BA</option>
+            <option>Ceará - CE</option>
+            <option>Brasília - DF</option>
+            <option>Espírito Santo - ES</option>
+            <option>Goiás - GO</option>
+            <option>Maranhão - MA</option>
+            <option>Mato Grosso - MT</option>
+            <option>Mato Grosso do Sul - MS</option>
+            <option>Minas Gerais - MG</option>
+            <option>Pará - PA</option>
+            <option>Paraíba - PB</option>
+            <option>Paraná - PA</option>
+            <option>Pernambuco - PE</option>
+            <option>Piauí - PI</option>
+            <option>Rio de Janeiro - RJ</option>
+            <option>Rio Grande do Norte - RN</option>
+            <option>Rio Grande do Sul - RS</option>
+            <option>Rondônia - RO</option>
+            <option>Roraima - RR</option>
+            <option>Santa Catarina - SC</option>
+            <option>São Paulo - SP</option>
+            <option>Sergipe - SE</option>
+            <option>Tocantins - TO</option>
+        </select>
 
-            <label for="email" name="email">E-mail:</label>
-            <input type="email" placeholder="Digite seu email aqui">
+        <!-- Cidade (coluna 2) -->
+        <label for="cidade" class="label-cidade">Cidade:</label>
+        <input type="text" name="cidade" placeholder="Digite sua cidade" class="input-cidade">
 
-            <label for="senha" id="senha" name="senha">Digite sua senha:</label>
-            <input type="password" name="password" placeholder="Digite sua senha">
-            <span id="orientacao-senha">
-                <ul>
-                    <li>Mínimo de 6 caracteres</li>
-                    <li>Um caractere maiúsculo</li>
-                    <li>Caracteres minúsculos</li>
-                    <li>Um caractere especial (#, @, _)</li>
-                </ul>
-            </span>
+        <label for="email" class="label-email">E-mail:</label>
+        <input type="email" placeholder="Digite seu email aqui" id="email" name="email" class="input-email">
 
-            <button id="botao-enviar" type="submit">Cadastrar</button>
-        </form><br>
+        <label for="senha" class="label-senha">Digite sua senha:</label>
+        <input type="password" name="password" placeholder="Digite sua senha" class="input-senha">
 
-    </div>
+        <label for="confirmar-senha" class="label-confirmar-senha">Confirme sua senha:</label>
+        <input type="password" name="confirmar-password" placeholder="Confirme sua senha" class="input-confirmar-senha">
+
+        <span id="orientacao-senha">
+            <ul>
+                <li>Mínimo de 6 caracteres</li>
+                <li>Um caractere maiúsculo</li>
+                <li>Caracteres minúsculos</li>
+                <li>Um caractere especial (#, @, _)</li>
+            </ul>
+        </span>
+
+        <button id="botao-enviar" type="submit">Cadastrar</button>
+
+        <div id="link-login">
+                <a href="login">Já tem uma conta? Faça login</a>
+        </div>
+    </form>
+</div>
 
     <span id="mensagem"></span>
     <script src="{{ url_for('static', filename='script/script.js') }}"></script>

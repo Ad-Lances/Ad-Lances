@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
-    <title>Ad-Lances</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/imoveis.css') }}">
+    <title>Imóveis</title>
 </head>
 <body>
     <nav id="nav">
@@ -49,7 +49,7 @@
     <div id="nav-categorias">
         <ul>
             <li>Categorias</li>
-            <a href="imoveis"><li><img src="{{ url_for('static', filename='img/img-nav/house-icon.png') }}"></li></a>
+            <li><img src="{{ url_for('static', filename='img/img-nav/house-icon-color.png') }}"></li>
             <li><img src="{{ url_for('static', filename='img/img-nav/car-icon.png') }}"></li>
             <li><img src="{{ url_for('static', filename='img/img-nav/screen-icon.png') }}"></li>
             <li><img src="{{ url_for('static', filename='img/img-nav/houseitems-icon.png') }}"></li>
@@ -59,29 +59,72 @@
         </ul>
     </div>
 
-    <br><br>
-
-    <div id="carrossel">
-        <img src="{{ url_for('static', filename='img/banners/slide1.png')}}" alt="Banner">
+    <div id="header">
+        <img src="{{ url_for('static', filename='img/banners/banner-imoveis.png')}}">
     </div>
 
-    <br><br>
+    <div id="secaotitulo">
+        <h2>Categorias</h2><br>
+        <hr>
+    </div>
+    <div id="categorias">
+        <div id="item-cat">
+            <img src="{{ url_for('static', filename='img/imoveis-img/cat1.png') }}"><br>
+            <div id="texto-cat">Casas</div>
+        </div>
+
+        <div id="item-cat">
+            <img src="{{ url_for('static', filename='img/imoveis-img/cat2.png') }}" alt="apartamentos"><br>
+            <div id="texto-cat">Apartamentos</div>
+        </div>
+
+        <div id="item-cat">
+            <img src="{{ url_for('static', filename='img/imoveis-img/cat3.png') }}" alt="comerciais"><br>
+            <div id="texto-cat">Comerciais</div>
+        </div>
+
+        <div id="item-cat">
+            <img src="{{ url_for('static', filename='img/imoveis-img/cat4.png') }}" alt="industriais-e-galpoes"><br>
+            <div id="texto-cat">Industriais e Galpões</div>
+        </div>
+
+        <div id="item-cat">
+            <img src="{{ url_for('static', filename='img/imoveis-img/cat5.png') }}" alt="terrennos"><br>
+            <div id="texto-cat">Terrenos</div>
+        </div>
+    </div>
 
     <div id="secaotitulo">
-        <h2>Leilões encerrando em breve</h2><br>
+        <h2>Leilões acontecendo agora</h2><br>
         <hr>
     </div>
 
-    <div id="encerrando-em-breve">
+    <div id="acontecendo-agora">
         <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
+
         <div id="item">
-            <img src="{{ url_for('static', filename='img/eb-img/eb-img1.jpg') }}"><br>
-            Itens de escritório - Gomes Papelaria
-            <br><p id="local">São Paulo, SP</p><br>
+            <img src="{{ url_for('static', filename='img/imoveis-img/aa1.png') }}"><br>
+            Apartamento 55m² - Banco Santander
+            <br><p id="local">Toledo - SP</p><br>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 Visualizações</span>
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/aa2.png') }}"><br>
+            Apartamento 60m² - Setin Incorporadora
+            <br><p id="local">São Paulo - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -89,13 +132,13 @@
         </div>
 
         <div id="item">
-            <img src="{{ url_for('static', filename='img/eb-img/predio.png' )}}"><br>
-            Apartamento 55m²
-            <br><p id="local">Toledo, SP</p><br>
+            <img src="{{ url_for('static', filename='img/imoveis-img/aa3.png') }}"><br>
+            Galpão 600,00 m² - Banco Bradesco
+            <br><p id="local">Várzea Paulista - SP</p><br>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 Visualizações</span>
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -103,13 +146,13 @@
         </div>
 
         <div id="item">
-            <img src="{{ url_for('static', filename='img/eb-img/itensinformatica.webp' )}}"><br>
-            Itens de Informática - GM
-            <br><p id="local">São Cateano do Sul, SP</p><br>
+            <img src="{{ url_for('static', filename='img/imoveis-img/aa4.png') }}"><br>
+            Terreno 253m² - Usuário
+            <br><p id="local">Monte Alegre de Minas - MG</p><br>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 Visualizações</span>
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -117,27 +160,13 @@
         </div>
 
         <div id="item">
-            <img src="{{ url_for('static', filename='img/eb-img/bensap.webp' )}}"><br>
-            Bens de Apartamento Decorado - Consultora Patriani
-            <br><p id="local">São Paulo, SP</p><br>
+            <img src="{{ url_for('static', filename='img/imoveis-img/aa5.webp') }}"><br>
+            Casa 62,17m² - Banco Santander
+            <br><p id="local">São Paulo - SP</p><br>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 Visualizações</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eb-img/tv.jpg' )}}"><br>
-            Televisor Samsung
-            <br><p id="local">Indaiatuba, SP</p><br>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 Visualizações</span>
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -147,22 +176,18 @@
         <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
     </div>
 
-    <div id="banners-menores">
-        <img src="{{ url_for('static', filename='img/banners/veiculos.png') }}">
-        <img src="{{ url_for('static', filename='img/banners/eletrodomesticos.png') }}">
-    </div>
-
     <div id="secaotitulo">
-        <h2>Mais recentes</h2><br>
+        <h2>Casas</h2><br>
         <hr>
     </div>
 
-    <div id="mais-recentes">
+    <div id="casas">
         <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
+        
         <div id="item">
-            <img src="{{ url_for('static', filename='img/mr-img/terrenool.jpg') }}"><br>
-            Terreno Residencial (16m²) - Wilson José de Almeida
-            <br><p id="local">Olímpia, SP</p><br>
+            <img src="{{ url_for('static', filename='img/imoveis-img/c2.webp') }}"><br>
+            Casa 80m² - Kléber Bordini
+            <br><p id="local">Praia Grande - SP</p><br>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
@@ -174,9 +199,9 @@
         </div>
 
         <div id="item">
-            <img src="{{ url_for('static', filename='img/mr-img/renault.webp' )}}"><br>
-            Renault Captur Intense 2.0 - Autofácil Locadoras (Seminovo)
-            <br><p id="local">São Paulo, SP</p><br>
+            <img src="{{ url_for('static', filename='img/imoveis-img/c1.webp') }}"><br>
+            Casa 467,58m² - Anderson Luz
+            <br><p id="local">São Paulo - SP</p><br>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
@@ -188,9 +213,9 @@
         </div>
 
         <div id="item">
-            <img src="{{ url_for('static', filename='img/mr-img/maqdelavar.jpeg') }}"><br>
-            Máquina de Lavar Brastemp Ative 11kg
-            <br><p id="local">Maceió, AL</p><br>
+            <img src="{{ url_for('static', filename='img/imoveis-img/c3.png') }}"><br>
+            Casa 224,97m² - Lut Gestão e Intermediação de Ativos Ltda
+            <br><p id="local">Sorocaba - SP</p><br>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
@@ -202,9 +227,9 @@
         </div>
 
         <div id="item">
-            <img src="{{ url_for('static', filename='img/mr-img/apartamento.webp') }}"><br>
-            Apartamento 70m² - Eztec Imóveis
-            <br><p id="local">São Paulo, SP</p><br>
+            <img src="{{ url_for('static', filename='img/imoveis-img/c4.png') }}"><br>
+            Casa 326m² - Ação Veículos Ltda.
+            <br><p id="local">São Paulo - SP</p><br>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
@@ -216,53 +241,23 @@
         </div>
 
         <div id="item">
-            <img src="{{ url_for('static', filename='img/mr-img/apartamento2.webp') }}"><br>
-            Apartamento 76m² - Residencial Flórida
-            <br><p id="local">Ribeirão Preto, SP</p><br>
+            <img src="{{ url_for('static', filename='img/imoveis-img/c5.webp') }}"><br>
+            Casa 276,65m² - Governo do Estado de São Paulo
+            <br><p id="local">São Paulo - SP</p><br>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 Visualizações</span>
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
             <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
-    </div>
-
-    <div id="banners-maiores">
-        <img src="{{ url_for('static', filename='img/banners/bannermaior.png') }}">
-    </div>
-
-    <div id="secaotitulo">
-        <h2>Empresas que já venderam conosco</h2><br>
-        <hr>
-    </div>
-
-    <!--Arrumar o carrossel dps-->
-    <div id="container">
-        <div id="carrossel-emp">
-            <div id="empresas">
-                <div id="itemcar" style="--delay: 1s"><img src="{{ url_for('static', filename='img/empresas/corpore.jpg') }}" alt=""></div>
-                <div id="itemcar" style="--delay: 3s"><img src="{{ url_for('static', filename='img/empresas/eztec.png') }}" alt=""></div>
-                <div id="itemcar" style="--delay: 6s"><img src="{{ url_for('static', filename='img/empresas/lar.png') }}" alt=""></div>
-                <div id="itemcar" style="--delay: 9s"><img src="{{ url_for('static', filename='img/empresas/gomes.png') }}" alt=""></div>
-                <div id="itemcar" style="--delay: 12s"><img src="{{ url_for('static', filename='img/empresas/bradesco.webp') }}" alt=""></div>
-                <div id="itemcar" style="--delay: 15s"><img src="{{ url_for('static', filename='img/empresas/itau.png') }}" alt=""></div>
-                <div id="itemcar" style="--delay: 18s"><img src="{{ url_for('static', filename='img/empresas/magalu.png') }}" alt=""></div>
-                <div id="itemcar" style="--delay: 21s"><img src="{{ url_for('static', filename='img/empresas/setin.png') }}" alt=""></div>
-                <div id="itemcar" style="--delay: 24s"><img src="{{ url_for('static', filename='img/empresas/santander.png') }}" alt=""></div>
-                <!--<img id="empresa1" src="{{ url_for('static', filename='img/empresas/corpore.jpg') }}" alt="Empresa 1">
-                <img id="empresa2" src="{{ url_for('static', filename='img/empresas/eztec.png') }}" alt="Empresa 2">
-                <img id="empresa3" src="{{ url_for('static', filename='img/empresas/lar.png') }}" alt="Empresa 3">
-                <img id="empresa4" src="{{ url_for('static', filename='img/empresas/gomes.png') }}">-->
-            </div>
         </div>
     </div>
 
-<footer id="footer">
+    <div id=""
+
+    <footer id="footer">
     <div id="footer-container">
         <div id="footer-section">
             <h4>Sobre nós</h4>
@@ -312,5 +307,4 @@
     </div>
 </footer>
 </body>
-<script src="{{ url_for('static', filename='script/script.js') }}"></script>
 </html>

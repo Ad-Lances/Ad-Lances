@@ -95,7 +95,7 @@ body {
     padding: 40px;
     background: #fff;
     width: 100%;
-    max-width: 600px;
+    max-width: 800px;
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.15);
 }
@@ -104,14 +104,48 @@ body {
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px 25px;
+    gap: 20px 30px;
 }
 
-#formulario label {
-    font-size: 14px;
-    font-weight: 600;
-    color: #333;
-    grid-column: span 2;
+.label-nome { grid-area: label-nome; }
+.input-nome { grid-area: input-nome; }
+
+.label-data { grid-area: label-data; }
+.input-data { grid-area: input-data; }
+
+.label-cpf { grid-area: label-cpf; }
+.input-cpf { grid-area: input-cpf; }
+
+.label-estado { grid-area: label-estado; }
+.input-estado { grid-area: input-estado; }
+
+.label-cidade { grid-area: label-cidade; }
+.input-cidade { grid-area: input-cidade; }
+
+.label-email { grid-area: label-email; }
+.input-email { grid-area: input-email; }
+
+.label-senha { grid-area: label-senha; }
+.input-senha { grid-area: input-senha; }
+
+.label-confirmar-senha { grid-area: label-confirmar-senha; }
+.input-confirmar-senha { grid-area: input-confirmar-senha; }
+
+
+#formulario form {
+    grid-template-areas:
+        "label-nome label-nome"
+        "input-nome input-nome"
+        "label-data label-cpf"
+        "input-data input-cpf"
+        "label-estado label-cidade"
+        "input-estado input-cidade"
+        "label-email label-email"
+        "input-email input-email"
+        "label-senha label-confirmar-senha"
+        "input-senha input-confirmar-senha"
+        "orientacao orientacao"
+        "botao botao";
 }
 
 #formulario input,
@@ -122,26 +156,20 @@ body {
     font-size: 14px;
     transition: border-color 0.3s ease;
     width: 100%;
-    grid-column: span 2;
 }
 
-#formulario input:focus,
-#formulario select:focus {
-    border-color: #034660;
-    outline: none;
-}
-
-#formulario input[type="date"],
-#formulario input[name="cpf"],
-#formulario #estado,
-#formulario input[name="cidade"] {
-    grid-column: span 1;
+#formulario label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: -10px;
 }
 
 #orientacao-senha {
     font-size: 12px;
     color: #555;
-    grid-column: span 2;
+    grid-area: orientacao;
+    margin-top: -10px;
 }
 
 #orientacao-senha ul {
@@ -159,23 +187,36 @@ body {
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    grid-column: span 2;
+    grid-area: botao;
+    margin-top: 10px;
 }
 
 #botao-enviar:hover {
     background-color: #046d92;
 }
 
-h1{
-    display: grid;
-    justify-self: center;
-    align-self: center;
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-#mensagem{
-    display: grid;
-    justify-self: center;
-    align-self: center;
+#mensagem {
+    text-align: center;
     font-size: 18px;
     margin-bottom: 50px;
+}
+
+#link-login {
+    margin-top: 20px;
+    width: 100%;
+}
+
+#link-login a {
+    color: #034660;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+#link-login a:hover {
+    text-decoration: underline;
 }

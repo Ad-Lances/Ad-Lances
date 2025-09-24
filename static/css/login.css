@@ -87,15 +87,91 @@ body {
     width: 20px;
 }
 
+
 #formulario {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 40px auto;
-    padding: 40px;
+    padding: 60px 40px;
     background: #fff;
     width: 100%;
-    max-width: 600px;
+    max-width: 800px;
     border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
 }
 
+#formulario form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+#campo-email, #campo-senha {
+    width: 100%;
+}
+
+#formulario label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+    display: block;
+    width: 100%;
+}
+
+#formulario input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+#formulario input:focus {
+    border-color: #034660;
+    outline: none;
+}
+
+#botao-login {
+    background-color: #034660;
+    color: #fff;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-top: 10px;
+}
+
+#botao-login:hover {
+    background-color: #046d92;
+}
+
+h1{
+    display: grid;
+    justify-self: center;
+    align-self: center;
+}
+
+#link-cadastro {
+    text-align: center;
+    margin-top: 20px;
+    width: 100%;
+}
+
+#link-cadastro a {
+    color: #034660;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+#link-cadastro a:hover {
+    text-decoration: underline;
+}

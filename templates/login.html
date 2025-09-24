@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/cadastro.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 </head>
 <body>
     <nav id="nav">
         <ul>
             <li>
                 <div id="nav-item">
-                    <img id="logo" src="{{ url_for('static', filename='img/logo.png') }}">
+                    <a href="/"><img id="logo" src="{{ url_for('static', filename='img/logo.png') }}"></a>
                 </div>
             </li>
             <li>
@@ -31,27 +31,33 @@
             <li>
                 <div id="nav-item">
                     <div id="img-nav">
-                        <a href="cadastro.html"><img src="{{ url_for('static', filename='img/icons-img/profile-icon.png') }}"></a>
+                        <a href="login"><img src="{{ url_for('static', filename='img/icons-img/profile-icon.png') }}"></a>
                     </div>
                 </div>
             </li>
         </ul>
     </nav>
 
+    <h1>Entre na sua conta</h1>
+    
     <div id="formulario">
-        <form id="formulario">
+        <form>
             <div id="campo-email">
-                <label for="email" name="email">E-mail:</label><br>
-                <input type="email" placeholder="Digite seu email"><br>
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" name="email" placeholder="Digite seu email">
             </div>
 
             <div id="campo-senha">
-                <label for="password" name="password">Senha:</label>
-                <input type="password" placeholder="Digite sua senha">
+                <label for="password">Senha:</label>
+                <input type="password" id="password" name="password" placeholder="Digite sua senha">
+            </div>
+
+            <button type="submit" id="botao-login">Entrar</button>
+
+            <div id="link-cadastro">
+                <a href="cadastro">Não tem uma conta? Cadastre-se</a>
             </div>
         </form>
-
     </div>
-
-
 </body>
+</html>
