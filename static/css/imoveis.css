@@ -147,6 +147,13 @@ body {
     margin-top: -25px;
 }
 
+#header img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin-bottom: 60px;
+}
+
 #categorias{
     width: 100%;
     max-width: 1200px;
@@ -173,7 +180,8 @@ body {
     position: relative;
 }
 
-#acontecendo-agora, #casas{
+#acontecendo-agora, #casas, #apartamentos, #comerciais,
+#industriais-e-galpoes, #terrenos{
     width: 100%;
     max-width: 1200px;
     margin: 30px auto;
