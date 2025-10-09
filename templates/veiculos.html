@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/veiculos.css') }}">
+    <title>Veículos</title>
+</head>
+<body>
+<nav id="nav">
+        <ul>
+            <li>
+                <div id="nav-item">
+                <a href="/"><img id="logo" src="{{ url_for('static', filename='img/logo.png') }}"></a>
+                </div>
+            </li>
+
+            <li>
+                <div id="search-container">
+                    <form>
+                        <input type="text" placeholder="Digite aqui...">
+                        <button type="submit"><img src="{{ url_for('static', filename='img/search-icon.png') }}" id="searchimg"></button>
+                    </form>
+                </div>
+            </li>
+
+            <li>
+                <div id="nav-item">
+                    Como vender
+                </div>
+            </li>
+
+            <li>
+                <div id="nav-item">
+                    Fale conosco
+                </div>
+            </li>
+
+            <li>
+                <div id="nav-item">
+                    <div id="img-nav">
+                        <a href="login"><img src="{{ url_for('static', filename='img/icons-img/profile-icon.png') }}"></a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <div id="nav-categorias">
+        <ul>
+            <li>Categorias</li>
+            <a href="imoveis"><li><img src="{{ url_for('static', filename='img/img-nav/house-icon.png') }}"></li></a>
+            <li><img src="{{ url_for('static', filename='img/img-nav/car-icon.png') }}"></li>
+            <li><img src="{{ url_for('static', filename='img/img-nav/screen-icon.png') }}"></li>
+            <li><img src="{{ url_for('static', filename='img/img-nav/houseitems-icon.png') }}"></li>
+            <li><img src="{{ url_for('static', filename='img/img-nav/office-icon.png') }}"></li>
+            <li><img src="{{ url_for('static', filename='img/img-nav/machine-icon.png') }}"></li>
+            <li><img src="{{ url_for('static', filename='img/img-nav/decoration-icon.png') }}"></li>
+        </ul>
+    </div>
+
+    <br><br>
+
+    <div id="header">
+        <img src="{{ url_for('static', filename='img/banners/banner-veiculos2.png')}}">
+    </div>
+
+    <div id="secaotitulo">
+        <h2>Categorias</h2><br>
+        <hr>
+    </div>
+
+    <div id="categorias">
+        <div id="item-cat">
+            <img src="{{ url_for('static', filename='img/veiculos-img/cat1.jpg') }}"><br>
+            <div id="texto-cat">Carros</div>
+        </div>
+
+        <div id="item-cat">
+            <img src="{{ url_for('static', filename='img/veiculos-img/cat2.webp') }}" alt="motos"><br>
+            <div id="texto-cat">Motocicletas</div>
+        </div>
+
+        <div id="item-cat">
+            <img src="{{ url_for('static', filename='img/veiculos-img/cat3.jpg') }}" alt="caminhões"><br>
+            <div id="texto-cat">Caminhões</div>
+        </div>
+    </div>
+
+    <div id="secaotitulo">
+        <h2>Leilões acontecendo agora</h2><br>
+        <hr>
+    </div>
+
+    <div id="acontecendo-agora">
+        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/veiculos-img/aa1.webp') }}"><br>
+            Motocicleta BMW R1250 - Detran
+            <br><p id="local">Curitiba - PR</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/veiculos-img/aa2.webp') }}"><br>
+            Carro Renault Sandero EXP 16 - Tribunal de Justiça de São Paulo
+            <br><p id="local">São Paulo - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/veiculos-img/aa3.jpeg') }}"><br>
+            Mercedes-Benz/Atego 1418 (2006) - Detran MG
+            <br><p id="local">Carnaíba - MG</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/veiculos-img/aa4.webp') }}"><br>
+            Fiat Toro Freedom 1.8 AT6 - Fiat
+            <br><p id="local">Porto Alegre - RS</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/veiculos-img/aa5.png') }}"><br>
+            Kawasaki Z1000 (2025)
+            <br><p id="local">Rio de Janeiro - RJ</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
+    </div>
+
+    <div id="secaotitulo">
+        <h2>Carros</h2><br>
+        <hr>
+    </div>
+
+    <div id="carros">
+        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
+        
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/veiculos-img/c1.webp') }}"><br>
+            Volkswagen Gol 1.6 (2022) (Seminovo) - Guaíra Veículos
+            <br><p id="local">São Paulo - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 Visualizações</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/c1.webp') }}"><br>
+            Casa 467,58m² - Anderson Luz
+            <br><p id="local">São Paulo - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 Visualizações</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/c3.png') }}"><br>
+            Casa 224,97m² - Lut Gestão e Intermediação de Ativos Ltda
+            <br><p id="local">Sorocaba - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 Visualizações</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/c4.png') }}"><br>
+            Casa 326m² - Ação Veículos Ltda.
+            <br><p id="local">São Paulo - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 Visualizações</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/c5.webp') }}"><br>
+            Casa 276,65m² - Governo do Estado de São Paulo
+            <br><p id="local">São Paulo - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 Visualizações</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
+    </div>
+</body>
+
+<script src="{{ url_for('static', filename='script/script.js') }}"></script>
+</html>

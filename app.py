@@ -18,5 +18,9 @@ def login():
 def imoveis():
     return render_template('imoveis.html')
 
+@app.route('/veiculos')
+def veiculos():
+    return render_template('veiculos.html')
+
 if __name__ == '__main__':
     app.run(debug=True)

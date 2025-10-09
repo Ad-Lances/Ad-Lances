@@ -403,3 +403,163 @@ document.addEventListener('DOMContentLoaded', function() {
 window.addEventListener('resize', function() {
     setTimeout(initCarousels, 300);
 });
+
+// Apenas se quiser controle mais preciso via JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+    const track = document.getElementById('track-empresas');
+    if (!track) return;
+    
+    // Clona os itens para efeito contínuo infinito
+    const items = track.querySelectorAll('.empresa-item-auto');
+    items.forEach(item => {
+        const clone = item.cloneNode(true);
+        track.appendChild(clone);
+    });
+});
+
+// Carrossel Principal Automático
+function initMainCarousel() {
+    const carousel = document.getElementById('carrossel-principal');
+    if (!carousel) return;
+
+    const inner = carousel.querySelector('.carrossel-inner-principal');
+    const slides = carousel.querySelectorAll('.slide-item');
+    const indicators = carousel.querySelectorAll('.indicator');
+    
+    if (slides.length === 0) return;
+
+    let currentSlide = 0;
+    let autoPlayInterval;
+
+    // Função para mostrar slide específico
+    function showSlide(index) {
+        // Remove classe active de todos os slides e indicadores
+        slides.forEach(slide => slide.classList.remove('active'));
+        indicators.forEach(indicator => indicator.classList.remove('active'));
+        
+        // Adiciona classe active ao slide e indicador atual
+        slides[index].classList.add('active');
+        indicators[index].classList.add('active');
+        
+        currentSlide = index;
+    }
+
+    // Função para próximo slide
+    function nextSlide() {
+        let nextIndex = currentSlide + 1;
+        if (nextIndex >= slides.length) {
+            nextIndex = 0;
+        }
+        showSlide(nextIndex);
+    }
+
+    // Função para iniciar autoplay
+    function startAutoPlay() {
+        autoPlayInterval = setInterval(nextSlide, 5000); // Muda a cada 5 segundos
+    }
+
+    // Função para parar autoplay
+    function stopAutoPlay() {
+        clearInterval(autoPlayInterval);
+    }
+
+    // Event listeners para os indicadores
+    indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+            stopAutoPlay();
+            showSlide(index);
+            startAutoPlay();
+        });
+    });
+
+    // Pausar autoplay quando o mouse estiver sobre o carrossel
+    carousel.addEventListener('mouseenter', stopAutoPlay);
+    carousel.addEventListener('mouseleave', startAutoPlay);
+
+    // Inicializar
+    showSlide(0);
+    startAutoPlay();
+
+    // Limpar intervalo quando a página for fechada
+    window.addEventListener('beforeunload', () => {
+        clearInterval(autoPlayInterval);
+    });
+}
+
+// Se preferir uma versão mais simples sem JavaScript, use esta alternativa CSS-only:
+
+function initMainCarouselCSSOnly() {
+    const carousel = document.getElementById('carrossel-principal');
+    if (!carousel) return;
+
+    const inner = carousel.querySelector('.carrossel-inner-principal');
+    const slides = carousel.querySelectorAll('.slide-item');
+    
+    if (slides.length === 0) return;
+
+    // Adiciona classes para animação CSS
+    inner.classList.add('css-carousel');
+    slides.forEach(slide => slide.classList.add('css-slide'));
+}
+
+// Adicione este CSS alternativo se quiser versão apenas CSS:
+
+const cssCarouselStyles = `
+/* Versão CSS-only do carrossel (alternativa) */
+.css-carousel {
+    display: flex;
+    animation: slideCarousel 15s infinite;
+}
+
+.css-slide {
+    flex: 0 0 100%;
+}
+
+@keyframes slideCarousel {
+    0%, 25% {
+        transform: translateX(0%);
+    }
+    33%, 58% {
+        transform: translateX(-100%);
+    }
+    66%, 91% {
+        transform: translateX(-200%);
+    }
+    100% {
+        transform: translateX(0%);
+    }
+}
+
+/* Para 4 slides */
+.css-carousel[data-slides="4"] {
+    animation: slideCarousel4 20s infinite;
+}
+
+@keyframes slideCarousel4 {
+    0%, 20% { transform: translateX(0%); }
+    25%, 45% { transform: translateX(-100%); }
+    50%, 70% { transform: translateX(-200%); }
+    75%, 95% { transform: translateX(-300%); }
+    100% { transform: translateX(0%); }
+}
+`;
+
+// Adicione os estilos CSS-only se necessário
+function addCSSCarouselStyles() {
+    if (!document.querySelector('#css-carousel-styles')) {
+        const style = document.createElement('style');
+        style.id = 'css-carousel-styles';
+        style.textContent = cssCarouselStyles;
+        document.head.appendChild(style);
+    }
+}
+
+// Inicialização principal
+document.addEventListener('DOMContentLoaded', function() {
+    // Use a versão com JavaScript para mais controle
+    initMainCarousel();
+    
+    // Ou use a versão CSS-only (comente a linha acima e descomente a abaixo)
+    // initMainCarouselCSSOnly();
+    // addCSSCarouselStyles();
+});

@@ -50,7 +50,7 @@
         <ul>
             <li>Categorias</li>
             <a href="imoveis"><li><img src="{{ url_for('static', filename='img/img-nav/house-icon.png') }}"></li></a>
-            <li><img src="{{ url_for('static', filename='img/img-nav/car-icon.png') }}"></li>
+            <a href="veiculos"><li><img src="{{ url_for('static', filename='img/img-nav/car-icon.png') }}"></li></a>
             <li><img src="{{ url_for('static', filename='img/img-nav/screen-icon.png') }}"></li>
             <li><img src="{{ url_for('static', filename='img/img-nav/houseitems-icon.png') }}"></li>
             <li><img src="{{ url_for('static', filename='img/img-nav/office-icon.png') }}"></li>
@@ -61,9 +61,29 @@
 
     <br><br>
 
-    <div id="carrossel">
-        <img src="{{ url_for('static', filename='img/banners/slide1.png')}}" alt="Banner">
+    <div id="carrossel-principal">
+        <div class="carrossel-track-principal">
+            <div class="carrossel-inner-principal">
+                <div class="slide-item">
+                    <img src="{{ url_for('static', filename='img/banners/slide1.png')}}" alt="Banner 1">
+                </div>
+                <div class="slide-item">
+                    <img src="{{ url_for('static', filename='img/banners/slide2.png')}}" alt="Banner 2">
+                </div>
+                <div class="slide-item">
+                    <img src="{{ url_for('static', filename='img/banners/slide3.png')}}" alt="Banner 3">
+                </div>
+            </div>
+        </div>
+        
+        <div class="slide-indicators">
+            <span class="indicator active" data-slide="0"></span>
+            <span class="indicator" data-slide="1"></span>
+            <span class="indicator" data-slide="2"></span>
+        </div>
     </div>
+
+    <br><br>
 
     <br><br>
 
@@ -241,23 +261,65 @@
         <hr>
     </div>
 
-    <!--Arrumar o carrossel dps-->
-    <div id="container">
-        <div id="carrossel-emp">
-            <div id="empresas">
-                <div id="itemcar" style="--delay: 1s"><img src="{{ url_for('static', filename='img/empresas/corpore.jpg') }}" alt=""></div>
-                <div id="itemcar" style="--delay: 3s"><img src="{{ url_for('static', filename='img/empresas/eztec.png') }}" alt=""></div>
-                <div id="itemcar" style="--delay: 6s"><img src="{{ url_for('static', filename='img/empresas/lar.png') }}" alt=""></div>
-                <div id="itemcar" style="--delay: 9s"><img src="{{ url_for('static', filename='img/empresas/gomes.png') }}" alt=""></div>
-                <div id="itemcar" style="--delay: 12s"><img src="{{ url_for('static', filename='img/empresas/bradesco.webp') }}" alt=""></div>
-                <div id="itemcar" style="--delay: 15s"><img src="{{ url_for('static', filename='img/empresas/itau.png') }}" alt=""></div>
-                <div id="itemcar" style="--delay: 18s"><img src="{{ url_for('static', filename='img/empresas/magalu.png') }}" alt=""></div>
-                <div id="itemcar" style="--delay: 21s"><img src="{{ url_for('static', filename='img/empresas/setin.png') }}" alt=""></div>
-                <div id="itemcar" style="--delay: 24s"><img src="{{ url_for('static', filename='img/empresas/santander.png') }}" alt=""></div>
-                <!--<img id="empresa1" src="{{ url_for('static', filename='img/empresas/corpore.jpg') }}" alt="Empresa 1">
-                <img id="empresa2" src="{{ url_for('static', filename='img/empresas/eztec.png') }}" alt="Empresa 2">
-                <img id="empresa3" src="{{ url_for('static', filename='img/empresas/lar.png') }}" alt="Empresa 3">
-                <img id="empresa4" src="{{ url_for('static', filename='img/empresas/gomes.png') }}">-->
+    <div id="carrossel-empresas-automatico">
+        <div class="carrossel-track">
+            <div class="carrossel-inner">
+                <!-- Primeira cópia -->
+                <div class="empresa-item">
+                    <img src="{{ url_for('static', filename='img/empresas/corpore.jpg') }}" alt="Corpore">
+                </div>
+                <div class="empresa-item">
+                    <img src="{{ url_for('static', filename='img/empresas/eztec.png') }}" alt="Eztec">
+                </div>
+                <div class="empresa-item">
+                    <img src="{{ url_for('static', filename='img/empresas/lar.png') }}" alt="Lar">
+                </div>
+                <div class="empresa-item">
+                    <img src="{{ url_for('static', filename='img/empresas/gomes.png') }}" alt="Gomes">
+                </div>
+                <div class="empresa-item">
+                    <img src="{{ url_for('static', filename='img/empresas/bradesco.webp') }}" alt="Bradesco">
+                </div>
+                <div class="empresa-item">
+                    <img src="{{ url_for('static', filename='img/empresas/itau.png') }}" alt="Itaú">
+                </div>
+                <div class="empresa-item">
+                    <img src="{{ url_for('static', filename='img/empresas/magalu.png') }}" alt="Magalu">
+                </div>
+                <div class="empresa-item">
+                    <img src="{{ url_for('static', filename='img/empresas/setin.png') }}" alt="Setin">
+                </div>
+                <div class="empresa-item">
+                    <img src="{{ url_for('static', filename='img/empresas/santander.png') }}" alt="Santander">
+                </div>
+                
+                <div class="empresa-item">
+                    <img src="{{ url_for('static', filename='img/empresas/corpore.jpg') }}" alt="Corpore">
+                </div>
+                <div class="empresa-item">
+                    <img src="{{ url_for('static', filename='img/empresas/eztec.png') }}" alt="Eztec">
+                </div>
+                <div class="empresa-item">
+                    <img src="{{ url_for('static', filename='img/empresas/lar.png') }}" alt="Lar">
+                </div>
+                <div class="empresa-item">
+                    <img src="{{ url_for('static', filename='img/empresas/gomes.png') }}" alt="Gomes">
+                </div>
+                <div class="empresa-item">
+                    <img src="{{ url_for('static', filename='img/empresas/bradesco.webp') }}" alt="Bradesco">
+                </div>
+                <div class="empresa-item">
+                    <img src="{{ url_for('static', filename='img/empresas/itau.png') }}" alt="Itaú">
+                </div>
+                <div class="empresa-item">
+                    <img src="{{ url_for('static', filename='img/empresas/magalu.png') }}" alt="Magalu">
+                </div>
+                <div class="empresa-item">
+                    <img src="{{ url_for('static', filename='img/empresas/setin.png') }}" alt="Setin">
+                </div>
+                <div class="empresa-item">
+                    <img src="{{ url_for('static', filename='img/empresas/santander.png') }}" alt="Santander">
+                </div>
             </div>
         </div>
     </div>

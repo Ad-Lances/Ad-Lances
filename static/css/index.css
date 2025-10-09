@@ -190,12 +190,108 @@ body {
     }
 }
 
-#empresas img {
-  width: 150px;
-  height: 100px; 
-  object-fit: contain;
+/* Carrossel Principal Automático */
+#carrossel-principal {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    margin-top: 20px;
 }
 
+.carrossel-track-principal {
+    width: 100%;
+    overflow: hidden;
+}
+
+.carrossel-inner-principal {
+    display: flex;
+    transition: transform 0.8s ease-in-out;
+    width: 100%;
+}
+
+.slide-item {
+    flex: 0 0 100%;
+    width: 100%;
+}
+
+.slide-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+.slide-indicators {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+}
+
+.indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.indicator.active {
+    background: white;
+    transform: scale(1.2);
+}
+
+.indicator:hover {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.carrossel-inner-principal {
+    position: relative;
+}
+
+.slide-item {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: opacity 0.8s ease-in-out;
+}
+
+.slide-item.active {
+    opacity: 1;
+    position: relative;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .slide-indicators {
+        bottom: 15px;
+    }
+    
+    .indicator {
+        width: 10px;
+        height: 10px;
+    }
+    
+    #carrossel-principal {
+        margin-top: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .slide-indicators {
+        bottom: 10px;
+    }
+    
+    .indicator {
+        width: 8px;
+        height: 8px;
+    }
+}
 #secaotitulo{
     padding: 20px;
 }
