@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/categorias/imoveis.css') }}">
+    <title>Imóveis</title>
+</head>
+<body>
+    <nav id="nav">
+        <ul>
+            <li>
+                <div id="nav-item">
+                <a href="/"><img id="logo" src="{{ url_for('static', filename='img/logo.png') }}"></a>
+                </div>
+            </li>
+
+            <li>
+                <div id="search-container">
+                    <form>
+                        <input type="text" placeholder="Digite aqui...">
+                        <button type="submit"><img src="{{ url_for('static', filename='img/search-icon.png') }}" id="searchimg"></button>
+                    </form>
+                </div>
+            </li>
+
+            <li>
+                <div id="nav-item">
+                    Como vender
+                </div>
+            </li>
+
+            <li>
+                <div id="nav-item">
+                    Fale conosco
+                </div>
+            </li>
+
+            <li>
+                <div id="nav-item">
+                    <div id="img-nav">
+                        <a href="login"><img src="{{ url_for('static', filename='img/icons-img/profile-icon.png') }}"></a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <div id="nav-categorias">
+        <ul>
+            <li>Categorias</li>
+            <li><img src="{{ url_for('static', filename='img/img-nav/house-icon-color.png') }}"></li>
+            <a href="veiculos"><li><img src="{{ url_for('static', filename='img/img-nav/car-icon.png') }}"></li></a>
+            <a href="eletronicos"><li><img src="{{ url_for('static', filename='img/img-nav/screen-icon.png') }}"></li></a>
+            <li><img src="{{ url_for('static', filename='img/img-nav/houseitems-icon.png') }}"></li>
+            <li><img src="{{ url_for('static', filename='img/img-nav/office-icon.png') }}"></li>
+            <li><img src="{{ url_for('static', filename='img/img-nav/machine-icon.png') }}"></li>
+            <li><img src="{{ url_for('static', filename='img/img-nav/decoration-icon.png') }}"></li>
+        </ul>
+    </div>
+
+    <div id="header">
+        <img src="{{ url_for('static', filename='img/banners/banner-imoveis.png')}}">
+    </div>
+
+    <div id="secaotitulo">
+        <h2>Categorias</h2><br>
+        <hr>
+    </div>
+    <div id="categorias">
+        <div id="item-cat">
+            <img src="{{ url_for('static', filename='img/imoveis-img/cat1.png') }}"><br>
+            <div id="texto-cat">Casas</div>
+        </div>
+
+        <div id="item-cat">
+            <img src="{{ url_for('static', filename='img/imoveis-img/cat2.png') }}" alt="apartamentos"><br>
+            <div id="texto-cat">Apartamentos</div>
+        </div>
+
+        <div id="item-cat">
+            <img src="{{ url_for('static', filename='img/imoveis-img/cat3.png') }}" alt="comerciais"><br>
+            <div id="texto-cat">Comerciais</div>
+        </div>
+
+        <div id="item-cat">
+            <img src="{{ url_for('static', filename='img/imoveis-img/cat4.png') }}" alt="industriais-e-galpoes"><br>
+            <div id="texto-cat">Industriais e Galpões</div>
+        </div>
+
+        <div id="item-cat">
+            <img src="{{ url_for('static', filename='img/imoveis-img/cat5.png') }}" alt="terrennos"><br>
+            <div id="texto-cat">Terrenos</div>
+        </div>
+    </div>
+
+    <div id="secaotitulo">
+        <h2>Leilões acontecendo agora</h2><br>
+        <hr>
+    </div>
+
+    <div id="acontecendo-agora">
+        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/aa1.png') }}"><br>
+            Apartamento 55m² - Banco Santander
+            <br><p id="local">Toledo - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/aa2.png') }}"><br>
+            Apartamento 60m² - Setin Incorporadora
+            <br><p id="local">São Paulo - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/aa3.png') }}"><br>
+            Galpão 600,00 m² - Banco Bradesco
+            <br><p id="local">Várzea Paulista - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/aa4.png') }}"><br>
+            Terreno 253m² - Usuário
+            <br><p id="local">Monte Alegre de Minas - MG</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/aa5.webp') }}"><br>
+            Casa 62,17m² - Banco Santander
+            <br><p id="local">São Paulo - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
+    </div>
+
+    <div id="secaotitulo">
+        <h2>Casas</h2><br>
+        <hr>
+    </div>
+
+    <div id="casas">
+        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
+        
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/a1.png') }}"><br>
+            Casa 80m² - Kléber Bordini
+            <br><p id="local">Praia Grande - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 Visualizações</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/c1.webp') }}"><br>
+            Casa 467,58m² - Anderson Luz
+            <br><p id="local">São Paulo - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 Visualizações</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/c3.png') }}"><br>
+            Casa 224,97m² - Lut Gestão e Intermediação de Ativos Ltda
+            <br><p id="local">Sorocaba - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 Visualizações</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/c4.png') }}"><br>
+            Casa 326m² - Ação Veículos Ltda.
+            <br><p id="local">São Paulo - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 Visualizações</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/c5.webp') }}"><br>
+            Casa 276,65m² - Governo do Estado de São Paulo
+            <br><p id="local">São Paulo - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 Visualizações</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
+    </div>
+
+    <div id="secaotitulo">
+        <h2>Apartamentos</h2><br>
+        <hr>
+    </div>
+
+    <div id="apartamentos">
+        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
+        
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/a1.png') }}"><br>
+            Apartamento 62,09m² - Dora Plat
+            <br><p id="local">São Paulo - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 Visualizações</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/a2.png') }}"><br>
+            Apartamento 67,41m² - Banco Santander
+            <br><p id="local">Rio de Janeiro - RJ</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 Visualizações</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/a3.png') }}"><br>
+            Apartamento 45m² - Setin Incorporadora
+            <br><p id="local">Campinas - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 Visualizações</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/a4.png') }}"><br>
+            Apartamento 45m² - Eztec Imóveis
+            <br><p id="local">Alphaville - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 Visualizações</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/a5.webp') }}"><br>
+            Apartamento 210m² - Setin Incorporadora
+            <br><p id="local">São Paulo - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 Visualizações</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
+    </div>
+
+    <div id="secaotitulo">
+        <h2>Comerciais</h2><br>
+        <hr>
+    </div>
+
+    <div id="comerciais">
+        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
+        
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/co1.png') }}"><br>
+            Sala Comercial 56m² - Bento Gonçalves Imóveis
+            <br><p id="local">Poços de Caldas - MG</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 Visualizações</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/co2.png') }}"><br>
+            Sala Comercial 175m² - Pan Express Viagens e Turismo
+            <br><p id="local">São Paulo - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 Visualizações</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/co3.png') }}"><br>
+            Sala Comercial 80,25m² - Condomínio Central Park Prime
+            <br><p id="local">Campinas - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 Visualizações</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/co4.png') }}"><br>
+            Sala Comercial 193,82m² - Edifício Manhattan Tower
+            <br><p id="local">Rio de Janeiro - RJ</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 Visualizações</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/co5.jpg') }}"><br>
+            Sala Comercial 199m² - TRK Imóveis
+            <br><p id="local">São Paulo - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 Visualizações</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
+    </div>
+
+    <div id="secaotitulo">
+        <h2>Industriais e Galpões</h2><br>
+        <hr>
+    </div>
+
+    <div id="industriais-e-galpoes">
+        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
+        
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/ig1.png') }}"><br>
+            Galpão 1000m² - SP Imóvel
+            <br><p id="local">São Paulo - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 Visualizações</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/ig2.webp') }}"><br>
+            Galpão 360m² - Terra Brasil Tranding
+            <br><p id="local">Manga - MG</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 Visualizações</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/ig3.png') }}"><br>
+            Galpão 300m² - Franca Imobiliária
+            <br><p id="local">Franco da Rocha - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 Visualizações</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/ig4.png') }}"><br>
+            Galpão 370m² - S.A. Imóveis
+            <br><p id="local">Botucatu - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 Visualizações</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/ig5.webp') }}"><br>
+            Galpão 1169m²
+            <br><p id="local">São Paulo - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 Visualizações</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
+    </div>
+
+    <div id="secaotitulo">
+        <h2>Terrenos</h2><br>
+        <hr>
+    </div>
+
+    <div id="terrenos">
+        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
+        
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/t1.png') }}"><br>
+            Terreno 360m² - Banco Itaú
+            <br><p id="local">São José do Rio Preto - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 Visualizações</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/t2.png') }}"><br>
+            Terreno 9576m² - Prefeitura de Cascavel
+            <br><p id="local">Cascavel - PR</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 Visualizações</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/t3.png') }}"><br>
+            Terreno para chácara 3254m² - Imobiliária SBS
+            <br><p id="local">São Bento do Sul - SC</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 Visualizações</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/t4.webp') }}"><br>
+            Terreno 9534m² - Casa Mineira
+            <br><p id="local">Bueno Brandão - MG</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 Visualizações</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/t5.webp') }}"><br>
+            Terreno 356m² - Vitrine Imobiliária
+            <br><p id="local">Jacareí - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 Visualizações</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/t4.webp') }}"><br>
+            Terreno 9534m² - Casa Mineira
+            <br><p id="local">Bueno Brandão - MG</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 Visualizações</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/imoveis-img/t4.webp') }}"><br>
+            Terreno 9534m² - Casa Mineira
+            <br><p id="local">Bueno Brandão - MG</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 Visualizações</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
+    </div>
+
+    <footer id="footer">
+    <div id="footer-container">
+        <div id="footer-section">
+            <h4>Sobre nós</h4>
+            <ul>
+                <li><a href="#">A empresa</a></li>
+                <li><a href="#">Política de privacidade</a></li>
+                <li><a href="#">Como funciona</a></li>
+                <li><a href="#">Como vender</a></li>
+            </ul>
+        </div>
+
+        <div id="footer-section">
+            <h4>Contato</h4>
+            <p><strong>E-mail:</strong> adlances@gmail.com</p>
+            <p><strong>Telefone:</strong> (11) 5567-3452</p>
+            <p><a href="#">Perguntas frequentes</a></p>
+        </div>
+
+        <div id="footer-section">
+    <h4>Redes sociais</h4>
+    <div id="social-icons">
+        <a href="#" aria-label="Instagram">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="24" height="24">
+                <path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9a5.5 5.5 0 0 1-5.5 5.5h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2zm0 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4h-9zm4.5 3a5.5 5.5 0 1 1 0 11a5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7zm5.25-.75a.75.75 0 1 1 0 1.5a.75.75 0 0 1 0-1.5z"/>
+            </svg>
+        </a>
+        <a href="#" aria-label="Facebook">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="24" height="24">
+                <path d="M13.5 22V12.75h3l.5-4h-3.5V6.5c0-1.1.3-1.9 2-1.9h1.6V1.2c-.3 0-1.4-.2-2.7-.2c-2.7 0-4.6 1.6-4.6 4.7V8.7H7v4h3.8V22h2.7z"/>
+            </svg>
+        </a>
+        <a href="#" aria-label="LinkedIn">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="24" height="24">
+                <path d="M4.98 3.5A2.5 2.5 0 1 1 5 8.5a2.5 2.5 0 0 1-.02-5zM3 9h4v12H3zm7 0h3.7v1.6h.1c.5-.9 1.7-1.8 3.4-1.8c3.6 0 4.3 2.4 4.3 5.6V21h-4v-5.2c0-1.2 0-2.7-1.7-2.7c-1.8 0-2 1.3-2 2.6V21h-4z"/>
+            </svg>
+        </a>
+    </div>
+</div>
+
+        <div id="footer-section">
+            <h4>Localização</h4>
+            <p>Av. Paulista, 1167 - Bela Vista</p>
+        </div>
+    </div>
+    <div id="footer-bottom">
+        <p>© AdLances. Todos os direitos reservados.</p>
+    </div>
+</footer>
+<script src="{{ url_for('static', filename='script/script.js') }}"></script>
+</body>
+</html>

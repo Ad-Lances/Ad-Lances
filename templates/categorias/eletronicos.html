@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/veiculos.css') }}">
-    <title>Veículos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/categorias/eletronicos.css') }}">
+    <title>Eletrônicos</title>
 </head>
 <body>
-<nav id="nav">
+    <nav id="nav">
         <ul>
             <li>
                 <div id="nav-item">
@@ -50,8 +50,8 @@
         <ul>
             <li>Categorias</li>
             <a href="imoveis"><li><img src="{{ url_for('static', filename='img/img-nav/house-icon.png') }}"></li></a>
-            <li><img src="{{ url_for('static', filename='img/img-nav/car-icon.png') }}"></li>
-            <li><img src="{{ url_for('static', filename='img/img-nav/screen-icon.png') }}"></li>
+            <a href="veiculos"><li><img src="{{ url_for('static', filename='img/img-nav/car-icon.png') }}"></li></a>
+            <a href="eletronicos"><li><img src="{{ url_for('static', filename='img/img-nav/screen-icon.png') }}"></li></a>
             <li><img src="{{ url_for('static', filename='img/img-nav/houseitems-icon.png') }}"></li>
             <li><img src="{{ url_for('static', filename='img/img-nav/office-icon.png') }}"></li>
             <li><img src="{{ url_for('static', filename='img/img-nav/machine-icon.png') }}"></li>
@@ -62,7 +62,7 @@
     <br><br>
 
     <div id="header">
-        <img src="{{ url_for('static', filename='img/banners/banner-veiculos2.png')}}">
+        <img src="{{ url_for('static', filename='img/banners/banner-eletronicos.png') }}">
     </div>
 
     <div id="secaotitulo">
@@ -72,18 +72,23 @@
 
     <div id="categorias">
         <div id="item-cat">
-            <img src="{{ url_for('static', filename='img/veiculos-img/cat1.jpg') }}"><br>
-            <div id="texto-cat">Carros</div>
+            <img src="{{ url_for('static', filename='img/eletronicos-img/cat1.jpg') }}"><br>
+            <div id="texto-cat">Computadores</div>
         </div>
 
         <div id="item-cat">
-            <img src="{{ url_for('static', filename='img/veiculos-img/cat2.webp') }}" alt="motos"><br>
-            <div id="texto-cat">Motocicletas</div>
+            <img src="{{ url_for('static', filename='img/eletronicos-img/cat2.jpeg') }}"><br>
+            <div id="texto-cat">Smartphones</div>
         </div>
 
         <div id="item-cat">
-            <img src="{{ url_for('static', filename='img/veiculos-img/cat3.jpg') }}" alt="caminhões"><br>
-            <div id="texto-cat">Caminhões</div>
+            <img src="{{ url_for('static', filename='img/eletronicos-img/cat3.jpg') }}"><br>
+            <div id="texto-cat">Videogames</div>
+        </div>
+
+        <div id="item-cat">
+            <img src="{{ url_for('static', filename='img/eletronicos-img/cat4.jpeg')}}"><br>
+            <div id="texto-cat">Componentes eletrônicos</div>
         </div>
     </div>
 
@@ -96,23 +101,8 @@
         <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
 
         <div id="item">
-            <img src="{{ url_for('static', filename='img/veiculos-img/aa1.webp') }}"><br>
-            Motocicleta BMW R1250 - Detran
-            <br><p id="local">Curitiba - PR</p><br>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/veiculos-img/aa2.webp') }}"><br>
-            Carro Renault Sandero EXP 16 - Tribunal de Justiça de São Paulo
+            <img src="{{ url_for('static', filename='img/eletronicos-img/n1.webp') }}"><br>
+            Notebook Acer Nitro V15 ANV15-51-58AZ 13ª Geração - Amazon Brasil
             <br><p id="local">São Paulo - SP</p><br>
 
             <div id="views-img">
@@ -124,10 +114,11 @@
             <span id="temporizador">Encerra em: </span>
         </div>
 
+
         <div id="item">
-            <img src="{{ url_for('static', filename='img/veiculos-img/aa3.jpeg') }}"><br>
-            Mercedes-Benz/Atego 1418 (2006) - Detran MG
-            <br><p id="local">Carnaíba - MG</p><br>
+            <img src="{{ url_for('static', filename='img/eletronicos-img/aa2.webp') }}"><br>
+            Monitor Dell P1917s Com Tela De 19 polegadas 60hz - Note Space
+            <br><p id="local">Curitiba - PR</p><br>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
@@ -139,23 +130,37 @@
         </div>
 
         <div id="item">
-            <img src="{{ url_for('static', filename='img/veiculos-img/aa4.webp') }}"><br>
-            Fiat Toro Freedom 1.8 AT6 - Fiat
-            <br><p id="local">Porto Alegre - RS</p><br>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/veiculos-img/aa5.png') }}"><br>
-            Kawasaki Z1000 (2025)
+            <img src="{{ url_for('static', filename='img/eletronicos-img/aa3.avif') }}"><br>
+            Tablet Samsung Galaxy Tab A9+ SM-X216 11" Android 13 Octa-Core WiFi + 5G 64GB 8MP Grafite - Casas Bahia
             <br><p id="local">Rio de Janeiro - RJ</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/eletronicos-img/aa4.jpg') }}"><br>
+            Kit Componentes Eletrônicos 111 peças - Usina Info
+            <br><p id="local">Santo Ângelo - RS</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/eletronicos-img/aa5.webp') }}"><br>
+            Videogame Sony Playstation Classic Mini Usado - Mundo Joy
+            <br><p id="local">São Paulo - SP</p><br>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
@@ -170,21 +175,21 @@
     </div>
 
     <div id="secaotitulo">
-        <h2>Carros</h2><br>
+        <h2>Computadores</h2><br>
         <hr>
     </div>
 
-    <div id="carros">
+    <div id="computadores">
         <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
-        
+
         <div id="item">
-            <img src="{{ url_for('static', filename='img/veiculos-img/c1.webp') }}"><br>
-            Volkswagen Gol 1.6 (2022) (Seminovo) - Guaíra Veículos
-            <br><p id="local">São Paulo - SP</p><br>
+            <img src="{{ url_for('static', filename='img/eletronicos-img/comp1.webp') }}"><br>
+            Computador Completo Dell Optiplex 3050, I5, 7° Geração, 8GB, SSD 480GB (Seminovo) - Amorim Tech
+            <br><p id="local">Limeira - SP</p>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 Visualizações</span>
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -192,13 +197,41 @@
         </div>
 
         <div id="item">
-            <img src="{{ url_for('static', filename='img/imoveis-img/c1.webp') }}"><br>
-            Casa 467,58m² - Anderson Luz
-            <br><p id="local">São Paulo - SP</p><br>
+            <img src="{{ url_for('static', filename='img/eletronicos-img/comp2.jpg' )}}"><br>
+            Notebook ASUS Vivobook GO 15, Intel Celeron Dual Core N4500, 4 GB, 128 GB Star Black - Amazon Brasil
+            <br><p id="local">Cuiabá - MT</p>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 Visualizações</span>
+                <span id="views-count">1000 participantes</span>
+            </div>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/eletronicos-img/comp3.webp')}}">
+            Notebook Dell Vostro 3550 - Core i3,  2ª geração, 120GB SSD, 8GB DDR3, 14" - MeuPC Informática
+            <br><p id="local">São José dos Campos - SP</p>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/eletronicos-img/comp4.webp') }}"><br>
+            Notebook Acer Aspire E1-510 - Celeron, 4GER, 120GB SSD, 8GB DDR4, 15,6 - MeuPC Informática
+            <br><p id="local">São José dos Campos - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -206,41 +239,13 @@
         </div>
 
         <div id="item">
-            <img src="{{ url_for('static', filename='img/imoveis-img/c3.png') }}"><br>
-            Casa 224,97m² - Lut Gestão e Intermediação de Ativos Ltda
-            <br><p id="local">Sorocaba - SP</p><br>
+            <img src="{{ url_for('static', filename='img/eletronicos-img/comp5.webp') }}"><br>
+            Computador Completo Dell OptiPlex, Intel i3, 128GB, 8GB (Seminovo) - Soares Informática
+            <br><p id="local">São Luís - MA</p><br>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 Visualizações</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/imoveis-img/c4.png') }}"><br>
-            Casa 326m² - Ação Veículos Ltda.
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 Visualizações</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/imoveis-img/c5.webp') }}"><br>
-            Casa 276,65m² - Governo do Estado de São Paulo
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 Visualizações</span>
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -249,7 +254,7 @@
 
         <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
     </div>
-</body>
 
-<script src="{{ url_for('static', filename='script/script.js') }}"></script>
+    
+</body>
 </html>

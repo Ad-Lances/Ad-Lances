@@ -16,11 +16,15 @@ def login():
 
 @app.route('/imoveis')
 def imoveis():
-    return render_template('imoveis.html')
+    return render_template('categorias/imoveis.html')
 
 @app.route('/veiculos')
 def veiculos():
-    return render_template('veiculos.html')
+    return render_template('categorias/veiculos.html')
+
+@app.route('/eletronicos')
+def eletronicos():
+    return render_template('categorias/eletronicos.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
