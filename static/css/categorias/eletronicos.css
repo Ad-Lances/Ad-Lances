@@ -182,7 +182,7 @@ body {
     position: relative;
 }
 
-#acontecendo-agora, #computadores{
+#acontecendo-agora, #computadores, #audio-e-video{
     width: 100%;
     max-width: 1200px;
     margin: 30px auto;
