@@ -26,5 +26,9 @@ def veiculos():
 def eletronicos():
     return render_template('categorias/eletronicos.html')
 
+@app.route('/eletrodomesticos')
+def eletrodomesticos():
+    return render_template('categorias/eletrodomesticos.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
