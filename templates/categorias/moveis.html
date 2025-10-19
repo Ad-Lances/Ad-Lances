@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/categorias/eletronicos.css') }}">
-    <title>Eletrônicos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/categorias/moveis.css') }}">
+    <title>Móveis</title>
 </head>
 <body>
-    <nav id="nav">
+        <nav id="nav">
         <ul>
             <li>
                 <div id="nav-item">
@@ -49,57 +49,102 @@
     <div id="nav-categorias">
         <ul>
             <li>Categorias</li>
-            <a href="imoveis"><li><img src="{{ url_for('static', filename='img/img-nav/house-icon.png') }}"></li></a>
+            <li><img src="{{ url_for('static', filename='img/img-nav/house-icon.png') }}"></li>
             <a href="veiculos"><li><img src="{{ url_for('static', filename='img/img-nav/car-icon.png') }}"></li></a>
-            <a href="eletronicos"><li><img src="{{ url_for('static', filename='img/img-nav/screen-icon-color.png') }}"></li></a>
+            <a href="eletronicos"><li><img src="{{ url_for('static', filename='img/img-nav/screen-icon.png') }}"></li></a>
             <a href="eletrodomesticos"><li><img src="{{ url_for('static', filename='img/img-nav/houseitems-icon.png') }}"></li></a>
-            <a href="moveis"><li><img src="{{ url_for('static', filename='img/img-nav/office-icon.png') }}"></li></a>
+            <a href="moveis"><li><img src="{{ url_for('static', filename='img/img-nav/office-icon-color.png') }}"></li></a>
             <li><img src="{{ url_for('static', filename='img/img-nav/machine-icon.png') }}"></li>
             <li><img src="{{ url_for('static', filename='img/img-nav/decoration-icon.png') }}"></li>
         </ul>
     </div>
 
-    <br><br>
-
     <div id="header">
-        <img src="{{ url_for('static', filename='img/banners/banner-eletronicos.png') }}">
+        <img src="{{ url_for('static', filename='img/banners/banner-moveis.png')}}">
     </div>
 
-    <!--Subcategorias-->
+    <!--Categorias-->
     <div id="categorias">
         <div id="item-cat">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/cat1.jpg') }}"><br>
-            <div id="texto-cat">Computadores</div>
+            <img src="{{ url_for('static', filename='img/moveis-img/cat1.webp')}}"><br>
+            <div id="texto-cat">Sala de Estar</div>
         </div>
 
         <div id="item-cat">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/cat2.png') }}"><br>
-            <div id="texto-cat">Áudio e Vídeo</div>
+            <img src="{{ url_for('static', filename='img/moveis-img/cat2.jpeg') }}"><br>
+            <div id="texto-cat">Cozinha</div>
         </div>
 
         <div id="item-cat">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/cat3.jpg') }}"><br>
-            <div id="texto-cat">Videogames</div>
+            <img src="{{ url_for('static', filename='img/moveis-img/cat3.jpeg') }}"><br>
+            <div id="texto-cat">Quarto</div>
         </div>
 
         <div id="item-cat">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/cat4.jpeg')}}"><br>
-            <div id="texto-cat">Componentes eletrônicos</div>
+            <img src="{{ url_for('static', filename='img/moveis-img/cat4.jpg') }}"><br>
+            <div id="texto-cat">Banheiro</div>
+        </div>
+
+        <div id="item-cat">
+            <img src="{{ url_for('static', filename='img/moveis-img/cat5.jpg') }}"><br>
+            <div id="texto-cat">Escritório</div>
         </div>
     </div>
 
+    <!--Encerrando em breve-->
     <div id="secaotitulo">
         <h2>Leilões encerrando em breve</h2><br>
         <hr>
     </div>
 
-    <!--Encerrando em breve-->
     <div id="encerrando-em-breve">
         <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
 
         <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/n1.webp') }}"><br>
-            Notebook Acer Nitro V15 ANV15-51-58AZ 13ª Geração - Amazon Brasil
+            <img src="{{ url_for('static', filename='img/moveis-img/eb1.webp') }}"><br>
+            Cômoda Coliseu J&A Off-White - Móveis Jequitiba
+            <br><p id="local">São João de Meriti - RJ</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/moveis-img/eb2.jpg') }}"><br>
+            Mesa de Jantar Noah Madeira (Usado) - Tok&Stok
+            <br><p id="local">Guarulhos - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/moveis-img/eb3.webp') }}"><br>
+            Cama Solteiro Lion Marrom - Toque Final Móveis
+            <br><p id="local">Rio de Janeiro - RJ</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/moveis-img/eb4.webp') }}"><br>
+            Armário de Cozinha 8 Portas 2 Gavetas Freijó/Soft - MadeiraMadeira
             <br><p id="local">São Paulo - SP</p><br>
 
             <div id="views-img">
@@ -111,10 +156,145 @@
             <span id="temporizador">Encerra em: </span>
         </div>
 
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/moveis-img/eb5.webp') }}"><br>
+            Armário de Cozinha 6 Portas e 1 Gaveta Cinza Escuro - Multiloja
+            <br><p id="local">Toledo - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
+    </div>
+
+    <!--Sala de Estar-->
+    <div id="secaotitulo">
+        <h2>Sala de Estar</h2><br>
+        <hr>
+    </div>
+
+    <div id="sala-de-estar">
+        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
 
         <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/aa2.webp') }}"><br>
-            Monitor Dell P1917s Com Tela De 19 polegadas 60hz - Note Space
+            <img src="{{ url_for('static', filename='img/moveis-img/se1.webp') }}"><br>
+            Mesa de Centro Antiga Design Anos 60 Pinho de Riga e Formica - Império dos Antigos
+            <br><p id="local">Nova Iguaçu - RJ</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/moveis-img/se2.webp') }}"><br>
+            Rack para TV até 50 Polegadas 2 Portas 2 Prateleiras Pés em Madeira Maciça Rubi Cinamomo/Branco - MadeiraMadeira
+            <br><p id="local">Nova Iguaçu - RJ</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/moveis-img/se3.jpg') }}"><br>
+            Sofá 3 Lugares Beny Base de Madeira Linho Cotton Cru - Mobly
+            <br><p id="local">São Paulo - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/moveis-img/se4.jpg') }}"><br>
+            Mesa de Centro Ameba Anos 50 (Usado) - Interior Antigo Móveis
+            <br><p id="local">Rio de Janeiro - RJ</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/moveis-img/se5.webp') }}"><br>
+            Mesa Lateral Madeira Maciça Vanilla (Amêndoa/Branco) - YesCasa
+            <br><p id="local">Curitiba - PR</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
+    </div>
+
+    <!--Cozinha-->
+    <div id="secaotitulo">
+        <h2>Cozinha</h2><br>
+        <hr>
+    </div>
+
+    <div id="cozinha">
+        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/moveis-img/eb4.webp') }}"><br>
+            Armário de Cozinha 8 Portas 2 Gavetas Freijó/Soft - MadeiraMadeira
+            <br><p id="local">São Paulo - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/moveis-img/eb5.webp') }}"><br>
+            Armário de Cozinha 6 Portas e 1 Gaveta Cinza Escuro - Multiloja
+            <br><p id="local">Toledo - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/moveis-img/co1.webp') }}"><br>
+            Armário de Cozinha 12 portas e 1 gaveta Branco - Yescasa
             <br><p id="local">Curitiba - PR</p><br>
 
             <div id="views-img">
@@ -127,9 +307,9 @@
         </div>
 
         <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/aa3.avif') }}"><br>
-            Tablet Samsung Galaxy Tab A9+ SM-X216 11" Android 13 Octa-Core WiFi + 5G 64GB 8MP Grafite - Casas Bahia
-            <br><p id="local">Rio de Janeiro - RJ</p><br>
+            <img src="{{ url_for('static', filename='img/moveis-img/co2.webp') }}"><br>
+            Cozinha Completa 3 peças com Torre Quente Branca - MadeiraMadeira
+            <br><p id="local">São Paulo - SP</p><br>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
@@ -141,22 +321,8 @@
         </div>
 
         <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/aa4.jpg') }}"><br>
-            Kit Componentes Eletrônicos 111 peças - Usina Info
-            <br><p id="local">Santo Ângelo - RS</p><br>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/aa5.webp') }}"><br>
-            Videogame Sony Playstation Classic Mini Usado - Mundo Joy
+            <img src="{{ url_for('static', filename='img/moveis-img/co3.webp') }}"><br>
+            Nicho para Microondas Arizona CabeCasa MadeiraOriginals Branco - MadeiraMadeira
             <br><p id="local">São Paulo - SP</p><br>
 
             <div id="views-img">
@@ -171,133 +337,23 @@
         <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
     </div>
 
-    <!--Computadores-->
+    <!--Quarto-->
     <div id="secaotitulo">
-        <h2>Computadores</h2><br>
+        <h2>Quarto</h2><br>
         <hr>
     </div>
 
-    <div id="computadores">
+    <div id="quarto">
         <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
 
         <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/comp1.webp') }}"><br>
-            Computador Completo Dell Optiplex 3050, I5, 7° Geração, 8GB, SSD 480GB (Seminovo) - Amorim Tech
-            <br><p id="local">Limeira - SP</p>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/comp2.jpg' )}}"><br>
-            Notebook ASUS Vivobook GO 15, Intel Celeron Dual Core N4500, 4 GB, 128 GB Star Black - Amazon Brasil
-            <br><p id="local">Cuiabá - MT</p>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/comp3.webp')}}">
-            Notebook Dell Vostro 3550 - Core i3,  2ª geração, 120GB SSD, 8GB DDR3, 14" - MeuPC Informática
-            <br><p id="local">São José dos Campos - SP</p>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/comp4.webp') }}"><br>
-            Notebook Acer Aspire E1-510 - Celeron, 4GER, 120GB SSD, 8GB DDR4, 15,6 - MeuPC Informática
-            <br><p id="local">São José dos Campos - SP</p><br>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/comp5.webp') }}"><br>
-            Computador Completo Dell OptiPlex, Intel i3, 128GB, 8GB (Seminovo) - Soares Informática
-            <br><p id="local">São Luís - MA</p><br>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
-    </div>
-
-    <!--Áudio e Vídeo-->
-    <div id="secaotitulo">
-        <h2>Áudio e Vídeo</h2><br>
-        <hr>
-    </div>
-
-    <div id="audio-e-video">
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/av1.jpg' )}}"><br>
-            Caixa de Som Bluetooth LTomex AL-1098
-            <br><p id="local">Franca - SP</p>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/av2.webp')}}"><br>
-            Smart TV Android TV Philips 32' (Usado) - Center Kennedy 
-            <br><p id="local">Macapá - AP</p><br>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/av3.jpg') }}"><br>
-            Smart TV 43" LG Full HD 43LR6700 Processador A5 - Amazon Brasil
+            <img src="{{ url_for('static', filename='img/moveis-img/eb3.webp') }}"><br>
+            Cama Solteiro Lion Marrom - Toque Final Móveis
             <br><p id="local">Rio de Janeiro - RJ</p><br>
 
             <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png')}}">
-                <span id="views-count">1000 visualizações</span>
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -305,13 +361,13 @@
         </div>
 
         <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/av4.webp') }}"><br>
-            Smart TV 32” Full HD LED TCL 32S5400AF Android - Magazineluiza
-            <br><p id="local">Salvador - BA</p>
+            <img src="{{ url_for('static', filename='img/moveis-img/eb1.webp') }}"><br>
+            Cômoda Coliseu J&A Off-White - Móveis Jequitiba
+            <br><p id="local">São João de Meriti - RJ</p><br>
 
             <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png')}}">
-                <span id="views-count">1000 visualizações</span>
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -319,53 +375,67 @@
         </div>
 
         <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/av5.jpg') }}"><br>
-            Caixa de Som JBL Party Box 120 (Bluetooth) - SOLD Eletrônicos
-            <br><p id="local">São Paulo - SP</p>
+            <img src="{{ url_for('static', filename='img/moveis-img/qu2.jpg') }}"><br>
+            Conjunto 2 Mesas de Cabeceira Império 3 Gavetas Benetil Cinamomo - Vyle Móveis
+            <br><p id="local">Rio de Janeiro - RJ</p><br>
 
             <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png')}}">
-                <span id="views-count">1000 visualizações</span>
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
             <span id="temporizador">Encerra em: </span>
         </div>
-        
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/moveis-img/qu3.jpg') }}"><br>
+            Cama Box Mônaco Casal TCIL Cinamono - Vyle Móveis
+            <br><p id="local">Rio de Janeiro - RJ</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/moveis-img/qu4.jpg') }}"><br>
+            Cama Box com Colchão Queen Classic com Espuma D40 Cinza - Mobly
+            <br><p id="local">Rio de Janeiro - RJ</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
         <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
     </div>
 
-    <!--Consoles de videogame-->
+    <!--Banheiro-->
     <div id="secaotitulo">
-        <h2>Videogames</h2><br>
+        <h2>Banheiro</h2><br>
         <hr>
     </div>
 
-    <div id="videogames">
+    <div id="banheiro">
         <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
 
         <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/vi1.webp') }}"><br>
-            Console PS5 Slim Digital + Astro Bot + Gran Turismo 7 - Webfones
-            <br><p id="local">Embu Das Artes - SP</p>
+            <img src="{{ url_for('static', filename='img/moveis-img/ba1.jpg') }}"><br>
+            Armário de Banheiro com Espelho Helena 2 Portas Mel e Arenas - Modern Móveis
+            <br><p id="local">Porto Alegre - RS</p><br>
 
             <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png')}}">
-                <span id="views-count">1000 visualizações</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-        
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/vi2.webp') }}"><br>
-            Console Xbox One S 1TB - Microsoft (Usado) - MeuGameUsado
-            <br><p id="local">Curitiba - PR</p>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png')}}">
-                <span id="views-count">1000 visualizações</span>
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -373,13 +443,13 @@
         </div>
 
         <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/vi3.webp') }}"><br>
-            Console Nintendo Switch OLED 64GB Standard - WM Comércio Eletrônicos
-            <br><p id="local">Belém - PA</p>
+            <img src="{{ url_for('static', filename='img/moveis-img/ba2.jpg') }}"><br>
+           Gabinete de Banheiro com Cuba Cecília II 3 Portas Grafite e Mel - Modern Móveis
+            <br><p id="local">Porto Alegre - RS</p><br>
 
             <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png')}}">
-                <span id="views-count">1000 visualizações</span>
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -387,13 +457,13 @@
         </div>
 
         <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/vi4.webp') }}"><br>
-            Console PlayStation 1 Slim Sony (Usado) - MeuGameUsado
-            <br><p id="local">Curitiba - PR</p>
+            <img src="{{ url_for('static', filename='img/moveis-img/ba5.jpg') }}"><br>
+            Gabinete de Banheiro de Coluna Slim 1 Porta Branco - Modern Móveis
+            <br><p id="local">Porto Alegre - RS</p><br>
 
             <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png')}}">
-                <span id="views-count">1000 visualizações</span>
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -401,13 +471,27 @@
         </div>
 
         <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/vi5.webp') }}"><br>
-            Console PlayStation 4 Fat 500GB (Usado) - Imperial Games
-            <br><p id="local">São Paulo - SP</p>
+            <img src="{{ url_for('static', filename='img/moveis-img/ba3.webp') }}"><br>
+            Lavatório em Porcelanato para Banheiro Slim 60cm com Cuba Esculpida Travertino - MadeiraMadeira
+            <br><p id="local">São Paulo - SP</p><br>
 
             <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png')}}">
-                <span id="views-count">1000 visualizações</span>
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/moveis-img/ba6.webp') }}"><br>
+            Espelheira para Banheiro 2 Portas 2 Prateleiras Malbec Branco - MadeiraMadeira
+            <br><p id="local">São Paulo - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -417,23 +501,23 @@
         <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
     </div>
 
-    <!--Componentes eletrônicos-->
+    <!--Escritório-->
     <div id="secaotitulo">
-        <h2>Componentes eletrônicos</h2><br>
+        <h2>Escritório</h2><br>
         <hr>
     </div>
 
-    <div id="componentes">
+    <div id="escritorio">
         <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
 
         <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/ce1.webp') }}"><br>
-            Kit Componentes Eletrônicos (97 Peças) - Eletrogate
-            <br><p id="local">Belo Horizonte - MG</p>
+            <img src="{{ url_for('static', filename='img/moveis-img/es1.webp') }}"><br>
+            Mesa de Escritório em L 2 Gavetas 3 Nichos Office Branco - MadeiraMadeira
+            <br><p id="local">São Paulo - SP</p><br>
 
             <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png')}}">
-                <span id="views-count">1000 visualizações</span>
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -441,28 +525,13 @@
         </div>
 
         <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/ce2.webp') }}"><br>
-            Monitor VST 23, 23'', Full HD - Pichau
-            <br><p id="local">São Paulo - SP</p>
+            <img src="{{ url_for('static', filename='img/moveis-img/es2.jpg') }}"><br>
+            Mesa 120x70cm Munique Metal e MDP Kappesberg - Leroy Merlin
+            <br><p id="local">São Paulo - SP</p><br>
 
             <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png')}}">
-                <span id="views-count">1000 visualizações</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/ce3.webp') }}"><br>
-            Gabinete para PC Alltek ATK20S - BFTECH
-            <br><p id="local">São Paulo - SP</p>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png')}}">
-                <span id="views-count">1000 visualizações</span>
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -470,13 +539,13 @@
         </div>
 
         <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/ce4.webp') }}"><br>
-            Kit Componentes Eletrônicos Arduino Uno R3 (400 peças) - Amazon Brasil
-            <br><p id="local">São Paulo - SP</p>
+            <img src="{{ url_for('static', filename='img/moveis-img/es3.webp') }}"><br>
+            Mesa Gamer Escrivaninha 3 Gavetas DRX5000 Preto - MadeiraMadeira
+            <br><p id="local">São Paulo - SP</p><br>
 
             <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png')}}">
-                <span id="views-count">1000 visualizações</span>
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -484,23 +553,37 @@
         </div>
 
         <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/ce5.avif') }}"><br>
-            Teclado sem fio Logitech K400 Plus - Kalunga
-            <br><p id="local">Rio de Janeiro - RJ</p>
+            <img src="{{ url_for('static', filename='img/moveis-img/es4.jpg') }}"><br>
+            Cadeira de Escritório Presidente Giratória com Relax Office Plus Preta - Mobly
+            <br><p id="local">Rio de Janeiro - RJ</p><br>
 
             <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png')}}">
-                <span id="views-count">1000 visualizações</span>
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
             <span id="temporizador">Encerra em: </span>
         </div>
 
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/moveis-img/es5.jpg') }}"><br>
+            Armário de Escritório Corp 4 PT Branco e Cinza Cristal - Bramov Móveis
+            <br><p id="local">Belo Horizonte - MG</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>      
     </div>
-    
-    <footer id="footer">
+
+        <footer id="footer">
     <div id="footer-container">
         <div id="footer-section">
             <h4>Sobre nós</h4>
@@ -550,5 +633,5 @@
     </div>
 </footer>
 </body>
-<script src="{{ url_for('static', filename='script/script.js') }}"></script>
+<script src="{{ url_for('static', filename='script/script.js')}}"></script>
 </html>
