@@ -34,5 +34,9 @@ def eletrodomesticos():
 def moveis():
     return render_template('categorias/moveis.html')
 
+@app.route('/industriais')
+def industriais():
+    return render_template('categorias/industriais.html')
+
 if __name__ == '__main__':
     app.run(debug=True)

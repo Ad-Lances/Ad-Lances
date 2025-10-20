@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/categorias/industriais.css') }}">
+    <title>Industriais</title>
+</head>
+<body>
+    <nav id="nav">
+        <ul>
+            <li>
+                <div id="nav-item">
+                <a href="/"><img id="logo" src="{{ url_for('static', filename='img/logo.png') }}"></a>
+                </div>
+            </li>
+
+            <li>
+                <div id="search-container">
+                    <form>
+                        <input type="text" placeholder="Digite aqui...">
+                        <button type="submit"><img src="{{ url_for('static', filename='img/search-icon.png') }}" id="searchimg"></button>
+                    </form>
+                </div>
+            </li>
+
+            <li>
+                <div id="nav-item">
+                    Como vender
+                </div>
+            </li>
+
+            <li>
+                <div id="nav-item">
+                    Fale conosco
+                </div>
+            </li>
+
+            <li>
+                <div id="nav-item">
+                    <div id="img-nav">
+                        <a href="login"><img src="{{ url_for('static', filename='img/icons-img/profile-icon.png') }}"></a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <div id="nav-categorias">
+        <ul>
+            <li>Categorias</li>
+            <li><img src="{{ url_for('static', filename='img/img-nav/house-icon.png') }}"></li>
+            <a href="veiculos"><li><img src="{{ url_for('static', filename='img/img-nav/car-icon.png') }}"></li></a>
+            <a href="eletronicos"><li><img src="{{ url_for('static', filename='img/img-nav/screen-icon.png') }}"></li></a>
+            <a href="eletrodomesticos"><li><img src="{{ url_for('static', filename='img/img-nav/houseitems-icon.png') }}"></li></a>
+            <a href="moveis"><li><img src="{{ url_for('static', filename='img/img-nav/office-icon.png') }}"></li></a>
+            <li><img src="{{ url_for('static', filename='img/img-nav/machine-icon-color.png') }}"></li>
+            <li><img src="{{ url_for('static', filename='img/img-nav/decoration-icon.png') }}"></li>
+        </ul>
+    </div>
+
+    <div id="header">
+        <img src="{{ url_for('static', filename='img/banners/banner-industriais.png')}}">
+    </div>
+
+    <!--Categorias-->
+    <div id="categorias">
+        <div id="item-cat">
+            <img src="{{ url_for('static', filename='img/industriais-img/cat1.jpg')}}"><br>
+            <div id="texto-cat">Máquinas e Equipamentos Pesados</div>
+        </div>
+
+        <div id="item-cat">
+            <img src="{{ url_for('static', filename='img/industriais-img/cat2.jpeg') }}"><br>
+            <div id="texto-cat">Materiais e Insumos Industriais</div>
+        </div>
+
+        <div id="item-cat">
+            <img src="{{ url_for('static', filename='img/industriais-img/cat3.jpg') }}"><br>
+            <div id="texto-cat">Ferramentas e Equipamentos de Oficina</div>
+        </div>
+
+        <div id="item-cat">
+            <img src="{{ url_for('static', filename='img/industriais-img/cat4.jpg') }}"><br>
+            <div id="texto-cat">Acessórios de Máquinas</div>
+        </div>
+
+        <div id="item-cat">
+            <img src="{{ url_for('static', filename='img/industriais-img/cat5.jpg') }}"><br>
+            <div id="texto-cat">Automação, Robótica e Controle</div>
+        </div>
+
+    </div>
+
+    <!--Encerrando em breve-->
+    <div id="secaotitulo">
+        <h2>Leilões encerrando em breve</h2><br>
+        <hr>
+    </div>
+
+    <div id="encerrando-em-breve">
+        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/industriais-img/eb1.webp') }}"><br>
+            Plataforma Elevatória 12m Tesoura Hidráulica Móvel Autopropulsão 320kg - Agrotama
+            <br><p id="local">Diadema - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/industriais-img/eb2.webp') }}"><br>
+            Acessórios De Fixação Coladeira Flex - Maksiwa-FF.500 - Angatu Máquinas
+            <br><p id="local">Diadema - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/industriais-img/eb3.webp') }}"><br>
+            Painel Elétrico Para Estação Elevatória 2 Bomba 3cv 220v Apr - APR Soluções Industriais
+            <br><p id="local">Marília - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/industriais-img/eb4.webp') }}"><br>
+            Motor VR L100L4 5CV 4P 220/380/440/760V T 60HZ - Industrial Motores
+            <br><p id="local">Araraquara - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/industriais-img/eb5.jpg') }}"><br>
+            Contator Principal Tripolar 105A A S4 2NA+2NF 380VCA V 60HZ 3TS50 Siemens - Plenobras 
+            <br><p id="local">Porto Alegre - RS</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
+    </div>
+
+    <!--Máquinas e Equipamentos Pesados-->
+    <div id="secaotitulo">
+        <h2>Máquinas e Equipamentos Pesados</h2><br>
+        <hr>
+    </div>
+
+    <div id="maquinas-equipamentos-pesados">
+        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/industriais-img/eb1.webp') }}"><br>
+            Plataforma Elevatória 12m Tesoura Hidráulica Móvel Autopropulsão 320kg - Agrotama
+            <br><p id="local">Diadema - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/industriais-img/vp1.webp') }}"><br>
+            Pá Carregadeira BRUTATEC BR 931 Caçamba de 1T e Garfo Paleteiro - Multivisi
+            <br><p id="local">Fortaleza - CE</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/industriais-img/vp2.webp') }}"><br>
+            Talha Elétrica 3T 9m com Trolley - Nagano Materiais
+            <br><p id="local">Diadema - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/industriais-img/vp3.webp') }}"><br>
+            Trator Agrícola Kawashima TRY 253 Super Compacto 4x4 Diesel 25 HP - Santamaq
+            <br><p id="local">São Paulo - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/industriais-img/vp4.webp') }}"><br>
+            Betoneira 400L Prime 220V Menegotti - Leroy Merlin
+            <br><p id="local">São Paulo - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
+    </div>
+
+    <!--Materiais e Insumos Industriais-->
+    <div id="secaotitulo">
+        <h2>Materiais e Insumos Industriais</h2><br>
+        <hr>
+    </div>
+
+    <div id="materiais-e-insumos">
+        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/industriais-img/eb4.webp') }}"><br>
+            Motor VR L100L4 5CV 4P 220/380/440/760V T 60HZ - Industrial Motores
+            <br><p id="local">Araraquara - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/industriais-img/mi1.webp') }}"><br>
+            Motor Trifásico Hércules IP 55 IR3 4P 5CV - Vendas MBM
+            <br><p id="local">São Paulo - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/industriais-img/mi2.webp') }}"><br>
+            Contator 2Na+2Nf 12A 60Hz Tripolar 380Vca CWM122230V41 - Weg 
+            <br><p id="local">Garuya - SC</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/industriais-img/mi3.webp') }}"><br>
+            Rolamento NX35Z PS 35x47x30 - Daaz Rolamentos
+            <br><p id="local">Piracicaba - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/industriais-img/mi4.webp') }}"><br>
+            Motor Elétrico Trifásico 2CV Weg 220/380v 2 Polos Aberto - Loja do Mecânico
+            <br><p id="local">Piracicaba - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
+    </div>
+
+    <!--Ferramentas e Equipamentos de Oficina-->
+    <div id="secaotitulo">
+        <h2>Ferramentas e Equipamentos de Oficina</h2><br>
+        <hr>
+    </div>
+
+    <div id="ferramentas-equipamentos">
+        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/industriais-img/eb2.webp') }}"><br>
+            Acessórios De Fixação Coladeira Flex - Maksiwa-FF.500 - Angatu Máquinas
+            <br><p id="local">Diadema - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+        
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/industriais-img/fe1.webp') }}"><br>
+            Desmontadora Pneumática com Braço Auxiliar Monofásica 220V Vermelha FORTGPRO-FG1420 - Loja do Mecânico
+            <br><p id="local">Piracicaba - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        <div id="item">
+            <img src="{{ url_for('static', filename='img/industriais-img/fe2.png') }}"><br>
+            Compressor de Ar Monofásico 10pcm 140psi 100L 2Hp Bivolt Worker - Ferramentas Kennedy
+            <br><p id="local">São Paulo - SP</p><br>
+
+            <div id="views-img">
+                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                <span id="views-count">1000 participantes</span>
+            </div><br>
+
+            <span id="lance">Lance atual: </span><br>
+            <span id="temporizador">Encerra em: </span>
+        </div>
+
+        
+    </div>
+</body>
+<script src="{{ url_for('static', filename='script/script.js') }}"></script>
+</html>
