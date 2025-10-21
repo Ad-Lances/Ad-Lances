@@ -131,14 +131,343 @@ body {
     object-fit: contain;
 }
 
-#carrossel{
+/* ===== CARROSSEL PRINCIPAL - IMAGENS COMPLETAS ===== */
+#carrossel-principal {
     width: 100%;
-    height: auto;
+    position: relative;
+    overflow: hidden;
+    margin: 20px 0;
+    background: #f5f5f5;
 }
 
-#carrossel img{
-    width: 80%;
-    height: 50%;
+.carrossel-track-principal {
+    width: 100%;
+    overflow: hidden;
+}
+
+.carrossel-inner-principal {
+    display: flex;
+    transition: transform 0.8s ease-in-out;
+    width: 100%;
+}
+
+.slide-item {
+    flex: 0 0 100%;
+    width: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: #f5f5f5;
+    min-height: 500px;
+}
+
+.slide-item.active {
+    display: flex;
+}
+
+.slide-item img {
+    width: auto;
+    max-width: 100%;
+    max-height: 500px;
+    height: auto;
+    object-fit: contain;
+}
+
+.slide-indicators {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: 10;
+}
+
+.indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.indicator.active {
+    background: #034660;
+    transform: scale(1.2);
+}
+
+.indicator:hover {
+    background: #034660;
+}
+
+/* ===== CARROSSEL DE EMPRESAS - LOGOS GRANDES ===== */
+#carrossel-empresas-automatico {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    margin: 60px 0;
+    padding: 50px 0;
+    background: #f8f9fa;
+}
+
+.carrossel-track {
+    width: 100%;
+    overflow: hidden;
+}
+
+.carrossel-inner {
+    display: flex;
+    align-items: center;
+    gap: 80px;
+    padding: 20px 0;
+}
+
+.empresa-item {
+    flex: 0 0 auto;
+    width: 250px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.empresa-item img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: grayscale(20%);
+    opacity: 0.9;
+    transition: all 0.3s ease;
+}
+
+.empresa-item:hover img {
+    filter: grayscale(0%);
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.empresa-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+/* ===== ANIMAÇÃO ===== */
+@keyframes scrollCompanies {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(calc(-250px * 9 - 80px * 9));
+    }
+}
+
+#carrossel-empresas-automatico .carrossel-inner {
+    animation: scrollCompanies 40s linear infinite;
+}
+
+#carrossel-empresas-automatico:hover .carrossel-inner {
+    animation-play-state: paused;
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 1200px) {
+    .slide-item img {
+        max-height: 450px !important;
+    }
+    
+    .empresa-item {
+        width: 220px !important;
+        height: 110px !important;
+    }
+    
+    .carrossel-inner {
+        gap: 70px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .slide-item {
+        min-height: 400px !important;
+    }
+    
+    .slide-item img {
+        max-height: 350px !important;
+    }
+    
+    .empresa-item {
+        width: 180px !important;
+        height: 90px !important;
+        padding: 15px !important;
+    }
+    
+    .carrossel-inner {
+        gap: 50px !important;
+    }
+    
+    #carrossel-empresas-automatico {
+        padding: 40px 0 !important;
+        margin: 40px 0 !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .slide-item {
+        min-height: 300px !important;
+    }
+    
+    .slide-item img {
+        max-height: 250px !important;
+    }
+    
+    .empresa-item {
+        width: 140px !important;
+        height: 70px !important;
+        padding: 12px !important;
+    }
+    
+    .carrossel-inner {
+        gap: 40px !important;
+    }
+    
+    #carrossel-empresas-automatico {
+        padding: 30px 0 !important;
+        margin: 30px 0 !important;
+    }
+    
+    .slide-indicators {
+        bottom: 15px !important;
+    }
+    
+    .indicator {
+        width: 10px !important;
+        height: 10px !important;
+    }
+}
+
+.empresa-item {
+    flex: 0 0 auto;
+    width: 150px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.empresa-item img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    filter: grayscale(100%);
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.empresa-item:hover img {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+/* ===== ANIMAÇÃO DO CARROSSEL DE EMPRESAS ===== */
+@keyframes scrollCompanies {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(calc(-150px * 9 - 40px * 9));
+    }
+}
+
+/* Pausar animação no hover */
+#carrossel-empresas-automatico:hover .carrossel-inner {
+    animation-play-state: paused;
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 768px) {
+    /* Carrossel Principal */
+    .slide-item img {
+        height: 300px !important;
+    }
+    
+    .carrossel-inner-principal {
+        min-height: 300px;
+    }
+    
+    /* Carrossel de Empresas */
+    #carrossel-empresas-automatico {
+        padding: 30px 0;
+        margin: 30px 0;
+    }
+    
+    .empresa-item {
+        width: 120px !important;
+        height: 60px !important;
+    }
+    
+    .carrossel-inner {
+        gap: 30px !important;
+    }
+    
+    @keyframes scrollCompanies {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(calc(-120px * 9 - 30px * 9));
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    /* Carrossel Principal */
+    .slide-item img {
+        height: 250px !important;
+    }
+    
+    .carrossel-inner-principal {
+        min-height: 250px;
+    }
+    
+    .slide-indicators {
+        bottom: 10px !important;
+    }
+    
+    .indicator {
+        width: 8px !important;
+        height: 8px !important;
+    }
+    
+    /* Carrossel de Empresas */
+    #carrossel-empresas-automatico {
+        padding: 20px 0;
+        margin: 20px 0;
+    }
+    
+    .empresa-item {
+        width: 100px !important;
+        height: 50px !important;
+    }
+    
+    .carrossel-inner {
+        gap: 20px !important;
+    }
+    
+    @keyframes scrollCompanies {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(calc(-100px * 9 - 20px * 9));
+        }
+    }
 }
 
 #encerrando-em-breve, #mais-recentes, #empresas {
@@ -162,136 +491,6 @@ body {
     height: 50px;
 }
 
-#carrossel-emp{
-    width: 100%;
-    display: flex;
-    position: relative;
-    gap: 30px;
-}
-
-#itemcar{
-    width: 100px;
-    height: 50px;
-    position: absolute;
-    left: 100%;
-    animation: autoRun 10s linear infinite;
-    animation-delay: var(--delay);
-}
-
-#itemcar img{
-    width: 100%;
-}
-
-@keyframes autoRun {
-    from{
-        left: 100%;
-    } to{
-        left: -50px;
-    }
-}
-
-/* Carrossel Principal Automático */
-#carrossel-principal {
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-    margin-top: 20px;
-}
-
-.carrossel-track-principal {
-    width: 100%;
-    overflow: hidden;
-}
-
-.carrossel-inner-principal {
-    display: flex;
-    transition: transform 0.8s ease-in-out;
-    width: 100%;
-}
-
-.slide-item {
-    flex: 0 0 100%;
-    width: 100%;
-}
-
-.slide-item img {
-    width: 100%;
-    height: auto;
-    display: block;
-    object-fit: cover;
-}
-
-.slide-indicators {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 10px;
-    z-index: 10;
-}
-
-.indicator {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.5);
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.indicator.active {
-    background: white;
-    transform: scale(1.2);
-}
-
-.indicator:hover {
-    background: rgba(255, 255, 255, 0.8);
-}
-
-.carrossel-inner-principal {
-    position: relative;
-}
-
-.slide-item {
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    transition: opacity 0.8s ease-in-out;
-}
-
-.slide-item.active {
-    opacity: 1;
-    position: relative;
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-    .slide-indicators {
-        bottom: 15px;
-    }
-    
-    .indicator {
-        width: 10px;
-        height: 10px;
-    }
-    
-    #carrossel-principal {
-        margin-top: 15px;
-    }
-}
-
-@media (max-width: 480px) {
-    .slide-indicators {
-        bottom: 10px;
-    }
-    
-    .indicator {
-        width: 8px;
-        height: 8px;
-    }
-}
 #secaotitulo{
     padding: 20px;
 }
