@@ -75,7 +75,8 @@ function initCarousel() {
         'casas', 'apartamentos', 'comerciais', 'industriais-e-galpoes', 'terrenos',
         'carros', 'motos', 'caminhoes',
         'cozinha', 'limpeza', 'eletroportateis',
-        'computadores', 'audio-e-video', 'videogames', 'componentes'
+        'computadores', 'audio-e-video', 'videogames', 'componentes',
+        'sala-de-estar', 'cozinha', 'banheiro', 'quarto', 'escritorio'
     ];
 
     sections.forEach(sectionId => {
@@ -334,12 +335,15 @@ function addResponsiveStyles() {
             
             /* Mobile */
             @media (max-width: 767px) {
-                #encerrando-em-breve,
-                #maquinas-equipamentos-pesados,
-                #materiais-e-insumos,
-                #ferramentas-equipamentos {
+                #encerrando-em-breve, #maquinas-equipamentos-pesados, #materiais-e-insumos, #ferramentas-equipamentos,
+                #mais-recentes,
+                #casas, #apartamentos#, #comerciais, #industriais-e-galpoes, #terrenos,
+                #carros, #motos, #caminhoes,
+                #cozinha, #limpeza, #eletroportateis,
+                #computadores, #audio-e-video, #videogames, #componentes,
+                #sala-de-estar, #cozinha, #banheiro, #quarto, #escritorio{
                     gap: 12px !important;
-                    margin: 20px auto !important;
+                    margin: 12px auto !important;
                     padding: 5px 0 !important;
                 }
                 
@@ -362,26 +366,31 @@ function addResponsiveStyles() {
                 }
                 
                 #local {
-                    font-size: 11px !important;
+                    font-size: 13px !important;
                 }
                 
                 #views-count {
-                    font-size: 11px !important;
+                    font-size: 13px !important;
                 }
                 
                 #lance, #temporizador {
-                    font-size: 11px !important;
+                    font-size: 13px !important;
                 }
             }
             
             /* Tablet */
             @media (min-width: 768px) and (max-width: 1023px) {
-                #encerrando-em-breve,
-                #maquinas-equipamentos-pesados,
-                #materiais-e-insumos,
-                #ferramentas-equipamentos {
+                 #encerrando-em-breve, #maquinas-equipamentos-pesados, #materiais-e-insumos, #ferramentas-equipamentos,
+                #mais-recentes,
+                #casas, #apartamentos#, #comerciais, #industriais-e-galpoes, #terrenos,
+                #carros, #motos, #caminhoes,
+                #cozinha, #limpeza, #eletroportateis,
+                #computadores, #audio-e-video, #videogames, #componentes,
+                #sala-de-estar, #cozinha, #banheiro, #quarto, #escritorio{
                     gap: 15px !important;
                     margin: 25px auto !important;
+                    margin-top: 25px;
+                    margin-bottom: 20px;
                 }
                 
                 .items-container {
@@ -395,11 +404,14 @@ function addResponsiveStyles() {
             
             /* Desktop */
             @media (min-width: 1024px) {
-                #encerrando-em-breve,
-                #maquinas-equipamentos-pesados,
-                #materiais-e-insumos,
-                #ferramentas-equipamentos {
-                    gap: 20px !important;
+                #encerrando-em-breve, #maquinas-equipamentos-pesados, #materiais-e-insumos, #ferramentas-equipamentos,
+                #mais-recentes,
+                #casas, #apartamentos#, #comerciais, #industriais-e-galpoes, #terrenos,
+                #carros, #motos, #caminhoes,
+                #cozinha, #limpeza, #eletroportateis,
+                #computadores, #audio-e-video, #videogames, #componentes,
+                #sala-de-estar, #cozinha, #banheiro, #quarto, #escritorio{
+                    gap: 30px !important;
                 }
                 
                 .items-container {
@@ -426,10 +438,13 @@ function addResponsiveStyles() {
             
             /* Garantir que o carrossel funcione em telas muito pequenas */
             @media (max-width: 480px) {
-                #encerrando-em-breve,
-                #maquinas-equipamentos-pesados,
-                #materiais-e-insumos,
-                #ferramentas-equipamentos {
+                 #encerrando-em-breve, #maquinas-equipamentos-pesados, #materiais-e-insumos, #ferramentas-equipamentos,
+                #mais-recentes,
+                #casas, #apartamentos#, #comerciais, #industriais-e-galpoes, #terrenos,
+                #carros, #motos, #caminhoes,
+                #cozinha, #limpeza, #eletroportateis,
+                #computadores, #audio-e-video, #videogames, #componentes,
+                #sala-de-estar, #cozinha, #banheiro, #quarto, #escritorio{
                     max-width: 95% !important;
                 }
             }

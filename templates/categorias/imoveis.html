@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -54,7 +54,7 @@
             <a href="eletronicos"><li><img src="{{ url_for('static', filename='img/img-nav/screen-icon.png') }}"></li></a>
             <a href="eletrodomesticos"><li><img src="{{ url_for('static', filename='img/img-nav/houseitems-icon.png') }}"></li></a>
             <a href="moveis"><li><img src="{{ url_for('static', filename='img/img-nav/office-icon.png') }}"></li></a>
-            <li><img src="{{ url_for('static', filename='img/img-nav/machine-icon.png') }}"></li>
+            <a href="industriais"><li><img src="{{ url_for('static', filename='img/img-nav/machine-icon.png') }}"></li></a>
             <li><img src="{{ url_for('static', filename='img/img-nav/decoration-icon.png') }}"></li>
         </ul>
     </div>
@@ -101,8 +101,13 @@
 
         <div id="item">
             <img src="{{ url_for('static', filename='img/imoveis-img/aa1.png') }}"><br>
-            Apartamento 55m² - Banco Santander
+            Apartamento 55m²
             <br><p id="local">Toledo - SP</p><br>
+
+            <div id="infos-leiloeiro">
+                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                <span id="leiloeiro-texto">Banco Santander</span>
+            </div>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
@@ -115,8 +120,13 @@
 
         <div id="item">
             <img src="{{ url_for('static', filename='img/imoveis-img/aa2.png') }}"><br>
-            Apartamento 60m² - Setin Incorporadora
+            Apartamento 60m²
             <br><p id="local">São Paulo - SP</p><br>
+
+            <div id="infos-leiloeiro">
+                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                <span id="leiloeiro-texto">Setin Incorporadora</span>
+            </div>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
@@ -129,8 +139,13 @@
 
         <div id="item">
             <img src="{{ url_for('static', filename='img/imoveis-img/aa3.png') }}"><br>
-            Galpão 600,00 m² - Banco Bradesco
+            Galpão 600,00 m²
             <br><p id="local">Várzea Paulista - SP</p><br>
+
+            <div id="infos-leiloeiro">
+                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                <span id="leiloeiro-texto">Banco Bradesco</span>
+            </div>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
@@ -143,8 +158,13 @@
 
         <div id="item">
             <img src="{{ url_for('static', filename='img/imoveis-img/aa4.png') }}"><br>
-            Terreno 253m² - Usuário
+            Terreno 253m²
             <br><p id="local">Monte Alegre de Minas - MG</p><br>
+
+            <div id="infos-leiloeiro">
+                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                <span id="leiloeiro-texto">Usuário</span>
+            </div>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
@@ -157,8 +177,13 @@
 
         <div id="item">
             <img src="{{ url_for('static', filename='img/imoveis-img/aa5.webp') }}"><br>
-            Casa 62,17m² - Banco Santander
+            Casa 62,17m²
             <br><p id="local">São Paulo - SP</p><br>
+
+            <div id="infos-leiloeiro">
+                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                <span id="leiloeiro-texto">Banco Santander</span>
+            </div>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
@@ -182,12 +207,17 @@
         
         <div id="item">
             <img src="{{ url_for('static', filename='img/imoveis-img/a1.png') }}"><br>
-            Casa 80m² - Kléber Bordini
+            Casa 80m²
             <br><p id="local">Praia Grande - SP</p><br>
+
+            <div id="infos-leiloeiro">
+                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                <span id="leiloeiro-texto">Usuário</span>
+            </div>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 Visualizações</span>
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -196,12 +226,17 @@
 
         <div id="item">
             <img src="{{ url_for('static', filename='img/imoveis-img/c1.webp') }}"><br>
-            Casa 467,58m² - Anderson Luz
+            Casa 467,58m²
             <br><p id="local">São Paulo - SP</p><br>
+
+            <div id="infos-leiloeiro">
+                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                <span id="leiloeiro-texto">Usuário</span>
+            </div>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 Visualizações</span>
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -210,12 +245,17 @@
 
         <div id="item">
             <img src="{{ url_for('static', filename='img/imoveis-img/c3.png') }}"><br>
-            Casa 224,97m² - Lut Gestão e Intermediação de Ativos Ltda
+            Casa 224,97m²
             <br><p id="local">Sorocaba - SP</p><br>
+
+            <div id="infos-leiloeiro">
+                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                <span id="leiloeiro-texto">Lut Gestão e Intermediação de Ativos Ltda</span>
+            </div>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 Visualizações</span>
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -224,12 +264,17 @@
 
         <div id="item">
             <img src="{{ url_for('static', filename='img/imoveis-img/c4.png') }}"><br>
-            Casa 326m² - Ação Veículos Ltda.
+            Casa 326m²
             <br><p id="local">São Paulo - SP</p><br>
+
+            <div id="infos-leiloeiro">
+                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                <span id="leiloeiro-texto">Usuário</span>
+            </div>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 Visualizações</span>
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -238,12 +283,17 @@
 
         <div id="item">
             <img src="{{ url_for('static', filename='img/imoveis-img/c5.webp') }}"><br>
-            Casa 276,65m² - Governo do Estado de São Paulo
+            Casa 276,65m²
             <br><p id="local">São Paulo - SP</p><br>
+
+            <div id="infos-leiloeiro">
+                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                <span id="leiloeiro-texto">Governo do Estado de São Paulo</span>
+            </div>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 Visualizações</span>
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -263,12 +313,17 @@
         
         <div id="item">
             <img src="{{ url_for('static', filename='img/imoveis-img/a1.png') }}"><br>
-            Apartamento 62,09m² - Dora Plat
+            Apartamento 62,09m²
             <br><p id="local">São Paulo - SP</p><br>
+
+            <div id="infos-leiloeiro">
+                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                <span id="leiloeiro-texto">Dora Plat Imóveis</span>
+            </div>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 Visualizações</span>
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -277,12 +332,17 @@
 
         <div id="item">
             <img src="{{ url_for('static', filename='img/imoveis-img/a2.png') }}"><br>
-            Apartamento 67,41m² - Banco Santander
+            Apartamento 67,41m²
             <br><p id="local">Rio de Janeiro - RJ</p><br>
+
+            <div id="infos-leiloeiro">
+                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                <span id="leiloeiro-texto">Banco Santander</span>
+            </div>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 Visualizações</span>
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -291,12 +351,17 @@
 
         <div id="item">
             <img src="{{ url_for('static', filename='img/imoveis-img/a3.png') }}"><br>
-            Apartamento 45m² - Setin Incorporadora
+            Apartamento 45m²
             <br><p id="local">Campinas - SP</p><br>
+            
+            <div id="infos-leiloeiro">
+                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                <span id="leiloeiro-texto">Setin Incorporadora</span>
+            </div>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 Visualizações</span>
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -305,12 +370,17 @@
 
         <div id="item">
             <img src="{{ url_for('static', filename='img/imoveis-img/a4.png') }}"><br>
-            Apartamento 45m² - Eztec Imóveis
+            Apartamento 45m²
             <br><p id="local">Alphaville - SP</p><br>
+
+            <div id="infos-leiloeiro">
+                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                <span id="leiloeiro-texto">Eztec Imóveis</span>
+            </div>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 Visualizações</span>
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -319,12 +389,17 @@
 
         <div id="item">
             <img src="{{ url_for('static', filename='img/imoveis-img/a5.webp') }}"><br>
-            Apartamento 210m² - Setin Incorporadora
+            Apartamento 210m²
             <br><p id="local">São Paulo - SP</p><br>
+
+            <div id="infos-leiloeiro">
+                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                <span id="leiloeiro-texto">Setin Incorporadora</span>
+            </div>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 Visualizações</span>
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -344,12 +419,17 @@
         
         <div id="item">
             <img src="{{ url_for('static', filename='img/imoveis-img/co1.png') }}"><br>
-            Sala Comercial 56m² - Bento Gonçalves Imóveis
+            Sala Comercial 56m² 
             <br><p id="local">Poços de Caldas - MG</p><br>
+
+            <div id="infos-leiloeiro">
+                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                <span id="leiloeiro-texto">Bento Gonçalves Imóveis</span>
+            </div>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 Visualizações</span>
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -358,12 +438,17 @@
 
         <div id="item">
             <img src="{{ url_for('static', filename='img/imoveis-img/co2.png') }}"><br>
-            Sala Comercial 175m² - Pan Express Viagens e Turismo
+            Sala Comercial 175m²
             <br><p id="local">São Paulo - SP</p><br>
+
+            <div id="infos-leiloeiro">
+                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                <span id="leiloeiro-texto">Pan Express Viagens e Turismo</span>
+            </div>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 Visualizações</span>
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -375,9 +460,14 @@
             Sala Comercial 80,25m² - Condomínio Central Park Prime
             <br><p id="local">Campinas - SP</p><br>
 
+            <div id="infos-leiloeiro">
+                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                <span id="leiloeiro-texto">Uusário</span>
+            </div>
+
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 Visualizações</span>
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -389,9 +479,14 @@
             Sala Comercial 193,82m² - Edifício Manhattan Tower
             <br><p id="local">Rio de Janeiro - RJ</p><br>
 
+            <div id="infos-leiloeiro">
+                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                <span id="leiloeiro-texto">Usuário</span>
+            </div>
+
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 Visualizações</span>
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -400,12 +495,17 @@
 
         <div id="item">
             <img src="{{ url_for('static', filename='img/imoveis-img/co5.jpg') }}"><br>
-            Sala Comercial 199m² - TRK Imóveis
+            Sala Comercial 199m²
             <br><p id="local">São Paulo - SP</p><br>
+
+            <div id="infos-leiloeiro">
+                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                <span id="leiloeiro-texto">TRK Imóveis</span>
+            </div>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 Visualizações</span>
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -425,12 +525,17 @@
         
         <div id="item">
             <img src="{{ url_for('static', filename='img/imoveis-img/ig1.png') }}"><br>
-            Galpão 1000m² - SP Imóvel
+            Galpão 1000m²
             <br><p id="local">São Paulo - SP</p><br>
+
+            <div id="infos-leiloeiro">
+                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                <span id="leiloeiro-texto">Usuário</span>
+            </div>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 Visualizações</span>
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -439,12 +544,17 @@
 
         <div id="item">
             <img src="{{ url_for('static', filename='img/imoveis-img/ig2.webp') }}"><br>
-            Galpão 360m² - Terra Brasil Tranding
+            Galpão 360m²
             <br><p id="local">Manga - MG</p><br>
+
+            <div id="infos-leiloeiro">
+                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                <span id="leiloeiro-texto">Terra Brasil Imóveis</span>
+            </div>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 Visualizações</span>
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -453,12 +563,17 @@
 
         <div id="item">
             <img src="{{ url_for('static', filename='img/imoveis-img/ig3.png') }}"><br>
-            Galpão 300m² - Franca Imobiliária
+            Galpão 300m²
             <br><p id="local">Franco da Rocha - SP</p><br>
+
+            <div id="infos-leiloeiro">
+                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                <span id="leiloeiro-texto">Franca Imobiliária</span>
+            </div>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 Visualizações</span>
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -467,12 +582,17 @@
 
         <div id="item">
             <img src="{{ url_for('static', filename='img/imoveis-img/ig4.png') }}"><br>
-            Galpão 370m² - S.A. Imóveis
+            Galpão 370m²
             <br><p id="local">Botucatu - SP</p><br>
+
+            <div id="infos-leiloeiro">
+                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                <span id="leiloeiro-texto">S.A. Imóveis</span>
+            </div>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 Visualizações</span>
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -484,9 +604,14 @@
             Galpão 1169m²
             <br><p id="local">São Paulo - SP</p><br>
 
+            <div id="infos-leiloeiro">
+                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                <span id="leiloeiro-texto">Usuário</span>
+            </div>
+
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 Visualizações</span>
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -506,12 +631,17 @@
         
         <div id="item">
             <img src="{{ url_for('static', filename='img/imoveis-img/t1.png') }}"><br>
-            Terreno 360m² - Banco Itaú
+            Terreno 360m²
             <br><p id="local">São José do Rio Preto - SP</p><br>
+
+            <div id="infos-leiloeiro">
+                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                <span id="leiloeiro-texto">Banco Itaú</span>
+            </div>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 Visualizações</span>
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -520,12 +650,17 @@
 
         <div id="item">
             <img src="{{ url_for('static', filename='img/imoveis-img/t2.png') }}"><br>
-            Terreno 9576m² - Prefeitura de Cascavel
+            Terreno 9576m²
             <br><p id="local">Cascavel - PR</p><br>
+
+            <div id="infos-leiloeiro">
+                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                <span id="leiloeiro-texto">Prefeitura de Cascavel</span>
+            </div>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 Visualizações</span>
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -534,12 +669,17 @@
 
         <div id="item">
             <img src="{{ url_for('static', filename='img/imoveis-img/t3.png') }}"><br>
-            Terreno para chácara 3254m² - Imobiliária SBS
+            Terreno para chácara 3254m²
             <br><p id="local">São Bento do Sul - SC</p><br>
+
+            <div id="infos-leiloeiro">
+                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                <span id="leiloeiro-texto">Imobiliária SBS</span>
+            </div>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 Visualizações</span>
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -548,12 +688,17 @@
 
         <div id="item">
             <img src="{{ url_for('static', filename='img/imoveis-img/t4.webp') }}"><br>
-            Terreno 9534m² - Casa Mineira
+            Terreno 9534m²
             <br><p id="local">Bueno Brandão - MG</p><br>
+
+            <div id="infos-leiloeiro">
+                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                <span id="leiloeiro-texto">Casa Mineira Imobiliária</span>
+            </div>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 Visualizações</span>
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>
@@ -562,12 +707,17 @@
 
         <div id="item">
             <img src="{{ url_for('static', filename='img/imoveis-img/t5.webp') }}"><br>
-            Terreno 356m² - Vitrine Imobiliária
+            Terreno 356m²
             <br><p id="local">Jacareí - SP</p><br>
+
+           <div id="infos-leiloeiro">
+                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                <span id="leiloeiro-texto">Vitrine Imobiliária</span>
+            </div>
 
             <div id="views-img">
                 <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 Visualizações</span>
+                <span id="views-count">1000 participantes</span>
             </div><br>
 
             <span id="lance">Lance atual: </span><br>

@@ -218,18 +218,32 @@ body {
     margin-bottom: 10px;
 }
 
-#views-img {
+#views-img, #infos-leiloeiro{
     display: flex;
     align-items: center;
     align-self: center;
     gap: 5px;
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
-#views-img img{
+#views-img img, #infos-leiloeiro img{
     width: 20px;
     height: 20px;
     object-fit: contain;
+}
+
+#views-count {
+    font-size: 13px;
+    align-self: center;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+#leiloeiro-texto{
+    font-size: 13px;
+    align-self: center;
+    color: #666;
+    margin-bottom: 9.5px;
 }
 
 #local{
@@ -237,11 +251,6 @@ body {
     color: #666;
 }
 
-#views-count {
-    font-size: 12px;
-    align-self: center;
-    color: #666;
-}
 
 #lance, #temporizador{
     font-size: 12px;

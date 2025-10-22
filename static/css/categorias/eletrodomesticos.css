@@ -219,29 +219,37 @@ body {
     margin-bottom: 10px;
 }
 
-#views-img {
-    display: flex;
-    align-items: center;
-    align-self: center;
-    gap: 5px;
-    margin-top: 10px;
-}
-
-#views-img img{
-    width: 20px;
-    height: 20px;
-    object-fit: contain;
-}
-
 #local{
     font-size: 15px;
     color: #666;
 }
 
+#views-img, #infos-leiloeiro{
+    display: flex;
+    align-items: center;
+    align-self: center;
+    gap: 5px;
+    margin-top: 15px;
+}
+
+#views-img img, #infos-leiloeiro img{
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
 #views-count {
-    font-size: 12px;
+    font-size: 13px;
     align-self: center;
     color: #666;
+    margin-bottom: 4px;
+}
+
+#leiloeiro-texto{
+    font-size: 13px;
+    align-self: center;
+    color: #666;
+    margin-bottom: 9.5px;
 }
 
 #lance, #temporizador{
