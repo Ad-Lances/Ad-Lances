@@ -1,70 +1,120 @@
 const formulario = document.getElementById('formulario');
 const nomeInput = document.getElementById('nome');
-const dataNascInput = document.getElementById('datanasc');
 const estadoInput = document.getElementById('estado');
 const cidadeInput = document.getElementById('cidade');
+const ruaInput = document.getElementById('rua');
+const numeroCasaInput = document.getElementById('numero_casa');
+const complementoInput = document.getElementById('complemento');
 const emailInput = document.getElementById('email');
 const senhaInput = document.getElementById('password');
-let mensagem = document.getElementById('mensagem');
+const mensagem = document.getElementById('mensagem');
+const botao = document.getElementById('botao-enviar');
+
+function exibirCampo(){
+    const tipoDeConta = document.getElementById('tipo-de-conta');
+    const campoCPF = document.getElementById('campoCpf');
+    const campoCNPJ = document.getElementById('campoCnpj');
+    
+    if (tipoDeConta.value === 'Pessoa Física'){
+        campoCNPJ.style.display = 'none';
+        campoCPF.style.display = 'block';
+        campoCPF.style.width = '50%';
+    } else if(tipoDeConta.value === 'Pessoa Jurídica'){
+        campoCPF.style.display = 'none';
+        campoCNPJ.style.display = 'block';
+        campoCNPJ.style.width = '50%';
+    } else{
+        campoCPF.style.display = 'none';
+        campoCNPJ.style.display = 'none';
+    }
+}
 
 function verificar_idade(){
     const dataAtual = new Date();
-    const anoAtual = dataAtual.getFullYear;
-    let datanasc = dataNascInput.value;
+    const anoAtual = dataAtual.getFullYear();
+    const dataNascInput = document.getElementById('datanasc');
+    const dataNasc = new Date(dataNascInput.value);
+    const anoDataNasc = dataNasc.getFullYear();
 
-    let idade = anoAtual-datanasc;
+    if(!dataNascInput.value){
+        mensagem.innerHTML = 'Insira uma data de nascimento válida';
+        return false;
+    }
+
+    let idade = anoAtual-anoDataNasc;
 
     if (idade<18){
         mensagem.style.color = 'Red';
         mensagem.innerHTML = 'Você deve ter mais de 18 anos para se cadastrar';
-    }
-}
-
-function verificar_email(){
-    let email = mensagemInput.value;
-
-    if(!email.includes('@gmail.com') && !email.includes('@hotmail.com') && !email.includes('@yahoo.com')){
-        mensagem.style.color = 'Red';
-        mensagem.innerHTML = 'Por favor, insira um e-mail válido';
         return false;
-    }
-    return true;
-}
-
-function verificar_senha(){
-    let senha = senhaInput.value;
-    let temMaiuscula = false;
-    let temCaractere = false;
-    
-    for(let i=0; i < senha.length(); i++){
-        const caractere = senha[i];
-
-        if(caractere>='A' && caractere <= 'Z'){
-            temMaiuscula = true;
-        }
-
-        if (!caractere.includes('#') && !caractere.includes('_') && caractere.includes('#')){
-            temCaractere = false;
-        }
-
-        if(temMaiuscula === true && temCaractere === true && senha.length >=6){
-            return true
-        } else{
-            mensagem.style.color = 'Red';
-            mensagem.innerHTML = 'A senha deve ter mais de 6 caracteres e incluir uma letra maiúscula, uma minúscula e um caractere especial';
-            return false;
-        }
+    } else{
+        mensagem.innerHTML = '';
+        return true;
     }
 }
-//formulario.addEventListener('submit', function(event){
-//    event.preventDefault();
-//    verificar_email();
-//    verificar_idade();
-  //  verificar_senha();
-//})
 
-// script.js
+function verificar_email(email){
+    const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    return regex.test(email);
+}
 
+function verificar_senha(senha){
+    const maiuscula = /[A-Z]/.test(senha);
+    const especiais = /[#_@]/.test(senha);
+
+   if (especiais === false){
+        mensagem.style.color = 'red';
+        mensagem.innerHTML = 'A senha precisa ter ao menos um caractere especial';
+        return false;
+   } else if(senha.length<6){
+        mensagem.innerHTML = 'A senha precisa ter mais de 6 caracteres';
+        return false;
+   } else if(maiuscula === false){
+        mensagem.innerHTML = 'A senha precisa ter ao menos uma letra maiúscula';
+        return false;
+   } else{
+        mensagem.innerHTML = '';
+        return true;
+   }
+}
+
+formulario.addEventListener('submit', function(event){
+    event.preventDefault();
+
+    const nome = nomeInput.value.trim();
+    const estado = estadoInput.value.trim();
+    const cidade = cidadeInput.value.trim();
+    const rua = ruaInput.value.trim();
+    const numeroCasa = numeroCasaInput.value.trim();
+    const complemento = complementoInput.value.trim();
+    const email = emailInput.value.trim();
+    const senha = senhaInput.value.trim();
+    const botao = document.getElementById('botao-enviar');
+
+
+    mensagem.innerHTML = '';
+
+    if (!nome || !estado || !cidade || !rua || !numeroCasa || !complemento || !email || !senha) {
+        mensagem.style.color = 'red';
+        mensagem.innerHTML = 'Por favor, preencha todos os campos obrigatórios';
+        return;
+    } 
+
+    const idadeValida = verificar_idade();
+    if(!idadeValida) return;
+
+    const emailValido = verificar_email(email);
+    if(!emailValido){
+        mensagem.innerHTML = 'Insira um email válido';
+        return;
+    }
+
+    const senhaValida = verificar_senha(senha);
+    if(!senhaValida) return;
+
+    mensagem.innerHTML = 'Cadastro realizado com sucesso';
+})
+//carrossel
 function initCarousel() {
     console.log('=== INICIANDO CARROSSEL RESPONSIVO ===');
     

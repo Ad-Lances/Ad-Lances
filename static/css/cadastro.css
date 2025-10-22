@@ -10,6 +10,7 @@
 body {
     background-color: #f3f3f3;
     padding-top: 140px;
+    min-height: 100vh;
 }
 
 #nav {
@@ -87,40 +88,85 @@ body {
     width: 20px;
 }
 
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #034660;
+    font-size: 2rem;
+}
+
 #formulario {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 40px auto;
+    margin: 20px auto;
     padding: 40px;
     background: #fff;
-    width: 100%;
-    max-width: 800px;
+    width: 95%;
+    max-width: 1000px;
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.15);
 }
 
-#formulario form {
+#formulario  {
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px 30px;
 }
 
+#formulario {
+    grid-template-areas:
+        "label-nome label-nome"
+        "input-nome input-nome"
+        "tipo-conta data-nasc"
+        "select-tipo input-data"
+        "campo-documento campo-documento"
+        "campo-documento-input campo-documento-input"
+        "label-estado label-cidade"
+        "input-estado input-cidade"
+        "label-rua label-numero"
+        "input-rua input-numero"
+        "label-complemento label-complemento"
+        "input-complemento input-complemento"
+        "label-email label-email"
+        "input-email input-email"
+        "label-senha label-confirmar-senha"
+        "input-senha input-confirmar-senha"
+        "orientacao orientacao"
+        "botao botao"
+        "link-login link-login";
+}
+
 .label-nome { grid-area: label-nome; }
 .input-nome { grid-area: input-nome; }
 
-.label-data { grid-area: label-data; }
+.label-data { grid-area: data-nasc; }
 .input-data { grid-area: input-data; }
 
-.label-cpf { grid-area: label-cpf; }
-.input-cpf { grid-area: input-cpf; }
+.campo-documento { 
+    grid-area: campo-documento; 
+    display: none;
+}
+
+.campo-documento input { 
+    grid-area: campo-documento-input; 
+}
 
 .label-estado { grid-area: label-estado; }
 .input-estado { grid-area: input-estado; }
 
 .label-cidade { grid-area: label-cidade; }
 .input-cidade { grid-area: input-cidade; }
+
+.label-rua { grid-area: label-rua; }
+.input-rua { grid-area: input-rua; }
+
+.label-numero { grid-area: label-numero; }
+.input-numero_casa { grid-area: input-numero; }
+
+.label-complemento { grid-area: label-complemento; }
+.input-complemento { grid-area: input-complemento; }
 
 .label-email { grid-area: label-email; }
 .input-email { grid-area: input-email; }
@@ -131,45 +177,42 @@ body {
 .label-confirmar-senha { grid-area: label-confirmar-senha; }
 .input-confirmar-senha { grid-area: input-confirmar-senha; }
 
-
-#formulario form {
-    grid-template-areas:
-        "label-nome label-nome"
-        "input-nome input-nome"
-        "label-data label-cpf"
-        "input-data input-cpf"
-        "label-estado label-cidade"
-        "input-estado input-cidade"
-        "label-email label-email"
-        "input-email input-email"
-        "label-senha label-confirmar-senha"
-        "input-senha input-confirmar-senha"
-        "orientacao orientacao"
-        "botao botao";
-}
+#orientacao-senha { grid-area: orientacao; }
+#botao-enviar { grid-area: botao; }
+#link-login { grid-area: link-login; }
 
 #formulario input,
 #formulario select {
-    padding: 12px 14px;
+    padding: 14px 16px;
     border: 1.5px solid #ccc;
     border-radius: 8px;
-    font-size: 14px;
+    font-size: 15px;
     transition: border-color 0.3s ease;
     width: 100%;
 }
 
+#formulario input:focus,
+#formulario select:focus {
+    border-color: #034660;
+    outline: none;
+}
+
 #formulario label {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
     color: #333;
-    margin-bottom: -10px;
+    margin-bottom: 5px;
+    display: block;
 }
 
 #orientacao-senha {
-    font-size: 12px;
+    font-size: 13px;
     color: #555;
-    grid-area: orientacao;
-    margin-top: -10px;
+    margin-top: 5px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #034660;
 }
 
 #orientacao-senha ul {
@@ -180,24 +223,18 @@ body {
 #botao-enviar {
     background-color: #034660;
     color: #fff;
-    padding: 12px;
+    padding: 16px;
     border: none;
     border-radius: 8px;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    grid-area: botao;
     margin-top: 10px;
 }
 
 #botao-enviar:hover {
     background-color: #046d92;
-}
-
-h1 {
-    text-align: center;
-    margin-bottom: 20px;
 }
 
 #mensagem {
@@ -208,6 +245,7 @@ h1 {
 
 #link-login {
     margin-top: 20px;
+    text-align: center;
     width: 100%;
 }
 
@@ -215,8 +253,131 @@ h1 {
     color: #034660;
     text-decoration: none;
     font-weight: 500;
+    font-size: 15px;
 }
 
 #link-login a:hover {
     text-decoration: underline;
+}
+
+.campo-documento {
+    display: none;
+}
+
+.campo-documento.active {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-top: 120px;
+    }
+    
+    #nav {
+        height: 70px;
+        padding: 8px 15px;
+    }
+    
+    #nav ul {
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+    
+    #search-container {
+        order: 3;
+        max-width: 100%;
+        margin-top: 10px;
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+    
+    #formulario {
+        padding: 25px 20px;
+        margin: 10px auto;
+        width: 98%;
+    }
+    
+    #formulario {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    #formulario{
+        grid-template-areas:
+            "label-nome"
+            "input-nome"
+            "tipo-conta"
+            "select-tipo"
+            "data-nasc"
+            "input-data"
+            "campo-documento"
+            "campo-documento-input"
+            "label-estado"
+            "input-estado"
+            "label-cidade"
+            "input-cidade"
+            "label-rua"
+            "input-rua"
+            "label-numero"
+            "input-numero"
+            "label-complemento"
+            "input-complemento"
+            "label-email"
+            "input-email"
+            "label-senha"
+            "input-senha"
+            "label-confirmar-senha"
+            "input-confirmar-senha"
+            "orientacao"
+            "botao"
+            "link-login";
+    }
+    
+    #formulario input,
+    #formulario select {
+        padding: 12px 14px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding-top: 100px;
+    }
+    
+    #nav {
+        height: 60px;
+    }
+    
+    #nav #logo {
+        height: 35px;
+    }
+    
+    #nav-item img {
+        width: 25px;
+    }
+    
+    #nav-item div {
+        font-size: 12px;
+    }
+    
+    h1 {
+        font-size: 1.3rem;
+    }
+    
+    #formulario {
+        padding: 20px 15px;
+    }
+    
+    #formulario label {
+        font-size: 14px;
+    }
+    
+    #botao-enviar {
+        padding: 14px;
+        font-size: 15px;
+    }
 }
