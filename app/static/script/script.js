@@ -9,6 +9,10 @@ const emailInput = document.getElementById('email');
 const senhaInput = document.getElementById('password');
 const mensagem = document.getElementById('mensagem');
 const botao = document.getElementById('botao-enviar');
+const cpf = document.getElementById('cpf');
+const cnpj = document.getElementById('cnpj');
+const tipo_pessoa = document.getElementById('tipo-de-conta');
+const datanascInput = document.getElementById('datanasc');
 
 function exibirCampo(){
     const tipoDeConta = document.getElementById('tipo-de-conta');
@@ -78,9 +82,9 @@ function verificar_senha(senha){
    }
 }
 
-formulario.addEventListener('submit', function(event){
+formulario.addEventListener('submit', async (event) => {
     event.preventDefault();
-
+    
     const nome = nomeInput.value.trim();
     const estado = estadoInput.value.trim();
     const cidade = cidadeInput.value.trim();
@@ -89,6 +93,10 @@ formulario.addEventListener('submit', function(event){
     const complemento = complementoInput.value.trim();
     const email = emailInput.value.trim();
     const senha = senhaInput.value.trim();
+    const ccpf = cpf.value.trim();
+    const ccnpj = cnpj.value.trim();
+    const tipopessoa = tipo_pessoa.value.trim();
+    const data_nasc = datanascInput.value.trim();
     const botao = document.getElementById('botao-enviar');
 
 
@@ -112,8 +120,35 @@ formulario.addEventListener('submit', function(event){
     const senhaValida = verificar_senha(senha);
     if(!senhaValida) return;
 
-    mensagem.innerHTML = 'Cadastro realizado com sucesso';
+    const dados = {
+        nome: nome,
+        unid_federativa: estado,
+        cidade: cidade,
+        rua: rua,
+        numero_casa: numeroCasa,
+        complemento: complemento,
+        email: email,
+        senha: senha,
+        cpf: ccpf,
+        cnpj: ccnpj,
+        tipo_pessoa: tipopessoa,
+        datanasc: data_nasc
+    }
+
+    const resposta = await fetch('/cadastrar', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dados)
+    })
+    const resultado = await resposta.json()
+
+    mensagem.innerHTML = resultado.mensagem;
+
+    formulario.reset();
 })
+
 //carrossel
 function initCarousel() {
     console.log('=== INICIANDO CARROSSEL RESPONSIVO ===');
