@@ -1,0 +1,7 @@
+Flask
+Flask-SQLAlchemy
+Flask-Argon2
+PyMySQL
+python-dotenv
+gunicorn
+cloudinary
