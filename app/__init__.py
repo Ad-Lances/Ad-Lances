@@ -2,6 +2,9 @@ from flask import Flask
 from flask_argon2 import Argon2
 from flask_sqlalchemy import SQLAlchemy
 from config import Config
+from dotenv import load_dotenv  # Adicione esta linha
+
+load_dotenv()  # Adicione esta linha
 
 db = SQLAlchemy()
 argon2 = Argon2()

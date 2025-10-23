@@ -43,6 +43,8 @@
     <section id="mensagem"></section> 
 
    <form id="formulario">
+    <h3>Informações Pessoais</h3>
+    <hr>
         <label for="nome" class="label-nome">Nome completo:</label>
         <input type="text" id="nome" name="nomecompleto" placeholder="Digite seu nome completo aqui..." class="input-nome">
 
@@ -65,6 +67,9 @@
         
         <label for="datanasc" class="label-data">Data de nascimento:</label>
         <input type="date" id="datanasc" name="datanasc" class="input-data">
+
+        <h3>Informações de residência</h3>
+        <hr>
 
         <label for="estado" class="label-estado">Unidade Federativa (UF):</label>
         <select name="estado" id="estado" class="input-estado">
@@ -110,6 +115,12 @@
         <label for="complemento" class="label-complemento">Complemento:</label>
         <input type="text" name="complemento" class="input-complemento" id="complemento">
 
+        <h3>Informações de Contato</h3>
+        <hr>
+        <label for="telefone" class="label-telefone">Telefone:</label>
+        <input type="tel" name="telefone_celular" id="telefone_celular" placeholder="(11) 99999-9999" class="input-telefone">
+        <input type="tel" name="telefone_residencial" id="telefone_residencial" class="input-telefone" placeholder="(11) 9999-9999" class="input-telefone">
+
         <label for="email" class="label-email">E-mail:</label>
         <input type="email" placeholder="Digite seu email aqui" id="email" name="email" class="input-email">
 
@@ -117,7 +128,7 @@
         <input type="password" name="password" placeholder="Digite sua senha" class="input-senha" id="password">
 
         <label for="confirmar-senha" class="label-confirmar-senha">Confirme sua senha:</label>
-        <input type="password" name="confirmar-password" placeholder="Confirme sua senha" class="input-confirmar-senha">
+        <input type="password" name="confirmar-password" id="confirmar-senha" placeholder="Confirme sua senha" class="input-confirmar-senha">
 
         <section id="orientacao-senha">
             <ul>

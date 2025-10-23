@@ -5,14 +5,53 @@ const cidadeInput = document.getElementById('cidade');
 const ruaInput = document.getElementById('rua');
 const numeroCasaInput = document.getElementById('numero_casa');
 const complementoInput = document.getElementById('complemento');
+const telefoneCelInput = document.getElementById('telefone_celular');
+const telefoneResInput = document.getElementById('telefone_residencial')
 const emailInput = document.getElementById('email');
 const senhaInput = document.getElementById('password');
+const confirmar_senhaInput = document.getElementById('confirmar-senha');
 const mensagem = document.getElementById('mensagem');
 const botao = document.getElementById('botao-enviar');
 const cpf = document.getElementById('cpf');
 const cnpj = document.getElementById('cnpj');
 const tipo_pessoa = document.getElementById('tipo-de-conta');
 const datanascInput = document.getElementById('datanasc');
+
+document.addEventListener('DOMContentLoaded', function() {
+    adicionarToggleSenha();
+});
+
+function adicionarToggleSenha() {
+    const senhaContainer = document.createElement('div');
+    senhaContainer.className = 'password-container';
+    senhaInput.parentNode.insertBefore(senhaContainer, senhaInput);
+    senhaContainer.appendChild(senhaInput);
+
+    const confirmarContainer = document.createElement('div');
+    confirmarContainer.className = 'password-container';
+    confirmar_senhaInput.parentNode.insertBefore(confirmarContainer, confirmar_senhaInput);
+    confirmarContainer.appendChild(confirmar_senhaInput);
+
+    adicionarBotaoToggle(senhaContainer, senhaInput);
+    adicionarBotaoToggle(confirmarContainer, confirmar_senhaInput);
+}
+
+function adicionarBotaoToggle(container, input) {
+    const toggleBtn = document.createElement('button');
+    toggleBtn.type = 'button';
+    toggleBtn.className = 'toggle-password';
+    toggleBtn.textContent = '👁️';
+    toggleBtn.setAttribute('aria-label', 'Mostrar senha');
+    
+    toggleBtn.addEventListener('click', function() {
+        const type = input.type === 'password' ? 'text' : 'password';
+        input.type = type;
+        toggleBtn.textContent = type === 'password' ? '👁️' : '🔒';
+        toggleBtn.setAttribute('aria-label', type === 'password' ? 'Mostrar senha' : 'Ocultar senha');
+    });
+    
+    container.appendChild(toggleBtn);
+}
 
 function exibirCampo(){
     const tipoDeConta = document.getElementById('tipo-de-conta');
@@ -32,6 +71,8 @@ function exibirCampo(){
         campoCNPJ.style.display = 'none';
     }
 }
+
+
 
 function verificar_idade(){
     const dataAtual = new Date();
@@ -91,8 +132,11 @@ formulario.addEventListener('submit', async (event) => {
     const rua = ruaInput.value.trim();
     const numeroCasa = numeroCasaInput.value.trim();
     const complemento = complementoInput.value.trim();
+    const telefone_celular = telefoneCelInput.value.trim();
+
     const email = emailInput.value.trim();
     const senha = senhaInput.value.trim();
+    const confirmarSenha = confirmar_senhaInput.value.trim();
     const ccpf = cpf.value.trim();
     const ccnpj = cnpj.value.trim();
     const tipopessoa = tipo_pessoa.value.trim();
@@ -118,6 +162,10 @@ formulario.addEventListener('submit', async (event) => {
     }
 
     const senhaValida = verificar_senha(senha);
+    if(senhaValida != confirmarSenha){
+        verificar_senha() === false;
+        return;
+    }
     if(!senhaValida) return;
 
     const dados = {

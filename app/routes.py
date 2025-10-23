@@ -15,6 +15,7 @@ def cadastro():
 @bp.route('/cadastrar', methods=['POST'])
 def cadastrar():
     dados = request.get_json()
+
     novo_usuario = UserModel(
         nome_completo=dados['nome'],
         tipo_pessoa=dados['tipo_pessoa'],

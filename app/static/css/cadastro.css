@@ -95,10 +95,25 @@ h1 {
     font-size: 2rem;
 }
 
+h3 {
+    color: #034660;
+    margin: 25px 0 10px 0;
+    font-size: 1.3rem;
+    grid-column: 1 / -1;
+}
+
+hr {
+    border: none;
+    height: 2px;
+    background: linear-gradient(90deg, #034660, #046d92);
+    margin: 10px 0 20px 0;
+    grid-column: 1 / -1;
+}
+
 #formulario {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 30px;
     margin: 20px auto;
     padding: 40px;
     background: #fff;
@@ -108,38 +123,12 @@ h1 {
     box-shadow: 0 4px 15px rgba(0,0,0,0.15);
 }
 
-#formulario  {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px 30px;
-}
-
-#formulario {
-    grid-template-areas:
-        "label-nome label-nome"
-        "input-nome input-nome"
-        "tipo-conta data-nasc"
-        "select-tipo input-data"
-        "campo-documento campo-documento"
-        "campo-documento-input campo-documento-input"
-        "label-estado label-cidade"
-        "input-estado input-cidade"
-        "label-rua label-numero"
-        "input-rua input-numero"
-        "label-complemento label-complemento"
-        "input-complemento input-complemento"
-        "label-email label-email"
-        "input-email input-email"
-        "label-senha label-confirmar-senha"
-        "input-senha input-confirmar-senha"
-        "orientacao orientacao"
-        "botao botao"
-        "link-login link-login";
-}
-
+/* Sistema de grid areas */
 .label-nome { grid-area: label-nome; }
 .input-nome { grid-area: input-nome; }
+
+#tipo-de-conta-label { grid-area: tipo-conta; }
+#tipo-de-conta { grid-area: select-tipo; }
 
 .label-data { grid-area: data-nasc; }
 .input-data { grid-area: input-data; }
@@ -168,6 +157,9 @@ h1 {
 .label-complemento { grid-area: label-complemento; }
 .input-complemento { grid-area: input-complemento; }
 
+.label-telefone { grid-area: label-telefone; }
+.input-telefone { grid-area: input-telefone; }
+
 .label-email { grid-area: label-email; }
 .input-email { grid-area: input-email; }
 
@@ -181,13 +173,39 @@ h1 {
 #botao-enviar { grid-area: botao; }
 #link-login { grid-area: link-login; }
 
+/* Definindo o layout da grid */
+#formulario {
+    grid-template-areas:
+        "label-nome label-nome"
+        "input-nome input-nome"
+        "tipo-conta data-nasc"
+        "select-tipo input-data"
+        "campo-documento campo-documento"
+        "campo-documento-input campo-documento-input"
+        "label-estado label-cidade"
+        "input-estado input-cidade"
+        "label-rua label-numero"
+        "input-rua input-numero"
+        "label-complemento label-complemento"
+        "input-complemento input-complemento"
+        "label-telefone label-telefone"
+        "input-telefone input-telefone"
+        "label-email label-email"
+        "input-email input-email"
+        "label-senha label-confirmar-senha"
+        "input-senha input-confirmar-senha"
+        "orientacao orientacao"
+        "botao botao"
+        "link-login link-login";
+}
+
 #formulario input,
 #formulario select {
     padding: 14px 16px;
     border: 1.5px solid #ccc;
     border-radius: 8px;
     font-size: 15px;
-    transition: border-color 0.3s ease;
+    transition: all 0.3s ease;
     width: 100%;
 }
 
@@ -195,6 +213,7 @@ h1 {
 #formulario select:focus {
     border-color: #034660;
     outline: none;
+    box-shadow: 0 0 0 3px rgba(3, 70, 96, 0.1);
 }
 
 #formulario label {
@@ -205,23 +224,134 @@ h1 {
     display: block;
 }
 
+/* Container para campos de senha com botão de toggle */
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-container input {
+    padding-right: 50px;
+    width: 100%;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #666;
+    font-size: 14px;
+    padding: 5px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.toggle-password:hover {
+    background-color: #f0f0f0;
+    color: #034660;
+}
+
+/* Estilização para mensagens */
+#mensagem {
+    text-align: center;
+    margin: 20px auto;
+    padding: 0;
+    max-width: 1000px;
+}
+
+.mensagem {
+    padding: 16px 20px;
+    border-radius: 10px;
+    margin: 10px 0;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    animation: slideDown 0.3s ease-out;
+}
+
+.mensagem.sucesso {
+    background: linear-gradient(135deg, #d4edda, #c3e6cb);
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.mensagem.erro {
+    background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.mensagem.info {
+    background: linear-gradient(135deg, #cce7ff, #b3d9ff);
+    color: #004085;
+    border: 1px solid #b3d9ff;
+}
+
+.mensagem::before {
+    font-size: 18px;
+}
+
+.mensagem.sucesso::before {
+    content: "✓";
+}
+
+.mensagem.erro::before {
+    content: "✗";
+}
+
+.mensagem.info::before {
+    content: "ℹ";
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 #orientacao-senha {
     font-size: 13px;
     color: #555;
     margin-top: 5px;
     padding: 15px;
-    background-color: #f8f9fa;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
     border-radius: 8px;
     border-left: 4px solid #034660;
+    grid-column: 1 / -1;
 }
 
 #orientacao-senha ul {
     padding-left: 20px;
-    list-style: disc;
+    list-style: none;
+}
+
+#orientacao-senha li {
+    margin-bottom: 5px;
+    position: relative;
+    padding-left: 15px;
+}
+
+#orientacao-senha li::before {
+    content: "•";
+    color: #034660;
+    font-weight: bold;
+    position: absolute;
+    left: 0;
 }
 
 #botao-enviar {
-    background-color: #034660;
+    background: linear-gradient(135deg, #034660, #046d92);
     color: #fff;
     padding: 16px;
     border: none;
@@ -229,24 +359,26 @@ h1 {
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
     margin-top: 10px;
+    grid-column: 1 / -1;
 }
 
 #botao-enviar:hover {
-    background-color: #046d92;
+    background: linear-gradient(135deg, #046d92, #034660);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(3, 70, 96, 0.3);
 }
 
-#mensagem {
-    text-align: center;
-    font-size: 18px;
-    margin-bottom: 50px;
+#botao-enviar:active {
+    transform: translateY(0);
 }
 
 #link-login {
     margin-top: 20px;
     text-align: center;
     width: 100%;
+    grid-column: 1 / -1;
 }
 
 #link-login a {
@@ -254,20 +386,39 @@ h1 {
     text-decoration: none;
     font-weight: 500;
     font-size: 15px;
+    transition: color 0.3s ease;
 }
 
 #link-login a:hover {
+    color: #046d92;
     text-decoration: underline;
 }
 
 .campo-documento {
     display: none;
+    grid-column: 1 / -1;
 }
 
 .campo-documento.active {
     display: block;
+    animation: fadeIn 0.3s ease;
 }
 
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Campos de telefone */
+.input-telefone {
+    margin-bottom: 10px;
+}
+
+.input-telefone:last-of-type {
+    margin-bottom: 0;
+}
+
+/* Responsividade */
 @media (max-width: 768px) {
     body {
         padding-top: 120px;
@@ -298,14 +449,11 @@ h1 {
         padding: 25px 20px;
         margin: 10px auto;
         width: 98%;
-    }
-    
-    #formulario {
         grid-template-columns: 1fr;
         gap: 15px;
     }
     
-    #formulario{
+    #formulario {
         grid-template-areas:
             "label-nome"
             "input-nome"
@@ -325,6 +473,8 @@ h1 {
             "input-numero"
             "label-complemento"
             "input-complemento"
+            "label-telefone"
+            "input-telefone"
             "label-email"
             "input-email"
             "label-senha"
@@ -339,6 +489,11 @@ h1 {
     #formulario input,
     #formulario select {
         padding: 12px 14px;
+        font-size: 14px;
+    }
+    
+    .mensagem {
+        padding: 12px 16px;
         font-size: 14px;
     }
 }
@@ -379,5 +534,10 @@ h1 {
     #botao-enviar {
         padding: 14px;
         font-size: 15px;
+    }
+    
+    .toggle-password {
+        right: 8px;
+        font-size: 12px;
     }
 }

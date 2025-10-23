@@ -1,4 +1,5 @@
 from app import argon2, db
+import re
 
 class UserModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -18,3 +19,14 @@ class UserModel(db.Model):
         
     def verify_senha(self, senha):
         return argon2.check_password_hash(self.senha_hash, senha)
+    
+    def verificar_email(self, email):
+        regex_email = r'^[^\s@]+@[^\s@]+\.[^\s@]+$'
+        return bool(re.match(regex_email, email))
+    
+    def verificar_senha(self, senha):
+        caracteres_especiais = ['#', '@', '_']
+        if senha.length()<6 and senha.includes(caracteres_especiais) == False:
+            return False
+        
+        
