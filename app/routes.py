@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, jsonify
+from flask import Blueprint, render_template, request, jsonify, session
 from .models.user import UserModel
 from . import db
 
@@ -36,6 +36,20 @@ def cadastrar():
 @bp.route('/login')
 def login():
     return render_template('login.html')
+
+@bp.route('/logar', methods=['POST'])
+def logar():
+    dados = request.get_json()
+    
+    email = dados['email']
+    senha = dados['senha']
+    
+    usuario = UserModel.query.filter_by(email=email).first()
+    if usuario and usuario.verify_senha(senha):
+        session['usuario_id'] = usuario.id
+        return jsonify({"sucesso": f"Bem-vindo(a), {usuario.nome_completo}!"})
+    else:
+        return jsonify({"erro": "Email ou senha inválidos."})
 
 @bp.route('/imoveis')
 def imoveis():
