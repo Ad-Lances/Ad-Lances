@@ -1,4 +1,5 @@
-from app import phash, db
+from app import db
+import bcrypt
 import re
 
 class UserModel(db.Model):
@@ -15,14 +16,12 @@ class UserModel(db.Model):
     senha_hash = db.Column(db.String(255), nullable=False)
         
     def set_senha(self, senha):
-        self.senha_hash = phash.hash(senha)
+        salt = bcrypt.gensalt()
+        print(salt)
+        self.senha_hash = bcrypt.hashpw(senha.encode('utf-8'), salt).decode('utf-8')
         
     def verify_senha(self, senha):
-        try:
-            phash.verify(self.senha_hash, senha)
-            return True
-        except:
-            return False
+        return bcrypt.checkpw(senha.encode('utf-8'), self.senha_hash.encode('utf-8'))
     
     def verificar_email(self, email):
         regex_email = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
