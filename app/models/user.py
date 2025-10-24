@@ -21,12 +21,32 @@ class UserModel(db.Model):
         return argon2.check_password_hash(self.senha_hash, senha)
     
     def verificar_email(self, email):
-        regex_email = r'^[^\s@]+@[^\s@]+\.[^\s@]+$'
+        regex_email = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         return bool(re.match(regex_email, email))
     
     def verificar_senha(self, senha):
         caracteres_especiais = ['#', '@', '_']
-        if senha.length()<6 and senha.includes(caracteres_especiais) == False:
+        if senha.length()<6:
             return False
+        
+        if not any(char in senha for char in caracteres_especiais):
+            return False
+        
+    def validar_cpf(self, cpf):
+        if len(cpf)<14:
+            return False
+        
+        soma = 0
+        i = 0
+        while(i<len(cpf)):
+            numero = int(cpf[i])
+            multiplicado = numero*9
+
+            soma += multiplicado
+            i += 1
+
+        soma 
+
+        if(soma)
         
         
