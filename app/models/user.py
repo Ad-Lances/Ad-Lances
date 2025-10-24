@@ -51,6 +51,6 @@ class UserModel(db.Model):
 
         soma 
 
-        if(soma)
+        #if(soma)
         
         
