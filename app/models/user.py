@@ -1,4 +1,4 @@
-from app import argon2, db
+from app import phash, db
 import re
 
 class UserModel(db.Model):
@@ -15,10 +15,14 @@ class UserModel(db.Model):
     senha_hash = db.Column(db.String(255), nullable=False)
         
     def set_senha(self, senha):
-        self.senha_hash = argon2.generate_password_hash(senha)
+        self.senha_hash = phash.hash(senha)
         
     def verify_senha(self, senha):
-        return argon2.check_password_hash(self.senha_hash, senha)
+        try:
+            phash.verify(self.senha_hash, senha)
+            return True
+        except:
+            return False
     
     def verificar_email(self, email):
         regex_email = r'^[^\s@]+@[^\s@]+\.[^\s@]+$'

@@ -1,5 +1,5 @@
 from flask import Flask
-from flask_argon2 import Argon2
+from argon2 import PasswordHasher
 from flask_sqlalchemy import SQLAlchemy
 from config import Config
 from dotenv import load_dotenv  # Adicione esta linha
@@ -7,13 +7,12 @@ from dotenv import load_dotenv  # Adicione esta linha
 load_dotenv()  # Adicione esta linha
 
 db = SQLAlchemy()
-argon2 = Argon2()
+phash = PasswordHasher()
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
     
-    argon2.init_app(app)
     db.init_app(app)
     
     from . import routes
