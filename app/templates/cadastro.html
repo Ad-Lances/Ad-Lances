@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/cadastro.css') }}">
+    <script src="https://kit.fontawesome.com/301e8f1b49.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <nav id="nav">
@@ -31,118 +32,175 @@
             <li>
                 <div id="nav-item">
                     <div id="img-nav">
-                        <a href="cadastro.html"><img src="{{ url_for('static', filename='img/icons-img/profile-icon.png') }}"></a>
+                        <a href="cadastro"><img src="{{ url_for('static', filename='img/icons-img/profile-icon.png') }}"></a>
                     </div>
                 </div>
             </li>
         </ul>
     </nav>
 
-    <h1>Faça seu cadastro</h1>
+    <h1 id="cadastro-text">Faça seu cadastro</h1>
 
     <section id="mensagem"></section> 
 
-   <form id="formulario" method="POST">
-    <h3>Informações Pessoais</h3>
-    <hr>
-        <label for="nome" class="label-nome">Nome completo:</label>
-        <input type="text" id="nome" name="nomecompleto" placeholder="Digite seu nome completo aqui..." class="input-nome">
-
-        <label for="tipo-de-conta">Tipo de pessoa:</label>
-        <select name="tipo-de-conta" id="tipo-de-conta" onchange="exibirCampo()">
-            <option value="none">Selecione uma opção...</option>
-            <option value="Pessoa Física">Pessoa Física</option>
-            <option value="Pessoa Jurídica">Pessoa Jurídica</option>
-        </select>
-
-        <div id="campoCpf" class="campo-documento">
-            <label for="cpf" class="label-cpf">CPF:</label>
-            <input type="text" id="cpf" name="cpf" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" title="Digite um CPF no formato: xxx.xxx.xxx-xx" class="input-cpf" placeholder="000.000.000-00">
-        </div>
-
-        <div id="campoCnpj" class="campo-documento">
-            <label for="cnpj" class="label-cnpj">CNPJ:</label>
-            <input type="text" id="cnpj" name="cnpj" pattern="\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}" title="Digite um CNPJ no formato: xx.xxx.xxx/xxxx-xx" class="input-cnpj">
-        </div>
+   <form id="formulario">
+    <div class="form-section">
+        <i class="fa-solid fa-circle-user fa-lg" style="color: #034660;"></i>
+        <h3>Informações Pessoais</h3>
+        <hr>
         
-        <label for="datanasc" class="label-data">Data de nascimento:</label>
-        <input type="date" id="datanasc" name="datanasc" class="input-data">
+        <div class="form-grid">
+            <div class="full-width">
+                <label for="nome" class="label-nome">Nome completo:</label>
+                <input type="text" id="nome" name="nomecompleto" placeholder="Digite seu nome completo aqui" class="input-nome">
+            </div>
 
+            <div>
+                <label for="tipo-de-conta" class="label-tipo-conta">Tipo de pessoa:</label>
+                <select name="tipo-de-conta" id="tipo-de-conta" onchange="exibirCampo()">
+                    <option value="none">Selecione uma opção...</option>
+                    <option value="Pessoa Física">Pessoa Física</option>
+                    <option value="Pessoa Jurídica">Pessoa Jurídica</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="datanasc" class="label-data">Data de nascimento:</label>
+                <input type="date" id="datanasc" name="datanasc" class="input-data">
+            </div>
+
+            <div id="campoCpf" class="campo-documento full-width">
+                <label for="cpf" class="label-cpf">CPF:</label>
+                <input type="text" id="cpf" name="cpf" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" title="Digite um CPF no formato: xxx.xxx.xxx-xx" class="input-cpf" placeholder="000.000.000-00">
+            </div>
+
+            <div id="campoCnpj" class="campo-documento full-width">
+                <label for="cnpj" class="label-cnpj">CNPJ:</label>
+                <input type="text" id="cnpj" name="cnpj" pattern="\d{2}\.1\d{3}\.\d{3}/\d{4}-\d{2}" title="Digite um CNPJ no formato: xx.xxx.xxx/xxxx-xx" class="input-cnpj" placeholder="00.000.000/0000-00">
+            </div>
+
+            <div id="nomeEmpresa" class="campo-nome-empresa full-width">
+                <label for="nome-empresa" class="label-empresa">Nome da Empresa:</label>
+                <input type="text" id="nome-empresa" name="nome-empresa" placeholder="Digite o nome da empresa" class="input-empresa">
+            </div>
+
+            <div class="full-width">
+                <label for="email" class="label-email">E-mail:</label>
+                <input type="email" placeholder="Digite seu email aqui" id="email" name="email" class="input-email">
+            </div>
+        </div>
+    </div>
+
+    <div class="form-section">
+        <i class="fa-solid fa-house" style="color: #034660;"></i>
         <h3>Informações de residência</h3>
         <hr>
 
-        <label for="estado" class="label-estado">Unidade Federativa (UF):</label>
-        <select name="estado" id="estado" class="input-estado">
-            <option>Selecione um estado</option>
-            <option>Acre - AC</option>
-            <option>Alagoas - AL</option>
-            <option>Amapá - AP</option>
-            <option>Amazonas - AM</option>
-            <option>Bahia - BA</option>
-            <option>Ceará - CE</option>
-            <option>Brasília - DF</option>
-            <option>Espírito Santo - ES</option>
-            <option>Goiás - GO</option>
-            <option>Maranhão - MA</option>
-            <option>Mato Grosso - MT</option>
-            <option>Mato Grosso do Sul - MS</option>
-            <option>Minas Gerais - MG</option>
-            <option>Pará - PA</option>
-            <option>Paraíba - PB</option>
-            <option>Paraná - PR</option>
-            <option>Pernambuco - PE</option>
-            <option>Piauí - PI</option>
-            <option>Rio de Janeiro - RJ</option>
-            <option>Rio Grande do Norte - RN</option>
-            <option>Rio Grande do Sul - RS</option>
-            <option>Rondônia - RO</option>
-            <option>Roraima - RR</option>
-            <option>Santa Catarina - SC</option>
-            <option>São Paulo - SP</option>
-            <option>Sergipe - SE</option>
-            <option>Tocantins - TO</option>
-        </select>
+        <div class="form-grid">
+            <div>
+                <label for="cep" class="label-cep">CEP:</label>
+                <input type="text" name="cep" placeholder="00000-000" class="input-cep" id="cep" maxlength="9">
+            </div>
 
-        <label for="cidade" class="label-cidade">Cidade:</label>
-        <input type="text" name="cidade" placeholder="Digite sua cidade" class="input-cidade" id="cidade">
+            <div>
+                <label for="estado" class="label-estado">Unidade Federativa (UF):</label>
+                <select name="estado" id="estado" class="input-estado">
+                    <option>Selecione um estado</option>
+                    <option>Acre - AC</option>
+                    <option>Alagoas - AL</option>
+                    <option>Amapá - AP</option>
+                    <option>Amazonas - AM</option>
+                    <option>Bahia - BA</option>
+                    <option>Ceará - CE</option>
+                    <option>Brasília - DF</option>
+                    <option>Espírito Santo - ES</option>
+                    <option>Goiás - GO</option>
+                    <option>Maranhão - MA</option>
+                    <option>Mato Grosso - MT</option>
+                    <option>Mato Grosso do Sul - MS</option>
+                    <option>Minas Gerais - MG</option>
+                    <option>Pará - PA</option>
+                    <option>Paraíba - PB</option>
+                    <option>Paraná - PR</option>
+                    <option>Pernambuco - PE</option>
+                    <option>Piauí - PI</option>
+                    <option>Rio de Janeiro - RJ</option>
+                    <option>Rio Grande do Norte - RN</option>
+                    <option>Rio Grande do Sul - RS</option>
+                    <option>Rondônia - RO</option>
+                    <option>Roraima - RR</option>
+                    <option>Santa Catarina - SC</option>
+                    <option>São Paulo - SP</option>
+                    <option>Sergipe - SE</option>
+                    <option>Tocantins - TO</option>
+                </select>
+            </div>
 
-        <label for="rua" class="label-rua">Rua:</label>
-        <input type="text" name="rua" placeholder="Rua Palmeiras" class="input-rua" id="rua">
+            <div>
+                <label for="cidade" class="label-cidade">Cidade:</label>
+                <input type="text" name="cidade" placeholder="Digite sua cidade" class="input-cidade" id="cidade">
+            </div>
 
-        <label for="numero-casa" class="label-numero">Número:</label>
-        <input type="text" name="numero_casa" class="input-numero_casa" id="numero_casa">
+            <div>
+                <label for="logradouro" class="label-logradouro">Logradouro:</label>
+                <input type="text" name="logradouro" placeholder="Ex: Rua Palmeiras" class="input-logradouro" id="logradouro">
+            </div>
 
-        <label for="complemento" class="label-complemento">Complemento:</label>
-        <input type="text" name="complemento" class="input-complemento" id="complemento">
+            <div>
+                <label for="numero-casa" class="label-numero">Número:</label>
+                <input type="text" name="numero_casa" class="input-numero_casa" id="numero_casa">
+            </div>
 
+            <div class="full-width">
+                <label for="complemento" class="label-complemento">Complemento:</label>
+                <input type="text" name="complemento" class="input-complemento" id="complemento">
+            </div>
+        </div>
+    </div>
+
+    <div class="form-section">
+        <i class="fa-solid fa-phone" style="color: #034660;"></i>
         <h3>Informações de Contato</h3>
         <hr>
-        <label for="telefone" class="label-telefone">Telefone:</label>
-        <input type="tel" name="telefone_celular" id="telefone_celular" placeholder="(11) 99999-9999" class="input-telefone">
-        <input type="tel" name="telefone_residencial" id="telefone_residencial" class="input-telefone" placeholder="(11) 9999-9999" class="input-telefone">
 
-        <label for="email" class="label-email">E-mail:</label>
-        <input type="email" placeholder="Digite seu email aqui" id="email" name="email" class="input-email">
+        <div class="form-grid">
+            <div class="full-width">
+                <label for="telefone" class="label-telefone">Telefone:</label>
+                <input type="tel" name="telefone_celular" id="telefone_celular" placeholder="(11) 99999-9999" class="input-telefone">
+                <input type="tel" name="telefone_residencial" id="telefone_residencial" class="input-telefone" placeholder="(11) 9999-9999">
+            </div>
 
-        <label for="senha" class="label-senha">Digite sua senha:</label>
-        <input type="password" name="password" placeholder="Digite sua senha" class="input-senha" id="password">
+            <div>
+                <label for="senha" class="label-senha">Digite sua senha:</label>
+                <input type="password" name="password" placeholder="Digite sua senha" class="input-senha" id="password">
+            </div>
 
-        <label for="confirmar-senha" class="label-confirmar-senha">Confirme sua senha:</label>
-        <input type="password" name="confirmar-password" id="confirmar-senha" placeholder="Confirme sua senha" class="input-confirmar-senha">
+            <div>
+                <label for="confirmar-senha" class="label-confirmar-senha">Confirme sua senha:</label>
+                <input type="password" name="confirmar-password" id="confirmar-senha" placeholder="Confirme sua senha" class="input-confirmar-senha">
+            </div>
 
-        <section id="orientacao-senha">
-            <ul>
-                <li>Mínimo de 6 caracteres</li>
-                <li>Um caractere maiúsculo</li>
-                <li>Caracteres minúsculos</li>
-                <li>Um caractere especial (#, @, _)</li>
-            </ul>
-        </section>
+            <div class="full-width">
+                <section id="orientacao-senha">
+                    <ul>
+                        <li>Mínimo de 6 caracteres</li>
+                        <li>Um caractere maiúsculo</li>
+                        <li>Caracteres minúsculos</li>
+                        <li>Um caractere especial (#, @, _)</li>
+                    </ul>
+                </section>
+            </div>
 
-        <button id="botao-enviar" type="submit">Cadastrar</button>
+            <div class="full-width">
+                <button id="botao-enviar" type="submit">Cadastrar</button>
+            </div>
 
-        <div id="link-login">
-                <a href="login">Já tem uma conta? Faça login</a>
+            <div class="full-width">
+                    <div id="link-login">
+                        <a href="login">Já tem uma conta? Faça login</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </form>
     

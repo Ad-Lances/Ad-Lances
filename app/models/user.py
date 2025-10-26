@@ -3,11 +3,14 @@ import bcrypt
 import re
 
 class UserModel(db.Model):
+    __tablename__ = 'users'
+
     id = db.Column(db.Integer, primary_key=True)
     nome_completo = db.Column(db.String(100), nullable=False)
     tipo_pessoa = db.Column(db.String(50), nullable=False)
     cpf = db.Column(db.String(14), unique=True, nullable=False)
     datanasc = db.Column(db.Date, nullable=False)
+    cep = db.Column(db.String(50), nullable=False)
     unid_federativa = db.Column(db.String(50), nullable=False)
     cidade = db.Column(db.String(100), nullable=False)
     rua = db.Column(db.String(150), nullable=False)

@@ -1,25 +1,51 @@
 const formulario = document.getElementById('formulario');
 const nomeInput = document.getElementById('nome');
-const estadoInput = document.getElementById('estado');
-const cidadeInput = document.getElementById('cidade');
-const ruaInput = document.getElementById('rua');
-const numeroCasaInput = document.getElementById('numero_casa');
-const complementoInput = document.getElementById('complemento');
-const telefoneCelInput = document.getElementById('telefone_celular');
-const telefoneResInput = document.getElementById('telefone_residencial')
-const emailInput = document.getElementById('email');
-const senhaInput = document.getElementById('password');
-const confirmar_senhaInput = document.getElementById('confirmar-senha');
-const mensagem = document.getElementById('mensagem');
-const botao = document.getElementById('botao-enviar');
 const cpf = document.getElementById('cpf');
 const cnpj = document.getElementById('cnpj');
 const tipo_pessoa = document.getElementById('tipo-de-conta');
 const datanascInput = document.getElementById('datanasc');
 
+const estadoInput = document.getElementById('estado');
+const cidadeInput = document.getElementById('cidade');
+const logradouroInput = document.getElementById('logradouro');
+const cepInput = document.getElementById('cep');
+const numeroCasaInput = document.getElementById('numero_casa');
+const complementoInput = document.getElementById('complemento');
+
+const telefoneCelInput = document.getElementById('telefone_celular');
+const telefoneResInput = document.getElementById('telefone_residencial');
+const emailInput = document.getElementById('email');
+const senhaInput = document.getElementById('password');
+const confirmar_senhaInput = document.getElementById('confirmar-senha');
+
+const mensagem = document.getElementById('mensagem');
+const botao = document.getElementById('botao-enviar');
+
+
 document.addEventListener('DOMContentLoaded', function() {
     adicionarToggleSenha();
 });
+
+function estilizarmensagem(){
+    mensagem.style.cssText = `
+            color: #ffffff;
+            background: #d65050ff;
+            border-radius: 12px;
+            padding: 16px 24px;
+            margin: 20px auto;
+            text-align: center;
+            font-weight: 500;
+            font-size: 15px;
+            box-shadow: 0 4px 15px rgba(194, 74, 74, 0.3);
+            border: 1px solid #b84545;
+            width: fit-content;
+            max-width: 90%;
+            backdrop-filter: blur(10px);
+            animation: slideIn 0.3s ease-out;
+            position: relative;
+            overflow: hidden;
+        `;
+}
 
 function adicionarToggleSenha() {
     const senhaContainer = document.createElement('div');
@@ -40,39 +66,59 @@ function adicionarBotaoToggle(container, input) {
     const toggleBtn = document.createElement('button');
     toggleBtn.type = 'button';
     toggleBtn.className = 'toggle-password';
-    toggleBtn.textContent = '👁️';
+    toggleBtn.innerHTML = '<i class="fa-solid fa-eye" style="color: #034660;"></i>';
     toggleBtn.setAttribute('aria-label', 'Mostrar senha');
     
     toggleBtn.addEventListener('click', function() {
         const type = input.type === 'password' ? 'text' : 'password';
         input.type = type;
-        toggleBtn.textContent = type === 'password' ? '👁️' : '🔒';
+        
+        toggleBtn.innerHTML = type === 'password' 
+            ? '<i class="fa-solid fa-eye" style="color: #034660;"></i>' 
+            : '<i class="fa-solid fa-eye-slash" style="color: #034660;"></i>';
+            
         toggleBtn.setAttribute('aria-label', type === 'password' ? 'Mostrar senha' : 'Ocultar senha');
     });
     
     container.appendChild(toggleBtn);
 }
 
+function scrollerro(){
+    if (mensagem) {
+        mensagem.scrollIntoView({ 
+            behavior: "smooth", 
+            block: "center" 
+        });
+    } else {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+}
+
 function exibirCampo(){
     const tipoDeConta = document.getElementById('tipo-de-conta');
     const campoCPF = document.getElementById('campoCpf');
     const campoCNPJ = document.getElementById('campoCnpj');
+    const campoNomeEmpresa = document.getElementById('nomeEmpresa');
     
     if (tipoDeConta.value === 'Pessoa Física'){
         campoCNPJ.style.display = 'none';
+        campoNomeEmpresa.style.display = 'none';
         campoCPF.style.display = 'block';
         campoCPF.style.width = '50%';
     } else if(tipoDeConta.value === 'Pessoa Jurídica'){
         campoCPF.style.display = 'none';
         campoCNPJ.style.display = 'block';
+        campoNomeEmpresa.style.display = 'block';
+        campoNomeEmpresa.style.width = '50%';
         campoCNPJ.style.width = '50%';
     } else{
         campoCPF.style.display = 'none';
         campoCNPJ.style.display = 'none';
     }
 }
-
-
 
 function verificar_idade(){
     const dataAtual = new Date();
@@ -82,15 +128,18 @@ function verificar_idade(){
     const anoDataNasc = dataNasc.getFullYear();
 
     if(!dataNascInput.value){
-        mensagem.innerHTML = 'Insira uma data de nascimento válida';
+        scrollerro();
+        estilizarmensagem(mensagem);
+        mensagem.innerHTML = '<i class="fa-solid fa-circle-exclamation" style="margin-right: 8px;"></i> Insira uma data de nascimento válida';
         return false;
     }
 
     let idade = anoAtual-anoDataNasc;
 
     if (idade<18){
-        mensagem.style.color = 'Red';
-        mensagem.innerHTML = 'Você deve ter mais de 18 anos para se cadastrar';
+        scrollerro();
+        estilizarmensagem(mensagem);
+        mensagem.innerHTML = '<i class="fa-solid fa-circle-exclamation" style="margin-right: 8px;"></i> Você deve ter mais de 18 anos para criar uma conta';
         return false;
     } else{
         mensagem.innerHTML = '';
@@ -104,18 +153,26 @@ function verificar_email(email){
 }
 
 function verificar_senha(senha){
-    const maiuscula = /[A-Z]/.test(senha);
-    const especiais = /[#_@]/.test(senha);
+    //[@!#$%^&*()/\\]
+    mensagem.innerHTML = '';
 
-   if (especiais === false){
-        mensagem.style.color = 'red';
-        mensagem.innerHTML = 'A senha precisa ter ao menos um caractere especial';
+    const maiuscula = /[A-Z]/.test(senha);
+    const especiais = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(senha);
+
+   if(senha.length<6){
+        scrollerro();
+        estilizarmensagem();
+        mensagem.innerHTML ='<i class="fa-solid fa-circle-exclamation" style="margin-right: 8px;"></i> A senha deve ter mais de 6 caracteres';
         return false;
-   } else if(senha.length<6){
-        mensagem.innerHTML = 'A senha precisa ter mais de 6 caracteres';
+   } else if (!especiais){
+        scrollerro();
+        estilizarmensagem();
+        mensagem.innerHTML = '<i class="fa-solid fa-circle-exclamation" style="margin-right: 8px;"></i> A senha deve conter ao menos um caractere especial';
         return false;
-   } else if(maiuscula === false){
-        mensagem.innerHTML = 'A senha precisa ter ao menos uma letra maiúscula';
+   } else if(!maiuscula){
+        scrollerro();
+        estilizarmensagem();
+        mensagem.innerHTML = '<i class="fa-solid fa-circle-exclamation" style="margin-right: 8px;"></i> A senha deve conter ao menos um caractere maiúsculo';
         return false;
    } else{
         mensagem.innerHTML = '';
@@ -123,13 +180,51 @@ function verificar_senha(senha){
    }
 }
 
+function verificar_campos(nome, estado, cidade, logradouro, cep, numeroCasa, email, senha, telefone_celular, tipopessoa, ccpf, ccnpj){
+    if (!nome || !estado || !cidade || !logradouro || !cep || !numeroCasa || !email || !senha || !telefone_celular || !tipopessoa) {
+        estilizarmensagem()
+        mensagem.innerHTML = '<i class="fa-solid fa-circle-exclamation" style="margin-right: 8px;"></i> Por favor, preencha todos os campos obrigatórios'
+        return false;
+    }
+
+    if (tipopessoa === 'Pessoa Física') {
+        if (!ccpf) {
+            scrollerro();
+            estilizarmensagem();
+            mensagem.innerHTML = '<i class="fa-solid fa-circle-exclamation" style="margin-right: 8px;"></i> O CPF é obrigatório para contas do tipo pessoa física';
+            return false;
+        }
+    } else if (tipopessoa === 'Pessoa Jurídica') {
+        if (!ccnpj) {
+            scrollerro();
+            estilizarmensagem();
+            mensagem.innerHTML = '<i class="fa-solid fa-circle-exclamation" style="margin-right: 8px;"></i> O CNPJ é obrigatório para contas do tipo Pessoa Jurídica';
+            return false;
+        }
+        if (!document.getElementById('nome-empresa').value.trim()) {
+            scrollerro();
+            estilizarmensagem();
+            mensagem.innerHTML = '<i class="fa-solid fa-circle-exclamation" style="margin-right: 8px;"></i> Nome da Empresa é obrigatório para Pessoa Jurídica';
+            return false;
+        }
+    } else {
+        scrollerro();
+        estilizarmensagem();
+        mensagem.innerHTML = '<i class="fa-solid fa-circle-exclamation" style="margin-right: 8px;"></i> Por favor, preencha todos os campos obrigatórios';
+        return false;
+    }
+
+    return true;
+}
+    
 formulario.addEventListener('submit', async (event) => {
     event.preventDefault();
     
     const nome = nomeInput.value.trim();
     const estado = estadoInput.value.trim();
     const cidade = cidadeInput.value.trim();
-    const rua = ruaInput.value.trim();
+    const logradouro = logradouroInput.value.trim();
+    const cep = cepInput.value.trim();
     const numeroCasa = numeroCasaInput.value.trim();
     const complemento = complementoInput.value.trim();
     const telefone_celular = telefoneCelInput.value.trim();
@@ -141,58 +236,66 @@ formulario.addEventListener('submit', async (event) => {
     const ccnpj = cnpj.value.trim();
     const tipopessoa = tipo_pessoa.value.trim();
     const data_nasc = datanascInput.value.trim();
-    const botao = document.getElementById('botao-enviar');
-
 
     mensagem.innerHTML = '';
-
-    if (!nome || !estado || !cidade || !rua || !numeroCasa || !complemento || !email || !senha) {
-        mensagem.style.color = 'red';
-        mensagem.innerHTML = 'Por favor, preencha todos os campos obrigatórios';
+    
+    const camposPreenchidos = verificar_campos(nome, estado, cidade, logradouro, cep, numeroCasa, email, senha, telefone_celular, tipopessoa, ccpf, ccnpj);
+    if (!camposPreenchidos) {
+        scrollerro();
         return;
-    } 
+    }
 
     const idadeValida = verificar_idade();
     if(!idadeValida) return;
 
     const emailValido = verificar_email(email);
     if(!emailValido){
-        mensagem.innerHTML = 'Insira um email válido';
+        scrollerro();
+        estilizarmensagem();
+        mensagem.innerHTML = '<i class="fa-solid fa-circle-exclamation" style="margin-right: 8px;"></i> Insira um email válido';
         return;
     }
 
     const senhaValida = verificar_senha(senha);
-    if(senhaValida != confirmarSenha){
-        verificar_senha() === false;
+    if(senha !== senhaValida){
+        scrollerro();
+        estilizarmensagem();
+        return;
+    } else if (senha !== confirmarSenha) {
+        scrollerro();
+        estilizarmensagem();
+        mensagem.innerHTML = '<i class="fa-solid fa-circle-exclamation" style="margin-right: 8px;"></i> As senhas não coincidem';
         return;
     }
-    if(!senhaValida) return;
 
-    const dados = {
-        nome: nome,
-        unid_federativa: estado,
-        cidade: cidade,
-        rua: rua,
-        numero_casa: numeroCasa,
-        complemento: complemento,
-        email: email,
-        senha: senha,
-        cpf: ccpf,
-        cnpj: ccnpj,
-        tipo_pessoa: tipopessoa,
-        datanasc: data_nasc
+    if (emailValido && senhaValida && idadeValida && camposPreenchidos){
+        const dados = {
+            nome: nome,
+            unid_federativa: estado,
+            cidade: cidade,
+            logradouro: logradouro,
+            cep: cep,
+            numero_casa: numeroCasa,
+            complemento: complemento,
+            email: email,
+            senha: senha,
+            cpf: ccpf,
+            cnpj: ccnpj,
+            tipo_pessoa: tipopessoa,
+            datanasc: data_nasc
+        }
+
+        const resposta = await fetch('/cadastrar', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dados)
+        })
+        const resultado = await resposta.json()
+
+        mensagem.innerHTML = resultado.mensagem;
     }
-
-    const resposta = await fetch('/cadastrar', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(dados)
-    })
-    const resultado = await resposta.json()
-
-    mensagem.innerHTML = resultado.mensagem;
 
     formulario.reset();
 })
@@ -914,12 +1017,3 @@ function initCompaniesCarousel() {
         document.head.appendChild(style);
     }
 }
-
-// ===== INICIALIZAÇÃO =====
-function initImageCarousels() {
-    console.log('Iniciando carrosseis...');
-    initMainCarousel();
-    initCompaniesCarousel();
-}
-
-document.addEventListener('DOMContentLoaded', initImageCarousels);

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, jsonify, session
+from flask import Blueprint, render_template, request, jsonify, session, redirect, url_for
 from .models.user import UserModel
 from . import db
 
@@ -21,6 +21,7 @@ def cadastrar():
         tipo_pessoa=dados['tipo_pessoa'],
         cpf = dados['cpf'],
         datanasc=dados['datanasc'],
+        cep=dados['cep'],
         unid_federativa=dados['unid_federativa'],
         cidade=dados['cidade'],
         rua=dados['rua'],
@@ -32,7 +33,8 @@ def cadastrar():
     db.session.add(novo_usuario)
     db.session.commit()
     
-    return jsonify({'mensagem': f'Usuário {novo_usuario.nome_completo} cadastrado com sucesso!'})
+    #return jsonify({'mensagem': f'Usuário {novo_usuario.nome_completo} cadastrado com sucesso!'})
+    return redirect(url_for(login))
 
 @bp.route('/login')
 def login():

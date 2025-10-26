@@ -11,6 +11,8 @@ body {
     background-color: #f3f3f3;
     padding-top: 140px;
     min-height: 100vh;
+    background-color: #335e7d;
+    background-image: url();
 }
 
 #nav {
@@ -95,27 +97,11 @@ h1 {
     font-size: 2rem;
 }
 
-h3 {
-    color: #034660;
-    margin: 25px 0 10px 0;
-    font-size: 1.3rem;
-    grid-column: 1 / -1;
-}
-
-hr {
-    border: none;
-    height: 2px;
-    background: linear-gradient(90deg, #034660, #046d92);
-    margin: 10px 0 20px 0;
-    grid-column: 1 / -1;
-}
-
+/* ESTILOS DO FORMULÁRIO SIMPLIFICADOS */
 #formulario {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px 30px;
+    display: block;
     margin: 20px auto;
-    padding: 40px;
+    padding: 70px;
     background: #fff;
     width: 95%;
     max-width: 1000px;
@@ -123,82 +109,72 @@ hr {
     box-shadow: 0 4px 15px rgba(0,0,0,0.15);
 }
 
-/* Sistema de grid areas */
-.label-nome { grid-area: label-nome; }
-.input-nome { grid-area: input-nome; }
+/* SEÇÕES DO FORMULÁRIO */
+.form-section {
+    margin-bottom: 30px;
+}
 
-#tipo-de-conta-label { grid-area: tipo-conta; }
-#tipo-de-conta { grid-area: select-tipo; }
+.form-section:last-child {
+    margin-bottom: 0;
+}
 
-.label-data { grid-area: data-nasc; }
-.input-data { grid-area: input-data; }
+#cadastro-text{
+    color: white;
+}
 
-.campo-documento { 
-    grid-area: campo-documento; 
+#descricao{
+    display: contents;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 16px;
+}
+
+h3 {
+    color: #034660;
+    margin: 0 0 8px 0;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, #034660, #046d92);
+    margin: 0 0 20px 0;
+}
+
+/* GRID PARA OS CAMPOS */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px 25px;
+    margin-top: 30px;
+}
+
+/* Campos que ocupam largura total */
+.full-width {
+    grid-column: 1 / -1;
+}
+
+/* Campos de documento (ocupam largura total) */
+.campo-documento {
     display: none;
+    grid-column: 1 / -1;
 }
 
-.campo-documento input { 
-    grid-area: campo-documento-input; 
+.campo-nome-empresa {
+    display: none;
+    grid-column: 1 / -1;
 }
 
-.label-estado { grid-area: label-estado; }
-.input-estado { grid-area: input-estado; }
-
-.label-cidade { grid-area: label-cidade; }
-.input-cidade { grid-area: input-cidade; }
-
-.label-rua { grid-area: label-rua; }
-.input-rua { grid-area: input-rua; }
-
-.label-numero { grid-area: label-numero; }
-.input-numero_casa { grid-area: input-numero; }
-
-.label-complemento { grid-area: label-complemento; }
-.input-complemento { grid-area: input-complemento; }
-
-.label-telefone { grid-area: label-telefone; }
-.input-telefone { grid-area: input-telefone; }
-
-.label-email { grid-area: label-email; }
-.input-email { grid-area: input-email; }
-
-.label-senha { grid-area: label-senha; }
-.input-senha { grid-area: input-senha; }
-
-.label-confirmar-senha { grid-area: label-confirmar-senha; }
-.input-confirmar-senha { grid-area: input-confirmar-senha; }
-
-#orientacao-senha { grid-area: orientacao; }
-#botao-enviar { grid-area: botao; }
-#link-login { grid-area: link-login; }
-
-/* Definindo o layout da grid */
-#formulario {
-    grid-template-areas:
-        "label-nome label-nome"
-        "input-nome input-nome"
-        "tipo-conta data-nasc"
-        "select-tipo input-data"
-        "campo-documento campo-documento"
-        "campo-documento-input campo-documento-input"
-        "label-estado label-cidade"
-        "input-estado input-cidade"
-        "label-rua label-numero"
-        "input-rua input-numero"
-        "label-complemento label-complemento"
-        "input-complemento input-complemento"
-        "label-telefone label-telefone"
-        "input-telefone input-telefone"
-        "label-email label-email"
-        "input-email input-email"
-        "label-senha label-confirmar-senha"
-        "input-senha input-confirmar-senha"
-        "orientacao orientacao"
-        "botao botao"
-        "link-login link-login";
+.campo-documento.active,
+.campo-nome-empresa.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
 }
 
+/* ESTILOS DOS CAMPOS */
 #formulario input,
 #formulario select {
     padding: 14px 16px;
@@ -224,34 +200,13 @@ hr {
     display: block;
 }
 
-/* Container para campos de senha com botão de toggle */
-.password-container {
-    position: relative;
-    display: flex;
-    align-items: center;
+/* Campos de telefone */
+.input-telefone {
+    margin-bottom: 10px;
 }
 
-.password-container input {
-    padding-right: 50px;
-    width: 100%;
-}
-
-.toggle-password {
-    position: absolute;
-    right: 12px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #666;
-    font-size: 14px;
-    padding: 5px;
-    border-radius: 4px;
-    transition: all 0.3s ease;
-}
-
-.toggle-password:hover {
-    background-color: #f0f0f0;
-    color: #034660;
+.input-telefone:last-of-type {
+    margin-bottom: 0;
 }
 
 /* Estilização para mensagens */
@@ -361,7 +316,7 @@ hr {
     cursor: pointer;
     transition: all 0.3s ease;
     margin-top: 10px;
-    grid-column: 1 / -1;
+    width: 100%;
 }
 
 #botao-enviar:hover {
@@ -378,7 +333,6 @@ hr {
     margin-top: 20px;
     text-align: center;
     width: 100%;
-    grid-column: 1 / -1;
 }
 
 #link-login a {
@@ -394,28 +348,9 @@ hr {
     text-decoration: underline;
 }
 
-.campo-documento {
-    display: none;
-    grid-column: 1 / -1;
-}
-
-.campo-documento.active {
-    display: block;
-    animation: fadeIn 0.3s ease;
-}
-
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
-}
-
-/* Campos de telefone */
-.input-telefone {
-    margin-bottom: 10px;
-}
-
-.input-telefone:last-of-type {
-    margin-bottom: 0;
 }
 
 /* Responsividade */
@@ -445,45 +380,15 @@ hr {
         margin-bottom: 20px;
     }
     
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
     #formulario {
         padding: 25px 20px;
         margin: 10px auto;
         width: 98%;
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-    
-    #formulario {
-        grid-template-areas:
-            "label-nome"
-            "input-nome"
-            "tipo-conta"
-            "select-tipo"
-            "data-nasc"
-            "input-data"
-            "campo-documento"
-            "campo-documento-input"
-            "label-estado"
-            "input-estado"
-            "label-cidade"
-            "input-cidade"
-            "label-rua"
-            "input-rua"
-            "label-numero"
-            "input-numero"
-            "label-complemento"
-            "input-complemento"
-            "label-telefone"
-            "input-telefone"
-            "label-email"
-            "input-email"
-            "label-senha"
-            "input-senha"
-            "label-confirmar-senha"
-            "input-confirmar-senha"
-            "orientacao"
-            "botao"
-            "link-login";
     }
     
     #formulario input,
@@ -535,9 +440,82 @@ hr {
         padding: 14px;
         font-size: 15px;
     }
-    
-    .toggle-password {
-        right: 8px;
-        font-size: 12px;
-    }
+}
+
+/* ESTILOS PARA OS ÍCONES DOS TÍTULOS */
+.form-section {
+    position: relative;
+    margin-bottom: 70px;
+}
+
+.form-section > .fa-solid {
+    font-size: 1.8rem;
+    margin-right: 12px;
+    vertical-align: middle;
+    display: inline-flex;
+    align-items: center;
+}
+
+.form-section h3 {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 23px;
+    margin: 0;
+    line-height: 1.8rem;
+}
+
+.form-section hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, #034660, #046d92);
+    margin: 19px 0 19px 0; 
+}
+
+/* ESTILOS PARA OS BOTÕES DE TOGGLE SENHA */
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    margin: 0;
+    font-size: 1.2rem; /* Ícone um pouco maior */
+    color: #034660;
+    transition: color 0.3s ease;
+    z-index: 10;
+}
+
+.toggle-password:hover {
+    color: #046d92;
+    background: none;
+}
+
+.toggle-password:focus {
+    outline: none;
+    background: none;
+}
+
+/* CONTAINER PARA OS CAMPOS DE SENHA COM BOTÃO */
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-container input {
+    padding-right: 45px !important;
+    width: 100%;
+}
+
+/* ALINHAMENTO DOS CAMPOS DE SENHA NO GRID */
+.form-grid > div:has(.password-container) {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-grid > div:has(.password-container) label {
+    margin-bottom: 5px;
 }
