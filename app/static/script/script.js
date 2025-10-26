@@ -121,11 +121,7 @@ function exibirCampo(){
 }
 
 function verificar_idade(){
-    const dataAtual = new Date();
-    const anoAtual = dataAtual.getFullYear();
     const dataNascInput = document.getElementById('datanasc');
-    const dataNasc = new Date(dataNascInput.value);
-    const anoDataNasc = dataNasc.getFullYear();
 
     if(!dataNascInput.value){
         scrollerro();
@@ -133,6 +129,11 @@ function verificar_idade(){
         mensagem.innerHTML = '<i class="fa-solid fa-circle-exclamation" style="margin-right: 8px;"></i> Insira uma data de nascimento válida';
         return false;
     }
+
+    const dataNasc = new Date(dataNascInput.value);
+    const anoDataNasc = dataNasc.getFullYear();
+    const dataAtual = new Date();
+    const anoAtual = dataAtual.getFullYear();
 
     let idade = anoAtual-anoDataNasc;
 
@@ -153,9 +154,7 @@ function verificar_email(email){
 }
 
 function verificar_senha(senha){
-    //[@!#$%^&*()/\\]
     mensagem.innerHTML = '';
-
     const maiuscula = /[A-Z]/.test(senha);
     const especiais = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(senha);
 
@@ -174,10 +173,9 @@ function verificar_senha(senha){
         estilizarmensagem();
         mensagem.innerHTML = '<i class="fa-solid fa-circle-exclamation" style="margin-right: 8px;"></i> A senha deve conter ao menos um caractere maiúsculo';
         return false;
-   } else{
-        mensagem.innerHTML = '';
-        return true;
-   }
+   } 
+        
+   return true;
 }
 
 function verificar_campos(nome, estado, cidade, logradouro, cep, numeroCasa, email, senha, telefone_celular, tipopessoa, ccpf, ccnpj){
@@ -299,6 +297,8 @@ formulario.addEventListener('submit', async (event) => {
 
     formulario.reset();
 })
+
+
 
 //carrossel
 function initCarousel() {
