@@ -96,8 +96,7 @@ h1 {
     font-size: 2rem;
 }
 
-/* ESTILOS DO FORMULÁRIO SIMPLIFICADOS */
-#formulario {
+#formularioCadastro {
     display: block;
     margin: 70px auto;
     padding: 70px;
@@ -108,7 +107,6 @@ h1 {
     box-shadow: 0 4px 10px rgb(59, 59, 59);
 }
 
-/* SEÇÕES DO FORMULÁRIO */
 .form-section {
     margin-bottom: 30px;
 }
@@ -143,7 +141,6 @@ hr {
     margin: 0 0 20px 0;
 }
 
-/* GRID PARA OS CAMPOS */
 .form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -151,12 +148,10 @@ hr {
     margin-top: 30px;
 }
 
-/* Campos que ocupam largura total */
 .full-width {
     grid-column: 1 / -1;
 }
 
-/* Campos de documento (ocupam largura total) */
 .campo-documento {
     display: none;
     grid-column: 1 / -1;
@@ -173,9 +168,8 @@ hr {
     animation: fadeIn 0.3s ease;
 }
 
-/* ESTILOS DOS CAMPOS */
-#formulario input,
-#formulario select {
+#formularioCadastro input,
+#formularioCadastro select {
     padding: 14px 16px;
     border: 1.5px solid #ccc;
     border-radius: 8px;
@@ -184,14 +178,14 @@ hr {
     width: 100%;
 }
 
-#formulario input:focus,
-#formulario select:focus {
+#formularioCadastro input:focus,
+#formularioCadastro select:focus {
     border-color: #034660;
     outline: none;
     box-shadow: 0 0 0 3px rgba(3, 70, 96, 0.1);
 }
 
-#formulario label {
+#formularioCadastro label {
     font-size: 15px;
     font-weight: 600;
     color: #333;
@@ -199,68 +193,12 @@ hr {
     display: block;
 }
 
-/* Campos de telefone */
 .input-telefone {
     margin-bottom: 10px;
 }
 
 .input-telefone:last-of-type {
     margin-bottom: 0;
-}
-
-/* Estilização para mensagens */
-#mensagem {
-    text-align: center;
-    margin: 20px auto;
-    padding: 0;
-    max-width: 1000px;
-}
-
-.mensagem {
-    padding: 16px 20px;
-    border-radius: 10px;
-    margin: 10px 0;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    animation: slideDown 0.3s ease-out;
-}
-
-.mensagem.sucesso {
-    background: linear-gradient(135deg, #d4edda, #c3e6cb);
-    color: #155724;
-    border: 1px solid #c3e6cb;
-}
-
-.mensagem.erro {
-    background: linear-gradient(135deg, #f8d7da, #f5c6cb);
-    color: #721c24;
-    border: 1px solid #f5c6cb;
-}
-
-.mensagem.info {
-    background: linear-gradient(135deg, #cce7ff, #b3d9ff);
-    color: #004085;
-    border: 1px solid #b3d9ff;
-}
-
-.mensagem::before {
-    font-size: 18px;
-}
-
-.mensagem.sucesso::before {
-    content: "✓";
-}
-
-.mensagem.erro::before {
-    content: "✗";
-}
-
-.mensagem.info::before {
-    content: "ℹ";
 }
 
 @keyframes slideDown {
@@ -352,96 +290,6 @@ hr {
     to { opacity: 1; }
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
-    body {
-        padding-top: 120px;
-    }
-    
-    #nav {
-        height: 70px;
-        padding: 8px 15px;
-    }
-    
-    #nav ul {
-        flex-wrap: wrap;
-        gap: 5px;
-    }
-    
-    #search-container {
-        order: 3;
-        max-width: 100%;
-        margin-top: 10px;
-    }
-    
-    h1 {
-        font-size: 1.5rem;
-        margin-bottom: 20px;
-    }
-    
-    .form-grid {
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }
-    
-    #formulario {
-        padding: 25px 20px;
-        margin: 10px auto;
-        width: 98%;
-    }
-    
-    #formulario input,
-    #formulario select {
-        padding: 12px 14px;
-        font-size: 14px;
-    }
-    
-    .mensagem {
-        padding: 12px 16px;
-        font-size: 14px;
-    }
-}
-
-@media (max-width: 480px) {
-    body {
-        padding-top: 100px;
-    }
-    
-    #nav {
-        height: 60px;
-    }
-    
-    #nav #logo {
-        height: 35px;
-    }
-    
-    #nav-item img {
-        width: 25px;
-    }
-    
-    #nav-item div {
-        font-size: 12px;
-    }
-    
-    h1 {
-        font-size: 1.3rem;
-    }
-    
-    #formulario {
-        padding: 20px 15px;
-    }
-    
-    #formulario label {
-        font-size: 14px;
-    }
-    
-    #botao-enviar {
-        padding: 14px;
-        font-size: 15px;
-    }
-}
-
-/* ESTILOS PARA OS ÍCONES DOS TÍTULOS */
 .form-section {
     position: relative;
     margin-bottom: 70px;
@@ -470,53 +318,51 @@ hr {
     margin: 19px 0 19px 0; 
 }
 
-/* ESTILOS PARA OS BOTÕES DE TOGGLE SENHA */
+.password-container {
+    position: relative;
+    width: 100%;
+}
+
+.password-container input {
+    padding-right: 50px !important;
+    width: 100%;
+    height: 50px;
+}
+
 .toggle-password {
     position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
+    right: 15px;
+    top: 35px;
     background: none;
     border: none;
     cursor: pointer;
-    padding: 8px;
-    margin: 0;
-    font-size: 1.2rem; /* Ícone um pouco maior */
+    padding: 5px;
+    font-size: 1.2rem;
     color: #034660;
-    transition: color 0.3s ease;
     z-index: 10;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .toggle-password:hover {
     color: #046d92;
-    background: none;
 }
 
-.toggle-password:focus {
-    outline: none;
-    background: none;
-}
-
-/* CONTAINER PARA OS CAMPOS DE SENHA COM BOTÃO */
-.password-container {
+.form-grid > div {
     position: relative;
-    display: flex;
-    align-items: center;
+    min-height: 90px;
 }
 
-.password-container input {
-    padding-right: 45px !important;
-    width: 100%;
-}
-
-/* ALINHAMENTO DOS CAMPOS DE SENHA NO GRID */
 .form-grid > div:has(.password-container) {
     display: flex;
     flex-direction: column;
 }
 
 .form-grid > div:has(.password-container) label {
-    margin-bottom: 5px;
+    margin-bottom: 8px;
 }
 
 #footer {
@@ -574,14 +420,6 @@ hr {
     font-size: 13px;
 }
 
-
-@media (max-width: 768px) {
-    #footer-container {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-}
-
 #social-icons {
     display: flex;
     gap: 15px;
@@ -595,4 +433,122 @@ hr {
 #social-icons a:hover svg {
     transform: scale(1.2);
     fill: #48D1CC;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-top: 120px;
+    }
+    
+    #nav {
+        height: 70px;
+        padding: 8px 15px;
+    }
+    
+    #nav ul {
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+    
+    #search-container {
+        order: 3;
+        max-width: 100%;
+        margin-top: 10px;
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+    
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    #formularioCadastro {
+        padding: 25px 20px;
+        margin: 10px auto;
+        width: 98%;
+    }
+    
+    #formularioCadastro input,
+    #formularioCadastro select {
+        padding: 12px 14px;
+        font-size: 14px;
+    }
+    
+    .mensagem {
+        padding: 12px 16px;
+        font-size: 14px;
+    }
+    
+    #footer-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .toggle-password {
+        right: 10px;
+        top: 32px;
+        font-size: 1.1rem;
+    }
+    
+    .password-container input {
+        padding-right: 45px !important;
+        height: 45px;
+    }
+    
+    .form-grid > div {
+        min-height: 85px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding-top: 100px;
+    }
+    
+    #nav {
+        height: 60px;
+    }
+    
+    #nav #logo {
+        height: 35px;
+    }
+    
+    #nav-item img {
+        width: 25px;
+    }
+    
+    #nav-item div {
+        font-size: 12px;
+    }
+    
+    h1 {
+        font-size: 1.3rem;
+    }
+    
+    #formularioCadastro {
+        padding: 20px 15px;
+    }
+    
+    #formularioCadastro label {
+        font-size: 14px;
+    }
+    
+    #botao-enviar {
+        padding: 14px;
+        font-size: 15px;
+    }
+    
+    .toggle-password {
+        right: 8px;
+        top: 30px;
+    }
+    
+    .password-container input {
+        padding-right: 40px !important;
+        height: 42px;
+    }
 }

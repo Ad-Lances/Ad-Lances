@@ -12,7 +12,7 @@
         <ul>
             <li>
                 <div id="nav-item">
-                    <img id="logo" src="{{ url_for('static', filename='img/logo.png') }}">
+                    <a href="/"><img id="logo" src="{{ url_for('static', filename='img/logo.png') }}"></a>
                 </div>
             </li>
             <li>
@@ -43,7 +43,7 @@
 
     <section id="mensagem"></section> 
 
-   <form id="formulario">
+   <form id="formularioCadastro">
     <div class="form-section">
         <i class="fa-solid fa-circle-user fa-lg" style="color: #034660;"></i>
         <h3>Informações Pessoais</h3>
@@ -76,7 +76,7 @@
 
             <div id="campoCnpj" class="campo-documento full-width">
                 <label for="cnpj" class="label-cnpj">CNPJ:</label>
-                <input type="text" id="cnpj" name="cnpj" pattern="\d{2}\.1\d{3}\.\d{3}/\d{4}-\d{2}" title="Digite um CNPJ no formato: xx.xxx.xxx/xxxx-xx" class="input-cnpj" placeholder="00.000.000/0000-00">
+                <input type="text" id="cnpj" name="cnpj" pattern="\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}" title="Digite um CNPJ no formato: xx.xxx.xxx/xxxx-xx" class="input-cnpj" placeholder="00.000.000/0000-00">
             </div>
 
             <div id="nomeEmpresa" class="campo-nome-empresa full-width">
@@ -256,6 +256,8 @@
         </div>
     </footer>
     
-    <script src="{{ url_for('static', filename='script/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='script/style.js')}}"></script>
+    <script src="{{ url_for('static', filename='script/validacao_cadastro.js')}}"></script>
+    <script src="{{ url_for('static', filename='script/cadastro.js')}}"></script>
 </body>
 </html>
