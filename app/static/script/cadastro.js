@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 nome: nome,
                 unid_federativa: estado,
                 cidade: cidade,
-                logradouro: logradouro,
+                rua: logradouro,
                 cep: cep,
                 numero_casa: numeroCasa,
                 complemento: complemento,
@@ -98,12 +98,21 @@ document.addEventListener('DOMContentLoaded', function(){
                 },
                 body: JSON.stringify(dados)
             })
-            const resultado = await resposta.json()
+            const resultado = await resposta.json();
 
-            mensagem.innerHTML = resultado.mensagem;
+            if (resultado.sucesso) {
+                mensagem.innerHTML = resultado.sucesso;
+                mensagem.style.color = 'green';
+                scrollerro();
+                setTimeout(() => {
+                    window.location.href = '/login';
+                }, 1500);
+            } else {
+                estilizarmensagem(mensagem);
+                mensagem.innerHTML = resultado.erro;
+                scrollerro();
+            }
         }
-
-        formularioCadastro.reset();
     })
 })
 

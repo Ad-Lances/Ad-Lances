@@ -16,25 +16,29 @@ def cadastro():
 def cadastrar():
     dados = request.get_json()
 
-    novo_usuario = UserModel(
-        nome_completo=dados['nome'],
-        tipo_pessoa=dados['tipo_pessoa'],
-        cpf = dados['cpf'],
-        datanasc=dados['datanasc'],
-        cep=dados['cep'],
-        unid_federativa=dados['unid_federativa'],
-        cidade=dados['cidade'],
-        rua=dados['rua'],
-        numero=dados['numero_casa'],
-        email=dados['email']
-    )
-    novo_usuario.set_senha(dados['senha'])
+    usuario_exist = UserModel.query.filter_by(email=dados['email']).first()
     
-    db.session.add(novo_usuario)
-    db.session.commit()
+    if not usuario_exist:
+        novo_usuario = UserModel(
+            nome_completo=dados['nome'],
+            tipo_pessoa=dados['tipo_pessoa'],
+            cpf = dados['cpf'],
+            datanasc=dados['datanasc'],
+            cep=dados['cep'],
+            unid_federativa=dados['unid_federativa'],
+            cidade=dados['cidade'],
+            rua=dados['rua'],
+            numero=dados['numero_casa'],
+            email=dados['email']
+        )
+        novo_usuario.set_senha(dados['senha'])
     
-    #return jsonify({'mensagem': f'Usuário {novo_usuario.nome_completo} cadastrado com sucesso!'})
-    return redirect(url_for(login))
+        db.session.add(novo_usuario)
+        db.session.commit()
+    
+        return jsonify({'sucesso': f'Usuário {novo_usuario.nome_completo} cadastrado com sucesso!'})
+    else:
+        return jsonify({'erro': 'Email já cadastrado. Faça login ou utilize outro email.'})
 
 @bp.route('/login')
 def login():
