@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/criarleilao.css')}}">
+    <script src="https://kit.fontawesome.com/301e8f1b49.js" crossorigin="anonymous"></script>
+    <title>Criar leilão</title>
+</head>
+<body>
+    <nav id="nav">
+        <ul>
+            <li>
+                <div id="nav-item">
+                <a href="/"><img id="logo" src="{{ url_for('static', filename='img/logo.png') }}"></a>
+                </div>
+            </li>
+
+            <li>
+                <div id="search-container">
+                    <form>
+                        <input type="text" placeholder="Digite aqui...">
+                        <button type="submit"><img src="{{ url_for('static', filename='img/search-icon.png') }}" id="searchimg"></button>
+                    </form>
+                </div>
+            </li>
+
+            <li>
+                <div id="nav-item">
+                    Como vender
+                </div>
+            </li>
+
+            <li>
+                <div id="nav-item">
+                    Fale conosco
+                </div>
+            </li>
+
+            <li>
+                <div id="nav-item">
+                    <div id="img-nav">
+                        <a href="login"><i class="fa-solid fa-circle-user fa-2xl" style="color: #ffffff;"></i></a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <section id="cabecalho">
+        <h2>Adicionar novo leilão</h2>
+    </section>
+
+    <div id="formularioProduto">
+        <form id="form-produto">
+            <div id="titulo1">
+                <h3>Informações do Produto</h3>
+                <hr>
+            </div>
+            <div id="img-input-produto">
+                <label for="img-produto" name="img_produto" id="img-produto"></label>
+                <input type="file" multiple accept="image/*" name="img_produto_input" id="img-produto-input" placeholder="Anexe uma imagem do produto aqui" style="text-align: center;">
+            </div>
+
+            <section id="nome-produto">
+                <label for="nome-produto" name="nome-produto" id="nome-produto-label">Nome do produto:</label>
+                <input type="text" name="nome-produto-input" id="nome-produto-input" placeholder="Digite o nome do produto aqui...">
+            </section>
+
+            <section id="descricao-produto">
+                <label for="descricao-produto" name="descricao-produto" id="descricao-produto">Descrição do produto:</label>
+                <input type="text" name="descricao-produto-input" id="descricao-produto-input" placeholder="Descreva seu produto aqui...">
+            </section>
+
+            <div class="categorias-container">
+                <section id="categoria-produto">
+                    <label for="categoria-produto-label" name="categoria-produto" id="categoria-produto">Categoria do produto:</label>
+                    <select>
+                        <option value="none">Selecione uma categoria</option>
+                        <option value="imoveis">Imóveis</option>
+                        <option value="veiculos">Veículos</option>
+                        <option value="eletronicos">Eletrônicos</option>
+                        <option value="eletrodomesticos">Eletrodomésticos</option>
+                        <option value="moveis">Móveis</option>
+                        <option value="industriais">Industriais</option>
+                        <option value="decoracao">Decoração</option>
+                    </select>
+                </section>
+
+                <section id="subcategoria-produto">
+                    <label for="subcategoria-produto-label" id="subcategoria-produto-label" name="subcategoria-produto-label">Selecione uma subcategoria:</label>
+                    <select id="subcategoria-produto-input">
+                        <option>Selecione uma subcategoria</option>
+                    </select>
+                </section>
+            </div>
+
+            <section class="datas-container">
+                <section id="data-inicio">
+                    <label for="data-inicio-label" name="data-inicio-label" id="data-inicio-label">Data de início:</label>
+                    <input type="datetime-local" id="data-inicio-input" name="data-inicio-input">
+                </section>
+
+                <section id="data-fim">
+                    <label for="data-fim-label" id="data-fim-label">Data de Encerramento:</label>
+                    <input type="datetime-local" id="data-fim-input" name="data-fim-input">
+                </section>
+            </section><br><br>
+
+            <div id="titulo2">
+                <h3>Informações de pagamento</h3>
+                <hr>
+            </div>
+
+            <section id="lance-inicial">
+                <label for="lance-inicial-label" id="lance-inicial-label" name="lance-inicial-label">Lance inicial:</label>
+                <input type="number" id="lance-inicial-input" name="lance-inicial-input" step="0.01" min="0.01" required>
+            </section>
+
+            <section id="pagamento">
+                <label for="pagamento-permitido" id="pagamento-permitido-label" name="pagamento-permitido-label">Formas de Pagamento Permitidas:</label>
+                <ul>
+                    <li><input type="checkbox" name="Cartão de crédito" id="checkbox-pagamento">Cartão de Crédito</li>
+                    <li><input type="checkbox" name="PIX" id="checkbox-pagamento">PIX</li>
+                    <li><input type="checkbox" name="FGTS" id="checkbox-pagamento">FGTS</li>
+                    <li><input type="checkbox" name="Financiamento" id="checkbox-pagamento">Financiamento</li>
+                    <li></li>
+                </ul>
+            </section>
+        </form>
+    </div>
+</body>
+</html>

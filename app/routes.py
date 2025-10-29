@@ -53,6 +53,7 @@ def logar():
     
     usuario = UserModel.query.filter_by(email=email).first()
     if usuario and usuario.verify_senha(senha):
+        session['logado'] = True
         session['usuario_id'] = usuario.id
         return jsonify({"sucesso": f"Bem-vindo(a), {usuario.nome_completo}!"})
     else:
@@ -81,3 +82,7 @@ def moveis():
 @bp.route('/industriais')
 def industriais():
     return render_template('categorias/industriais.html')
+
+@bp.route('/novoleilao')
+def pagina_criar_leilao():
+    return render_template('criarleilao.html')
