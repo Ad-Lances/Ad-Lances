@@ -96,7 +96,7 @@ body {
     font-size: 20px;
 }
 
-#titulo1, #titulo2 {
+#titulo1, #titulo2, #titulo3 {
     display: flex;
     flex-direction: column; /* Muda para coluna */
     justify-content: center;
@@ -186,7 +186,7 @@ section{
 .categorias-container{
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 0;
+    gap: 20px;
 }
 
 
@@ -202,7 +202,7 @@ section{
     grid-template-columns: 0.5fr 0.5fr;
     justify-content: flex-start;
     align-items: baseline;
-    gap: 0;
+    gap: 20px;
 }
 
 #data-inicio-input, #data-fim-input{
@@ -225,37 +225,44 @@ section{
 
 #lance-inicial-input{
     width: 100%;
+    margin-top: 8px;
 }
 
 #pagamento{
     font-size: 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
 }
 
-/*#pagamento input[type="checkbox"]{
-    appearance: none;
-    margin-right: 5px;
-    color: #034660;
-    
-}*/
-
-#checkbox-pagamento input[type="checkbox"] {
-    appearance: none;
-    -webkit-appearance: none;
-    width: 5px;
-    height: 5px;
-    border: 1px solid #ccc;
-    border-radius: 2px;
-    background: white;
+#pagamento input[type="checkbox"] {
     cursor: pointer;
-    margin-right: 10px;
-}
-
-#checkbox-pagamento input[type="checkbox"]:checked {
-    background-color: #034660;
-    border-color: #034660;
+    margin-right: 5px;
 }
 
 #pagamento ul{
     list-style-type: none;
-    margin-left: 5px;
+    margin-left: 20px;
+    margin-top: 8px;
+}
+
+#parcelas-permitidas select{
+    margin-top: 8px;
+    width: 50%
+}
+
+#aviso{
+    font-size: 13px;
+    color: #555;
+    margin-top: 5px;
+    padding: 15px;
+    background: whitesmoke;
+    border-radius: 8px;
+    border-left: 4px solid #034660;
+    grid-column: 1 / -1;
+}
+
+#aviso li{
+    list-style-type: none;
+    margin-right: 10px;
 }

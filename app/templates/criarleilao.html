@@ -118,14 +118,49 @@
             </section>
 
             <section id="pagamento">
-                <label for="pagamento-permitido" id="pagamento-permitido-label" name="pagamento-permitido-label">Formas de Pagamento Permitidas:</label>
+                <section id="forma-pagamento">
+                    <label for="pagamento-permitido" id="pagamento-permitido-label" name="pagamento-permitido-label">Formas de Pagamento Permitidas:</label>
+                    <ul>
+                        <li><input type="checkbox" name="Cartão de crédito" id="checkbox-pagamento">Cartão de Crédito</li>
+                        <li><input type="checkbox" name="PIX" id="checkbox-pagamento">PIX</li>
+                        <li><input type="checkbox" name="FGTS" id="checkbox-pagamento">FGTS</li>
+                        <li><input type="checkbox" name="Financiamento" id="checkbox-pagamento">Financiamento</li>
+                        <li></li>
+                    </ul>
+                </section>
+
+                <section id="parcelas-permitidas">
+                    <label id="parcelas-permitidas-label">Número de Parcelas Permitidas:</label>
+                    <select id="parcelas-permitidas-input">
+                        <option value="none">Selecione um número</option>
+                        <option value="12x">2x</option>
+                        <option value="3x">3x</option>
+                        <option value="4x">4x</option>
+                        <option value="5x">5x</option>
+                        <option value="6x">6x</option>
+                        <option value="7x">7x</option>
+                        <option value="8x">8x</option>
+                        <option value="9x">9x</option>
+                        <option value="10x">10x</option>
+                        <option value="11x">11x</option>
+                        <option value="12x">12x</option>
+                    </select>
+                </section>
+            </section>
+
+            <section id="aviso">
                 <ul>
-                    <li><input type="checkbox" name="Cartão de crédito" id="checkbox-pagamento">Cartão de Crédito</li>
-                    <li><input type="checkbox" name="PIX" id="checkbox-pagamento">PIX</li>
-                    <li><input type="checkbox" name="FGTS" id="checkbox-pagamento">FGTS</li>
-                    <li><input type="checkbox" name="Financiamento" id="checkbox-pagamento">Financiamento</li>
-                    <li></li>
+                    <li>Não é permitido alterar a forma de pagamento ou o número de parcelas permitidas após a criação do leilão.</li>
                 </ul>
+            </section>
+
+            <div id="titulo3">
+                <h3>Informações de entrega</h3>
+                <hr>
+            </div>
+            
+            <section id="infos-entrega">
+                
             </section>
         </form>
     </div>
