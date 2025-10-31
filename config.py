@@ -8,3 +8,4 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ENGINE_OPTIONS = {"connect_args": {"ssl": {"ssl-disabled": False}}}
     SECRET_KEY = os.getenv('SECRET_KEY', 'aderbal')
+    CLOUDINARY_URL = os.getenv('CLOUDINARY_URL') 

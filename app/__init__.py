@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+import cloudinary
 from config import Config
 from dotenv import load_dotenv  # Adicione esta linha
 
@@ -10,6 +11,7 @@ db = SQLAlchemy()
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
+    cloudinary.config(cloudinary_url=app.config['CLOUDINARY_URL'], secure=True)
     
     db.init_app(app)
     

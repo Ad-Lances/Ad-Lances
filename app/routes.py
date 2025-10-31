@@ -1,6 +1,10 @@
 from flask import Blueprint, render_template, request, jsonify, session, redirect, url_for
 from .models.user import UserModel
+from .models.leiloes import LeilaoModel
 from . import db
+from . import cloudinary
+import cloudinary.uploader
+
 
 bp = Blueprint('main', __name__)
 
@@ -86,3 +90,32 @@ def industriais():
 @bp.route('/novoleilao')
 def pagina_criar_leilao():
     return render_template('criarleilao.html')
+
+@bp.route('/criarleilao', methods=['POST'])
+def criar_leilao():
+    dados = request.get_json()
+    imagem = request.files.get('img')
+    
+    if imagem:
+        upload = cloudinary.uploader.upload(imagem, transformation=[{"fetch_format": "auto", "quality": "auto:best"}])
+        url_imagem = upload.get('secure_url')
+    else:
+        url_imagem = None
+    
+    novo_leilao = LeilaoModel(
+        nome=dados['nome'],
+        descricao=dados['descricao'],
+        categoria=dados['categoria'],
+        subcategoria=dados['subcategoria'],
+        data_inicio=dados['data_inicio'],
+        data_fim=dados['data_fim'],
+        lance_inicial=dados['lance_inicial'],
+        pagamento=dados['pagamento'],
+        parcelas=dados['parcelas'],
+        imagem_url=url_imagem
+    )
+    
+    db.session.add(novo_leilao)
+    db.session.commit()
+    
+    return jsonify({'sucesso': f'Leilão {novo_leilao.nome} criado com sucesso!'})
