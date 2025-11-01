@@ -57,111 +57,181 @@
                 <h3>Informações do Produto</h3>
                 <hr>
             </div>
-            <div id="img-input-produto">
-                <label for="img-produto" name="img_produto" id="img-produto"></label>
-                <input type="file" multiple accept="image/*" name="img_produto_input" id="img-produto-input" placeholder="Anexe uma imagem do produto aqui" style="text-align: center;">
+            
+            <div id="img-input-produto" class="compact-section">
+                <div class="file-upload-area" id="file-upload-trigger">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <div class="file-upload-text">Clique para adicionar imagens do produto</div>
+                </div>
+                <input type="file" multiple accept="image/*" name="img_produto_input" id="img-produto-input">
+                <div class="preview-container" id="image-preview-container"></div>
             </div>
 
-            <section id="nome-produto">
-                <label for="nome-produto" name="nome-produto" id="nome-produto-label">Nome do produto:</label>
-                <input type="text" name="nome-produto-input" id="nome-produto-input" placeholder="Digite o nome do produto aqui...">
+            <div class="compact-grid compact-section">
+                <section id="nome-produto">
+                    <label for="nome-produto-input">Nome do produto:</label>
+                    <input type="text" name="nome-produto-input" id="nome-produto-input" placeholder="Digite o nome do produto">
+                </section>
+
+                <section id="lance-inicial">
+                    <label for="lance-inicial-input">Lance inicial:</label>
+                    <input type="number" id="lance-inicial-input" name="lance-inicial-input" step="0.01" min="0.01" placeholder="R$ 0,00">
+                </section>
+            </div>
+
+            <section id="descricao-produto" class="compact-section">
+                <label for="descricao-produto-input">Descrição do produto:</label>
+                <textarea name="descricao-produto-input" id="descricao-produto-input" placeholder="Descreva seu produto aqui..."></textarea>
             </section>
 
-            <section id="descricao-produto">
-                <label for="descricao-produto" name="descricao-produto" id="descricao-produto">Descrição do produto:</label>
-                <input type="text" name="descricao-produto-input" id="descricao-produto-input" placeholder="Descreva seu produto aqui...">
-            </section>
-
-            <div class="categorias-container">
+            <div class="categorias-container compact-section">
                 <section id="categoria-produto">
-                    <label for="categoria-produto-label" name="categoria-produto" id="categoria-produto">Categoria do produto:</label>
-                    <select>
-                        <option value="none">Selecione uma categoria</option>
+                    <label for="categoria-produto-select">Categoria:</label>
+                    <select id="categoria-produto-select">
+                        <option value="none">Selecione</option>
                         <option value="imoveis">Imóveis</option>
                         <option value="veiculos">Veículos</option>
                         <option value="eletronicos">Eletrônicos</option>
                         <option value="eletrodomesticos">Eletrodomésticos</option>
-                        <option value="moveis">Móveis</option>
-                        <option value="industriais">Industriais</option>
-                        <option value="decoracao">Decoração</option>
                     </select>
                 </section>
 
                 <section id="subcategoria-produto">
-                    <label for="subcategoria-produto-label" id="subcategoria-produto-label" name="subcategoria-produto-label">Selecione uma subcategoria:</label>
+                    <label for="subcategoria-produto-input">Subcategoria:</label>
                     <select id="subcategoria-produto-input">
-                        <option>Selecione uma subcategoria</option>
+                        <option>Selecione</option>
                     </select>
                 </section>
             </div>
 
-            <section class="datas-container">
+            <div class="datas-container compact-section">
                 <section id="data-inicio">
-                    <label for="data-inicio-label" name="data-inicio-label" id="data-inicio-label">Data de início:</label>
+                    <label for="data-inicio-input">Data de início:</label>
                     <input type="datetime-local" id="data-inicio-input" name="data-inicio-input">
                 </section>
 
                 <section id="data-fim">
-                    <label for="data-fim-label" id="data-fim-label">Data de Encerramento:</label>
+                    <label for="data-fim-input">Data de término:</label>
                     <input type="datetime-local" id="data-fim-input" name="data-fim-input">
                 </section>
-            </section><br><br>
+            </div>
 
             <div id="titulo2">
-                <h3>Informações de pagamento</h3>
+                <h3>Informações de Pagamento</h3>
                 <hr>
             </div>
 
-            <section id="lance-inicial">
-                <label for="lance-inicial-label" id="lance-inicial-label" name="lance-inicial-label">Lance inicial:</label>
-                <input type="number" id="lance-inicial-input" name="lance-inicial-input" step="0.01" min="0.01" required>
-            </section>
-
-            <section id="pagamento">
+            <section id="pagamento" class="compact-section">
                 <section id="forma-pagamento">
-                    <label for="pagamento-permitido" id="pagamento-permitido-label" name="pagamento-permitido-label">Formas de Pagamento Permitidas:</label>
+                    <label>Formas de Pagamento:</label>
                     <ul>
-                        <li><input type="checkbox" name="Cartão de crédito" id="checkbox-pagamento">Cartão de Crédito</li>
-                        <li><input type="checkbox" name="PIX" id="checkbox-pagamento">PIX</li>
-                        <li><input type="checkbox" name="FGTS" id="checkbox-pagamento">FGTS</li>
-                        <li><input type="checkbox" name="Financiamento" id="checkbox-pagamento">Financiamento</li>
-                        <li></li>
+                        <li><input type="checkbox" name="Cartão de crédito" id="checkbox-cartao"> Cartão de Crédito</li>
+                        <li><input type="checkbox" name="PIX" id="checkbox-pix"> PIX</li>
+                        <li><input type="checkbox" name="FGTS" id="checkbox-fgts"> FGTS</li>
+                        <li><input type="checkbox" name="Financiamento" id="checkbox-financiamento"> Financiamento</li>
                     </ul>
                 </section>
 
                 <section id="parcelas-permitidas">
-                    <label id="parcelas-permitidas-label">Número de Parcelas Permitidas:</label>
+                    <label for="parcelas-permitidas-input">Parcelas:</label>
                     <select id="parcelas-permitidas-input">
-                        <option value="none">Selecione um número</option>
-                        <option value="12x">2x</option>
+                        <option value="none">Selecione</option>
+                        <option value="2x">2x</option>
                         <option value="3x">3x</option>
                         <option value="4x">4x</option>
                         <option value="5x">5x</option>
                         <option value="6x">6x</option>
-                        <option value="7x">7x</option>
-                        <option value="8x">8x</option>
-                        <option value="9x">9x</option>
-                        <option value="10x">10x</option>
-                        <option value="11x">11x</option>
-                        <option value="12x">12x</option>
                     </select>
                 </section>
             </section>
 
-            <section id="aviso">
+            <section id="aviso" class="compact-section">
                 <ul>
-                    <li>Não é permitido alterar a forma de pagamento ou o número de parcelas permitidas após a criação do leilão.</li>
+                    <li>Não é permitido alterar a forma de pagamento após a criação do leilão</li>
                 </ul>
             </section>
 
             <div id="titulo3">
-                <h3>Informações de entrega</h3>
+                <h3>Informações de Entrega</h3>
                 <hr>
             </div>
             
-            <section id="infos-entrega">
-                
+            <section id="infos-entrega" class="compact-section">
+                <div class="infos-entrega-grid">
+                    <div id="estado-leilao">
+                        <label for="estado-leilao-select">Estado:</label>
+                        <select name="estado-leilao" id="estado-leilao-select">
+                            <option>Selecione um estado</option>
+                    <option>Acre - AC</option>
+                    <option>Alagoas - AL</option>
+                    <option>Amapá - AP</option>
+                    <option>Amazonas - AM</option>
+                    <option>Bahia - BA</option>
+                    <option>Ceará - CE</option>
+                    <option>Brasília - DF</option>
+                    <option>Espírito Santo - ES</option>
+                    <option>Goiás - GO</option>
+                    <option>Maranhão - MA</option>
+                    <option>Mato Grosso - MT</option>
+                    <option>Mato Grosso do Sul - MS</option>
+                    <option>Minas Gerais - MG</option>
+                    <option>Pará - PA</option>
+                    <option>Paraíba - PB</option>
+                    <option>Paraná - PR</option>
+                    <option>Pernambuco - PE</option>
+                    <option>Piauí - PI</option>
+                    <option>Rio de Janeiro - RJ</option>
+                    <option>Rio Grande do Norte - RN</option>
+                    <option>Rio Grande do Sul - RS</option>
+                    <option>Rondônia - RO</option>
+                    <option>Roraima - RR</option>
+                    <option>Santa Catarina - SC</option>
+                    <option>São Paulo - SP</option>
+                    <option>Sergipe - SE</option>
+                    <option>Tocantins - TO</option>
+                    </select>
+                    </div>
+
+                    <div id="cidade-leilao">
+                        <label for="cidade-leilao-input">Cidade:</label>
+                        <input type="text" name="cidade-leilao-input" id="cidade-leilao-input">
+                    </div>
+
+                    <div id="cep-leilao">
+                        <label for="cep-leilao-input">CEP:</label>
+                        <input type="text" name="cep-leilao-input" id="cep-leilao-input">
+                    </div>
+
+                    <div id="rua-leilao">
+                        <label for="rua-leilao-input">Rua:</label>
+                        <input type="text" name="rua-leilao-input" id="rua-leilao-input">
+                    </div>
+
+                    <div id="numero-leilao">
+                        <label for="numero-leilao-input">Número:</label>
+                        <input type="text" name="numero-leilao-input" id="numero-leilao-input">
+                    </div>
+
+                    <div id="complemento-leilao" class="infos-entrega-full">
+                        <label for="complemento-leilao-input">Complemento:</label>
+                        <input type="text" name="complemento-leilao-input" id="complemento-leilao-input">
+                    </div>
+                </div>
             </section>
+
+            <section id="termos-condicoes" class="compact-section">
+                <ul>
+                    <li>
+                        <input type="checkbox" id="termo-veracidade"> Declaro que todas as informações são verídicas
+                    </li>
+
+                    <li>
+                        <input type="checkbox" id="termo-condicoes"> Aceito os Termos e Condições
+                    </li>
+                </ul>
+            </section>
+
+            <button type="button" id="criar-leilao-botao">Criar Leilão</button>
         </form>
     </div>
 </body>
