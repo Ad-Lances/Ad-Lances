@@ -140,3 +140,123 @@ function exibirCampo(){
         campoNomeEmpresa.style.display = 'none';
     }
 }
+
+// função de exibirsubcategorias na página de criar leilão
+function exibirCampoSubcategorias(){
+    const subcategoriaCampo = document.getElementById('subcategoria-produto');
+    const categoriaSelect = document.getElementById('categoria-produto-select');
+    const subcategoriaSelect = document.getElementById('subcategoria-produto-select');
+
+    if(categoriaSelect.value === 'imoveis'){
+        subcategoriaSelect.length = 0;
+
+        const options = [
+            new Option('Selecione', 'none'),
+            new Option('Casas', 'casas'),
+            new Option('Apartamentos', 'apartamentos'),
+            new Option('Salas comerciais', 'comerciais'),
+            new Option('Industriais e Galpões', 'industriais_e_galpoes'),
+            new Option('Terrenos', 'terrenos')
+        ];
+
+        options.forEach(option => {
+            subcategoriaSelect.add(option);
+        });
+
+        subcategoriaCampo.style.display = 'block';
+        subcategoriaSelect.style.display = 'block';
+
+    } else if(categoriaSelect.value === 'veiculos'){
+        subcategoriaSelect.length = 0;
+
+        const options = [
+                new Option('Selecione', 'none'),
+                new Option('Carros', 'carros'),
+                new Option('Motocicletas', 'motos'),
+                new Option('Caminhões', 'caminhoes')
+            ];
+
+            options.forEach(option => {
+                subcategoriaSelect.add(option);
+            });
+
+            subcategoriaCampo.style.display = 'block';
+            subcategoriaSelect.style.display = 'block';
+
+    } else if(categoriaSelect.value === 'eletronicos'){
+        subcategoriaSelect.length = 0;
+
+        const options = [
+            new Option('Selecione', 'none'),
+            new Option('Computadores', 'computadores'),
+            new Option('Áudio e Vídeo', 'audio_e_video'),
+            new Option('Videogames', 'videogames'),
+            new Option('Componentes Eletrônicos', 'componentes_eletronicos')
+        ];
+
+        options.forEach(option => {
+            subcategoriaSelect.add(option)
+        });
+
+        subcategoriaCampo.style.display = 'block';
+        subcategoriaSelect.style.display = 'block';
+
+    } else if(categoriaSelect.value === 'eletrodomesticos'){
+        subcategoriaSelect.length = 0;
+
+        const options = [
+            new Option('Selecione', 'none'),
+            new Option('Cozinha', 'cozinha'),
+            new Option('Limpeza', 'limpeza'),
+            new Option('Eletroportáteis', 'eletroportateis')
+        ];
+
+        options.forEach(option => {
+            subcategoriaSelect.add(option);
+        });
+
+        subcategoriaCampo.style.display = 'block';
+        subcategoriaSelect.style.display = 'block';
+
+    } else if(categoriaSelect.value === 'moveis'){
+        subcategoriaSelect.length = 0;
+
+        const options = [
+            new Option('Selecione', 'none'),
+            new Option('Sala de Estar', 'sala_de_estar'),
+            new Option('Cozinha', 'cozinha'),
+            new Option('Quarto', 'quarto'),
+            new Option('Banheiro', 'banheiro'),
+            new Option('Escritório', 'escritorio')
+        ];
+
+        options.forEach(option =>{
+            subcategoriaSelect.add(option);
+        });
+
+        subcategoriaCampo.style.display = 'block';
+        subcategoriaSelect.style.display = 'block';
+
+    } else if(categoriaSelect.value === 'industriais'){
+        subcategoriaSelect.length = 0;
+
+        const options = [
+            new Option('Selecione', 'none'),
+            new Option('Máquinas e Equipamentos Pesados', 'maquinas_pesados'),
+            new Option('Materiais e Insumos Industriais', 'materiais_insumos'),
+            new Option('Ferramentas e Equipamentos de Oficina', 'ferramentas_oficina'),
+            new Option('Acessórios de Máquinas', 'acessorios_maquinas'),
+            new Option('Automação, Robótica e Controle', 'automacao_robotica_controle')
+        ];
+
+        options.forEach(option =>{
+            subcategoriaSelect.add(option)
+        });
+
+        subcategoriaCampo.style.display = 'block';
+        subcategoriaSelect.style.display = 'block';
+    } else{
+        subcategoriaCampo.style.display = 'none';
+        subcategoriaSelect.style.display = 'none';
+    }
+}

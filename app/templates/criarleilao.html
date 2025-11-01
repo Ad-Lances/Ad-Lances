@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/criarleilao.css')}}">
     <script src="https://kit.fontawesome.com/301e8f1b49.js" crossorigin="anonymous"></script>
-    <title>Criar leilão</title>
+    <title>Criar Leilão</title>
 </head>
 <body>
     <nav id="nav">
@@ -51,6 +51,8 @@
         <h2>Adicionar novo leilão</h2>
     </section>
 
+    <section id="mensagem"></section><br><br>
+
     <div id="formularioProduto">
         <form id="form-produto">
             <div id="titulo1">
@@ -87,18 +89,19 @@
             <div class="categorias-container compact-section">
                 <section id="categoria-produto">
                     <label for="categoria-produto-select">Categoria:</label>
-                    <select id="categoria-produto-select">
+                    <select id="categoria-produto-select" onchange="exibirCampoSubcategorias()">
                         <option value="none">Selecione</option>
                         <option value="imoveis">Imóveis</option>
                         <option value="veiculos">Veículos</option>
                         <option value="eletronicos">Eletrônicos</option>
                         <option value="eletrodomesticos">Eletrodomésticos</option>
+                        <option value="industriais">Industriais</option>
                     </select>
                 </section>
 
-                <section id="subcategoria-produto">
+                <section id="subcategoria-produto" style="display: none;">
                     <label for="subcategoria-produto-input">Subcategoria:</label>
-                    <select id="subcategoria-produto-input">
+                    <select id="subcategoria-produto-select">
                         <option>Selecione</option>
                     </select>
                 </section>
@@ -135,12 +138,19 @@
                 <section id="parcelas-permitidas">
                     <label for="parcelas-permitidas-input">Parcelas:</label>
                     <select id="parcelas-permitidas-input">
-                        <option value="none">Selecione</option>
-                        <option value="2x">2x</option>
+                        <option value="none">Selecione um número</option>
+                        <option value="1x">1x</option>
+                        <option value="12x">2x</option>
                         <option value="3x">3x</option>
                         <option value="4x">4x</option>
                         <option value="5x">5x</option>
                         <option value="6x">6x</option>
+                        <option value="7x">7x</option>
+                        <option value="8x">8x</option>
+                        <option value="9x">9x</option>
+                        <option value="10x">10x</option>
+                        <option value="11x">11x</option>
+                        <option value="12x">12x</option>
                     </select>
                 </section>
             </section>
@@ -162,59 +172,59 @@
                         <label for="estado-leilao-select">Estado:</label>
                         <select name="estado-leilao" id="estado-leilao-select">
                             <option>Selecione um estado</option>
-                    <option>Acre - AC</option>
-                    <option>Alagoas - AL</option>
-                    <option>Amapá - AP</option>
-                    <option>Amazonas - AM</option>
-                    <option>Bahia - BA</option>
-                    <option>Ceará - CE</option>
-                    <option>Brasília - DF</option>
-                    <option>Espírito Santo - ES</option>
-                    <option>Goiás - GO</option>
-                    <option>Maranhão - MA</option>
-                    <option>Mato Grosso - MT</option>
-                    <option>Mato Grosso do Sul - MS</option>
-                    <option>Minas Gerais - MG</option>
-                    <option>Pará - PA</option>
-                    <option>Paraíba - PB</option>
-                    <option>Paraná - PR</option>
-                    <option>Pernambuco - PE</option>
-                    <option>Piauí - PI</option>
-                    <option>Rio de Janeiro - RJ</option>
-                    <option>Rio Grande do Norte - RN</option>
-                    <option>Rio Grande do Sul - RS</option>
-                    <option>Rondônia - RO</option>
-                    <option>Roraima - RR</option>
-                    <option>Santa Catarina - SC</option>
-                    <option>São Paulo - SP</option>
-                    <option>Sergipe - SE</option>
-                    <option>Tocantins - TO</option>
-                    </select>
+                            <option>Acre - AC</option>
+                            <option>Alagoas - AL</option>
+                            <option>Amapá - AP</option>
+                            <option>Amazonas - AM</option>
+                            <option>Bahia - BA</option>
+                            <option>Ceará - CE</option>
+                            <option>Brasília - DF</option>
+                            <option>Espírito Santo - ES</option>
+                            <option>Goiás - GO</option>
+                            <option>Maranhão - MA</option>
+                            <option>Mato Grosso - MT</option>
+                            <option>Mato Grosso do Sul - MS</option>
+                            <option>Minas Gerais - MG</option>
+                            <option>Pará - PA</option>
+                            <option>Paraíba - PB</option>
+                            <option>Paraná - PR</option>
+                            <option>Pernambuco - PE</option>
+                            <option>Piauí - PI</option>
+                            <option>Rio de Janeiro - RJ</option>
+                            <option>Rio Grande do Norte - RN</option>
+                            <option>Rio Grande do Sul - RS</option>
+                            <option>Rondônia - RO</option>
+                            <option>Roraima - RR</option>
+                            <option>Santa Catarina - SC</option>
+                            <option>São Paulo - SP</option>
+                            <option>Sergipe - SE</option>
+                            <option>Tocantins - TO</option>
+                        </select>
                     </div>
 
                     <div id="cidade-leilao">
                         <label for="cidade-leilao-input">Cidade:</label>
-                        <input type="text" name="cidade-leilao-input" id="cidade-leilao-input">
+                        <input type="text" name="cidade-leilao-input" id="cidade-leilao-input" placeholder="Digite sua cidade">
                     </div>
 
                     <div id="cep-leilao">
                         <label for="cep-leilao-input">CEP:</label>
-                        <input type="text" name="cep-leilao-input" id="cep-leilao-input">
+                        <input type="text" name="cep-leilao-input" id="cep-leilao-input" placeholder="00000-000">
                     </div>
 
                     <div id="rua-leilao">
-                        <label for="rua-leilao-input">Rua:</label>
-                        <input type="text" name="rua-leilao-input" id="rua-leilao-input">
+                        <label for="rua-leilao-input">Logradouro:</label>
+                        <input type="text" name="rua-leilao-input" id="rua-leilao-input" placeholder="Digite o nome da rua">
                     </div>
 
                     <div id="numero-leilao">
                         <label for="numero-leilao-input">Número:</label>
-                        <input type="text" name="numero-leilao-input" id="numero-leilao-input">
+                        <input type="text" name="numero-leilao-input" id="numero-leilao-input" placeholder="Digite o número">
                     </div>
 
                     <div id="complemento-leilao" class="infos-entrega-full">
                         <label for="complemento-leilao-input">Complemento:</label>
-                        <input type="text" name="complemento-leilao-input" id="complemento-leilao-input">
+                        <input type="text" name="complemento-leilao-input" id="complemento-leilao-input" placeholder="Ex: Casa, Apartamento">
                     </div>
                 </div>
             </section>
@@ -230,9 +240,13 @@
                     </li>
                 </ul>
             </section>
-
-            <button type="button" id="criar-leilao-botao">Criar Leilão</button>
         </form>
+
+        <button type="submit" id="criar-leilao-botao">Criar Leilão</button>
     </div>
+
+    <script src="{{ url_for('static', filename='script/style.js') }}"></script>
+    <script src="{{ url_for('static', filename='script/validacao_leilao.js') }}"></script>
+    <script src="{{ url_for('static', filename='script/criarleilao.js') }}"></script>
 </body>
 </html>
