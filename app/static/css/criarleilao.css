@@ -12,8 +12,11 @@ body {
     padding-top: 140px;
     min-height: 100vh;
     background-image: url('img/background-image.jpg');
+    background-size: cover;
+    background-attachment: fixed;
 }
 
+/* ===== NAVEGAÇÃO RESPONSIVA ===== */
 #nav {
     background-color: #034660;
     width: 100%;
@@ -52,7 +55,7 @@ body {
     background-color: transparent;
 }
 
-#nav-item img, i {
+#nav-item img {
     width: 35px;
     height: auto;
 }
@@ -89,12 +92,15 @@ body {
     width: 20px;
 }
 
-#cabecalho{
+/* ===== CONTEÚDO PRINCIPAL ===== */
+#cabecalho {
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 20px;
-    margin: 20px 0;
+    margin: 40px 0 30px 0;
+    text-align: center;
+    padding: 0 15px;
 }
 
 #titulo1, #titulo2, #titulo3 {
@@ -104,39 +110,45 @@ body {
     align-items: center;
     font-size: 18px;
     margin-top: 25px;
+    text-align: center;
 }
 
 #titulo1 hr, #titulo2 hr, #titulo3 hr {
     color: #034660;
-    width: 350px;
+    width: 100%;
+    max-width: 350px;
     margin-top: 5px;
     margin-bottom: 8px;
 }
 
-#formularioProduto{
-    margin: 30px auto;
+#formularioProduto {
+    margin: 40px auto;
     padding: 30px;
     max-width: 1000px;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: calc(100% - 30px);
 }
 
-#form-produto{
+#form-produto {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-#formularioProduto input, #formularioProduto select, #formularioProduto textarea{
+#formularioProduto input:not([type="checkbox"]), 
+#formularioProduto select, 
+#formularioProduto textarea {
     padding: 10px 12px;
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 14px;
     transition: all 0.2s ease;
+    width: 100%;
 }
 
-#formularioProduto input:focus,
+#formularioProduto input:not([type="checkbox"]):focus,
 #formularioProduto select:focus,
 #formularioProduto textarea:focus {
     border-color: #034660;
@@ -144,7 +156,7 @@ body {
     box-shadow: 0 0 0 2px rgba(3, 70, 96, 0.1);
 }
 
-#formularioProduto label {
+#formularioProduto label:not(.custom-file-upload) {
     font-size: 14px;
     font-weight: 500;
     color: #111111;
@@ -152,45 +164,95 @@ body {
     display: block;
 }
 
-#img-input-produto{
+/* ===== CHECKBOXES CORRIGIDOS ===== */
+#forma-pagamento ul {
+    list-style-type: none;
+    margin-left: 0;
+    margin-top: 5px;
+    padding: 0;
+}
+
+#forma-pagamento ul li {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    gap: 8px;
+}
+
+#forma-pagamento input[type="checkbox"] {
+    cursor: pointer;
+    transform: scale(1.2);
+    margin: 0;
+    flex-shrink: 0;
+}
+
+#termos-condicoes ul {
+    list-style-type: none;
+    margin-left: 0;
+    padding: 0;
+}
+
+#termos-condicoes ul li {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+    line-height: 1.4;
+    font-size: 14px;
+    gap: 10px;
+}
+
+#termos-condicoes input[type="checkbox"] {
+    cursor: pointer;
+    transform: scale(1.2);
+    margin: 2px 0 0 0;
+    flex-shrink: 0;
+}
+
+/* ===== UPLOAD DE IMAGENS ===== */
+#img-input-produto {
     margin-top: 15px;
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
+}
+
+.custom-file-upload {
+    display: block;
+    cursor: pointer;
+    width: 100%;
 }
 
 .file-upload-area {
     width: 100%;
     border: 2px dashed #034660;
     border-radius: 8px;
-    padding: 25px;
+    padding: 40px 20px;
     text-align: center;
     background-color: #f8f9fa;
-    cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
 }
 
 .file-upload-area:hover {
     background-color: #e9f7fe;
     border-color: #046d92;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(3, 70, 96, 0.15);
 }
 
 .file-upload-area i {
-    font-size: 32px;
+    font-size: 48px;
     color: #034660;
-    margin-bottom: 8px;
+    margin-bottom: 15px;
 }
 
 .file-upload-text {
-    font-size: 14px;
+    font-size: 16px;
     color: #034660;
+    font-weight: 500;
     margin-bottom: 5px;
 }
 
 .file-upload-subtext {
-    font-size: 11px;
+    font-size: 12px;
     color: #666;
 }
 
@@ -198,46 +260,7 @@ body {
     display: none;
 }
 
-.preview-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 15px;
-    width: 100%;
-}
-
-.image-preview {
-    position: relative;
-    width: 80px;
-    height: 80px;
-    border-radius: 6px;
-    overflow: hidden;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-}
-
-.image-preview img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.remove-image {
-    position: absolute;
-    top: 3px;
-    right: 3px;
-    background: rgba(255,255,255,0.9);
-    border: none;
-    border-radius: 50%;
-    width: 18px;
-    height: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 12px;
-    font-weight: bold;
-}
-
+/* ===== LAYOUTS DE GRID ===== */
 .compact-section {
     margin: 8px 0;
 }
@@ -248,78 +271,62 @@ body {
     gap: 15px;
 }
 
-#nome-produto input{
+#nome-produto input {
     width: 100%;
     margin-top: 5px;
 }
 
-#descricao-produto textarea{
+#descricao-produto textarea {
     margin-top: 5px;
     width: 100%;
     height: 80px;
     padding: 10px 12px;
     resize: vertical;
     font-family: "Poppins", sans-serif;
+    min-height: 80px;
 }
 
-.categorias-container{
+.categorias-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 15px;
 }
 
-#categoria-produto select, #subcategoria-produto select{
+#categoria-produto select, 
+#subcategoria-produto select {
     width: 100%;
     margin-top: 5px;
 }
 
-.datas-container{
+.datas-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 15px;
 }
 
-#data-inicio-input, #data-fim-input{
+#data-inicio-input, 
+#data-fim-input {
     width: 100%;
     margin-top: 5px;
 }
 
-#lance-inicial-input{
+#lance-inicial-input {
     width: 100%;
     margin-top: 5px;
 }
 
-#pagamento{
+#pagamento {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 15px;
 }
 
-#pagamento input[type="checkbox"] {
-    cursor: pointer;
-    margin-right: 6px;
-    transform: scale(1.1);
-}
-
-#pagamento ul{
-    list-style-type: none;
-    margin-left: 0;
-    margin-top: 5px;
-}
-
-#pagamento ul li {
-    margin-bottom: 5px;
-    display: flex;
-    align-items: center;
-    font-size: 14px;
-}
-
-#parcelas-permitidas select{
+#parcelas-permitidas select {
     margin-top: 5px;
     width: 100%;
 }
 
-#aviso{
+#aviso {
     font-size: 12px;
     color: #555;
     margin-top: 3px;
@@ -330,7 +337,7 @@ body {
     grid-column: 1 / -1;
 }
 
-#aviso li{
+#aviso li {
     list-style-type: none;
 }
 
@@ -345,35 +352,21 @@ body {
     grid-column: 1 / -1;
 }
 
-#estado-leilao select, #cidade-leilao input, #cep-leilao input, #rua-leilao input, #numero-leilao input, #complemento-leilao input {
+#estado-leilao select, 
+#cidade-leilao input, 
+#cep-leilao input, 
+#rua-leilao input, 
+#numero-leilao input, 
+#complemento-leilao input {
     width: 100%;
     margin-top: 5px;
 }
 
-#termos-condicoes{
+#termos-condicoes {
     margin-top: 20px;
     padding: 15px;
     background: #f8f9fa;
     border-radius: 6px;
-}
-
-#termos-condicoes input[type="checkbox"] {
-    cursor: pointer;
-    margin-right: 8px;
-    transform: scale(1.1);
-}
-
-#termos-condicoes ul{
-    list-style-type: none;
-    margin-left: 0;
-}
-
-#termos-condicoes ul li {
-    margin-bottom: 8px;
-    display: flex;
-    align-items: flex-start;
-    line-height: 1.3;
-    font-size: 14px;
 }
 
 #criar-leilao-botao {
@@ -401,21 +394,357 @@ body {
     transform: translateY(0);
 }
 
+/* ===== FOOTER ===== */
+#footer {
+    background-color: #034660;
+    color: #fff;
+    padding: 30px 15px 15px;
+    margin-top: 80px;
+    font-size: 14px;
+}
+
+#footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 25px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+#footer-section {
+    flex: 1;
+    min-width: 180px;
+}
+
+#footer-section h4 {
+    margin-bottom: 12px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+#footer-section ul li {
+    margin-bottom: 6px;
+}
+
+#footer-section a {
+    color: #fff;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+#footer-section a:hover {
+    text-decoration: underline;
+}
+
+#footer-bottom {
+    text-align: center;
+    margin-top: 25px;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    padding-top: 12px;
+    font-size: 12px;
+}
+
+#social-icons {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+    justify-content: center;
+}
+
+#social-icons a svg {
+    transition: transform 0.3s, fill 0.3s;
+}
+
+#social-icons a:hover svg {
+    transform: scale(1.2);
+    fill: #48D1CC;
+}
+
+/* ===== ANIMAÇÕES ===== */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== MEDIA QUERIES ===== */
+
+/* Tablets (768px - 1024px) */
+@media (max-width: 1024px) {
+    body {
+        padding-top: 120px;
+    }
+    
+    #cabecalho {
+        margin: 30px 0 25px 0;
+    }
+    
+    #formularioProduto {
+        margin: 30px auto;
+    }
+    
+    #nav {
+        padding: 8px 15px;
+    }
+    
+    #nav #logo {
+        height: 45px;
+    }
+    
+    #search-container {
+        max-width: 400px;
+    }
+    
+    .file-upload-area {
+        padding: 35px 15px;
+    }
+    
+    .file-upload-area i {
+        font-size: 42px;
+    }
+}
+
 @media (max-width: 768px) {
+    body {
+        padding-top: 110px;
+    }
+    
+    #cabecalho {
+        margin: 25px 0 20px 0;
+        font-size: 18px;
+    }
+    
+    #formularioProduto {
+        margin: 25px auto;
+    }
+    
+    #nav {
+        padding: 6px 12px;
+        height: 70px;
+    }
+    
+    #nav #logo {
+        height: 40px;
+    }
+    
+    #nav-item {
+        font-size: 11px;
+    }
+    
+    #nav-item img {
+        width: 30px;
+    }
+    
+    #search-container {
+        max-width: 300px;
+    }
+    
+    #search-container input[type="text"] {
+        padding: 8px 12px;
+        font-size: 11px;
+    }
+    
+    #search-container button {
+        padding: 8px 12px;
+    }
+    
+    #searchimg {
+        width: 18px;
+    }
+    
     .categorias-container,
     .datas-container,
     #pagamento,
     .infos-entrega-grid,
     .compact-grid {
         grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    #formularioProduto {
+        padding: 25px;
+        margin: 20px;
+        width: calc(100% - 40px);
+    }
+    
+    #titulo1, #titulo2, #titulo3 {
+        font-size: 16px;
+    }
+    
+    .file-upload-area {
+        padding: 30px 15px;
+    }
+    
+    .file-upload-area i {
+        font-size: 38px;
+    }
+    
+    .file-upload-text {
+        font-size: 15px;
+    }
+    
+    #footer {
+        margin-top: 60px;
+    }
+}
+
+@media (max-width: 576px) {
+    body {
+        padding-top: 100px;
+    }
+    
+    #cabecalho {
+        margin: 20px 0 15px 0;
+        font-size: 16px;
+    }
+    
+    #formularioProduto {
+        margin: 20px auto;
+    }
+    
+    #nav {
+        padding: 5px 10px;
+        height: 65px;
+    }
+    
+    #nav ul {
+        gap: 8px;
+    }
+    
+    #nav #logo {
+        height: 35px;
+    }
+    
+    #nav-item {
+        font-size: 10px;
+    }
+    
+    #nav-item img {
+        width: 25px;
+    }
+    
+    #search-container {
+        max-width: 250px;
+    }
+    
+    #search-container input[type="text"] {
+        padding: 6px 10px;
+        font-size: 10px;
+    }
+    
+    #search-container button {
+        padding: 6px 10px;
     }
     
     #formularioProduto {
         padding: 20px;
-        margin: 20px 15px;
+        margin: 15px;
+        width: calc(100% - 30px);
     }
     
-    #titulo1 hr, #titulo2 hr, #titulo3 hr {
-        width: 100%;
+    .file-upload-area {
+        padding: 25px 12px;
+    }
+    
+    .file-upload-area i {
+        font-size: 32px;
+    }
+    
+    .file-upload-text {
+        font-size: 14px;
+    }
+    
+    #footer {
+        margin-top: 50px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding-top: 90px;
+    }
+    
+    #cabecalho {
+        margin: 15px 0 10px 0;
+        font-size: 15px;
+    }
+    
+    #formularioProduto {
+        margin: 15px auto;
+    }
+    
+    #nav {
+        padding: 5px 8px;
+        height: 60px;
+    }
+    
+    #nav #logo {
+        height: 30px;
+    }
+    
+    #nav-item {
+        font-size: 9px;
+    }
+    
+    #nav-item img {
+        width: 22px;
+    }
+    
+    #search-container {
+        max-width: 200px;
+    }
+    
+    #formularioProduto {
+        padding: 15px;
+        margin: 10px;
+        width: calc(100% - 20px);
+    }
+    
+    #titulo1, #titulo2, #titulo3 {
+        font-size: 14px;
+    }
+    
+    .file-upload-area {
+        padding: 20px 10px;
+    }
+    
+    .file-upload-area i {
+        font-size: 28px;
+    }
+    
+    #footer {
+        margin-top: 40px;
+    }
+}
+
+@media (min-width: 1200px) {
+    #formularioProduto {
+        max-width: 1100px;
+    }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+    body {
+        padding-top: 80px;
+    }
+    
+    #cabecalho {
+        margin: 15px 0 10px 0;
+    }
+    
+    #formularioProduto {
+        margin: 10px auto;
+        padding: 20px;
     }
 }

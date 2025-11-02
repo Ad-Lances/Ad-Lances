@@ -1,42 +1,70 @@
 document.addEventListener('DOMContentLoaded', function(){
-    estilizarmensagem();
+    const imgProdutoInput = document.getElementById('img-produto-input');
+    const nomeProdutoInput = document.getElementById('nome-produto-input');
+    const lanceInicialInput = document.getElementById('lance-inicial-input');
+    const descricaoProdutoInput = document.getElementById('descricao-produto-input');
+    const categoriaProdutoInput = document.getElementById('categoria-produto-select');
+    const subcategoriaProdutoInput = document.getElementById('subcategoria-produto-select');
+    const dataInicioInput = document.getElementById('data-inicio-input');
+    const dataFimInput = document.getElementById('data-fim-input');
+
+    const pagamentoCartaoInput = document.getElementById('checkbox-cartao');
+    const pagamentoPIXInput = document.getElementById('checkbox-pix');
+    const pagamentoFGTSInput = document.getElementById('checkbox-fgts');
+    const pagamentoFinanciamentoInput = document.getElementById('checkbox-financiamento');
+    const parcelasPermitidasInput = document.getElementById('parcelas-permitidas-input');
+
+    const UFLeilaoInput = document.getElementById('estado-leilao-select');
+    const cidadeLeilaoInput = document.getElementById('cidade-leilao-input');
+    const CEPLeilaoInput = document.getElementById('cep-leilao-input');
+    const ruaLeilaoInput = document.getElementById('rua-leilao-input');
+    const numeroLeilaoInput = document.getElementById('numero-leilao-input');
+    const complementoLeilaoInput = document.getElementById('complemento-leilao-input');
+    const termosVeracidadeInput = document.getElementById('termo-veracidade');
+    const termosCondicoesInput = document.getElementById('termo-condicoes');
 
     const formularioProduto = document.getElementById('form-produto');
     const mensagem = document.getElementById('mensagem');
 
-    formularioProduto.addEventListener('submit', async(event)=>{
+    formularioProduto.addEventListener('submit', async(event) =>{
         event.preventDefault();
 
-        const imgProduto = document.getElementById('img-produto-input').value;
-        const nomeProduto = document.getElementById('nome-produto-input').value;
-        const lanceInicial = document.getElementById('lance-inicial-input').value;
-        const descricaoProduto = document.getElementById('descricao-produto-input').value;
-        const categoriaProduto = document.getElementById('categoria-produto-select').value;
-        const subcategoriaProduto = document.getElementById('subcategoria-produto-select').value;
-        const dataInicio = document.getElementById('data-inicio-input').value;
-        const dataFim = document.getElementById('data-fim-input').value;
+        const imgProduto = imgProdutoInput.files.length > 0 ? imgProdutoInput.files[0] : null;        
+        const nomeProduto = nomeProdutoInput.value.trim();
+        const lanceInicial = lanceInicialInput.value.trim();
+        const descricaoProduto = descricaoProdutoInput.value.trim();
+        const categoriaProduto = categoriaProdutoInput.value.trim();
+        const subcategoriaProduto = subcategoriaProdutoInput.value.trim();
+        const dataInicio = dataInicioInput.value.trim();
+        const dataFim = dataFimInput.value.trim();
 
-        const pagamentoCartao = document.getElementById('checkbox-cartao').checked;
-        const pagamentoPIX = document.getElementById('checkbox-pix').checked;
-        const pagamentoFGTS = document.getElementById('checkbox-fgts').checked;
-        const pagamentoFinanciamento = document.getElementById('checkbox-financiamento').checked;
-        const parcelasPermitidas = document.getElementById('parcelas-permitidas-input').value;
+        const pagamentoCartao = pagamentoCartaoInput.checked;
+        const pagamentoPIX = pagamentoPIXInput.checked;
+        const pagamentoFGTS = pagamentoFGTSInput.checked;
+        const pagamentoFinanciamento = pagamentoFinanciamentoInput.checked;
+        const parcelasPermitidas = parcelasPermitidasInput.value.trim();
 
-        const UFLeilao = document.getElementById('estado-leilao-select').value;
-        const cidadeLeilao = document.getElementById('cidade-leilao-input').value;
-        const CEPLeilao = document.getElementById('cep-leilao-input').value;
-        const ruaLeilao = document.getElementById('rua-leilao-input').value;
-        const numeroLeilao = document.getElementById('numero-leilao-input').value;
-        const complementoLeilao = document.getElementById('complemento-leilao-input').value;
+        const UFLeilao = UFLeilaoInput.value.trim();
+        const cidadeLeilao = cidadeLeilaoInput.value.trim();
+        const CEPLeilao = CEPLeilaoInput.value.trim();
+        const ruaLeilao = ruaLeilaoInput.value.trim();
+        const numeroLeilao = numeroLeilaoInput.value.trim();
+        const complementoLeilao = complementoLeilaoInput.value.trim();
 
-        const termosVeracidade = document.getElementById('termo-veracidade').checked;
-        const termosCondicoes = document.getElementById('termo-condicoes').checked;
+        const termosVeracidade = termosVeracidadeInput.checked;
+        const termosCondicoes = termosCondicoesInput.checked;
 
-        const camposPreenchidos = verificarCamposLeilao(imgProduto, nomeProduto, lanceInicial, descricaoProduto, categoriaProduto, subcategoriaProduto, dataInicio, dataFim, pagamentoCartao, pagamentoFGTS, pagamentoFinanciamento, pagamentoPIX, parcelasPermitidas, UFLeilao, cidadeLeilao, CEPLeilao, ruaLeilao, numeroLeilao, complementoLeilao, termosCondicoes, termosVeracidade, mensagem);
+        const camposPreenchidos = verificarCamposLeilao(
+        imgProduto, nomeProduto, lanceInicial, descricaoProduto, 
+        categoriaProduto, subcategoriaProduto, dataInicio, dataFim, 
+        pagamentoCartao, pagamentoPIX, pagamentoFGTS, pagamentoFinanciamento, parcelasPermitidas, 
+        UFLeilao, cidadeLeilao, CEPLeilao, ruaLeilao, numeroLeilao, 
+        termosVeracidade, termosCondicoes
+        );
             if (!camposPreenchidos){
+                mensagem.innerHTML = '<i class="fa-solid fa-circle-exclamation" style="margin-right: 8px;"></i> Por favor, preencha todos os campos obrigatórios';
                 estilizarmensagem(mensagem);
                 scrollerro();
-                mensagem.innerHTML = '<i class="fa-solid fa-circle-exclamation" style="margin-right: 8px;"></i> Por favor, preencha todos os campos obrigatórios';
                 return;
             }
 
