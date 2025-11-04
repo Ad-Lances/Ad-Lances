@@ -39,20 +39,23 @@ class UserModel(db.Model):
             return False
         
     def validar_cpf(self, cpf):
-        if len(cpf)<14:
+        if len(cpf)<11:
             return False
         
+        lista_cpf = list(cpf)
+
         soma = 0
         i = 0
-        while(i<len(cpf)):
-            numero = int(cpf[i])
-            multiplicado = numero*9
+        j = 10
+        while(i<9):
+            numero = int(lista_cpf[i])
+            multiplicado = numero*j
 
             soma += multiplicado
             i += 1
+            j -= 1
 
-        soma 
-
-        #if(soma)
+        if (soma*10)%11 == lista_cpf[10]:
+            return False
         
         

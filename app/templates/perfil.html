@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='perfil.css')}}">
+    <title>Perfil</title>
+</head>
+<body>
+    <nav id="nav">
+        <ul>
+            <li>
+                <div id="nav-item">
+                <a href="/"><img id="logo" src="{{ url_for('static', filename='img/logo.png') }}"></a>
+                </div>
+            </li>
+
+            <li>
+                <div id="search-container">
+                    <form>
+                        <input type="text" placeholder="Digite aqui...">
+                        <button type="button"><img src="{{ url_for('static', filename='img/search-icon.png') }}" id="searchimg"></button>
+                    </form>
+                </div>
+            </li>
+
+            <li>
+                <div id="nav-item">
+                    <a href="pagina_criar_leilao">Como vender</a>
+                </div>
+            </li>
+
+            <li>
+                <div id="nav-item">
+                    Fale conosco
+                </div>
+            </li>
+
+
+            {% if session.get('logado') %}
+                <li>
+                    <div id="nav-item">
+                        <div id="img-nav">
+                            <a href="perfil"><img src="{{ url_for('static', filename='img/icons-img/profile-icon.png') }}"></a>
+                        </div>
+                    </div>
+                </li>
+
+                <!--<li>
+                    <div id="nav-item">
+                        Sair
+                    </div>
+                </li>-->
+
+                {% else %}
+                    <div id="img-nav">
+                        <a href="login"><img src="{{ url_for('static', filename='img/icons-img/profile-icon.png') }}"></a>
+                    </div>
+                {% endif %}
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <section id="msg-bemvindo">
+        <h1>Bem vindo, {{user.nome_completo}}!</h1>
+        <hr>
+    </section>
+
+    <div id="leiloes-user">
+        <div id="leilao1">
+            
+        </div>
+    </div>
+</body>
+</html>
