@@ -55,6 +55,17 @@ body {
     height: auto;
 }
 
+#nav-item a{
+    text-decoration: none;
+    color: white;
+}
+
+#nav-item a:hover{
+    text-decoration: underline;
+    line-height: 5px;
+    cursor: pointer;
+}
+
 #search-container {
     flex-grow: 1;
     max-width: 500px;

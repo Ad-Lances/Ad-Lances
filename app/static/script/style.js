@@ -260,3 +260,48 @@ function exibirCampoSubcategorias(){
         subcategoriaSelect.style.display = 'none';
     }
 }
+
+// Função de exibir os campos para editar dados na página de perfil
+function exibirCampoDados(){
+    const editarBotao = document.getElementById('btn-editar');
+
+    const spanNome = document.getElementById('nome-completo');
+    const spanEmail = document.getElementById('email');
+    const spanTelefone = document.getElementById('telefone');
+    const spanEndereco = document.getElementById('endereco');
+
+    const inputNovoNome = document.getElementById('input-nome');
+    const inputNovoEmail = document.getElementById('input-email');
+    const inputNovoTelefone = document.getElementById('input-telefone');
+    const inputNovoCEP = document.getElementById('input-cep');
+    const inputNovaRua = document.getElementById('input-rua');
+    const inputNovoNumero = document.getElementById('input-numero');
+    const divBotoes = document.getElementById('botoes-salvar');
+
+    editarBotao.addEventListener('click', function(){
+        divBotoes.style.display = 'block';
+        spanNome.style.display = 'none';
+        spanEmail.style.display = 'none';
+        spanTelefone.style.display = 'none';
+        spanEndereco.style.display = 'none';
+
+        inputNovoNome.style.display = 'block';
+        inputNovoEmail.style.display = 'block';
+        inputNovoTelefone.style.display = 'block';
+        inputNovoCEP.style.display = 'block';
+        inputNovaRua.style.display = 'block';
+        inputNovoNumero.style.display = 'block';
+
+        const novaSenhaInput = document.createElement('input');
+        novaSenhaInput.type = 'password';
+        novaSenhaInput.style.cssText = `
+        font-size: 1em;
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        background: white;
+        width: 100%;
+        max-width: 250px;
+        text-align: center;`;
+    })
+}

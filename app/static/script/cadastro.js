@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function(){
         const numeroCasa = numeroCasaInput.value.trim();
         const complemento = complementoInput.value.trim();
         const telefone_celular = telefoneCelInput.value.trim();
+        const telefone_residencial = telefoneResInput.value.trim();
 
         const emailCadastro = emailCadastroInput.value.trim();
         const senhaCadastro = senhaCadastroInput.value.trim();
@@ -85,6 +86,8 @@ document.addEventListener('DOMContentLoaded', function(){
                 complemento: complemento,
                 email: emailCadastro,
                 senha: senhaCadastro,
+                telefone: telefoneCelInput,
+                telefone_res: telefoneResInput,
                 cpf: ccpf,
                 cnpj: ccnpj,
                 tipo_pessoa: tipopessoa,

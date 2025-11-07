@@ -339,7 +339,6 @@ hr {
     background: none;
 }
 
-/* CONTAINER PARA OS CAMPOS DE SENHA COM BOTÃO */
 .password-container {
     position: relative;
     display: flex;
@@ -351,7 +350,7 @@ hr {
     width: 100%;
 }
 
-/* ALINHAMENTO DOS CAMPOS DE SENHA NO GRID */
+
 .form-grid > div:has(.password-container) {
     display: flex;
     flex-direction: column;
@@ -361,7 +360,6 @@ hr {
     margin-bottom: 5px;
 }
 
-/* FOOTER ADICIONADO */
 #footer {
     background-color: #034660;
     color: #fff;

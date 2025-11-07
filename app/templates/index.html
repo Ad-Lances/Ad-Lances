@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <script src="https://kit.fontawesome.com/301e8f1b49.js" crossorigin="anonymous"></script>
     <title>Ad-Lances</title>
 </head>
 <body>
@@ -26,7 +27,7 @@
 
             <li>
                 <div id="nav-item">
-                    <a href="pagina_criar_leilao">Como vender</a>
+                    <a href="pagina_criar_leilao">Criar leilão</a>
                 </div>
             </li>
 
@@ -41,20 +42,14 @@
                 <li>
                     <div id="nav-item">
                         <div id="img-nav">
-                            <a href="perfil"><img src="{{ url_for('static', filename='img/icons-img/profile-icon.png') }}"></a>
+                            <a href="perfil_user"><i class="fa-solid fa-circle-user fa-2xl" style="color: #ffffff;"></i></a>
                         </div>
                     </div>
                 </li>
 
-                <!--<li>
-                    <div id="nav-item">
-                        Sair
-                    </div>
-                </li>-->
-
                 {% else %}
-                    <div id="img-nav">
-                        <a href="login"><img src="{{ url_for('static', filename='img/icons-img/profile-icon.png') }}"></a>
+                    <div id="nav-item">
+                        <a href="login">Login</a>
                     </div>
                 {% endif %}
                 </div>
@@ -136,7 +131,7 @@
 
             <div id="infos-leiloeiro">
                 <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Americanas Brasil</span>
+                <span id="leiloeiro-texto">João Silva Santos</span>
             </div>
 
             <div id="views-img">

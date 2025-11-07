@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='perfil.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/perfil.css')}}">
     <title>Perfil</title>
 </head>
 <body>
@@ -46,12 +46,6 @@
                     </div>
                 </li>
 
-                <!--<li>
-                    <div id="nav-item">
-                        Sair
-                    </div>
-                </li>-->
-
                 {% else %}
                     <div id="img-nav">
                         <a href="login"><img src="{{ url_for('static', filename='img/icons-img/profile-icon.png') }}"></a>
@@ -63,14 +57,338 @@
     </nav>
 
     <section id="msg-bemvindo">
-        <h1>Bem vindo, {{user.nome_completo}}!</h1>
+        Bem vindo, {{ usuario.nome_completo }}!
         <hr>
     </section>
 
-    <div id="leiloes-user">
-        <div id="leilao1">
-            
+    <div id="dados-usuario">
+    <div class="dados-container">
+        <!-- Foto de Perfil -->
+        <div class="foto-perfil-container">
+            <div class="foto-perfil">
+                <img src="{{ usuario.foto_url or '/static/images/default-avatar.png' }}" alt="Foto de perfil" id="foto-preview">
+                <div class="foto-actions">
+                    <input type="file" id="foto-input" accept="image/*" style="display: none;">
+                    <button class="btn-foto" id="btn-alterar-foto">Alterar Foto</button>
+                    <button class="btn-foto btn-remover" id="btn-remover-foto" style="display: none;">Remover</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="dados-lista">
+            <div class="dado-item">
+                <span class="dado-label">Nome completo:</span>
+                <div class="dado-content">
+                    <span class="dado-valor" id="nome-completo">{{ usuario.nome_completo }}</span>
+                    <input type="text" class="dado-input" id="input-nome" value="{{ usuario.nome_completo }}" style="display: none;">
+                </div>
+            </div>
+
+            <div class="dado-item">
+                <span class="dado-label">E-mail:</span>
+                <div class="dado-content">
+                    <span class="dado-valor" id="email">{{ usuario.email }}</span>
+                    <input type="email" class="dado-input" id="input-email" value="{{ usuario.email }}" style="display: none;">
+                </div>
+            </div>
+
+            <div class="dado-item">
+                <span class="dado-label">Telefone:</span>
+                <div class="dado-content">
+                    <span class="dado-valor" id="telefone">{{ usuario.telefone or "Não informado" }}</span>
+                    <input type="tel" class="dado-input" id="input-telefone" value="{{ usuario.telefone }}" style="display: none;">
+                </div>
+            </div>
+
+            <div class="dado-item">
+                <span class="dado-label">Endereço:</span>
+                <div class="dado-content">
+                    <span class="dado-valor" id="endereco">{{ usuario.rua }}, {{ usuario.numero }}, {{ usuario.cep }}</span>
+                    <input type="text" class="dado-input" id="input-cep" value="{{ usuario.cep }}" style="display: none;">
+                    <input type="text" class="dado-input" id="input-rua" value="{{ usuario.rua }}" style="display: none;">
+                    <input type="text" class="dado-input" id="input-numero" value="{{ usuario.numero }}" style="display: none;">
+                </div>
+            </div>
+
+            <div class="dados-stats">
+                <div class="stat-item">
+                    <span class="stat-numero">{{ usuario.quantidade_leiloes }}</span>
+                    <span class="stat-label">leilões participados</span>
+                </div>
+
+                <div class="stat-item">
+                    <span class="stat-numero">{{ usuario.leiloes_criados }}</span>
+                    <span class="stat-label">leilões criados</span>
+                </div>
+            </div>
         </div>
     </div>
+</div>
+
+    <div id="botoes-salvar" style="display: none;">
+        <button type="click" id="btn-salvar" class="btn-salvar">Salvar alterações</button>
+        <button type="click" id="btn-cancelar" class="btn-cancelar">Cancelar</button>
+    </div>
+
+    <div id="opcoes">
+        <button type="button">Sair</button>
+        <button type="button">Apagar minha conta</button>
+        <button type="click" id="btn-editar" onclick="exibirCampoDados()">Editar Perfil</button>
+    </div>
+
+    <div id="leiloes-user">
+        <section id="msg-leiloes">
+            Seus leilões
+            <hr>
+        </section>
+
+        <!-- Leilões teste -->
+        <div id="leiloes-criados">
+            <div id="carrossel-leiloes">
+                <div id="leilao">
+                    <img src="{{ url_for('static', filename='img/eletrodom-img/eb2.webp') }}"><br>
+                    Fogão Atlas Mônaco Plus 4 bocas
+                    <br><p id="local">Rio de Janeiro - RJ</p><br>
+                
+                    <div id="infos-leiloeiro">
+                        <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                        <span id="leiloeiro-texto">João Silva Santos</span>
+                    </div>
+                
+                    <div id="views-img">
+                        <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                        <span id="views-count">1000 participantes</span>
+                    </div><br>
+                
+                    <span id="lance">Lance atual:</span><br>
+                    <span id="temporizador">Encerra em: </span>
+                </div>
+
+                <div id="leilao">
+                    <img src="{{ url_for('static', filename='img/moveis-img/eb1.webp') }}"><br>
+                    Cômoda Coliseu J&A Off-White
+                    <br><p id="local">São João de Meriti - RJ</p><br>
+
+                    <div id="infos-leiloeiro">
+                        <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                        <span id="leiloeiro-texto">João Silva Santos</span>
+                    </div>
+
+                    <div id="views-img">
+                        <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                        <span id="views-count">1000 participantes</span>
+                    </div><br>
+
+                    <span id="lance">Lance atual: </span><br>
+                    <span id="temporizador">Encerra em: </span>
+                </div>
+            </div>
+        </div>
+
+        <div id="leiloes-participante">
+            <section id="msg-leiloes">
+                Leilões que você está participando
+                <hr>
+            </section>
+
+            <div id="carrossel-leiloes">
+                <div id="leilao">
+                    <img src="{{ url_for('static', filename='img/veiculos-img/aa1.webp') }}"><br>
+                    Motocicleta BMW R1250
+                    <br><p id="local">Curitiba - PR</p><br>
+
+                    <div id="infos-leiloeiro">
+                        <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                        <span id="leiloeiro-texto">Detran</span>
+                    </div>
+
+                    <div id="views-img">
+                        <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                        <span id="views-count">1000 participantes</span>
+                    </div><br>
+
+                    <span id="lance">Lance atual: </span>
+                    <span id="temporizador">Encerra em: </span>
+                </div>
+
+                <div id="leilao">
+                    <img src="{{ url_for('static', filename='img/eletronicos-img/n1.webp') }}"><br>
+                    Notebook Acer Nitro V15 ANV15-51-58AZ 13ª Geração
+                    <br><p id="local">São Paulo - SP</p><br>
+
+                    <div id="infos-leiloeiro">
+                        <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                        <span id="leiloeiro-texto">Amazon Brasil</span>
+                    </div>
+
+                    <div id="views-img">
+                        <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                        <span id="views-count">1000 participantes</span>
+                    </div><br>
+
+                    <span id="lance">Lance atual: </span><br>
+                    <span id="temporizador">Encerra em: </span>
+                </div>
+
+                <div id="leilao">
+                    <img src="{{ url_for('static', filename='img/eletrodom-img/eb-1.webp ')}}"><br>
+                    Geladeira Electrolux 590L Frost Free Inverter
+                    <br><p id="local">Salvador - BA</p><br>
+
+                    <div id="infos-leiloeiro">
+                        <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                        <span id="leiloeiro-texto">Magazineluiza</span>
+                    </div>
+                
+                    <div id="views-img">
+                        <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                        <span id="views-count">1000 participantes</span>
+                    </div><br>
+                
+                    <span id="lance">Lance atual: </span><br>
+                    <span id="temporizador">Encerra em: </span>
+                </div>
+            </div>
+        </div>
+
+        <div id="leiloes-arrematados">
+            <section id="msg-leiloes">
+                Leilões arrematados
+                <hr>
+            </section>
+
+            <div id="carrossel-leiloes">
+                <div id="leilao">
+                    <img src="{{ url_for('static', filename='img/veiculos-img/tcross.webp ')}}"><br>
+                    Volkswagen T-Cross 1.0 200 TSI 12V Total Flex Automatico 2024 - (Seminovo)
+                    <br><p id="local">São Paulo - SP</p><br>
+
+                    <div id="infos-leiloeiro">
+                        <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                        <span id="leiloeiro-texto">Localiza Seminovos</span>
+                    </div>
+                
+                    <div id="views-img">
+                        <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                        <span id="views-count">1000 participantes</span>
+                    </div><br>
+                
+                    <span id="lance">Lance atual: </span><br>
+                    <span id="temporizador">Encerra em: </span>
+                </div>
+
+                <div id="leilao">
+                    <img src="{{ url_for('static', filename='img/eletronicos-img/ps4.webp ')}}"><br>
+                    Console PS4 PRO - 1TB +2 controles + 1 jogo com 2 Anos de Garantia - Sony
+                    <br><p id="local">São Paulo - SP</p><br>
+
+                    <div id="infos-leiloeiro">
+                        <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                        <span id="leiloeiro-texto">JF Games</span>
+                    </div>
+                
+                    <div id="views-img">
+                        <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                        <span id="views-count">1000 participantes</span>
+                    </div><br>
+                
+                    <span id="lance">Lance atual: </span><br>
+                    <span id="temporizador">Encerra em: </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="historico-leiloes">
+        <section id="msg-leiloes">
+            Histórico de Lances
+            <hr>
+        </section>
+
+        <table id="tabela-historico">
+        <thead>
+            <tr>
+                <th>Produto</th>
+                <th>Valor do Lance</th>
+                <th>Data/Hora</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Motocicleta BMW R1250</td>
+                <td>R$ 65.250,00</td>
+                <td>01/11/2024 14:30</td>
+                <td class="status-ativo">Ativo</td>
+            </tr>
+            <tr>
+                <td>Notebook Acer Nitro V15 ANV15-51-58AZ 13ª Geração</td>
+                <td>R$ 4.900,00</td>
+                <td>29/10/2025 14:25</td>
+                <td class="status-superado">Superado</td>
+            </tr>
+            <tr>
+                <td>Geladeira Electrolux 590L Frost Free Inverter</td>
+                <td>R$ 5.150,00</td>
+                <td>31/10/2025 20:09</td>
+                <td class="status-ativo">Ativo</td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+
+    <footer id="footer">
+        <div id="footer-container">
+            <div id="footer-section">
+                <h4>Sobre nós</h4>
+                <ul>
+                    <li><a href="#">A empresa</a></li>
+                    <li><a href="#">Política de privacidade</a></li>
+                    <li><a href="#">Como funciona</a></li>
+                    <li><a href="#">Como vender</a></li>
+                </ul>
+            </div>
+
+            <div id="footer-section">
+                <h4>Contato</h4>
+                <p><strong>E-mail:</strong> adlances@gmail.com</p>
+                <p><strong>Telefone:</strong> (11) 5567-3452</p>
+                <p><a href="#">Perguntas frequentes</a></p>
+            </div>
+
+            <div id="footer-section">
+                <h4>Redes sociais</h4>
+                <div id="social-icons">
+                    <a href="#" aria-label="Instagram">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9a5.5 5.5 0 0 1-5.5 5.5h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2zm0 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4h-9zm4.5 3a5.5 5.5 0 1 1 0 11a5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7zm5.25-.75a.75.75 0 1 1 0 1.5a.75.75 0 0 1 0-1.5z"/>
+                        </svg>
+                     </a>
+
+                    <a href="#" aria-label="Facebook">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M13.5 22V12.75h3l.5-4h-3.5V6.5c0-1.1.3-1.9 2-1.9h1.6V1.2c-.3 0-1.4-.2-2.7-.2c-2.7 0-4.6 1.6-4.6 4.7V8.7H7v4h3.8V22h2.7z"/>
+                        </svg>
+                    </a>
+
+                    <a href="#" aria-label="LinkedIn">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M4.98 3.5A2.5 2.5 0 1 1 5 8.5a2.5 2.5 0 0 1-.02-5zM3 9h4v12H3zm7 0h3.7v1.6h.1c.5-.9 1.7-1.8 3.4-1.8c3.6 0 4.3 2.4 4.3 5.6V21h-4v-5.2c0-1.2 0-2.7-1.7-2.7c-1.8 0-2 1.3-2 2.6V21h-4z"/>
+                        </svg>
+                    </a>
+            </div>
+        </div>
+
+        <div id="footer-section">
+            <h4>Localização</h4>
+            <p>Av. Paulista, 1167 - Bela Vista</p>
+        </div>
+        </div>
+        <div id="footer-bottom">
+            <p>© AdLances. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script/style.js')}}"></script>
 </body>
 </html>

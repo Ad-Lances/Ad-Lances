@@ -59,9 +59,16 @@ def logar():
     if usuario and usuario.verify_senha(senha):
         session['logado'] = True
         session['usuario_id'] = usuario.id
-        return jsonify({"sucesso": f"Bem-vindo(a), {usuario.nome_completo}!"})
+        session['nome_completo'] = usuario.nome_completo
+
+        return jsonify({"sucesso": True, "redirect": "/"})
     else:
         return jsonify({"erro": "Email ou senha inválidos."})
+    
+@bp.route('/perfil')
+def perfil_user():
+    usuario = UserModel.query.get(session['usuario_id'])
+    return render_template('perfil.html', usuario=usuario)
 
 @bp.route('/imoveis')
 def imoveis():
