@@ -27,7 +27,7 @@
 
             <li>
                 <div id="nav-item">
-                    Como vender
+                    Criar leilão
                 </div>
             </li>
 
@@ -37,16 +37,24 @@
                 </div>
             </li>
 
-            <li>
-                <div id="nav-item">
-                    <div id="img-nav">
-                        <a href="login"><i class="fa-solid fa-circle-user fa-2xl" style="color: #ffffff;"></i></a>
+            {% if session.get('logado') %}
+                <li>
+                    <div id="nav-item">
+                        <div id="img-nav">
+                            <a href="perfil"><i class="fa-solid fa-circle-user fa-2xl" style="color: #ffffff;"></i></a>
+                        </div>
                     </div>
-                </div>
-            </li>
+                </li>
+
+                {% else %}
+                    <div id="nav-item">
+                        <a href="login">Login</a>
+                    </div>
+            {% endif %}
         </ul>
     </nav>
 
+    {% if session.get('logado') %}
     <section id="cabecalho">
         <h2>Adicionar novo leilão</h2>
     </section>
@@ -246,6 +254,23 @@
             <button type="submit" id="criar-leilao-botao">Criar Leilão</button>
         </form>
     </div>
+
+    {% else %}
+
+    <div id="mensagem-login">
+        <h3>Você está quase lá!</h3>
+        <hr>
+
+        <section id="descricao-mensagem-login">
+            Faça login para leiloar seus produtos por preços incríveis!
+        </section>
+
+        <section id="link-login">
+            <a href="login"><button id="redirect-login">Faça login</button></a>
+        </section>
+    </div>
+
+    {% endif %}
 
     <footer id="footer">
         <div id="footer-container">

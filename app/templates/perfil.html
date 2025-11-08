@@ -26,7 +26,7 @@
 
             <li>
                 <div id="nav-item">
-                    <a href="pagina_criar_leilao">Como vender</a>
+                    <a href="/novoleilao">Criar leilão</a>
                 </div>
             </li>
 
@@ -47,8 +47,10 @@
                 </li>
 
                 {% else %}
-                    <div id="img-nav">
-                        <a href="login"><img src="{{ url_for('static', filename='img/icons-img/profile-icon.png') }}"></a>
+                    <div id="nav-item">
+                        <div id="img-nav">
+                            <a href="login"><img src="{{ url_for('static', filename='img/icons-img/profile-icon.png') }}"></a>
+                        </div>
                     </div>
                 {% endif %}
                 </div>
@@ -63,17 +65,6 @@
 
     <div id="dados-usuario">
     <div class="dados-container">
-        <!-- Foto de Perfil -->
-        <div class="foto-perfil-container">
-            <div class="foto-perfil">
-                <img src="{{ usuario.foto_url or '/static/images/default-avatar.png' }}" alt="Foto de perfil" id="foto-preview">
-                <div class="foto-actions">
-                    <input type="file" id="foto-input" accept="image/*" style="display: none;">
-                    <button class="btn-foto" id="btn-alterar-foto">Alterar Foto</button>
-                    <button class="btn-foto btn-remover" id="btn-remover-foto" style="display: none;">Remover</button>
-                </div>
-            </div>
-        </div>
 
         <div class="dados-lista">
             <div class="dado-item">
@@ -110,6 +101,13 @@
                 </div>
             </div>
 
+            <div class="dado-item" id="dado-senha" style="display: none;">
+                <span class="dado-label">Senha:</span>
+                <div class="dado-content">
+                    <input type="password" class="dado-input" id="input-nova-senha" placeholder="Nova senha" style="display: none;">
+                </div>
+            </div>
+
             <div class="dados-stats">
                 <div class="stat-item">
                     <span class="stat-numero">{{ usuario.quantidade_leiloes }}</span>
@@ -128,6 +126,10 @@
     <div id="botoes-salvar" style="display: none;">
         <button type="click" id="btn-salvar" class="btn-salvar">Salvar alterações</button>
         <button type="click" id="btn-cancelar" class="btn-cancelar">Cancelar</button>
+    </div>
+
+    <div id="msg-editar-conta">
+        <section id="mensagem"></section>
     </div>
 
     <div id="opcoes">
@@ -335,7 +337,7 @@
             </tr>
         </tbody>
         </table>
-    </div>
+    </div><br><br><br><br>
 
     <footer id="footer">
         <div id="footer-container">
@@ -390,5 +392,6 @@
     </footer>
 
     <script src="{{ url_for('static', filename='script/style.js')}}"></script>
+    <script src="{{ url_for('static', filename='script/alterar_cadastro.js')}}"></script>
 </body>
 </html>

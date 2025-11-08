@@ -38,24 +38,32 @@ class UserModel(db.Model):
         if not any(char in senha for char in caracteres_especiais):
             return False
         
-    def validar_cpf(self, cpf):
-        if len(cpf)<11:
+    def validar_cpf(cpf):
+        cpf = ''.join(filter(str.isdigit, cpf))
+    
+        if len(cpf) != 11:
             return False
         
-        lista_cpf = list(cpf)
-
-        soma = 0
-        i = 0
-        j = 10
-        while(i<9):
-            numero = int(lista_cpf[i])
-            multiplicado = numero*j
-
-            soma += multiplicado
-            i += 1
-            j -= 1
-
-        if (soma*10)%11 == lista_cpf[10]:
+        if cpf == cpf[0] * 11:
             return False
+        
+        soma = 0
+        for i in range(9):
+            soma += int(cpf[i]) * (10 - i)
+        
+        resto = soma % 11
+        digito1 = 0 if resto < 2 else 11 - resto
+        
+        if digito1 != int(cpf[9]):
+            return False
+        
+        soma = 0
+        for i in range(10):
+            soma += int(cpf[i]) * (11 - i)
+        
+        resto = soma % 11
+        digito2 = 0 if resto < 2 else 11 - resto
+        
+        return digito2 == int(cpf[10])
         
         

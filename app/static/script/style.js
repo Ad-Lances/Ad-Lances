@@ -124,20 +124,20 @@ function exibirCampo(){
     const campoNomeEmpresa = document.getElementById('nomeEmpresa');
     
     if (tipoDeConta.value === 'Pessoa Física'){
-        campoCNPJ.style.display = 'none';
-        campoNomeEmpresa.style.display = 'none';
+        campoCNPJ.style.display = 'block';
+        campoNomeEmpresa.style.display = 'block';
         campoCPF.style.display = 'block';
         campoCPF.style.width = '50%';
     } else if(tipoDeConta.value === 'Pessoa Jurídica'){
-        campoCPF.style.display = 'none';
+        campoCPF.style.display = 'block';
         campoCNPJ.style.display = 'block';
         campoNomeEmpresa.style.display = 'block';
         campoNomeEmpresa.style.width = '50%';
         campoCNPJ.style.width = '50%';
     } else{
-        campoCPF.style.display = 'none';
-        campoCNPJ.style.display = 'none';
-        campoNomeEmpresa.style.display = 'none';
+        campoCPF.style.display = 'block';
+        campoCNPJ.style.display = 'block';
+        campoNomeEmpresa.style.display = 'block';
     }
 }
 
@@ -151,7 +151,7 @@ function exibirCampoSubcategorias(){
         subcategoriaSelect.length = 0;
 
         const options = [
-            new Option('Selecione', 'none'),
+            new Option('Selecione', 'block'),
             new Option('Casas', 'casas'),
             new Option('Apartamentos', 'apartamentos'),
             new Option('Salas comerciais', 'comerciais'),
@@ -170,7 +170,7 @@ function exibirCampoSubcategorias(){
         subcategoriaSelect.length = 0;
 
         const options = [
-                new Option('Selecione', 'none'),
+                new Option('Selecione', 'block'),
                 new Option('Carros', 'carros'),
                 new Option('Motocicletas', 'motos'),
                 new Option('Caminhões', 'caminhoes')
@@ -187,7 +187,7 @@ function exibirCampoSubcategorias(){
         subcategoriaSelect.length = 0;
 
         const options = [
-            new Option('Selecione', 'none'),
+            new Option('Selecione', 'block'),
             new Option('Computadores', 'computadores'),
             new Option('Áudio e Vídeo', 'audio_e_video'),
             new Option('Videogames', 'videogames'),
@@ -205,7 +205,7 @@ function exibirCampoSubcategorias(){
         subcategoriaSelect.length = 0;
 
         const options = [
-            new Option('Selecione', 'none'),
+            new Option('Selecione', 'block'),
             new Option('Cozinha', 'cozinha'),
             new Option('Limpeza', 'limpeza'),
             new Option('Eletroportáteis', 'eletroportateis')
@@ -222,7 +222,7 @@ function exibirCampoSubcategorias(){
         subcategoriaSelect.length = 0;
 
         const options = [
-            new Option('Selecione', 'none'),
+            new Option('Selecione', 'block'),
             new Option('Sala de Estar', 'sala_de_estar'),
             new Option('Cozinha', 'cozinha'),
             new Option('Quarto', 'quarto'),
@@ -241,7 +241,7 @@ function exibirCampoSubcategorias(){
         subcategoriaSelect.length = 0;
 
         const options = [
-            new Option('Selecione', 'none'),
+            new Option('Selecione', 'block'),
             new Option('Máquinas e Equipamentos Pesados', 'maquinas_pesados'),
             new Option('Materiais e Insumos Industriais', 'materiais_insumos'),
             new Option('Ferramentas e Equipamentos de Oficina', 'ferramentas_oficina'),
@@ -256,8 +256,8 @@ function exibirCampoSubcategorias(){
         subcategoriaCampo.style.display = 'block';
         subcategoriaSelect.style.display = 'block';
     } else{
-        subcategoriaCampo.style.display = 'none';
-        subcategoriaSelect.style.display = 'none';
+        subcategoriaCampo.style.display = 'block';
+        subcategoriaSelect.style.display = 'block';
     }
 }
 
@@ -269,6 +269,7 @@ function exibirCampoDados(){
     const spanEmail = document.getElementById('email');
     const spanTelefone = document.getElementById('telefone');
     const spanEndereco = document.getElementById('endereco');
+    const dadoSenha = document.getElementById('dado-senha');
 
     const inputNovoNome = document.getElementById('input-nome');
     const inputNovoEmail = document.getElementById('input-email');
@@ -276,32 +277,53 @@ function exibirCampoDados(){
     const inputNovoCEP = document.getElementById('input-cep');
     const inputNovaRua = document.getElementById('input-rua');
     const inputNovoNumero = document.getElementById('input-numero');
+    const inputNovaSenha = document.getElementById('input-nova-senha');
     const divBotoes = document.getElementById('botoes-salvar');
+    const btnCancelar = document.getElementById('btn-cancelar');
 
     editarBotao.addEventListener('click', function(){
-        divBotoes.style.display = 'block';
-        spanNome.style.display = 'none';
-        spanEmail.style.display = 'none';
-        spanTelefone.style.display = 'none';
-        spanEndereco.style.display = 'none';
+        divBotoes.style.display = 'flex';
+        spanNome.style.display = 'block';
+        spanEmail.style.display = 'block';
+        spanTelefone.style.display = 'block';
+        spanEndereco.style.display = 'block';
 
+        dadoSenha.style.display = 'flex';
         inputNovoNome.style.display = 'block';
         inputNovoEmail.style.display = 'block';
         inputNovoTelefone.style.display = 'block';
         inputNovoCEP.style.display = 'block';
         inputNovaRua.style.display = 'block';
         inputNovoNumero.style.display = 'block';
+        inputNovaSenha.style.display = 'block';
 
         const novaSenhaInput = document.createElement('input');
         novaSenhaInput.type = 'password';
         novaSenhaInput.style.cssText = `
-        font-size: 1em;
+        font-size: 0.95em;
         padding: 8px 12px;
         border: 1px solid #ddd;
         border-radius: 6px;
         background: white;
         width: 100%;
-        max-width: 250px;
-        text-align: center;`;
+        text-align: left;
+        max-width: 250px;`;
+    })
+
+    btnCancelar.addEventListener('click', function(){
+        spanNome.style.display = 'block';
+        spanEmail.style.display = 'block';
+        spanTelefone.style.display = 'block';
+        spanEndereco.style.display = 'block';
+
+        dadoSenha.style.display = 'none';
+        inputNovoNome.style.display = 'none';
+        inputNovoEmail.style.display = 'none';
+        inputNovoTelefone.style.display = 'none';
+        inputNovoCEP.style.display = 'none';
+        inputNovaRua.style.display = 'none';
+        inputNovoNumero.style.display = 'none';
+        inputNovaSenha.style.display = 'none';
+        divBotoes.style.display = 'none';
     })
 }

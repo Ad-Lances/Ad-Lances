@@ -394,6 +394,74 @@ body {
     transform: translateY(0);
 }
 
+#mensagem-login {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    color: white;
+    text-align: center;
+    margin: 30px 0;
+    border: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#mensagem-login h3 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: 0.5px;
+}
+
+#mensagem-login hr {
+    border: none;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.3);
+    margin: 25px auto;
+    width: 80px;
+    border-radius: 2px;
+}
+
+#descricao-mensagem-login {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    opacity: 0.9;
+    font-weight: 400;
+}
+
+#link-login {
+    margin-top: 10px;
+}
+
+#redirect-login {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    padding: 15px 40px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    letter-spacing: 0.5px;
+}
+
+#redirect-login:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.8);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+#mensagem-login:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
 /* ===== FOOTER ===== */
 #footer {
     background-color: #034660;

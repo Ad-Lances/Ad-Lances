@@ -36,7 +36,7 @@ body {
 }
 
 #nav #logo {
-    height: 40px;
+    height: 45px;
     width: auto;
     object-fit: contain;
 }
@@ -51,7 +51,7 @@ body {
 }
 
 #nav-item img {
-    width: 30px;
+    width: 32px;
     height: auto;
 }
 
@@ -95,15 +95,22 @@ body {
 }
 
 #searchimg {
-    width: 16px;
+    width: 18px;
+}
+
+#img-nav img {
+    width: 32px;
+    height: 32px;
 }
 
 #msg-bemvindo {
+    align-items: center;
+    justify-content: center;
     text-align: center;
     margin-bottom: 30px;
-    margin-top: 20px;
+    margin-top: 50px;
     color: #034660;
-    font-size: 24px;
+    font-size: 30px;
     font-weight: 600;
 }
 
@@ -228,7 +235,7 @@ body {
 .dado-valor {
     font-size: 0.95em;
     color: #1a1a1a;
-    font-weight: 500;
+    font-weight: 400;
     text-align: left;
     word-wrap: break-word;
     width: 100%;
@@ -243,6 +250,7 @@ body {
     width: 100%;
     text-align: left;
     max-width: 250px;
+    font-weight: 400;
 }
 
 .endereco-inputs {
@@ -260,55 +268,6 @@ body {
     outline: none;
     border-color: #2c5aa0;
     box-shadow: 0 0 0 2px rgba(44, 90, 160, 0.1);
-}
-
-.dados-actions {
-    margin-top: 20px;
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.btn-editar, .btn-salvar, .btn-cancelar {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 6px;
-    font-size: 0.85em;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: 500;
-    min-width: 140px;
-}
-
-.btn-editar {
-    background: #2c5aa0;
-    color: white;
-}
-
-.btn-editar:hover {
-    background: #1e3d72;
-    transform: translateY(-1px);
-}
-
-.btn-salvar {
-    background: #28a745;
-    color: white;
-}
-
-.btn-salvar:hover {
-    background: #218838;
-    transform: translateY(-1px);
-}
-
-.btn-cancelar {
-    background: #6c757d;
-    color: white;
-}
-
-.btn-cancelar:hover {
-    background: #5a6268;
-    transform: translateY(-1px);
 }
 
 .dados-stats {
@@ -351,6 +310,36 @@ body {
     gap: 10px;
     justify-content: center;
     flex-wrap: wrap;
+    width: 100%;
+}
+
+.btn-salvar, .btn-cancelar {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.85em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    min-width: 140px;
+}
+
+.btn-salvar {
+    background: #28a745;
+    color: white;
+}
+
+.btn-salvar:hover {
+    background: #218838;
+}
+
+.btn-cancelar {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-cancelar:hover {
+    background: #5a6268;
 }
 
 #opcoes {
@@ -375,6 +364,7 @@ body {
     color: white;
     cursor: pointer;
     min-width: 150px;
+    font-weight: 500;
 }
 
 #opcoes button:hover {
@@ -382,14 +372,14 @@ body {
 }
 
 #leiloes-user {
-    margin-top: 80px;
+    margin-top: 150px;
     padding: 0 15px;
 }
 
 #msg-leiloes {
     margin-top: 60px;
     text-align: center;
-    font-size: 24px;
+    font-size: 28px;
     color: black;
     font-weight: 600;
 }
@@ -444,56 +434,66 @@ body {
 #views-img, #infos-leiloeiro {
     display: flex;
     align-items: center;
-    gap: 5px;
+    justify-content: center;
+    gap: 8px;
     margin-top: 12px;
+    width: 100%;
 }
 
 #views-img img, #infos-leiloeiro img {
-    width: 18px;
-    height: 18px;
+    width: 25px;
+    height: 25px;
     object-fit: contain;
 }
 
 #views-count {
-    font-size: 12px;
+    font-size: 14px;
     color: #666;
     margin-bottom: 4px;
+    font-weight: 400;
 }
 
 #leiloeiro-texto {
-    font-size: 12px;
+    font-size: 14px; /* Proporcional ao resto */
     color: #666;
     margin-bottom: 8px;
+    font-weight: 400;
 }
 
 #local {
     font-size: 14px;
     color: #666;
     margin: 8px 0;
+    font-weight: 400;
 }
 
 #lance, #temporizador {
-    font-size: 11px;
-    font-weight: bold;
+    font-size: 13px;
+    font-weight: 500;
     text-align: center;
     margin-top: 8px;
+    font-weight: 500;
 }
 
 #leiloes-participante, #leiloes-arrematados, #historico-leiloes {
-    margin-top: 100px;
+    margin-top: 150px;
     padding: 0 15px;
 }
 
+#historico-lances{
+    margin-bottom: 150px;
+}
+
 #tabela-historico {
-    width: 100%;
-    max-width: 100%;
+    width: 95%;
+    max-width: 800px;
     margin: 20px auto;
     border-collapse: collapse;
     background: white;
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    font-size: 0.9em;
+    font-size: 0.95em;
 }
 
 #tabela-historico thead {
@@ -527,8 +527,9 @@ body {
 #tabela-historico td {
     padding: 12px 12px;
     color: #333;
-    font-size: 0.85em;
+    font-size: 0.9em;
     border: none;
+    font-weight: 400;
 }
 
 #tabela-historico td:first-child {
@@ -538,12 +539,12 @@ body {
 
 .status-ativo {
     color: #28a745;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .status-superado {
     color: #dc3545;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 #footer {
@@ -571,7 +572,7 @@ body {
 #footer-section h4 {
     margin-bottom: 12px;
     font-size: 15px;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 #footer-section ul {
@@ -629,11 +630,11 @@ body {
     }
     
     #nav #logo {
-        height: 35px;
+        height: 38px;
     }
     
-    #nav-item img {
-        width: 25px;
+    #nav-item img, #img-nav img {
+        width: 28px;
     }
     
     #nav-item a {
@@ -703,7 +704,8 @@ body {
     }
     
     #tabela-historico {
-        font-size: 0.8em;
+        font-size: 0.85em;
+        max-width: 95%;
     }
     
     #tabela-historico th,
@@ -743,16 +745,6 @@ body {
         width: 120px;
     }
     
-    .dados-actions {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .btn-editar, .btn-salvar, .btn-cancelar {
-        width: 100%;
-        max-width: 200px;
-    }
-    
     #opcoes {
         flex-direction: column;
         align-items: center;
@@ -785,27 +777,5 @@ body {
     
     #social-icons {
         justify-content: center;
-    }
-}
-
-@media (min-width: 1200px) {
-    #carrossel-leiloes {
-        gap: 25px;
-    }
-    
-    #leilao {
-        flex: 1 1 280px;
-        max-width: 280px;
-    }
-}
-
-@media (min-width: 1400px) {
-    #carrossel-leiloes {
-        max-width: 1400px;
-    }
-    
-    #leilao {
-        flex: 1 1 300px;
-        max-width: 300px;
     }
 }
