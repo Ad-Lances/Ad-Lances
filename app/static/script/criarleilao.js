@@ -88,5 +88,25 @@ document.addEventListener('DOMContentLoaded', function(){
                 scrollerro();
                 return;
             }
+
+        const formData = new FormData()
+        formData.append("nome", nomeProduto)
+        formData.append("descricao", descricaoProduto)
+        formData.append("categoria", categoriaProduto)
+        formData.append("subcategoria", subcategoriaProduto)
+        formData.append("data_inicio", dataInicio)
+        formData.append("data_fim", dataFim)
+        formData.append("lance_inicial", lanceInicial)
+        formData.append("pagamento", pagamentoCartao)
+        formData.append("parcelas", parcelasPermitidas)
+        formData.append("foto", imgProduto)
+
+        const resposta = await fetch('/criarleilao', {
+            method: 'POST',
+            body: formData
+        }
+        )
+        const resultado = await resposta.json()
+
     })
 })

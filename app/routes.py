@@ -100,11 +100,21 @@ def pagina_criar_leilao():
 
 @bp.route('/criarleilao', methods=['POST'])
 def criar_leilao():
-    dados = request.get_json()
-    imagem = request.files.get('img')
-    
-    if imagem:
-        upload = cloudinary.uploader.upload(imagem, transformation=[{"fetch_format": "auto", "quality": "auto:best"}])
+    dados = {
+        "nome": request.form.get("nome"),
+        "descricao": request.form.get("descricao"),
+        "categoria": request.form.get("categoria"),
+        "subcategoria": request.form.get("subcategoria"),
+        "data_inicio": request.form.get("data_inicio"),
+        "data_fim": request.form.get("data_fim"),
+        "lance_inicial": request.form.get("lance_inicial"),
+        "pagamento": request.form.get("pagamento"),
+        "parcelas": request.form.get("parcelas")
+    }
+    foto = request.files.get("foto")
+
+    if foto:
+        upload = cloudinary.uploader.upload(foto, transformation=[{"fetch_format": "auto", "quality": "auto:best"}])
         url_imagem = upload.get('secure_url')
     else:
         url_imagem = None
