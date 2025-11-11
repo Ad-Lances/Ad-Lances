@@ -107,6 +107,12 @@ document.addEventListener('DOMContentLoaded', function(){
         }
         )
         const resultado = await resposta.json()
-
-    })
+        if (resultado.sucesso){
+            mensagem.innerHTML = resultado.sucesso;
+            setTimeout(() => {
+                window.location.href = '/'
+            }, 2000);
+        }
+        
+})
 })

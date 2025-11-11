@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, jsonify, session, redirect, url_for
 from .models.user import UserModel
 from .models.leiloes import LeilaoModel
+from .models.lances import Lances
 from . import db
 from . import cloudinary
 import cloudinary.uploader
@@ -127,12 +128,31 @@ def criar_leilao():
         data_inicio=dados['data_inicio'],
         data_fim=dados['data_fim'],
         lance_inicial=dados['lance_inicial'],
+        lance_atual=dados['lance_inicial'],
         pagamento=dados['pagamento'],
         parcelas=dados['parcelas'],
-        imagem_url=url_imagem
+        foto=url_imagem
     )
     
     db.session.add(novo_leilao)
     db.session.commit()
     
     return jsonify({'sucesso': f'Leilão {novo_leilao.nome} criado com sucesso!'})
+
+@bp.route('/novolance', methods=['POST'])
+def novo_lance():
+    dados = request.get_json()
+    leilaoid = request.args.get('leilao')
+    leilao = LeilaoModel.query.filter_by(id=leilaoid).first()   
+    if leilao:
+        if dados['lance'] > leilao.lance_atual:
+            leilao.lance_atual = dados['lance']
+            novo_lance = Lances(
+                valor=dados['lance'],
+                horario=dados['horario'],
+                id_leilao=leilao.id,
+                id_usuario=session['usuario_id']
+            )
+            db.session.add(novo_lance)
+            db.session.commit()
+            return jsonify({'sucesso': 'Lance registrado com sucesso!'})
