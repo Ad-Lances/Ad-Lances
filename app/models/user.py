@@ -14,6 +14,7 @@ class UserModel(db.Model):
     unid_federativa = db.Column(db.String(50), nullable=False)
     cidade = db.Column(db.String(100), nullable=False)
     rua = db.Column(db.String(150), nullable=False)
+    #colocar a coluna de bairro
     numero = db.Column(db.String(10), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     senha_hash = db.Column(db.String(255), nullable=False)

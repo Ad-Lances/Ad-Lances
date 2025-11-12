@@ -117,6 +117,7 @@ function scrollerro(){
     }
 }
 
+
 function exibirCampo(){
     const tipoDeConta = document.getElementById('tipo-de-conta');
     const campoCPF = document.getElementById('campoCpf');
@@ -124,22 +125,68 @@ function exibirCampo(){
     const campoNomeEmpresa = document.getElementById('nomeEmpresa');
     
     if (tipoDeConta.value === 'Pessoa Física'){
-        campoCNPJ.style.display = 'block';
-        campoNomeEmpresa.style.display = 'block';
         campoCPF.style.display = 'block';
         campoCPF.style.width = '50%';
+        campoCNPJ.style.display = 'none';
+        campoNomeEmpresa.style.display = 'none';
     } else if(tipoDeConta.value === 'Pessoa Jurídica'){
-        campoCPF.style.display = 'block';
+        campoCPF.style.display = 'none';
         campoCNPJ.style.display = 'block';
         campoNomeEmpresa.style.display = 'block';
         campoNomeEmpresa.style.width = '50%';
         campoCNPJ.style.width = '50%';
     } else{
-        campoCPF.style.display = 'block';
-        campoCNPJ.style.display = 'block';
-        campoNomeEmpresa.style.display = 'block';
+        campoCPF.style.display = 'none';
+        campoCNPJ.style.display = 'none';
+        campoNomeEmpresa.style.display = 'none';
     }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    function aplicarMascara(input, tipo) {
+        let valor = input.value.replace(/\D/g, '');
+
+        switch (tipo) {
+            case 'cpf':
+                valor = valor.replace(/(\d{3})(\d)/, '$1.$2');
+                valor = valor.replace(/(\d{3})(\d)/, '$1.$2');
+                valor = valor.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+                break;
+
+            case 'cnpj':
+                valor = valor.replace(/^(\d{2})(\d)/, '$1.$2');
+                valor = valor.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+                valor = valor.replace(/\.(\d{3})(\d)/, '.$1/$2');
+                valor = valor.replace(/(\d{4})(\d)/, '$1-$2');
+                break;
+
+            case 'cep':
+                valor = valor.replace(/^(\d{5})(\d)/, '$1-$2');
+                break;
+
+            case 'celular':
+                valor = valor.replace(/^(\d{2})(\d)/g, '($1) $2');
+                valor = valor.replace(/(\d{5})(\d{4})$/, '$1-$2');
+                break;
+
+            case 'residencial':
+                valor = valor.replace(/^(\d{2})(\d)/g, '($1) $2');
+                valor = valor.replace(/(\d{4})(\d{4})$/, '$1-$2');
+                break;
+        }
+
+        input.value = valor;
+    }
+
+    // Ativa automaticamente as máscaras com base no atributo data-mask
+    document.querySelectorAll('[data-mask]').forEach(input => {
+        input.addEventListener('input', () => {
+            aplicarMascara(input, input.dataset.mask);
+        });
+    });
+});
+
+
 
 // função de exibirsubcategorias na página de criar leilão
 function exibirCampoSubcategorias(){

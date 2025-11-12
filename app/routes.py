@@ -99,6 +99,10 @@ def industriais():
 def pagina_criar_leilao():
     return render_template('criarleilao.html')
 
+@bp.route('/detalhes')
+def detalhes_leilao():
+    return render_template('detalhes_leilao.html')
+
 @bp.route('/criarleilao', methods=['POST'])
 def criar_leilao():
     dados = {
@@ -137,7 +141,7 @@ def criar_leilao():
     db.session.add(novo_leilao)
     db.session.commit()
     
-    return jsonify({'sucesso': f'Leilão {novo_leilao.nome} criado com sucesso!'})
+    return jsonify({'sucesso': f'Leilão {novo_leilao.nome} criado com sucesso!', "redirect": 'detalhes'})
 
 @bp.route('/novolance', methods=['POST'])
 def novo_lance():

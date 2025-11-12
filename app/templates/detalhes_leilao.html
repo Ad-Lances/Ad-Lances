@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/detalhes_leilao.css')}}">
+    <title>Hyundai HB20 1.6 Comfort Plus Automático</title>
+</head>
+<body>
+    <nav id="nav">
+        <ul>
+            <li>
+                <div id="nav-item">
+                <a href="/"><img id="logo" src="{{ url_for('static', filename='img/logo.png') }}"></a>
+                </div>
+            </li>
+
+            <li>
+                <div id="search-container">
+                    <form>
+                        <input type="text" placeholder="Digite aqui...">
+                        <button type="submit"><img src="{{ url_for('static', filename='img/search-icon.png') }}" id="searchimg"></button>
+                    </form>
+                </div>
+            </li>
+
+            <li>
+                <div id="nav-item">
+                    <a href="/novoleilao">Criar leilão</a>
+                </div>
+            </li>
+
+            <li>
+                <div id="nav-item">
+                    Fale conosco
+                </div>
+            </li>
+
+            {% if session.get('logado') %}
+                <li>
+                    <div id="nav-item">
+                        <div id="img-nav">
+                            <a href="perfil"><i class="fa-solid fa-circle-user fa-2xl" style="color: #ffffff;"></i></a>
+                        </div>
+                    </div>
+                </li>
+
+                {% else %}
+                    <div id="nav-item">
+                        <a href="login">Login</a>
+                    </div>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <div class="blocks-container">
+        <div class="blocks-row">
+            <div id="image-block">
+                <div id="imagem-produto">
+                    <img src="{{ url_for('static', filename='img/veiculos-img/c4.jpeg')}}">
+                </div>
+            </div>
+
+            <div id="main-block">
+                <div id="nome-produto">
+                    <h2>Hyundai HB20 1.6 Comfort Plus Automático</h2>
+                </div>
+
+                <div id="bloco-temporizador">
+                    <div class="info-label">Encerra em:</div>
+                    <div id="temporizador">04 11 34</div>
+                </div>
+
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Data de abertura:</span>
+                        <span class="info-value">15/09/25 às 14:20</span>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Data de encerramento:</span>
+                        <span class="info-value">20/09/25 às 01:54</span>
+                    </div>
+                </div>
+
+                <div class="info-item" style="grid-column: 1 / -1; text-align: center; margin: 10px 0;">
+                    <span class="info-label">Lance Atual</span>
+                    <div class="lance-atual">R$87.234,00</div>
+                </div>
+
+                <div class="lance-container">
+                    <div class="info-label" style="font-size: 16px; font-weight: 600;">Fazer um Lance</div>
+                    <div class="lance-input-group">
+                        <input type="number" id="novo-lance-input" name="novo-lance" placeholder="R$0,00" step="0.01">
+                        <button type="button" id="botao-lance">Lançar</button>
+                    </div>
+                    <div class="contador-lances">Total de lances: 4</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="infos-leiloeiro">
+            <div class="leiloeiro-content">
+                <section id="titulo">Leiloeiro</section>
+                <section id="nome-leiloeiro">Grupo R1 Autos</section>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h3 class="section-title">Descrição</h3>
+            <p class="description-text">
+                Na AdLances, você tem a chance de arrematar um HB20 seminovo em ótimo estado, com baixa quilometragem e pronto para rodar. Um modelo que combina design moderno, tecnologia embarcada, conforto e excelente economia de combustível. Ideal para quem busca um carro confiável e sofisticado, o Pulse oferece a experiência de dirigir um veículo praticamente novo, mas com um preço muito mais atrativo. Aproveite essa oportunidade exclusiva e faça já o seu lance!
+            </p>
+        </div>
+
+        <div class="info-section">
+            <h3 class="section-title">Detalhes do Produto</h3>
+            <div class="details-grid">
+                <div class="detail-item">
+                    <span class="detail-label">Marca/Modelo:</span>
+                    <span class="detail-value">Hyundai HB20</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Categoria:</span>
+                    <span class="detail-value">SUV Compacto</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Ano:</span>
+                    <span class="detail-value">2018</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Motorização:</span>
+                    <span class="detail-value">1.0 Turbo</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Potência:</span>
+                    <span class="detail-value">até 150 cv</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Transmissão:</span>
+                    <span class="detail-value">Automática CVT</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Combustível:</span>
+                    <span class="detail-value">Flex (Gasolina/Etanol)</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Quilometragem:</span>
+                    <span class="detail-value">Baixa – seminovo</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Cor:</span>
+                    <span class="detail-value">Branco</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Porta-malas:</span>
+                    <span class="detail-value">370 L</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h3 class="section-title">Localização</h3>
+            <div class="location-info">
+                <p>Avenida Itavuvu, 1361, Jardim Maria Antônia Prado, CEP: 18076-005 - Sorocaba/SP</p>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h3 class="section-title">Condições</h3>
+            <div class="conditions-grid">
+                <div class="condition-item">
+                    <strong>Pagamento à vista</strong>
+                </div>
+                <div class="condition-item">
+                    <strong>Retirada no local</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h3 class="section-title">Histórico de Lances</h3>
+            <table class="lance-table">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Valor</th>
+                        <th>Data/Hora</th>
+                        <th>Condição</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Lucas Pereira</td>
+                        <td class="lance-amount">R$ 52.300,00</td>
+                        <td class="lance-date">18/09/2025, 20:32</td>
+                        <td class="lance-installments">Parcelado em 20x</td>
+                    </tr>
+                    <tr>
+                        <td>Sara Silva</td>
+                        <td class="lance-amount">R$ 50.000,00</td>
+                        <td class="lance-date">17/09/2025, 15:21</td>
+                        <td class="lance-installments">Parcelado em 20x</td>
+                    </tr>
+                    <tr>
+                        <td>Paulo Almeida</td>
+                        <td class="lance-amount">R$ 51.444,24</td>
+                        <td class="lance-date">17/09/2025, 10:40</td>
+                        <td class="lance-installments">Parcelado em 15x</td>
+                    </tr>
+                    <tr>
+                        <td>Daniela Valença</td>
+                        <td class="lance-amount">R$ 47.234,00</td>
+                        <td class="lance-date">16/09/2025, 14:12</td>
+                        <td class="lance-installments">Parcelado em 15x</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer id="footer">
+        <div id="footer-container">
+            <div id="footer-section">
+                <h4>Sobre nós</h4>
+                <ul>
+                    <li><a href="#">A empresa</a></li>
+                    <li><a href="#">Política de privacidade</a></li>
+                    <li><a href="#">Como funciona</a></li>
+                    <li><a href="#">Como vender</a></li>
+                </ul>
+            </div>
+
+            <div id="footer-section">
+                <h4>Contato</h4>
+                <p><strong>E-mail:</strong> adlances@gmail.com</p>
+                <p><strong>Telefone:</strong> (11) 5567-3452</p>
+                <p><a href="#">Perguntas frequentes</a></p>
+            </div>
+
+            <div id="footer-section">
+                <h4>Redes sociais</h4>
+                <div id="social-icons">
+                    <a href="#" aria-label="Instagram">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9a5.5 5.5 0 0 1-5.5 5.5h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2zm0 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4h-9zm4.5 3a5.5 5.5 0 1 1 0 11a5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7zm5.25-.75a.75.75 0 1 1 0 1.5a.75.75 0 0 1 0-1.5z"/>
+                        </svg>
+                     </a>
+
+                    <a href="#" aria-label="Facebook">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M13.5 22V12.75h3l.5-4h-3.5V6.5c0-1.1.3-1.9 2-1.9h1.6V1.2c-.3 0-1.4-.2-2.7-.2c-2.7 0-4.6 1.6-4.6 4.7V8.7H7v4h3.8V22h2.7z"/>
+                        </svg>
+                    </a>
+
+                    <a href="#" aria-label="LinkedIn">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M4.98 3.5A2.5 2.5 0 1 1 5 8.5a2.5 2.5 0 0 1-.02-5zM3 9h4v12H3zm7 0h3.7v1.6h.1c.5-.9 1.7-1.8 3.4-1.8c3.6 0 4.3 2.4 4.3 5.6V21h-4v-5.2c0-1.2 0-2.7-1.7-2.7c-1.8 0-2 1.3-2 2.6V21h-4z"/>
+                        </svg>
+                    </a>
+            </div>
+        </div>
+
+        <div id="footer-section">
+            <h4>Localização</h4>
+            <p>Av. Paulista, 1167 - Bela Vista</p>
+        </div>
+        </div>
+        <div id="footer-bottom">
+            <p>© AdLances. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -40,6 +40,16 @@ body {
     gap: 10px;
 }
 
+#nav-item a{
+    color: white;
+    text-decoration: none;
+}
+
+#nav-item a:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 #nav #logo {
     height: 50px;
     width: auto;
@@ -395,71 +405,74 @@ body {
 }
 
 #mensagem-login {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #ffffff;
     padding: 40px 30px;
-    border-radius: 20px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-    color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(3, 70, 96, 0.15);
+    color: #034660;
     text-align: center;
-    margin: 30px 0;
-    border: none;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 50px auto;
+    max-width: 500px;
+    border: 2px solid #034660;
+    font-family: "Poppins", sans-serif;
+    transition: all 0.3s ease;
+}
+
+#mensagem-login:hover {
+    box-shadow: 0 6px 20px rgba(3, 70, 96, 0.2);
+    transform: translateY(-2px);
 }
 
 #mensagem-login h3 {
-    font-size: 28px;
-    font-weight: 700;
-    margin-bottom: 20px;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    letter-spacing: 0.5px;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #034660;
 }
 
 #mensagem-login hr {
     border: none;
     height: 2px;
-    background: rgba(255, 255, 255, 0.3);
-    margin: 25px auto;
-    width: 80px;
-    border-radius: 2px;
+    background: linear-gradient(90deg, #034660, #046d92, #034660);
+    margin: 20px auto;
+    width: 60px;
+    border-radius: 1px;
 }
 
 #descricao-mensagem-login {
-    font-size: 18px;
-    line-height: 1.6;
-    margin-bottom: 30px;
-    opacity: 0.9;
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 25px;
+    color: #555;
     font-weight: 400;
 }
 
 #link-login {
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 #redirect-login {
-    background: rgba(255, 255, 255, 0.2);
+    background: #034660;
     color: white;
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    padding: 15px 40px;
-    border-radius: 50px;
-    font-size: 16px;
-    font-weight: 600;
+    border: 2px solid #034660;
+    padding: 12px 35px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-    letter-spacing: 0.5px;
+    font-family: "Poppins", sans-serif;
 }
 
 #redirect-login:hover {
-    background: rgba(255, 255, 255, 0.3);
-    border-color: rgba(255, 255, 255, 0.8);
+    background: #046d92;
+    border-color: #046d92;
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 12px rgba(3, 70, 96, 0.3);
 }
 
-#mensagem-login:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
+#redirect-login:active {
+    transform: translateY(0);
 }
 
 /* ===== FOOTER ===== */
@@ -814,5 +827,73 @@ body {
     #formularioProduto {
         margin: 10px auto;
         padding: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    #mensagem-login {
+        padding: 30px 25px;
+        margin: 40px 20px;
+    }
+    
+    #mensagem-login h3 {
+        font-size: 22px;
+    }
+    
+    #descricao-mensagem-login {
+        font-size: 15px;
+    }
+    
+    #redirect-login {
+        padding: 11px 30px;
+        font-size: 14px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+    #mensagem-login {
+        padding: 25px 20px;
+        margin: 30px 15px;
+    }
+    
+    #mensagem-login h3 {
+        font-size: 20px;
+        margin-bottom: 12px;
+    }
+    
+    #descricao-mensagem-login {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+    
+    #redirect-login {
+        padding: 10px 25px;
+        font-size: 14px;
+    }
+    
+    #mensagem-login hr {
+        margin: 15px auto;
+    }
+}
+
+/* Mobile pequeno */
+@media (max-width: 480px) {
+    #mensagem-login {
+        padding: 20px 15px;
+        margin: 25px 10px;
+    }
+    
+    #mensagem-login h3 {
+        font-size: 18px;
+    }
+    
+    #descricao-mensagem-login {
+        font-size: 13px;
+    }
+    
+    #redirect-login {
+        padding: 9px 20px;
+        font-size: 13px;
     }
 }
