@@ -1,7 +1,7 @@
 from app import db
 
-class Lances(db.Model):
-    __tablename__ = "Lances"
+class LanceModel(db.Model):
+    __tablename__ = "lances"
     
     id = db.Column(db.Integer, primary_key=True)
     valor = db.Column(db.Float, nullable=False)

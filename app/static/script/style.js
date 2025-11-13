@@ -194,16 +194,16 @@ function exibirCampoSubcategorias(){
     const categoriaSelect = document.getElementById('categoria-produto-select');
     const subcategoriaSelect = document.getElementById('subcategoria-produto-select');
 
-    if(categoriaSelect.value === 'imoveis'){
+    if(categoriaSelect.value === '1'){
         subcategoriaSelect.length = 0;
 
         const options = [
             new Option('Selecione', 'block'),
-            new Option('Casas', 'casas'),
-            new Option('Apartamentos', 'apartamentos'),
-            new Option('Salas comerciais', 'comerciais'),
-            new Option('Industriais e Galpões', 'industriais_e_galpoes'),
-            new Option('Terrenos', 'terrenos')
+            new Option('Casas', '1'),
+            new Option('Apartamentos', '2'),
+            new Option('Salas comerciais', '3'),
+            new Option('Industriais e Galpões', '4'),
+            new Option('Terrenos', '5')
         ];
 
         options.forEach(option => {
@@ -213,7 +213,7 @@ function exibirCampoSubcategorias(){
         subcategoriaCampo.style.display = 'block';
         subcategoriaSelect.style.display = 'block';
 
-    } else if(categoriaSelect.value === 'veiculos'){
+    } else if(categoriaSelect.value === '2'){
         subcategoriaSelect.length = 0;
 
         const options = [
@@ -230,7 +230,7 @@ function exibirCampoSubcategorias(){
             subcategoriaCampo.style.display = 'block';
             subcategoriaSelect.style.display = 'block';
 
-    } else if(categoriaSelect.value === 'eletronicos'){
+    } else if(categoriaSelect.value === '3'){
         subcategoriaSelect.length = 0;
 
         const options = [
@@ -248,7 +248,7 @@ function exibirCampoSubcategorias(){
         subcategoriaCampo.style.display = 'block';
         subcategoriaSelect.style.display = 'block';
 
-    } else if(categoriaSelect.value === 'eletrodomesticos'){
+    } else if(categoriaSelect.value === '4'){
         subcategoriaSelect.length = 0;
 
         const options = [
@@ -265,7 +265,7 @@ function exibirCampoSubcategorias(){
         subcategoriaCampo.style.display = 'block';
         subcategoriaSelect.style.display = 'block';
 
-    } else if(categoriaSelect.value === 'moveis'){
+    } else if(categoriaSelect.value === '5'){
         subcategoriaSelect.length = 0;
 
         const options = [
@@ -284,7 +284,7 @@ function exibirCampoSubcategorias(){
         subcategoriaCampo.style.display = 'block';
         subcategoriaSelect.style.display = 'block';
 
-    } else if(categoriaSelect.value === 'industriais'){
+    } else if(categoriaSelect.value === '6'){
         subcategoriaSelect.length = 0;
 
         const options = [

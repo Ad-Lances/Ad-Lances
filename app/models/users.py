@@ -14,14 +14,13 @@ class UserModel(db.Model):
     unid_federativa = db.Column(db.String(50), nullable=False)
     cidade = db.Column(db.String(100), nullable=False)
     rua = db.Column(db.String(150), nullable=False)
-    #colocar a coluna de bairro
+    bairro = db.Column(db.String(100), nullable=False)
     numero = db.Column(db.String(10), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     senha_hash = db.Column(db.String(255), nullable=False)
         
     def set_senha(self, senha):
         salt = bcrypt.gensalt()
-        print(salt)
         self.senha_hash = bcrypt.hashpw(senha.encode('utf-8'), salt).decode('utf-8')
         
     def verify_senha(self, senha):

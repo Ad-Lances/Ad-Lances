@@ -10,9 +10,29 @@ document.addEventListener('DOMContentLoaded', function(){
     const inputNovaRua = document.getElementById('input-rua');
     const inputNovoNumero = document.getElementById('input-numero');
     const inputNovaSenha = document.getElementById('input-nova-senha');
-
+    const btnSair = document.getElementById('btn-sair');
     const btnSalvar = document.getElementById('btn-salvar');
     const mensagem = document.getElementById('mensagem');
+
+    btnSair.addEventListener('click', async() => {
+        const resposta = await fetch('/logout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const resultado = await resposta.json();
+        if (resultado.sucesso) {
+            mensagem.innerHTML = resultado.sucesso;
+            estilizarmensagem(mensagem);
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 5000);   
+        } else {
+            mensagem.innerHTML = resultado.erro;
+            estilizarmensagem(mensagem);
+        }
+    });
 
     btnSalvar.addEventListener('click', function(){
         const novoNome = inputNovoNome.value.trim();

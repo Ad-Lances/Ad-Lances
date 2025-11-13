@@ -1,10 +1,9 @@
 from flask import Blueprint, render_template, request, jsonify, session, redirect, url_for
-from .models.user import UserModel
-from .models.leiloes import LeilaoModel
-from .models.lances import Lances
+from app.models import *
 from . import db
 from . import cloudinary
 import cloudinary.uploader
+import re
 
 
 bp = Blueprint('main', __name__)
@@ -20,8 +19,15 @@ def cadastro():
 @bp.route('/cadastrar', methods=['POST'])
 def cadastrar():
     dados = request.get_json()
-
-    usuario_exist = UserModel.query.filter_by(email=dados['email']).first()
+    
+    for i in list(dados.values()):
+        if i == '':
+            return jsonify({'erro': 'Preencha todos os campos.'})
+        
+    if re.match(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$', dados['email']) is None:
+        return jsonify({'erro': 'Digite um email válido.'})
+        
+    usuario_exist = UserModel.query.filter_by(email=dados.get('email')).first()
     
     if not usuario_exist:
         novo_usuario = UserModel(
@@ -66,34 +72,27 @@ def logar():
     else:
         return jsonify({"erro": "Email ou senha inválidos."})
     
+@bp.route('/logout', methods=['POST'])
+def logout():
+    session.clear()
+    if session.get('logado'):
+        return jsonify({"erro": "Erro ao sair da conta."})
+    else:
+        return jsonify({"sucesso": "Você saiu da sua conta"})    
+    
 @bp.route('/perfil')
 def perfil_user():
     usuario = UserModel.query.get(session['usuario_id'])
     return render_template('perfil.html', usuario=usuario)
 
-@bp.route('/imoveis')
-def imoveis():
-    return render_template('categorias/imoveis.html')
-
-@bp.route('/veiculos')
-def veiculos():
-    return render_template('categorias/veiculos.html')
-
-@bp.route('/eletronicos')
-def eletronicos():
-    return render_template('categorias/eletronicos.html')
-
-@bp.route('/eletrodomesticos')
-def eletrodomesticos():
-    return render_template('categorias/eletrodomesticos.html')
-
-@bp.route('/moveis')
-def moveis():
-    return render_template('categorias/moveis.html')
-
-@bp.route('/industriais')
-def industriais():
-    return render_template('categorias/industriais.html')
+@bp.route('/categorias/<string:categoria>')
+def imoveis(categoria):
+    categoria_exist = CategoriaModel.query.filter_by(nome=categoria).first()
+    if categoria_exist:
+        leiloes = categoria_exist.leiloes
+        return render_template(f'categorias/{categoria_exist.slug}.html', leiloes=leiloes)
+    else:
+        return redirect(url_for('main.index'))
 
 @bp.route('/novoleilao')
 def pagina_criar_leilao():
@@ -101,7 +100,8 @@ def pagina_criar_leilao():
 
 @bp.route('/detalhes')
 def detalhes_leilao():
-    return render_template('detalhes_leilao.html')
+    leilao = LeilaoModel.query.get(1)
+    return render_template('detalhes_leilao.html', leilao=leilao)
 
 @bp.route('/criarleilao', methods=['POST'])
 def criar_leilao():
@@ -127,8 +127,8 @@ def criar_leilao():
     novo_leilao = LeilaoModel(
         nome=dados['nome'],
         descricao=dados['descricao'],
-        categoria=dados['categoria'],
-        subcategoria=dados['subcategoria'],
+        id_categoria=int(dados['categoria']),
+        subcategoria=int(dados['subcategoria']),
         data_inicio=dados['data_inicio'],
         data_fim=dados['data_fim'],
         lance_inicial=dados['lance_inicial'],
@@ -137,7 +137,7 @@ def criar_leilao():
         parcelas=dados['parcelas'],
         foto=url_imagem
     )
-    
+    novo_leilao.categoria = CategoriaModel.query.get(dados['categoria'])
     db.session.add(novo_leilao)
     db.session.commit()
     
@@ -151,7 +151,7 @@ def novo_lance():
     if leilao:
         if dados['lance'] > leilao.lance_atual:
             leilao.lance_atual = dados['lance']
-            novo_lance = Lances(
+            novo_lance = LanceModel(
                 valor=dados['lance'],
                 horario=dados['horario'],
                 id_leilao=leilao.id,

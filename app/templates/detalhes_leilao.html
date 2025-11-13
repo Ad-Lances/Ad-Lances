@@ -57,7 +57,7 @@
         <div class="blocks-row">
             <div id="image-block">
                 <div id="imagem-produto">
-                    <img src="{{ url_for('static', filename='img/veiculos-img/c4.jpeg')}}">
+                    <img src="{{ leilao.get_foto() }}">
                 </div>
             </div>
 
@@ -74,18 +74,18 @@
                 <div class="info-grid">
                     <div class="info-item">
                         <span class="info-label">Data de abertura:</span>
-                        <span class="info-value">15/09/25 às 14:20</span>
+                        <span class="info-value">{{ leilao.get_data_inicio_str() }}</span>
                     </div>
                     
                     <div class="info-item">
                         <span class="info-label">Data de encerramento:</span>
-                        <span class="info-value">20/09/25 às 01:54</span>
+                        <span class="info-value">{{ leilao.get_data_fim_str() }}</span>
                     </div>
                 </div>
 
                 <div class="info-item" style="grid-column: 1 / -1; text-align: center; margin: 10px 0;">
                     <span class="info-label">Lance Atual</span>
-                    <div class="lance-atual">R$87.234,00</div>
+                    <div class="lance-atual">{{ leilao.get_lance_atual_str() }}</div>
                 </div>
 
                 <div class="lance-container">
