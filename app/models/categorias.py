@@ -7,3 +7,4 @@ class CategoriaModel(db.Model):
     nome = db.Column(db.String(100), nullable=False)
     slug = db.Column(db.String(100), nullable=False, unique=True)
     leiloes = db.relationship('LeilaoModel', back_populates='categoria')
+    subcategorias = db.relationship('SubcategoriaModel', back_populates='categoria')
