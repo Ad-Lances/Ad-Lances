@@ -133,7 +133,10 @@
     </div>
 
     <div id="opcoes">
-        <button type="click" id="btn-sair">Sair</button>
+        <form action="{{ url_for('main.logout') }}" method="POST">
+            <button type="submit" id="btn-sair">Sair</button>
+        </form>
+
         <button type="button">Apagar minha conta</button>
         <button type="click" id="btn-editar" onclick="exibirCampoDados()">Editar Perfil</button>
     </div>

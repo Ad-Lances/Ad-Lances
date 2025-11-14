@@ -407,117 +407,124 @@ window.addEventListener('orientationchange', function() {
 
 // script-carrosseis.js
 
-// ===== CARROSSEL PRINCIPAL DE BANNERS =====
-function initMainCarousel() {
-    const carousel = document.getElementById('carrossel-principal');
-    if (!carousel) return;
-
-    const track = carousel.querySelector('.carrossel-track-principal');
-    const inner = carousel.querySelector('.carrossel-inner-principal');
-    const slides = carousel.querySelectorAll('.slide-item');
-    const indicators = carousel.querySelectorAll('.indicator');
+// Carrossel Principal
+document.addEventListener('DOMContentLoaded', function() {
+    const carrosselInner = document.querySelector('.carrossel-inner-principal');
+    const slides = document.querySelectorAll('.slide-item');
+    const indicators = document.querySelectorAll('.indicator');
     
-    if (slides.length === 0) return;
-
+    if (!carrosselInner || slides.length === 0) return;
+    
     let currentSlide = 0;
+    const totalSlides = slides.length;
     let autoPlayInterval;
 
-    // Configurar para imagens completas sem distorção
-    carousel.style.cssText = `
-        width: 100%;
-        position: relative;
-        overflow: hidden;
-        margin: 20px 0;
-        background: #f5f5f5;
-    `;
-
-    track.style.cssText = `
-        width: 100%;
-        overflow: hidden;
-    `;
-
-    inner.style.cssText = `
-        display: flex;
-        transition: transform 0.8s ease-in-out;
-        width: 100%;
-    `;
-
-    // Configurar slides para mostrar imagens completas
-    slides.forEach((slide, index) => {
-        slide.style.cssText = `
-            flex: 0 0 100%;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #f5f5f5;
-            min-height: 500px;
-        `;
-
-        const img = slide.querySelector('img');
-        if (img) {
-            img.style.cssText = `
-                width: auto;
-                max-width: 100%;
-                max-height: 500px;
-                height: auto;
-                object-fit: contain;
-                display: block;
-            `;
-        }
-    });
-
-    function showSlide(index) {
-        // Remove classe active de todos os slides
-        slides.forEach(slide => {
-            slide.style.display = 'none';
-            slide.classList.remove('active');
+    // Função para ir para um slide específico
+    function goToSlide(slideIndex) {
+        currentSlide = slideIndex;
+        
+        // Move o carrossel
+        const slideWidth = carrosselInner.parentElement.offsetWidth;
+        const offset = -currentSlide * slideWidth;
+        carrosselInner.style.transform = `translateX(${offset}px)`;
+        
+        // Atualiza os indicadores
+        indicators.forEach((indicator, index) => {
+            if (index === currentSlide) {
+                indicator.classList.add('active');
+            } else {
+                indicator.classList.remove('active');
+            }
         });
-        indicators.forEach(indicator => indicator.classList.remove('active'));
-        
-        // Mostra apenas o slide ativo
-        slides[index].style.display = 'flex';
-        slides[index].classList.add('active');
-        indicators[index].classList.add('active');
-        
-        currentSlide = index;
     }
 
+    // Função para ir para o próximo slide
     function nextSlide() {
-        let nextIndex = currentSlide + 1;
-        if (nextIndex >= slides.length) {
-            nextIndex = 0;
-        }
-        showSlide(nextIndex);
+        currentSlide = (currentSlide + 1) % totalSlides;
+        goToSlide(currentSlide);
     }
 
+    // Função para ir para o slide anterior
+    function prevSlide() {
+        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+        goToSlide(currentSlide);
+    }
+
+    // Auto-play do carrossel (muda a cada 5 segundos)
     function startAutoPlay() {
         autoPlayInterval = setInterval(nextSlide, 5000);
     }
 
+    // Para o auto-play
     function stopAutoPlay() {
         clearInterval(autoPlayInterval);
     }
 
+    // Event listeners para os indicadores
     indicators.forEach((indicator, index) => {
         indicator.addEventListener('click', () => {
             stopAutoPlay();
-            showSlide(index);
+            goToSlide(index);
             startAutoPlay();
         });
     });
 
-    carousel.addEventListener('mouseenter', stopAutoPlay);
-    carousel.addEventListener('mouseleave', startAutoPlay);
-
-    // Inicializar mostrando o primeiro slide
-    showSlide(0);
-    startAutoPlay();
-
-    window.addEventListener('beforeunload', () => {
-        clearInterval(autoPlayInterval);
+    // Navegação por teclado (opcional)
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+            stopAutoPlay();
+            prevSlide();
+            startAutoPlay();
+        } else if (e.key === 'ArrowRight') {
+            stopAutoPlay();
+            nextSlide();
+            startAutoPlay();
+        }
     });
-}
+
+    // Pausa o auto-play quando o mouse está sobre o carrossel
+    const carrosselPrincipal = document.getElementById('carrossel-principal');
+    carrosselPrincipal.addEventListener('mouseenter', stopAutoPlay);
+    carrosselPrincipal.addEventListener('mouseleave', startAutoPlay);
+
+    // Suporte para touch/swipe em dispositivos móveis
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    carrosselPrincipal.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        stopAutoPlay();
+    });
+
+    carrosselPrincipal.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+        startAutoPlay();
+    });
+
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        const diff = touchStartX - touchEndX;
+        
+        if (Math.abs(diff) > swipeThreshold) {
+            if (diff > 0) {
+                // Swipe para a esquerda - próximo slide
+                nextSlide();
+            } else {
+                // Swipe para a direita - slide anterior
+                prevSlide();
+            }
+        }
+    }
+
+    // Recalcula o carrossel ao redimensionar a janela
+    window.addEventListener('resize', () => {
+        goToSlide(currentSlide);
+    });
+
+    // Inicia o auto-play
+    startAutoPlay();
+});
 
 // ===== CARROSSEL AUTOMÁTICO DE EMPRESAS =====
 function initCompaniesCarousel() {

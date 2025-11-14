@@ -68,17 +68,14 @@ def logar():
         session['usuario_id'] = usuario.id
         session['nome_completo'] = usuario.nome_completo
 
-        return jsonify({"sucesso": True, "redirect": "/"})
+        return jsonify({"sucesso": 'Bem-vindo!', "redirect": "/"})
     else:
         return jsonify({"erro": "Email ou senha inválidos."})
     
 @bp.route('/logout', methods=['POST'])
 def logout():
     session.clear()
-    if session.get('logado'):
-        return jsonify({"erro": "Erro ao sair da conta."})
-    else:
-        return jsonify({"sucesso": "Você saiu da sua conta"})    
+    return redirect(url_for('main.index'))
     
 @bp.route('/perfil')
 def perfil_user():
