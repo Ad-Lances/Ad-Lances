@@ -42,6 +42,8 @@ class UserModel(db.Model):
     numero = db.Column(db.String(10), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     senha_hash = db.Column(db.String(255), nullable=False)
+    id_stripe = db.Column(db.String(255), nullable=True)
+    
     lances = db.relationship('LanceModel', back_populates='user')
     leiloes = db.relationship('LeilaoModel', back_populates='user')
         

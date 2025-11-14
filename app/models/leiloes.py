@@ -35,15 +35,15 @@ class LeilaoModel(db.Model):
     data_fim = db.Column(db.DateTime, nullable=False)
     lance_inicial = db.Column(db.Float, nullable=False)
     lance_atual = db.Column(db.Float, nullable=True)
-    pagamento = db.Column(db.String(50), nullable=False)
+    min_incremento = db.Column(db.Float, nullable=False, server_default="0.1")
     parcelas = db.Column(db.String(3), nullable=False)
     foto = db.Column(db.String(255), nullable=False)
     id_user = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     
     user = db.relationship('UserModel', back_populates='leiloes')
-    categoria = db.relationship('CategoriaModel', back_populates='leiloes')
     subcategoria = db.relationship('SubcategoriaModel', back_populates='leiloes')
     lances = db.relationship('LanceModel', back_populates='leilao')
+    pagamentos = db.relationship('PagamentoModel', secondary="leiloes_pagamentos", back_populates='leiloes')
     
     def get_data_inicio_str(self):
         """Retorna a data de início formatada como string."""

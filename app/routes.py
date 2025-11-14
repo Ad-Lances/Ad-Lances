@@ -4,7 +4,8 @@ from . import db
 from . import cloudinary
 import cloudinary.uploader
 import re
-
+from app import stripe
+from config import Config
 
 bp = Blueprint('main', __name__)
 
@@ -157,3 +158,54 @@ def novo_lance():
             db.session.add(novo_lance)
             db.session.commit()
             return jsonify({'sucesso': 'Lance registrado com sucesso!'})
+        
+@bp.route('/<id_leilao>/criarpagamento', methods=['POST'])
+def criar_pagamento(id_leilao):
+    user = UserModel.query.get(session['usuario_id'])
+    leilao = LeilaoModel.query.get(id_leilao)
+    
+    if user and leilao:
+        session = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            line_items=[{
+                'price_data': {
+                    'currency': 'brl',
+                    'product_data': {
+                        'name': leilao.nome,
+                        'description': leilao.descricao,
+                    },
+                    'unit_amount': int(leilao.lance_atual * 100),
+                },
+                'quantity': 1,
+            }],
+            mode='payment',
+            payment_intent_data={
+                'transfer_data': {
+                    'destination': leilao.user.id_stripe,
+                },
+            },
+            customer_email=user.email,
+            success_url=url_for('main.perfil_user', _external=True) + '?payment_success=true',
+            cancel_url=url_for('main.perfil_user', _external=True) + '?payment_canceled=true',
+        )
+        return jsonify({'url_pagamento': session.url})
+    return jsonify({'erro': 'Usuário ou leilão não encontrado.'})
+
+@bp.route('/webhook', methods=['POST'])
+def webhook():
+    pagamento = request.data
+    header_ass = request.headers.get('stripe-signature')
+    endpoint = Config.STRIPE_WEBHOOK_SECRET
+    try:
+        event = stripe.Webhook.construct_event(
+            pagamento, header_ass, endpoint
+        )
+    except Exception as e:
+        return str(e)
+    
+    if event['type'] == "checkout.session.completed":
+        session = event["data"]["object"]
+        email = session["customer_email"]
+        print("boa")
+        
+    return
