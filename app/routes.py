@@ -5,9 +5,12 @@ from . import cloudinary
 from datetime import datetime, date
 import cloudinary.uploader
 import re
-
+from app import stripe
+from config import Config
 
 bp = Blueprint('main', __name__)
+
+ENDPOINTS = [Config.STRIPE_WEBHOOK_ACCOUNT, Config.STRIPE_WEBHOOK_PAYMENT]
 
 @bp.route('/')
 def index():
@@ -101,7 +104,21 @@ def detalhes_leilao():
     leilao = LeilaoModel.query.get(1)
     return render_template('detalhes_leilao.html', leilao=leilao)
 
-@bp.route('/criarleilao', methods=['POST'])
+@bp.post('/verificarstripe')
+def verificar_stripe():
+    usuario = UserModel.query.get(session['usuario_id'])
+    if usuario.id_stripe is None:
+        stripe_conta = stripe.Account.create(type="express")
+        link = stripe.AccountLink.create(
+            account=stripe_conta.id,
+            refresh_url="https://ad-lances.onrender.com/verificarstripe",
+            return_url="https://ad-lances.onrender.com/perfil",
+            type="account_onboarding"
+        )
+        return jsonify({'stripe_url': link.url})
+    return redirect(url_for('main.criar_leilao'))
+
+@bp.post('/criarleilao')
 def criar_leilao():
     dados = {
         "nome": request.form.get("nome"),
@@ -125,23 +142,26 @@ def criar_leilao():
     novo_leilao = LeilaoModel(
         nome=dados['nome'],
         descricao=dados['descricao'],
-        id_categoria=int(dados['categoria']),
-        subcategoria=int(dados['subcategoria']),
+        id_subcategoria=int(dados['subcategoria']),
         data_inicio=dados['data_inicio'],
         data_fim=dados['data_fim'],
         lance_inicial=dados['lance_inicial'],
         lance_atual=dados['lance_inicial'],
+        min_incremento=dados.get('min_incremento'),
         pagamento=dados['pagamento'],
         parcelas=dados['parcelas'],
-        foto=url_imagem
+        foto=url_imagem,
+        id_user=session['usuario_id'],
     )
-    novo_leilao.categoria = CategoriaModel.query.get(dados['categoria'])
+    novo_leilao.subcategoria = SubcategoriaModel.query.get(dados['subcategoria'])
+    novo_leilao.user = UserModel.query.get(session['usuario_id'])    
+        
     db.session.add(novo_leilao)
     db.session.commit()
     
     return jsonify({'sucesso': f'Leilão {novo_leilao.nome} criado com sucesso!', "redirect": 'detalhes'})
 
-@bp.route('/novolance', methods=['POST'])
+@bp.post('/novolance')
 def novo_lance():
     dados = request.get_json()
     leilaoid = request.args.get('leilao')
@@ -158,3 +178,62 @@ def novo_lance():
             db.session.add(novo_lance)
             db.session.commit()
             return jsonify({'sucesso': 'Lance registrado com sucesso!'})
+        
+@bp.post('/<id_leilao>/criarpagamento')
+def criar_pagamento(id_leilao):
+    user = UserModel.query.get(session['usuario_id'])
+    leilao = LeilaoModel.query.get(id_leilao)
+    
+    if user and leilao:
+        session = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            line_items=[{
+                'price_data': {
+                    'currency': 'brl',
+                    'product_data': {
+                        'name': leilao.nome,
+                        'description': leilao.descricao,
+                    },
+                    'unit_amount': int(leilao.lance_atual * 100),
+                },
+                'quantity': 1,
+            }],
+            mode='payment',
+            payment_intent_data={
+                'transfer_data': {
+                    'destination': leilao.user.id_stripe,
+                },
+            },
+            customer_email=user.email,
+            success_url=url_for('main.perfil_user', _external=True) + '?payment_success=true',
+            cancel_url=url_for('main.perfil_user', _external=True) + '?payment_canceled=true',
+        )
+        return jsonify({'url_pagamento': session.url})
+    return jsonify({'erro': 'Usuário ou leilão não encontrado.'})
+
+@bp.post('/webhook')
+def webhook():
+    data = request.data
+    header_ass = request.headers.get('Stripe-Signature')
+    
+    for endpoint in ENDPOINTS:
+        try:
+            event = stripe.Webhook.construct_event(
+                data, header_ass, endpoint
+            )
+            break
+        except Exception:
+            continue
+        
+    if event is None:
+        return "", 400
+        
+    if event["type"]=="payment_intent.succeeded":
+        payment = event["data"]["object"]
+        print(payment)
+        
+    if event["type"]=="v2.core.account.created":
+        account = event["data"]["object"]
+        print(account)
+        
+    return "", 200

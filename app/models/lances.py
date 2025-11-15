@@ -8,3 +8,5 @@ class LanceModel(db.Model):
     horario = db.Column(db.DateTime, nullable=False)
     id_leilao = db.Column(db.Integer, db.ForeignKey('leiloes.id'), nullable=False)
     id_usuario = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user = db.relationship('UserModel', back_populates='lances')
+    leilao = db.relationship('LeilaoModel', back_populates='lances')

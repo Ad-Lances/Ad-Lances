@@ -3,6 +3,32 @@ import bcrypt
 import re
 
 class UserModel(db.Model):
+    """
+    Classe que representa um usuário no sistema.
+    Attributes:
+        id (int): Identificador único do usuário.
+        nome_completo (str): Nome completo do usuário.
+        tipo_pessoa (str): Tipo de pessoa (física ou jurídica).
+        cpf (str): CPF do usuário.
+        datanasc (date): Data de nascimento do usuário.
+        cep (str): CEP do endereço do usuário.
+        unid_federativa (str): Unidade federativa do endereço do usuário.
+        cidade (str): Cidade do endereço do usuário.
+        rua (str): Rua do endereço do usuário.
+        bairro (str): Bairro do endereço do usuário.
+        numero (str): Número do endereço do usuário.
+        email (str): Email do usuário.
+        senha_hash (str): Hash da senha do usuário.
+        id_stripe (str): Identificador da conta Stripe do usuário.
+        leiloes (list): Relação com os leilões criados pelo usuário.
+        lances (list): Relação com os lances feitos pelo usuário.   
+    Methods:
+        set_senha(senha): Define a senha do usuário, armazenando seu hash.
+        verify_senha(senha): Verifica se a senha fornecida corresponde ao hash armazenado.
+        verificar_email(email): Verifica se o email fornecido está em um formato válido.
+        verificar_senha(senha): Verifica se a senha atende aos critérios de segurança.
+        validar_cpf(cpf): Valida o CPF fornecido.
+    """
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -18,6 +44,10 @@ class UserModel(db.Model):
     numero = db.Column(db.String(10), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     senha_hash = db.Column(db.String(255), nullable=False)
+    id_stripe = db.Column(db.String(255), nullable=True)
+    
+    lances = db.relationship('LanceModel', back_populates='user')
+    leiloes = db.relationship('LeilaoModel', back_populates='user')
         
     def set_senha(self, senha):
         salt = bcrypt.gensalt()
