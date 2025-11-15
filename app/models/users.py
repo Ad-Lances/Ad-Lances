@@ -19,7 +19,9 @@ class UserModel(db.Model):
         numero (str): Número do endereço do usuário.
         email (str): Email do usuário.
         senha_hash (str): Hash da senha do usuário.
-        lances (list): Relação com os lances feitos pelo usuário.
+        id_stripe (str): Identificador da conta Stripe do usuário.
+        leiloes (list): Relação com os leilões criados pelo usuário.
+        lances (list): Relação com os lances feitos pelo usuário.   
     Methods:
         set_senha(senha): Define a senha do usuário, armazenando seu hash.
         verify_senha(senha): Verifica se a senha fornecida corresponde ao hash armazenado.

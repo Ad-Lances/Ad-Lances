@@ -9,6 +9,8 @@ from config import Config
 
 bp = Blueprint('main', __name__)
 
+ENDPOINTS = [Config.STRIPE_WEBHOOK_ACCOUNT, Config.STRIPE_WEBHOOK_PAYMENT]
+
 @bp.route('/')
 def index():
     return render_template('index.html')
@@ -101,7 +103,21 @@ def detalhes_leilao():
     leilao = LeilaoModel.query.get(1)
     return render_template('detalhes_leilao.html', leilao=leilao)
 
-@bp.route('/criarleilao', methods=['POST'])
+@bp.post('/verificarstripe')
+def verificar_stripe():
+    usuario = UserModel.query.get(session['usuario_id'])
+    if usuario.id_stripe is None:
+        stripe_conta = stripe.Account.create(type="express")
+        link = stripe.AccountLink.create(
+            account=stripe_conta.id,
+            refresh_url="https://ad-lances.onrender.com/verificarstripe",
+            return_url="https://ad-lances.onrender.com/perfil",
+            type="account_onboarding"
+        )
+        return jsonify({'stripe_url': link.url})
+    return redirect(url_for('main.criar_leilao'))
+
+@bp.post('/criarleilao')
 def criar_leilao():
     dados = {
         "nome": request.form.get("nome"),
@@ -125,23 +141,26 @@ def criar_leilao():
     novo_leilao = LeilaoModel(
         nome=dados['nome'],
         descricao=dados['descricao'],
-        id_categoria=int(dados['categoria']),
-        subcategoria=int(dados['subcategoria']),
+        id_subcategoria=int(dados['subcategoria']),
         data_inicio=dados['data_inicio'],
         data_fim=dados['data_fim'],
         lance_inicial=dados['lance_inicial'],
         lance_atual=dados['lance_inicial'],
+        min_incremento=dados.get('min_incremento'),
         pagamento=dados['pagamento'],
         parcelas=dados['parcelas'],
-        foto=url_imagem
+        foto=url_imagem,
+        id_user=session['usuario_id'],
     )
-    novo_leilao.categoria = CategoriaModel.query.get(dados['categoria'])
+    novo_leilao.subcategoria = SubcategoriaModel.query.get(dados['subcategoria'])
+    novo_leilao.user = UserModel.query.get(session['usuario_id'])    
+        
     db.session.add(novo_leilao)
     db.session.commit()
     
     return jsonify({'sucesso': f'Leilão {novo_leilao.nome} criado com sucesso!', "redirect": 'detalhes'})
 
-@bp.route('/novolance', methods=['POST'])
+@bp.post('/novolance')
 def novo_lance():
     dados = request.get_json()
     leilaoid = request.args.get('leilao')
@@ -159,7 +178,7 @@ def novo_lance():
             db.session.commit()
             return jsonify({'sucesso': 'Lance registrado com sucesso!'})
         
-@bp.route('/<id_leilao>/criarpagamento', methods=['POST'])
+@bp.post('/<id_leilao>/criarpagamento')
 def criar_pagamento(id_leilao):
     user = UserModel.query.get(session['usuario_id'])
     leilao = LeilaoModel.query.get(id_leilao)
@@ -191,21 +210,29 @@ def criar_pagamento(id_leilao):
         return jsonify({'url_pagamento': session.url})
     return jsonify({'erro': 'Usuário ou leilão não encontrado.'})
 
-@bp.route('/webhook', methods=['POST'])
+@bp.post('/webhook')
 def webhook():
-    pagamento = request.data
-    header_ass = request.headers.get('stripe-signature')
-    endpoint = Config.STRIPE_WEBHOOK_SECRET
-    try:
-        event = stripe.Webhook.construct_event(
-            pagamento, header_ass, endpoint
-        )
-    except Exception as e:
-        return str(e)
+    data = request.data
+    header_ass = request.headers.get('Stripe-Signature')
     
-    if event['type'] == "checkout.session.completed":
-        session = event["data"]["object"]
-        email = session["customer_email"]
-        print("boa")
+    for endpoint in ENDPOINTS:
+        try:
+            event = stripe.Webhook.construct_event(
+                data, header_ass, endpoint
+            )
+            break
+        except Exception:
+            continue
         
-    return
+    if event is None:
+        return "", 400
+        
+    if event["type"]=="payment_intent.succeeded":
+        payment = event["data"]["object"]
+        print(payment)
+        
+    if event["type"]=="v2.core.account.created":
+        account = event["data"]["object"]
+        print(account)
+        
+    return "", 200

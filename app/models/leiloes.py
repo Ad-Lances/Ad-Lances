@@ -7,16 +7,21 @@ class LeilaoModel(db.Model):
         id (int): Identificador único do leilão.
         nome (str): Nome do leilão.
         descricao (str): Descrição do leilão.
-        id_categoria (int): Identificador da categoria do leilão.
         id_subcategoria (int): Identificado da subcategoria do leilão.
         data_inicio (datetime): Data e hora de início do leilão.
         data_fim (datetime): Data e hora de término do leilão.
         lance_inicial (float): Valor do lance inicial do leilão.
         lance_atual (float): Valor do lance atual do leilão.
+        min_incremento (float): Incremento mínimo para os lances no leilão.
         pagamento (str): Método de pagamento aceito no leilão.
         parcelas (str): Número de parcelas permitidas para o pagamento.
         foto (str): URL da foto associada ao leilão.
+        id_user (int): Identificador do usuário que criou o leilão.
         categoria (CategoriaModel): Relação com a categoria do leilão.
+        subcategoria (SubcategoriaModel): Relação com a subcategoria do leilão.
+        user (UserModel): Relação com o usuário que criou o leilão.
+        lances (list): Relação com os lances feitos no leilão.
+        pagamentos (list): Relação com os pagamentos associados ao leilão.        
     Methods:
         get_data_inicio_str(): Retorna a data de início formatada como string.
         get_data_fim_str(): Retorna a data de fim formatada como string.
