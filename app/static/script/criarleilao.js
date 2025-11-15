@@ -92,12 +92,11 @@ document.addEventListener('DOMContentLoaded', function(){
         const formData = new FormData()
         formData.append("nome", nomeProduto)
         formData.append("descricao", descricaoProduto)
-        formData.append("categoria", categoriaProduto)
         formData.append("subcategoria", subcategoriaProduto)
         formData.append("data_inicio", dataInicio)
         formData.append("data_fim", dataFim)
         formData.append("lance_inicial", lanceInicial)
-        formData.append("pagamento", pagamentoCartao)
+        formData.append("min_incremento", "0.50")
         formData.append("parcelas", parcelasPermitidas)
         formData.append("foto", imgProduto)
 

@@ -99,36 +99,45 @@ def imoveis(categoria):
 def pagina_criar_leilao():
     return render_template('criarleilao.html')
 
-@bp.route('/detalhes')
-def detalhes_leilao():
-    leilao = LeilaoModel.query.get(1)
-    return render_template('detalhes_leilao.html', leilao=leilao)
+@bp.route('/<id_leilao>')
+def detalhes_leilao(id_leilao):
+    leilao = LeilaoModel.query.get(id_leilao)
+    if leilao:
+        return render_template('detalhes_leilao.html', leilao=leilao)
+    return redirect(url_for('main.index'))
 
-@bp.post('/verificarstripe')
+@bp.route('/verificarstripe')
 def verificar_stripe():
+    if session.get('usuario_id') is None:
+        return redirect(url_for('main.login'))
     usuario = UserModel.query.get(session['usuario_id'])
     if usuario.id_stripe is None:
         stripe_conta = stripe.Account.create(type="express")
         link = stripe.AccountLink.create(
             account=stripe_conta.id,
             refresh_url="https://ad-lances.onrender.com/verificarstripe",
-            return_url="https://ad-lances.onrender.com/perfil",
+            return_url="https://ad-lances.onrender.com/verificarstripe/sucesso",
             type="account_onboarding"
         )
-        return jsonify({'stripe_url': link.url})
-    return redirect(url_for('main.criar_leilao'))
+        usuario.id_stripe = stripe_conta.id
+        db.session.commit()
+        return redirect(link.url)
+    return redirect(url_for('main.pagina_criar_leilao'))
+
+@bp.route('/verificarstripe/sucesso')
+def sucesso_stripe():
+    return render_template('sucesso_stripe.html')
 
 @bp.post('/criarleilao')
 def criar_leilao():
     dados = {
         "nome": request.form.get("nome"),
         "descricao": request.form.get("descricao"),
-        "categoria": request.form.get("categoria"),
-        "subcategoria": request.form.get("subcategoria"),
+        "id_subcategoria": request.form.get("id_subcategoria"),
         "data_inicio": request.form.get("data_inicio"),
         "data_fim": request.form.get("data_fim"),
         "lance_inicial": request.form.get("lance_inicial"),
-        "pagamento": request.form.get("pagamento"),
+        "min_incremento": request.form.get("min_incremento"),
         "parcelas": request.form.get("parcelas")
     }
     foto = request.files.get("foto")
@@ -148,24 +157,23 @@ def criar_leilao():
         lance_inicial=dados['lance_inicial'],
         lance_atual=dados['lance_inicial'],
         min_incremento=dados.get('min_incremento'),
-        pagamento=dados['pagamento'],
         parcelas=dados['parcelas'],
         foto=url_imagem,
-        id_user=session['usuario_id'],
+        id_user=session['usuario_id']
     )
     novo_leilao.subcategoria = SubcategoriaModel.query.get(dados['subcategoria'])
-    novo_leilao.user = UserModel.query.get(session['usuario_id'])    
+    novo_leilao.user = UserModel.query.get(session['usuario_id'])
+
         
     db.session.add(novo_leilao)
     db.session.commit()
     
     return jsonify({'sucesso': f'Leilão {novo_leilao.nome} criado com sucesso!', "redirect": 'detalhes'})
 
-@bp.post('/novolance')
-def novo_lance():
+@bp.post('/<id_leilao>/novolance')
+def novo_lance(id_leilao):
     dados = request.get_json()
-    leilaoid = request.args.get('leilao')
-    leilao = LeilaoModel.query.filter_by(id=leilaoid).first()   
+    leilao = LeilaoModel.query.filter_by(id=id_leilao).first()   
     if leilao:
         if dados['lance'] > leilao.lance_atual:
             leilao.lance_atual = dados['lance']
@@ -178,6 +186,8 @@ def novo_lance():
             db.session.add(novo_lance)
             db.session.commit()
             return jsonify({'sucesso': 'Lance registrado com sucesso!'})
+        return jsonify({'erro': 'O valor do lance deve ser maior que o lance atual.'})
+    return jsonify({'erro': 'Leilão não encontrado.'})
         
 @bp.post('/<id_leilao>/criarpagamento')
 def criar_pagamento(id_leilao):

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/detalhes_leilao.css')}}">
     <title>Hyundai HB20 1.6 Comfort Plus Automático</title>
+    <script src="{{ url_for('static', filename='script/detalhes_leilao.js') }}" defer></script>
 </head>
 <body>
     <nav id="nav">
@@ -90,10 +91,13 @@
 
                 <div class="lance-container">
                     <div class="info-label" style="font-size: 16px; font-weight: 600;">Fazer um Lance</div>
-                    <div class="lance-input-group">
-                        <input type="number" id="novo-lance-input" name="novo-lance" placeholder="R$0,00" step="0.01">
-                        <button type="button" id="botao-lance">Lançar</button>
-                    </div>
+                    <form id="form-lance">
+                        <div class="lance-input-group">
+                            <input type="number" id="novo-lance-input" name="novo-lance" placeholder="R$0,00" step="0.01">
+                            <button type="button" id="botao-lance">Lançar</button>
+                        </div>
+                    </form>
+                    <p id="mensagem"></p>
                     <div class="contador-lances">Total de lances: 4</div>
                 </div>
             </div>
