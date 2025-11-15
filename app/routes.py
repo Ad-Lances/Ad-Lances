@@ -13,8 +13,22 @@ bp = Blueprint('main', __name__)
 ENDPOINTS = [Config.STRIPE_WEBHOOK_ACCOUNT, Config.STRIPE_WEBHOOK_PAYMENT]
 
 @bp.route('/')
+@bp.route('/')
 def index():
-    return render_template('index.html')
+    pagina = request.args.get('pagina', 1, type=int)
+    por_pagina = request.args.get('por_pagina', 12, type=int)
+    
+    leiloes_paginados = LeilaoModel.query.filter(
+        LeilaoModel.data_fim > datetime.now()
+    ).order_by(
+        LeilaoModel.data_inicio.desc()
+    ).paginate(
+        page=pagina,
+        per_page=por_pagina,
+        error_out=False
+    )
+    
+    return render_template('index.html', leiloes=leiloes_paginados)
 
 @bp.route('/cadastro')
 def cadastro():

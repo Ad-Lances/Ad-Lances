@@ -37,7 +37,6 @@
                 </div>
             </li>
 
-
             {% if session.get('logado') %}
                 <li>
                     <div id="nav-item">
@@ -46,27 +45,25 @@
                         </div>
                     </div>
                 </li>
-
-                {% else %}
+            {% else %}
+                <li>
                     <div id="nav-item">
                         <a href="login">Login</a>
                     </div>
-                {% endif %}
-                </div>
-            </li>
+                </li>
+            {% endif %}
         </ul>
     </nav>
 
     <div id="nav-categorias">
         <ul>
             <li>Categorias</li>
-            <a href="imoveis"><li><img src="{{ url_for('static', filename='img/img-nav/house-icon.png') }}"></li></a>
-            <a href="veiculos"><li><img src="{{ url_for('static', filename='img/img-nav/car-icon.png') }}"></li></a>
-            <a href="eletronicos"><li><img src="{{ url_for('static', filename='img/img-nav/screen-icon.png') }}"></li></a>
-            <a href="eletrodomesticos"><li><img src="{{ url_for('static', filename='img/img-nav/houseitems-icon.png') }}"></li></a>
-            <a href="moveis"><li><img src="{{ url_for('static', filename='img/img-nav/office-icon.png') }}"></li></a>
-            <a href="industriais"><li><img src="{{ url_for('static', filename='img/img-nav/machine-icon.png') }}"></li></a>
-            <li><img src="{{ url_for('static', filename='img/img-nav/decoration-icon.png') }}"></li>
+            <a href="categorias/Imóveis"><li><img src="{{ url_for('static', filename='img/img-nav/house-icon.png') }}"></li></a>
+            <a href="categorias/Veículos"><li><img src="{{ url_for('static', filename='img/img-nav/car-icon.png') }}"></li></a>
+            <a href="categorias/Eletrônicos"><li><img src="{{ url_for('static', filename='img/img-nav/screen-icon.png') }}"></li></a>
+            <a href="categorias/Eletrodomésticos"><li><img src="{{ url_for('static', filename='img/img-nav/houseitems-icon.png') }}"></li></a>
+            <a href="categorias/Móveis"><li><img src="{{ url_for('static', filename='img/img-nav/office-icon.png') }}"></li></a>
+            <a href="categorias/Industriais"><li><img src="{{ url_for('static', filename='img/img-nav/machine-icon.png') }}"></li></a>
         </ul>
     </div>
 
@@ -96,221 +93,208 @@
 
     <br><br>
 
-    <br><br>
-
+    <!-- SEÇÃO: LEILÕES ENCERRANDO EM BREVE -->
     <div id="secaotitulo">
         <h2>Leilões encerrando em breve</h2><br>
         <hr>
     </div>
 
     <div id="encerrando-em-breve">
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/industriais-img/eb1.webp') }}"><br>
-            Plataforma Elevatória 12m Tesoura Hidráulica Móvel Autopropulsão 320kg
-            <br><p id="local">Diadema - SP</p><br>
+        <div id="arrow-img" class="arrow-left" onclick="moverCarrossel('encerrando-em-breve', -1)">
+            <img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}">
+        </div>
+        
+        <div class="carrossel-container">
+            {% if leiloes_encerrando %}
+                {% for leilao in leiloes_encerrando.items %}
+                <div id="item" class="carrossel-item">
+                    <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
+                    <br>{{ leilao.nome }}
+                    <br><p id="local">
+                        {% if leilao.subcategoria and leilao.subcategoria.categoria %}
+                            {{ leilao.subcategoria.categoria.nome }}
+                        {% else %}
+                            Categoria não definida
+                        {% endif %}
+                    </p><br>
 
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Agrotama</span>
-            </div>
+                    <div id="infos-leiloeiro">
+                        <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                        <span id="leiloeiro-texto">
+                            {% if leilao.user %}
+                                {{ leilao.user.nome_completo }}
+                            {% else %}
+                                Anônimo
+                            {% endif %}
+                        </span>
+                    </div>
 
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
+                    <div id="views-img">
+                        <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                        <span id="views-count">
+                            {% set total_lances = leilao.lances|length %}
+                            {{ total_lances }} participante{% if total_lances != 1 %}s{% endif %}
+                        </span>
+                    </div><br>
 
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
+                    <span id="lance">Lance atual: R$ {{ "%.2f"|format(leilao.lance_atual) }}</span><br>
+                    <span id="temporizador">Encerra em: {{ leilao.data_fim.strftime('%d/%m/%Y %H:%M') }}</span>
+                    <br>
+                    <a href="{{ url_for('main.detalhes_leilao', id_leilao=leilao.id) }}" class="btn-ver-detalhes">Ver detalhes</a>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div id="item">
+                    <p>Nenhum leilão encerrando em breve</p>
+                </div>
+            {% endif %}
         </div>
 
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletrodom-img/eb2.webp') }}"><br>
-            Fogão Atlas Mônaco Plus 4 bocas
-            <br><p id="local">Rio de Janeiro - RJ</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">João Silva Santos</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual:</span><br>
-            <span id="temporizador">Encerra em: </span>
+        <div id="arrow-img" class="arrow-right" onclick="moverCarrossel('encerrando-em-breve', 1)">
+            <img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}">
         </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/imoveis-img/aa2.png') }}"><br>
-            Apartamento 60m²
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Setin Incorporadora</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/moveis-img/eb1.webp') }}"><br>
-            Cômoda Coliseu J&A Off-White
-            <br><p id="local">São João de Meriti - RJ</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Móveis Jequitiba</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/veiculos-img/aa1.webp') }}"><br>
-            Motocicleta BMW R1250
-            <br><p id="local">Curitiba - PR</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Detran</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-        </div>
-
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
     </div>
+
+    <!-- PAGINAÇÃO ENCERRANDO EM BREVE -->
+    {% if leiloes_encerrando and leiloes_encerrando.pages > 1 %}
+    <div class="paginacao-container">
+        <div class="paginacao">
+            {% if leiloes_encerrando.has_prev %}
+                <a href="{{ url_for('main.index', pagina_encerrando=leiloes_encerrando.prev_num, pagina_recentes=request.args.get('pagina_recentes', 1)) }}" class="pagina-link">
+                    ‹ Anterior
+                </a>
+            {% endif %}
+
+            {% for page_num in leiloes_encerrando.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                {% if page_num %}
+                    {% if page_num == leiloes_encerrando.page %}
+                        <span class="pagina-atual">{{ page_num }}</span>
+                    {% else %}
+                        <a href="{{ url_for('main.index', pagina_encerrando=page_num, pagina_recentes=request.args.get('pagina_recentes', 1)) }}" class="pagina-link">
+                            {{ page_num }}
+                        </a>
+                    {% endif %}
+                {% else %}
+                    <span class="pontos">...</span>
+                {% endif %}
+            {% endfor %}
+
+            {% if leiloes_encerrando.has_next %}
+                <a href="{{ url_for('main.index', pagina_encerrando=leiloes_encerrando.next_num, pagina_recentes=request.args.get('pagina_recentes', 1)) }}" class="pagina-link">
+                    Próxima ›
+                </a>
+            {% endif %}
+        </div>
+        <div class="info-paginacao">
+            Página {{ leiloes_encerrando.page }} de {{ leiloes_encerrando.pages }} - 
+            {{ leiloes_encerrando.total }} leilões no total
+        </div>
     </div>
+    {% endif %}
 
     <div id="banners-menores">
-        <a href="veiculos"><img src="{{ url_for('static', filename='img/banners/veiculos.png') }}"></a>
-        <a href="eletrodomesticos"><img src="{{ url_for('static', filename='img/banners/eletrodomesticos.png') }}"></a>
+        <a href="categorias/Veículos"><img src="{{ url_for('static', filename='img/banners/veiculos.png') }}"></a>
+        <a href="categorias/Eletrodomésticos"><img src="{{ url_for('static', filename='img/banners/eletrodomesticos.png') }}"></a>
     </div>
 
+    <!-- SEÇÃO: MAIS RECENTES -->
     <div id="secaotitulo">
         <h2>Mais recentes</h2><br>
         <hr>
     </div>
 
     <div id="mais-recentes">
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
+        <div id="arrow-img" class="arrow-left" onclick="moverCarrossel('mais-recentes', -1)">
+            <img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}">
+        </div>
+        
+        <div class="carrossel-container">
+            {% if leiloes_recentes %}
+                {% for leilao in leiloes_recentes.items %}
+                <div id="item" class="carrossel-item">
+                    <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
+                    <br>{{ leilao.nome }}
+                    <br><p id="local">
+                        {% if leilao.subcategoria and leilao.subcategoria.categoria %}
+                            {{ leilao.subcategoria.categoria.nome }}
+                        {% else %}
+                            Categoria não definida
+                        {% endif %}
+                    </p><br>
 
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/imoveis-img/a4.png') }}"><br>
-            Apartamento 45m²
-            <br><p id="local">Alphaville - SP</p><br>
+                    <div id="infos-leiloeiro">
+                        <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                        <span id="leiloeiro-texto">
+                            {% if leilao.user %}
+                                {{ leilao.user.nome_completo }}
+                            {% else %}
+                                Anônimo
+                            {% endif %}
+                        </span>
+                    </div>
 
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Eztec Imóveis</span>
-            </div>
+                    <div id="views-img">
+                        <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                        <span id="views-count">
+                            {% set total_lances = leilao.lances|length %}
+                            {{ total_lances }} participante{% if total_lances != 1 %}s{% endif %}
+                        </span>
+                    </div><br>
 
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
+                    <span id="lance">Lance atual: R$ {{ "%.2f"|format(leilao.lance_atual) }}</span><br>
+                    <span id="temporizador">Encerra em: {{ leilao.data_fim.strftime('%d/%m/%Y %H:%M') }}</span>
+                    <br>
+                    <a href="{{ url_for('main.detalhes_leilao', id_leilao=leilao.id) }}" class="btn-ver-detalhes">Ver detalhes</a>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div id="item">
+                    <p>Nenhum leilão recente</p>
+                </div>
+            {% endif %}
         </div>
 
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/veiculos-img/c1.webp') }}"><br>
-            Volkswagen Gol 1.6 (2022) (Seminovo)
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Guaíra Veículos</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
+        <div id="arrow-img" class="arrow-right" onclick="moverCarrossel('mais-recentes', 1)">
+            <img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}">
         </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletrodom-img/eb4.webp')}}"><br>
-            Máquina de Lavar Consul 9kg Branca
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Leroy Merlin</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/imoveis-img/a1.png') }}"><br>
-            Apartamento 62,09m²
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Dora Plat Imóveis</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/imoveis-img/a5.webp') }}"><br>
-            Apartamento 210m²
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Setin Incorporadora</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
     </div>
+
+    <!-- PAGINAÇÃO MAIS RECENTES -->
+    {% if leiloes_recentes and leiloes_recentes.pages > 1 %}
+    <div class="paginacao-container">
+        <div class="paginacao">
+            {% if leiloes_recentes.has_prev %}
+                <a href="{{ url_for('main.index', pagina_recentes=leiloes_recentes.prev_num, pagina_encerrando=request.args.get('pagina_encerrando', 1)) }}" class="pagina-link">
+                    ‹ Anterior
+                </a>
+            {% endif %}
+
+            {% for page_num in leiloes_recentes.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                {% if page_num %}
+                    {% if page_num == leiloes_recentes.page %}
+                        <span class="pagina-atual">{{ page_num }}</span>
+                    {% else %}
+                        <a href="{{ url_for('main.index', pagina_recentes=page_num, pagina_encerrando=request.args.get('pagina_encerrando', 1)) }}" class="pagina-link">
+                            {{ page_num }}
+                        </a>
+                    {% endif %}
+                {% else %}
+                    <span class="pontos">...</span>
+                {% endif %}
+            {% endfor %}
+
+            {% if leiloes_recentes.has_next %}
+                <a href="{{ url_for('main.index', pagina_recentes=leiloes_recentes.next_num, pagina_encerrando=request.args.get('pagina_encerrando', 1)) }}" class="pagina-link">
+                    Próxima ›
+                </a>
+            {% endif %}
+        </div>
+        <div class="info-paginacao">
+            Página {{ leiloes_recentes.page }} de {{ leiloes_recentes.pages }} - 
+            {{ leiloes_recentes.total }} leilões no total
+        </div>
+    </div>
+    {% endif %}
 
     <div id="banners-maiores">
         <img src="{{ url_for('static', filename='img/banners/bannermaior.png') }}">
@@ -353,6 +337,7 @@
                     <img src="{{ url_for('static', filename='img/empresas/santander.png') }}" alt="Santander">
                 </div>
                 
+                <!-- Segunda cópia para efeito infinito -->
                 <div class="empresa-item">
                     <img src="{{ url_for('static', filename='img/empresas/corpore.jpg') }}" alt="Corpore">
                 </div>
@@ -384,55 +369,55 @@
         </div>
     </div>
 
-<footer id="footer">
-    <div id="footer-container">
-        <div id="footer-section">
-            <h4>Sobre nós</h4>
-            <ul>
-                <li><a href="#">A empresa</a></li>
-                <li><a href="#">Política de privacidade</a></li>
-                <li><a href="#">Como funciona</a></li>
-                <li><a href="#">Como vender</a></li>
-            </ul>
-        </div>
+    <footer id="footer">
+        <div id="footer-container">
+            <div id="footer-section">
+                <h4>Sobre nós</h4>
+                <ul>
+                    <li><a href="#">A empresa</a></li>
+                    <li><a href="#">Política de privacidade</a></li>
+                    <li><a href="#">Como funciona</a></li>
+                    <li><a href="#">Como vender</a></li>
+                </ul>
+            </div>
 
-        <div id="footer-section">
-            <h4>Contato</h4>
-            <p><strong>E-mail:</strong> adlances@gmail.com</p>
-            <p><strong>Telefone:</strong> (11) 5567-3452</p>
-            <p><a href="#">Perguntas frequentes</a></p>
-        </div>
+            <div id="footer-section">
+                <h4>Contato</h4>
+                <p><strong>E-mail:</strong> adlances@gmail.com</p>
+                <p><strong>Telefone:</strong> (11) 5567-3452</p>
+                <p><a href="#">Perguntas frequentes</a></p>
+            </div>
 
-        <div id="footer-section">
-    <h4>Redes sociais</h4>
-    <div id="social-icons">
-        <a href="#" aria-label="Instagram">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="24" height="24">
-                <path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9a5.5 5.5 0 0 1-5.5 5.5h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2zm0 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4h-9zm4.5 3a5.5 5.5 0 1 1 0 11a5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7zm5.25-.75a.75.75 0 1 1 0 1.5a.75.75 0 0 1 0-1.5z"/>
-            </svg>
-        </a>
-        <a href="#" aria-label="Facebook">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="24" height="24">
-                <path d="M13.5 22V12.75h3l.5-4h-3.5V6.5c0-1.1.3-1.9 2-1.9h1.6V1.2c-.3 0-1.4-.2-2.7-.2c-2.7 0-4.6 1.6-4.6 4.7V8.7H7v4h3.8V22h2.7z"/>
-            </svg>
-        </a>
-        <a href="#" aria-label="LinkedIn">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="24" height="24">
-                <path d="M4.98 3.5A2.5 2.5 0 1 1 5 8.5a2.5 2.5 0 0 1-.02-5zM3 9h4v12H3zm7 0h3.7v1.6h.1c.5-.9 1.7-1.8 3.4-1.8c3.6 0 4.3 2.4 4.3 5.6V21h-4v-5.2c0-1.2 0-2.7-1.7-2.7c-1.8 0-2 1.3-2 2.6V21h-4z"/>
-            </svg>
-        </a>
-    </div>
-</div>
+            <div id="footer-section">
+                <h4>Redes sociais</h4>
+                <div id="social-icons">
+                    <a href="#" aria-label="Instagram">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9a5.5 5.5 0 0 1-5.5 5.5h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2zm0 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4h-9zm4.5 3a5.5 5.5 0 1 1 0 11a5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7zm5.25-.75a.75.75 0 1 1 0 1.5a.75.75 0 0 1 0-1.5z"/>
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="Facebook">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M13.5 22V12.75h3l.5-4h-3.5V6.5c0-1.1.3-1.9 2-1.9h1.6V1.2c-.3 0-1.4-.2-2.7-.2c-2.7 0-4.6 1.6-4.6 4.7V8.7H7v4h3.8V22h2.7z"/>
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="LinkedIn">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M4.98 3.5A2.5 2.5 0 1 1 5 8.5a2.5 2.5 0 0 1-.02-5zM3 9h4v12H3zm7 0h3.7v1.6h.1c.5-.9 1.7-1.8 3.4-1.8c3.6 0 4.3 2.4 4.3 5.6V21h-4v-5.2c0-1.2 0-2.7-1.7-2.7c-1.8 0-2 1.3-2 2.6V21h-4z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
 
-        <div id="footer-section">
-            <h4>Localização</h4>
-            <p>Av. Paulista, 1167 - Bela Vista</p>
+            <div id="footer-section">
+                <h4>Localização</h4>
+                <p>Av. Paulista, 1167 - Bela Vista</p>
+            </div>
         </div>
-    </div>
-    <div id="footer-bottom">
-        <p>© AdLances. Todos os direitos reservados.</p>
-    </div>
-</footer>
+        <div id="footer-bottom">
+            <p>© AdLances. Todos os direitos reservados.</p>
+        </div>
+    </footer>
 </body>
 <script src="{{ url_for('static', filename='script/carrossel.js') }}"></script>
 </html>
