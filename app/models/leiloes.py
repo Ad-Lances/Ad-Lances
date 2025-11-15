@@ -13,11 +13,9 @@ class LeilaoModel(db.Model):
         lance_inicial (float): Valor do lance inicial do leilão.
         lance_atual (float): Valor do lance atual do leilão.
         min_incremento (float): Incremento mínimo para os lances no leilão.
-        pagamento (str): Método de pagamento aceito no leilão.
         parcelas (str): Número de parcelas permitidas para o pagamento.
         foto (str): URL da foto associada ao leilão.
         id_user (int): Identificador do usuário que criou o leilão.
-        categoria (CategoriaModel): Relação com a categoria do leilão.
         subcategoria (SubcategoriaModel): Relação com a subcategoria do leilão.
         user (UserModel): Relação com o usuário que criou o leilão.
         lances (list): Relação com os lances feitos no leilão.
