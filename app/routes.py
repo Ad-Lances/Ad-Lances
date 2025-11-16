@@ -12,6 +12,16 @@ bp = Blueprint('main', __name__)
 
 ENDPOINTS = [Config.STRIPE_WEBHOOK_ACCOUNT, Config.STRIPE_WEBHOOK_PAYMENT]
 
+def salvar_dados(dados: object) -> bool:
+    try:
+        db.session.add(dados)
+        db.session.commit()
+        return True
+    except Exception as e:
+        print(f'Erro ao salvar dados: {e}')
+        db.session.rollback()
+        return False
+
 @bp.route('/')
 @bp.route('/')
 def index():
@@ -225,39 +235,38 @@ def criar_leilao():
         url_imagem = upload.get('secure_url')
     else:
         url_imagem = None
-    
-    novo_leilao = LeilaoModel(
-        nome=dados['nome'],
-        descricao=dados['descricao'],
-        id_subcategoria=int(dados['subcategoria']),
-        data_inicio=dados['data_inicio'],
-        data_fim=dados['data_fim'],
-        lance_inicial=dados['lance_inicial'],
-        lance_atual=dados['lance_inicial'],
-        min_incremento=dados.get('min_incremento'),
-        parcelas=dados['parcelas'],
-        foto=url_imagem,
-        id_user=session['usuario_id']
-    )
-    novo_leilao.subcategoria = SubcategoriaModel.query.get(dados['subcategoria'])
-    novo_leilao.user = UserModel.query.get(session['usuario_id'])
-
         
-    db.session.add(novo_leilao)
-    db.session.commit()
+    try:
+        novo_leilao = LeilaoModel(
+            nome=dados['nome'],
+            descricao=dados['descricao'],
+            id_subcategoria=dados['id_subcategoria'],
+            data_inicio=dados['data_inicio'],
+            data_fim=dados['data_fim'],
+            lance_inicial=dados['lance_inicial'],
+            lance_atual=dados['lance_inicial'],
+            min_incremento=dados['min_incremento'],
+            parcelas=dados['parcelas'],
+            foto=url_imagem,
+            id_user=session['usuario_id']
+        )    
+    except Exception:
+        return jsonify({'erro': 'Erro ao criar leilão. Tente novamente.'})
     
-    return jsonify({'sucesso': f'Leilão {novo_leilao.nome} criado com sucesso!', "redirect": 'detalhes'})
+    if salvar_dados(novo_leilao):
+        return jsonify({'sucesso': f'Leilão {novo_leilao.nome} criado com sucesso!', "redirect": 'detalhes'})
+    return jsonify({'erro': 'Erro ao salvar leilão no banco de dados. Tente novamente.'})
 
 @bp.post('/<id_leilao>/novolance')
 def novo_lance(id_leilao):
     dados = request.get_json()
-    leilao = LeilaoModel.query.filter_by(id=id_leilao).first()   
+    leilao = LeilaoModel.query.get(id_leilao)   
     if leilao:
         if dados['lance'] > leilao.lance_atual:
             leilao.lance_atual = dados['lance']
             novo_lance = LanceModel(
                 valor=dados['lance'],
-                horario=dados['horario'],
+                horario=datetime.now(),
                 id_leilao=leilao.id,
                 id_usuario=session['usuario_id']
             )

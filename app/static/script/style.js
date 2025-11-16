@@ -218,9 +218,9 @@ function exibirCampoSubcategorias(){
 
         const options = [
                 new Option('Selecione', 'block'),
-                new Option('Carros', 'carros'),
-                new Option('Motocicletas', 'motos'),
-                new Option('Caminhões', 'caminhoes')
+                new Option('Carros', '6'),
+                new Option('Motocicletas', '7'),
+                new Option('Caminhões', '8')
             ];
 
             options.forEach(option => {
@@ -235,10 +235,10 @@ function exibirCampoSubcategorias(){
 
         const options = [
             new Option('Selecione', 'block'),
-            new Option('Computadores', 'computadores'),
-            new Option('Áudio e Vídeo', 'audio_e_video'),
-            new Option('Videogames', 'videogames'),
-            new Option('Componentes Eletrônicos', 'componentes_eletronicos')
+            new Option('Computadores', '9'),
+            new Option('Áudio e Vídeo', '10'),
+            new Option('Videogames', '11'),
+            new Option('Componentes Eletrônicos', '12')
         ];
 
         options.forEach(option => {
@@ -253,9 +253,9 @@ function exibirCampoSubcategorias(){
 
         const options = [
             new Option('Selecione', 'block'),
-            new Option('Cozinha', 'cozinha'),
-            new Option('Limpeza', 'limpeza'),
-            new Option('Eletroportáteis', 'eletroportateis')
+            new Option('Cozinha', '13'),
+            new Option('Limpeza', '14'),
+            new Option('Eletroportáteis', '15')
         ];
 
         options.forEach(option => {
@@ -270,11 +270,11 @@ function exibirCampoSubcategorias(){
 
         const options = [
             new Option('Selecione', 'block'),
-            new Option('Sala de Estar', 'sala_de_estar'),
-            new Option('Cozinha', 'cozinha'),
-            new Option('Quarto', 'quarto'),
-            new Option('Banheiro', 'banheiro'),
-            new Option('Escritório', 'escritorio')
+            new Option('Sala de Estar', '16'),
+            new Option('Cozinha', '17'),
+            new Option('Quarto', '18'),
+            new Option('Banheiro', '19'),
+            new Option('Escritório', '20')
         ];
 
         options.forEach(option =>{
@@ -289,11 +289,11 @@ function exibirCampoSubcategorias(){
 
         const options = [
             new Option('Selecione', 'block'),
-            new Option('Máquinas e Equipamentos Pesados', 'maquinas_pesados'),
-            new Option('Materiais e Insumos Industriais', 'materiais_insumos'),
-            new Option('Ferramentas e Equipamentos de Oficina', 'ferramentas_oficina'),
-            new Option('Acessórios de Máquinas', 'acessorios_maquinas'),
-            new Option('Automação, Robótica e Controle', 'automacao_robotica_controle')
+            new Option('Máquinas e Equipamentos Pesados', '21'),
+            new Option('Materiais e Insumos Industriais', '22'),
+            new Option('Ferramentas e Equipamentos de Oficina', '23'),
+            new Option('Acessórios de Máquinas', '24'),
+            new Option('Automação, Robótica e Controle', '25')
         ];
 
         options.forEach(option =>{

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/detalhes_leilao.css')}}">
-    <title>Hyundai HB20 1.6 Comfort Plus Automático</title>
+    <title>{{ leilao.nome }}</title>
     <script src="{{ url_for('static', filename='script/detalhes_leilao.js') }}" defer></script>
 </head>
 <body>
@@ -64,7 +64,7 @@
 
             <div id="main-block">
                 <div id="nome-produto">
-                    <h2>Hyundai HB20 1.6 Comfort Plus Automático</h2>
+                    <h2>{{ leilao.nome }}</h2>
                 </div>
 
                 <div id="bloco-temporizador">
@@ -99,7 +99,7 @@
                             </div>
                         </form>
                         <p id="mensagem"></p>
-                        <div class="contador-lances">Total de lances: 4</div>
+                        <div class="contador-lances">Total de lances: {{ leilao.lances|length }}</div>
                     </div>
                 {% else %}
                     <div id="mensagem-login">
@@ -123,7 +123,7 @@
         <div id="infos-leiloeiro">
             <div class="leiloeiro-content">
                 <section id="titulo">Leiloeiro</section>
-                <section id="nome-leiloeiro">Grupo R1 Autos</section>
+                <section id="nome-leiloeiro">{{ leilao.user.nome_completo }}</section>
             </div>
         </div>
 

@@ -3,7 +3,12 @@ function verificarCamposLeilao(img_produto, nome_produto, lance_inicial, descric
     pagamentoCartao, pagamentoPIX, pagamentoFGTS, pagamentoFinanciamento, parcelas,
     uf_leilao, cidade_leilao, cep_leilao, rua_leilao, numero_leilao,
     termo_veracidade, termos_condicoes){
-   
+     console.log(rua_leilao, numero_leilao, termo_veracidade, termos_condicoes);
+     console.log(img_produto, nome_produto, lance_inicial, descricao_produto, categoria_produto, subcategoria_produto,
+        data_inicio, data_fim,
+        pagamentoCartao, pagamentoPIX, pagamentoFGTS, pagamentoFinanciamento, parcelas,
+        uf_leilao, cidade_leilao, cep_leilao, rua_leilao, numero_leilao,
+        termo_veracidade, termos_condicoes);   
     const temFormaPagamento = pagamentoCartao || pagamentoPIX || pagamentoFGTS || pagamentoFinanciamento;
 
     if(!img_produto ||
@@ -17,7 +22,7 @@ function verificarCamposLeilao(img_produto, nome_produto, lance_inicial, descric
        !temFormaPagamento ||
        !parcelas || parcelas === 'none' ||
        !uf_leilao || uf_leilao.trim() === "" ||
-       !cidade_leilao || cidade_leilao.value.trim() === ''||
+       !cidade_leilao || cidade_leilao.trim() === ''||
        !cep_leilao || cep_leilao.trim() === '' ||
        !rua_leilao || rua_leilao.trim() === '' ||
        !numero_leilao || numero_leilao.trim() === '' ||

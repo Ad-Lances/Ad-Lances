@@ -57,13 +57,13 @@ document.addEventListener('DOMContentLoaded', function(){
         const ruaLeilao = ruaLeilaoInput.value.trim();
         const numeroLeilao = numeroLeilaoInput.value.trim();
         const complementoLeilao = complementoLeilaoInput.value.trim();
-
+        
         const termosVeracidade = termosVeracidadeInput.checked;
         const termosCondicoes = termosCondicoesInput.checked;
-
+        console.log(ruaLeilao, numeroLeilao, termosVeracidade, termosCondicoes);
         const erroCamposLeilao = verificarCamposLeilao(
             imgProduto, nomeProduto, lanceInicial, descricaoProduto,
-            categoriaProduto, subcategoriaProduto, dataInicio, dataFim, parcelasPermitidas,
+            categoriaProduto, subcategoriaProduto, dataInicio, dataFim, pagamentoCartao, pagamentoPIX, pagamentoFGTS,pagamentoFinanciamento, parcelasPermitidas,
             UFLeilao, cidadeLeilao, CEPLeilao, ruaLeilao, numeroLeilao,
             termosVeracidade, termosCondicoes
         );
@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', function(){
         formData.append("nome", nomeProduto)
         formData.append("descricao", descricaoProduto)
         formData.append("categoria", categoriaProduto)
-        formData.append("subcategoria", subcategoriaProduto)
+        formData.append("id_subcategoria", subcategoriaProduto)
         formData.append("data_inicio", dataInicio)
         formData.append("data_fim", dataFim)
         formData.append("lance_inicial", lanceInicial)
@@ -203,9 +203,13 @@ document.addEventListener('DOMContentLoaded', function(){
         const resultado = await resposta.json()
         if (resultado.sucesso){
             mensagem.innerHTML = resultado.sucesso;
+            scrollerro();
             setTimeout(() => {
                 window.location.href = '/'
             }, 2000);
+        } else {
+            mensagem.innerHTML = resultado.erro;
+            scrollerro();
         }
     })
 })
