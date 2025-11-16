@@ -5,8 +5,10 @@ from . import cloudinary
 from datetime import datetime, date, timedelta
 import cloudinary.uploader
 import re
+from sqlalchemy import select
 from app import stripe
 from config import Config
+from app import socketio
 
 bp = Blueprint('main', __name__)
 
@@ -261,20 +263,60 @@ def criar_leilao():
 def novo_lance(id_leilao):
     dados = request.get_json()
     leilao = LeilaoModel.query.get(id_leilao)   
-    if leilao:
-        if dados['lance'] > leilao.lance_atual:
-            leilao.lance_atual = dados['lance']
-            novo_lance = LanceModel(
-                valor=dados['lance'],
-                horario=datetime.now(),
-                id_leilao=leilao.id,
-                id_usuario=session['usuario_id']
-            )
-            db.session.add(novo_lance)
-            db.session.commit()
-            return jsonify({'sucesso': 'Lance registrado com sucesso!'})
-        return jsonify({'erro': 'O valor do lance deve ser maior que o lance atual.'})
-    return jsonify({'erro': 'Leilão não encontrado.'})
+    
+    if leilao is None:
+        return jsonify({'erro': 'Leilão não encontrado.'})
+    
+    if leilao.data_fim < datetime.now():
+        return jsonify({'erro': 'Leilão já encerrado.'})
+    
+    try:
+        valor_lance = float(dados['lance'])
+    except:
+        return jsonify({'erro': 'Digite um lance válido.'})
+    
+    if valor_lance < leilao.lance_atual + leilao.min_incremento:
+        return jsonify({'erro': 'O valor do lance deve ser maior que o lance atual + incremento mínimo.'})
+    
+    try:
+        locked = db.session.execute(
+            select(LeilaoModel).
+            where(LeilaoModel.id == leilao.id).
+            with_for_update()
+        ).scalar_one_or_none()
+        
+        ultimo_lance = db.session.execute(
+            select(LanceModel)
+            .where(LanceModel.id_leilao == leilao.id)
+            .where(LanceModel.id_usuario == session['usuario_id'])
+            .order_by(LanceModel.id.desc())
+            .limit(1)
+        ).scalar_one_or_none()
+        
+        if valor_lance < locked.lance_atual + locked.min_incremento: 
+            db.session.rollback()
+            return jsonify({'erro': 'O valor do lance deve ser maior que o lance atual + incremento mínimo.'})
+        
+        if ultimo_lance and ultimo_lance.horario > datetime.now() - timedelta(seconds=5):
+            db.session.rollback()
+            return jsonify({'erro': 'Espere um pouco para fazer outro lance...'})
+        
+        novo_lance = LanceModel(
+            valor=valor_lance,
+            horario=datetime.now(),
+            id_leilao=leilao.id,
+            id_usuario=session['usuario_id']
+        )
+        db.session.add(novo_lance)
+        locked.lance_atual = valor_lance            
+        db.session.commit()
+        socketio.emit("novo_lance", (leilao.lance_atual, len(leilao.lances)))
+    except Exception as e:
+        db.session.rollback()
+        print(e)
+        return jsonify({'erro': 'Erro ao salvar lance. Tente novamente.'})
+    return jsonify({'sucesso': 'Lance registrado com sucesso!'})
+    
         
 @bp.post('/<id_leilao>/criarpagamento')
 def criar_pagamento(id_leilao):

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/detalhes_leilao.css')}}">
     <title>{{ leilao.nome }}</title>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
     <script src="{{ url_for('static', filename='script/detalhes_leilao.js') }}" defer></script>
 </head>
 <body>
@@ -86,7 +87,7 @@
 
                 <div class="info-item" style="grid-column: 1 / -1; text-align: center; margin: 10px 0;">
                     <span class="info-label">Lance Atual</span>
-                    <div class="lance-atual">{{ leilao.get_lance_atual_str() }}</div>
+                    <div class="lance-atual" id="lance-atual">{{ leilao.get_lance_atual_str() }}</div>
                 </div>
 
                 {% if session.get('logado') %}
@@ -95,11 +96,11 @@
                         <form id="form-lance">
                             <div class="lance-input-group">
                                 <input type="number" id="novo-lance-input" name="novo-lance" placeholder="R$0,00" step="0.01">
-                                <button type="button" id="botao-lance">Lançar</button>
+                                <button type="click" id="botao-lance">Lançar</button>
                             </div>
                         </form>
                         <p id="mensagem"></p>
-                        <div class="contador-lances">Total de lances: {{ leilao.lances|length }}</div>
+                        <div class="contador-lances" id="total-lances">Total de lances: {{ leilao.lances|length }}</div>
                     </div>
                 {% else %}
                     <div id="mensagem-login">
