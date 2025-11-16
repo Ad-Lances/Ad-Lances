@@ -324,6 +324,163 @@ body {
     font-size: 13px;
 }
 
+.btn-subcategoria {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    transition: transform 0.3s ease;
+}
+
+.btn-subcategoria:hover {
+    transform: translateY(-5px);
+}
+
+.btn-subcategoria.ativo {
+    position: relative;
+}
+
+.btn-subcategoria.ativo::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 3px;
+    background: #034660;
+    border-radius: 2px;
+}
+
+#categorias {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 40px 0;
+    flex-wrap: wrap;
+}
+
+#item-cat {
+    text-align: center;
+    padding: 15px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.btn-subcategoria:hover #item-cat {
+    background: rgba(3, 70, 96, 0.1);
+}
+
+.btn-subcategoria.ativo #item-cat {
+    background: rgba(3, 70, 96, 0.15);
+    box-shadow: 0 4px 12px rgba(3, 70, 96, 0.2);
+}
+
+#item-cat img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+#texto-cat {
+    font-weight: 500;
+    color: #034660;
+    font-size: 14px;
+}
+
+/* ========== CONTAINER DE LEILÕES ========== */
+#leiloes-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.sem-resultados {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+    font-size: 18px;
+}
+
+/* ========== PAGINAÇÃO ========== */
+.paginacao-container {
+    text-align: center;
+    margin: 40px 0;
+    padding: 0 20px;
+}
+
+.paginacao {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.pagina-link {
+    padding: 8px 12px;
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #034660;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    min-width: 40px;
+    text-align: center;
+}
+
+.pagina-link:hover {
+    background: #034660;
+    color: white;
+    border-color: #034660;
+}
+
+.pagina-atual {
+    padding: 8px 12px;
+    background: #034660;
+    border: 1px solid #034660;
+    border-radius: 4px;
+    color: white;
+    font-weight: 600;
+    min-width: 40px;
+    text-align: center;
+}
+
+.pontos {
+    padding: 8px 4px;
+    color: #6c757d;
+}
+
+.info-paginacao {
+    margin-top: 10px;
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.btn-ver-detalhes {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 16px;
+    background: #034660;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: background 0.3s ease;
+}
+
+.btn-ver-detalhes:hover {
+    background: #023047;
+}
+
 
 @media (max-width: 768px) {
     #footer-container {

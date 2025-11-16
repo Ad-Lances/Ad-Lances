@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, jsonify, session, redirec
 from app.models import *
 from . import db
 from . import cloudinary
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 import cloudinary.uploader
 import re
 from app import stripe
@@ -102,10 +102,74 @@ def perfil_user():
 
 @bp.route('/categorias/<string:categoria>')
 def imoveis(categoria):
+    # Obter parâmetros
+    subcategoria = request.args.get('subcategoria', '')
+    pagina = request.args.get('pagina', 1, type=int)
+    por_pagina = 10
+
     categoria_exist = CategoriaModel.query.filter_by(nome=categoria).first()
+    
     if categoria_exist:
-        leiloes = categoria_exist.leiloes
-        return render_template(f'categorias/{categoria_exist.slug}.html', leiloes=leiloes)
+        if subcategoria:
+            # Filtrar por subcategoria específica
+            subcategoria_obj = SubcategoriaModel.query.filter_by(
+                id_categoria=categoria_exist.id,
+                nome=subcategoria
+            ).first()
+            
+            if subcategoria_obj:
+                # Leilões encerrando em breve da subcategoria
+                leiloes_encerrando = LeilaoModel.query.filter(
+                    LeilaoModel.id_subcategoria == subcategoria_obj.id,
+                    LeilaoModel.data_fim > datetime.now(),
+                    LeilaoModel.data_fim <= datetime.now() + timedelta(hours=24)  # Próximas 24h
+                ).order_by(
+                    LeilaoModel.data_fim.asc()
+                ).limit(5).all()
+
+                # Todos os leilões da subcategoria (com paginação)
+                leiloes = LeilaoModel.query.filter(
+                    LeilaoModel.id_subcategoria == subcategoria_obj.id,
+                    LeilaoModel.data_fim > datetime.now()
+                ).order_by(
+                    LeilaoModel.data_inicio.desc()
+                ).paginate(
+                    page=pagina,
+                    per_page=por_pagina,
+                    error_out=False
+                )
+            else:
+                leiloes_encerrando = []
+                leiloes = None
+        else:
+            # Leilões encerrando em breve de toda a categoria
+            leiloes_encerrando = LeilaoModel.query.filter(
+                LeilaoModel.id_subcategoria.in_([sub.id for sub in categoria_exist.subcategorias]),
+                LeilaoModel.data_fim > datetime.now(),
+                LeilaoModel.data_fim <= datetime.now() + timedelta(hours=24)
+            ).order_by(
+                LeilaoModel.data_fim.asc()
+            ).limit(5).all()
+
+            # Todos os leilões da categoria (com paginação)
+            leiloes = LeilaoModel.query.filter(
+                LeilaoModel.id_subcategoria.in_([sub.id for sub in categoria_exist.subcategorias]),
+                LeilaoModel.data_fim > datetime.now()
+            ).order_by(
+                LeilaoModel.data_inicio.desc()
+            ).paginate(
+                page=pagina,
+                per_page=por_pagina,
+                error_out=False
+            )
+
+        return render_template(
+            f'categorias/{categoria_exist.slug}.html', 
+            leiloes=leiloes,
+            leiloes_encerrando=leiloes_encerrando,
+            subcategoria=subcategoria,
+            categoria=categoria_exist
+        )
     else:
         return redirect(url_for('main.index'))
 
