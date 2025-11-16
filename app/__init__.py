@@ -9,7 +9,7 @@ from flask_socketio import SocketIO
 load_dotenv()
 
 db = SQLAlchemy()
-socketio = SocketIO(cors_allowed_origins="*")
+socketio = SocketIO(cors_allowed_origins="*", async_mode='gevent')
 
 def create_app():
     app = Flask(__name__)
