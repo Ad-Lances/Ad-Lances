@@ -6,9 +6,8 @@ from datetime import datetime, date, timedelta
 import cloudinary.uploader
 import re
 from sqlalchemy import select
-from app import stripe
+from app import stripe, socketio, sqids
 from config import Config
-from app import socketio
 
 bp = Blueprint('main', __name__)
 
@@ -23,6 +22,12 @@ def salvar_dados(dados: object) -> bool:
         print(f'Erro ao salvar dados: {e}')
         db.session.rollback()
         return False
+    
+def get_leilao(hashid):
+    dihsah = sqids.decode(hashid)
+    if dihsah:
+        return LeilaoModel.query.get(dihsah[0])
+    return None     
 
 @bp.route('/')
 @bp.route('/')
@@ -189,9 +194,9 @@ def imoveis(categoria):
 def pagina_criar_leilao():
     return render_template('criarleilao.html')
 
-@bp.route('/<id_leilao>')
-def detalhes_leilao(id_leilao):
-    leilao = LeilaoModel.query.get(id_leilao)
+@bp.route('/<hashid>')
+def detalhes_leilao(hashid):
+    leilao = get_leilao(hashid)
     if leilao:
         return render_template('detalhes_leilao.html', leilao=leilao)
     return redirect(url_for('main.index'))
@@ -256,13 +261,15 @@ def criar_leilao():
         return jsonify({'erro': 'Erro ao criar leilão. Tente novamente.'})
     
     if salvar_dados(novo_leilao):
+        novo_leilao.hashid = sqids.encode([novo_leilao.id])
+        db.session.commit()
         return jsonify({'sucesso': f'Leilão {novo_leilao.nome} criado com sucesso!', "redirect": 'detalhes'})
     return jsonify({'erro': 'Erro ao salvar leilão no banco de dados. Tente novamente.'})
 
-@bp.post('/<id_leilao>/novolance')
-def novo_lance(id_leilao):
+@bp.post('/<hashid>/novolance')
+def novo_lance(hashid):
     dados = request.get_json()
-    leilao = LeilaoModel.query.get(id_leilao)   
+    leilao = get_leilao(hashid)
     
     if leilao is None:
         return jsonify({'erro': 'Leilão não encontrado.'})
@@ -318,10 +325,10 @@ def novo_lance(id_leilao):
     return jsonify({'sucesso': 'Lance registrado com sucesso!'})
     
         
-@bp.post('/<id_leilao>/criarpagamento')
-def criar_pagamento(id_leilao):
+@bp.post('/<hashid>/criarpagamento')
+def criar_pagamento(hashid):
     user = UserModel.query.get(session['usuario_id'])
-    leilao = LeilaoModel.query.get(id_leilao)
+    leilao = get_leilao(hashid)
     
     if user and leilao:
         session = stripe.checkout.Session.create(

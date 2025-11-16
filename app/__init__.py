@@ -5,11 +5,13 @@ from config import Config
 from dotenv import load_dotenv 
 import stripe
 from flask_socketio import SocketIO
+from sqids import Sqids
 
 load_dotenv()
 
 db = SQLAlchemy()
 socketio = SocketIO(cors_allowed_origins="*", async_mode='gevent')
+sqids = Sqids(min_length=6)
 
 def create_app():
     app = Flask(__name__)

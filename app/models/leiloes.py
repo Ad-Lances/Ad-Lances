@@ -42,6 +42,8 @@ class LeilaoModel(db.Model):
     parcelas = db.Column(db.String(3), nullable=False)
     foto = db.Column(db.String(255), nullable=False)
     id_user = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    hashid = db.Column(db.String(16), nullable=True)
+    status = db.Column(db.String(10), nullable=False, server_default="Aberto")
     
     user = db.relationship('UserModel', back_populates='leiloes')
     subcategoria = db.relationship('SubcategoriaModel', back_populates='leiloes')
