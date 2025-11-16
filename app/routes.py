@@ -325,3 +325,15 @@ def webhook():
         print(account)
         
     return "", 200
+
+@bp.route('/401')
+def erro_401():
+    return render_template('error-pages/401.html')
+
+@bp.route('/404')
+def erro_404():
+    return render_template('error-pages/404.html')
+
+@bp.route('/500')
+def erro_500():
+    return render_template('error-pages/500.html')

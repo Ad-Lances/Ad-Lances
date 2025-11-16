@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/erros.css')}}">
+    <script src="https://kit.fontawesome.com/301e8f1b49.js" crossorigin="anonymous"></script>
+    <title>Error 401 | Ad-Lances</title>
+</head>
+<body>
+    <div class="div-erro">
+        <section id="titulo">
+            <i class="fa-solid fa-circle-exclamation" style="color: #034660;"></i>Não autorizado
+        </section>
+
+        <section id="detalhes-erro">
+            Você não possui autorização para acessar essa página.
+            Faça login na sua conta ou volte para a página inicial.
+        </section>
+
+        <section id="links-paginas">
+            <a href="login">Fazer Login</a>
+            <a href="/">Página Inicial</a>
+        </section>
+        
+    </div>
+</body>
+</html>

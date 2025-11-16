@@ -17,7 +17,7 @@ function verificarCamposLeilao(img_produto, nome_produto, lance_inicial, descric
        !temFormaPagamento ||
        !parcelas || parcelas === 'none' ||
        !uf_leilao || uf_leilao.trim() === "" ||
-       !cidade_leilao || cidade_leilao.trim() === ''||
+       !cidade_leilao || cidade_leilao.value.trim() === ''||
        !cep_leilao || cep_leilao.trim() === '' ||
        !rua_leilao || rua_leilao.trim() === '' ||
        !numero_leilao || numero_leilao.trim() === '' ||
