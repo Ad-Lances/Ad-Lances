@@ -42,24 +42,26 @@ def verificar_senha(senha: str):
 def verificar_campos(dados):
 
     nome = dados.get("nome")
-    estado = dados.get("unid_federativa")
+    unid_federativa = dados.get("estado")
     cidade = dados.get("cidade")
-    logradouro = dados.get("rua")
+    rua = dados.get("logradouro")
     cep = dados.get("cep")
     bairro = dados.get("bairro")
     numero_casa = dados.get("numero_casa")
     email = dados.get("email")
     senha = dados.get("senha")
-    telefone = dados.get("telefone")
+    telefone = dados.get("telefone_celular")
     tipo_pessoa = dados.get("tipo_pessoa")
     cpf = dados.get("cpf")
     cnpj = dados.get("cnpj")
     nome_empresa = dados.get("nome_empresa")
 
     obrigatorios = [
-        nome, estado, cidade, logradouro, cep, bairro, numero_casa, email, senha, telefone, tipo_pessoa
+        nome, unid_federativa, cidade, rua, cep, bairro, numero_casa, email, senha, telefone, tipo_pessoa
     ]
 
+    print(obrigatorios)
+    print(dados)
     if any(not campo for campo in obrigatorios):
         return "Por favor, preencha todos os campos obrigatorios."
 

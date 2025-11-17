@@ -40,6 +40,46 @@ body {
     gap: 10px;
 }
 
+.flashes, #avisojs{
+    margin-left: 40%;
+    list-style-type: none;
+    color: #ffffff;
+    background: #d65050ff;
+    border-radius: 12px;
+    padding: 16px 24px;
+    margin: 20px auto;
+    text-align: center;
+    font-weight: 500;
+    font-size: 15px;
+    box-shadow: 0 4px 15px rgba(194, 74, 74, 0.3);
+    border: 1px solid #b84545;
+    width: fit-content;
+    max-width: 90%;
+    backdrop-filter: blur(10px);
+    animation: slideIn 0.3s ease-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.flashsucess{
+    color: #ffffff;
+    background: #75cc52ff;
+    border-radius: 12px;
+    padding: 16px 24px;
+    margin: 20px auto;
+    text-align: center;
+    font-weight: 500;
+    font-size: 15px;
+    box-shadow: 0 4px 15px rgba(194, 74, 74, 0.3);
+    border: 1px solid #b84545;
+    width: fit-content;
+    max-width: 90%;
+    backdrop-filter: blur(10px);
+    animation: slideIn 0.3s ease-out;
+    position: relative;
+    overflow: hidden;
+}
+
 #nav-item a{
     text-decoration: none;
     color: white;

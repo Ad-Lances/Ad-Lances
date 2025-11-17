@@ -46,10 +46,23 @@
     </nav>
 
     <h1 id="cadastro-text">Faça seu cadastro</h1>
+    <p id="avisojs">ATENÇÃO: Você está com o JavaScript desativado. Ative-o nas configurações do seu navegador para melhor experiência.</p>
 
     <ul id="mensagem">
 
     </ul> 
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <ul class="flashes">  
+            <li class="{{ category }}">{{ message }}</li>
+                    {% if category == 'sucesso' %}
+                        <ul class="flashsucess">
+                            <li class="{{ category }}">{{ message }}</li>
+                        </ul>
+                    {% endif %}
+        </ul>
+        {% endif %}
+    {% endwith %}
 
    <form id="formularioCadastro" action="/cadastrar" method="POST">
     <div class="form-section">
@@ -156,7 +169,7 @@
 
             <div>
                 <label for="senha" class="label-senha">Digite sua senha:</label>
-                <input type="password" name="password" placeholder="Digite sua senha" class="input-senha" id="password">
+                <input type="password" name="senha" placeholder="Digite sua senha" class="input-senha" id="senha">
             </div>
 
             <div>
