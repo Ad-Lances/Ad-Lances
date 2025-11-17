@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const nomeInput = document.getElementById('nome');
     const cpf = document.getElementById('cpf');
     const cnpj = document.getElementById('cnpj');
-    const tipo_pessoa = document.getElementById('tipo-de-conta');
+    const nome_empresa = document.getElementById("nome-empresa");
+    const tipo_pessoa = document.getElementById('tipo_pessoa');
     const datanascInput = document.getElementById('datanasc');
 
     const estadoInput = document.getElementById('estado');
@@ -47,13 +48,15 @@ document.addEventListener('DOMContentLoaded', function () {
         const confirmarSenha = confirmar_senhaInput.value.trim();
         const ccpf = cpf.value.replace(/\D/g, '').trim();
         const ccnpj = cnpj.value.replace(/\D/g, '').trim();
-        const tipopessoa = tipo_pessoa.value.trim();
-        const data_nasc = datanascInput.value.trim();
+        const tipopessoa = tipo_pessoa.value;
+        const data_nasc = datanascInput.value.trim(); 
+        const nomeEmpresa = nome_empresa.value.trim();
+
 
         const erroCampos = verificar_campos(
             nome, estado, cidade, logradouro, cep, bairro,
             numeroCasa, emailCadastro, senhaCadastro,
-            telefone_celular, tipopessoa, ccpf, ccnpj
+            telefone_celular, tipopessoa, ccpf, ccnpj, nomeEmpresa
         );
         if (erroCampos) {
             mensagem_erros.push(erroCampos);
@@ -179,9 +182,10 @@ document.addEventListener('DOMContentLoaded', function () {
             email: emailCadastro,
             senha: senhaCadastro,
             telefone: telefoneCelInput.value.trim(),
-            telefone_res: telefoneResInput.value.trim(),
-            cpf: ccpf,
-            cnpj: ccnpj,
+            ...(telefoneResInput.value.trim() && { telefone_res: telefoneResInput.value.trim() }),
+            ...(ccpf && { cpf: ccpf }),
+            ...(ccnpj && { cnpj: ccnpj }),
+            ...(nomeEmpresa && { nome_empresa: nomeEmpresa }),
             tipo_pessoa: tipopessoa,
             datanasc: data_nasc
         };

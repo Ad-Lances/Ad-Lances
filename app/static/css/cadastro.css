@@ -14,6 +14,9 @@ body {
     background-image: url('img/background-image.jpg');
 }
 
+.hidden{
+    display: none !important;
+}
 #nav {
     background-color: #034660;
     width: 100%;
@@ -159,16 +162,6 @@ hr {
 }
 
 .full-width {
-    grid-column: 1 / -1;
-}
-
-.campo-documento {
-    display: none;
-    grid-column: 1 / -1;
-}
-
-.campo-nome-empresa {
-    display: none;
     grid-column: 1 / -1;
 }
 

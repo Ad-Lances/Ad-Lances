@@ -51,7 +51,7 @@
 
     </ul> 
 
-   <form id="formularioCadastro">
+   <form id="formularioCadastro" action="/cadastrar" method="POST">
     <div class="form-section">
         <i class="fa-solid fa-circle-user fa-lg" style="color: #034660;"></i>
         <h3>Informações Pessoais</h3>
@@ -60,15 +60,15 @@
         <div class="form-grid">
             <div class="full-width">
                 <label for="nome" class="label-nome">Nome completo:</label>
-                <input type="text" id="nome" name="nomecompleto" placeholder="Digite seu nome completo aqui" class="input-nome">
+                <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo aqui" class="input-nome">
             </div>
 
             <div>
                 <label for="tipo-de-conta" class="label-tipo-conta">Tipo de pessoa:</label>
-                <select name="tipo-de-conta" id="tipo-de-conta" onchange="exibirCampo()">
+                <select name="tipo_pessoa" id="tipo_pessoa" onchange="exibirCampo()">
                     <option value="none">Selecione uma opção...</option>
-                    <option value="Pessoa Física">Pessoa Física</option>
-                    <option value="Pessoa Jurídica">Pessoa Jurídica</option>
+                    <option value="fisica">Pessoa Física</option>
+                    <option value="juridica">Pessoa Jurídica</option>
                 </select>
             </div>
 
@@ -77,19 +77,19 @@
                 <input type="date" id="datanasc" name="datanasc" class="input-data">
             </div>
 
-            <div id="campoCpf" class="campo-documento full-width">
+            <div id="campoCpf" class="campo-documento full-width ">
                 <label for="cpf" class="label-cpf">CPF:</label>
                 <input type="text" id="cpf" name="cpf" data-mask="cpf" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" title="Digite um CPF no formato: xxx.xxx.xxx-xx" class="input-cpf" placeholder="000.000.000-00" maxlength="14">
             </div>
 
-            <div id="campoCnpj" class="campo-documento full-width" style="display: none;">
+            <div id="campoCnpj" class="campo-documento full-width ">
                 <label for="cnpj" class="label-cnpj">CNPJ:</label>
                 <input type="text" id="cnpj" name="cnpj" data-mask="cnpj" pattern="\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}" title="Digite um CNPJ no formato: xx.xxx.xxx/xxxx-xx" class="input-cnpj" placeholder="00.000.000/0000-00" maxlength="18">
             </div>
 
-            <div id="nomeEmpresa" class="campo-nome-empresa full-width" style="display: none;">
+            <div id="nomeEmpresa" class="campo-nome-empresa full-width">
                 <label for="nome-empresa" class="label-empresa">Nome da Empresa:</label>
-                <input type="text" id="nome-empresa" name="nome-empresa" placeholder="Digite o nome da empresa" class="input-empresa">
+                <input type="text" id="nome-empresa" name="nome_empresa" placeholder="Digite o nome da empresa" class="input-empresa">
             </div>
 
             <div class="full-width">
@@ -112,7 +112,7 @@
 
             <div>
                 <label for="estado" class="label-estado">Unidade Federativa (UF):</label>
-                <input type="text" class="input-estado" id="estado">
+                <input type="text" id="estado" name="estado">
             </div>
 
             <div>

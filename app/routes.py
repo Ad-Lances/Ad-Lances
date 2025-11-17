@@ -10,13 +10,24 @@ from config import Config
 from app.validators_user import (
     verificar_idade,
     verificar_email,
-    verificar_senha
+    verificar_senha,
+    verificar_campos
 )
 
 bp = Blueprint('main', __name__)
 
 ENDPOINTS = [Config.STRIPE_WEBHOOK_ACCOUNT, Config.STRIPE_WEBHOOK_PAYMENT]
 
+def salvar_dados(dados: object) -> bool:
+    try:
+        db.session.add(dados)
+        db.session.commit()
+        return True
+    except Exception as e:
+        print(f'Erro ao salvar dados: {e}')
+        db.session.rollback()
+        return False
+    
 @bp.route('/')
 def index():
     return render_template('index.html')
@@ -27,16 +38,17 @@ def cadastro():
 
 @bp.route('/cadastrar', methods=['POST'])
 def cadastrar():
-    dados = request.get_json()
-    
-    for i in list(dados.values()):
-        if i == '':
-            return jsonify({'erro': 'Preencha todos os campos.'})
-        
-    if re.match(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$', dados['email']) is None:
-        return jsonify({'erro': 'Digite um email válido.'})
+    if request.is_json:
+        dados = request.get_json()
+    else:
+        dados = request.form.to_dict()
+    print('ta validando')
         
     usuario_exist = UserModel.query.filter_by(email=dados.get('email')).first()
+
+    erro = verificar_campos(dados)
+    if erro:
+        return jsonify({"erro": erro}), 400
 
     erro = verificar_idade(dados.get("datanasc"))
     if erro:
@@ -50,27 +62,32 @@ def cadastrar():
     if erro:
         return jsonify({'erro': erro}), 400
     
+
+    
+
+    
     if not usuario_exist:
         novo_usuario = UserModel(
-            nome_completo=dados['nome'],
-            tipo_pessoa=dados['tipo_pessoa'],
-            cpf = dados['cpf'],
-            datanasc=dados['datanasc'],
-            cep=dados['cep'],
-            unid_federativa=dados['unid_federativa'],
-            cidade=dados['cidade'],
-            rua=dados['rua'],
-            numero=dados['numero_casa'],
-            email=dados['email']
+        nome_completo=dados['nome'],
+        tipo_pessoa=dados['tipo_pessoa'],
+        cpf = dados['cpf'],
+        datanasc=dados['datanasc'],
+        cep=dados['cep'],            unid_federativa=dados['unid_federativa'],
+        cidade=dados['cidade'],
+        rua=dados['rua'],
+        bairro=dados['bairro'],            numero=dados['numero_casa'],
+        email=dados['email']
         )
         novo_usuario.set_senha(dados['senha'])
     
-        db.session.add(novo_usuario)
-        db.session.commit()
-    
-        return jsonify({'sucesso': f'Usuário {novo_usuario.nome_completo} cadastrado com sucesso!'})
+        if salvar_dados(novo_usuario):
+            return jsonify({'sucesso': f'Usuário {novo_usuario.nome_completo} cadastrado com sucesso!'})
+        return jsonify({'erro': 'Erro ao salvar usuário no banco de dados. Tente novamente'})
+
     else:
         return jsonify({'erro': 'Email já cadastrado. Faça login ou utilize outro email.'})
+
+    
 
 
 @bp.route('/login')
