@@ -10,7 +10,8 @@ from app import stripe, socketio, sqids
 from config import Config
 from app.validators_user import (
     verificar_idade,
-    verificar_email
+    verificar_email,
+    verificar_senha
 )
 
 bp = Blueprint('main', __name__)
@@ -79,6 +80,10 @@ def cadastrar():
         return jsonify({"erro": erro}), 400
 
     erro = verificar_email(dados.get('email'))
+    if erro:
+        return jsonify({'erro': erro}), 400
+    
+    erro = verificar_senha(dados.get('senha'))
     if erro:
         return jsonify({'erro': erro}), 400
     
