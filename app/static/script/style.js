@@ -119,10 +119,12 @@ function exibirCampo() {
     const campoCpf = document.getElementById('campoCpf');
     const campoCnpj = document.getElementById('campoCnpj');
     const campoEmpresa = document.getElementById('nomeEmpresa');
+    const avisosjs = document.getElementById('avisojs');
 
     campoCpf.classList.add("hidden");
     campoCnpj.classList.add("hidden");
     campoEmpresa.classList.add("hidden");
+    avisosjs.classList.add("hidden")
 
     if (tipo === "fisica") {
         campoCpf.classList.remove("hidden");

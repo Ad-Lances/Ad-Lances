@@ -54,13 +54,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const erroCampos = verificar_campos(
             nome, estado, cidade, logradouro, cep, bairro,
-<<<<<<< HEAD
             numeroCasa, emailCadastro, senhaCadastro, confirmarSenha,
             telefone_celular, tipopessoa, ccpf, ccnpj, data_nasc
-=======
-            numeroCasa, emailCadastro, senhaCadastro,
-            telefone_celular, tipopessoa, ccpf, ccnpj, nomeEmpresa
->>>>>>> 6ba9f1c (Correção de erros geral envolvendo a validação em JS do cadastro e corrição da validação no py, alterações em erros de concordancias no código, continuação da implementação de validação no flask.)
         );
         if (erroCampos) {
             console.log(erroCampos);
@@ -194,10 +189,7 @@ document.addEventListener('DOMContentLoaded', function () {
             ...(telefoneResInput.value.trim() && { telefone_res: telefoneResInput.value.trim() }),
             ...(ccpf && { cpf: ccpf }),
             ...(ccnpj && { cnpj: ccnpj }),
-<<<<<<< HEAD
-=======
             ...(nomeEmpresa && { nome_empresa: nomeEmpresa }),
->>>>>>> 6ba9f1c (Correção de erros geral envolvendo a validação em JS do cadastro e corrição da validação no py, alterações em erros de concordancias no código, continuação da implementação de validação no flask.)
             tipo_pessoa: tipopessoa,
             datanasc: data_nasc
         };

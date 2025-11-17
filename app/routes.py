@@ -69,23 +69,20 @@ def cadastrar():
 
     erro = verificar_campos(dados)
     if erro:
-        return jsonify({"erro": erro}), 400
+        return flash("erro", erro), 400
 
     erro = verificar_idade(dados.get("datanasc"))
     if erro:
-        return jsonify({"erro": erro}), 400
+        return flash("erro", erro), 400
 
     erro = verificar_email(dados.get('email'))
     if erro:
-        return jsonify({'erro': erro}), 400
+        return flash('erro', erro), 400
     
     erro = verificar_senha(dados.get('senha'))
     if erro:
-        return jsonify({'erro': erro}), 400
+        flash('erro', erro), 400
     
-
-    
-
     
     if not usuario_exist:
         novo_usuario = UserModel(
@@ -104,11 +101,14 @@ def cadastrar():
         novo_usuario.set_senha(dados['senha'])
     
         if salvar_dados(novo_usuario):
-            return jsonify({'sucesso': f'Usuário {novo_usuario.nome_completo} cadastrado com sucesso!'})
-        return jsonify({'erro': 'Erro ao salvar usuário no banco de dados. Tente novamente'})
+            flash(f'Usuário {novo_usuario.nome_completo} cadastrado com sucesso!', 'sucesso')
+            return redirect(url_for('main.login'))
+        flash('Erro ao salvar usuário no banco de dados. Tente novamente', 'erro')
+        return redirect(url_for('main.cadastro'))
 
     else:
-        return jsonify({'erro': 'Email já cadastrado. Faça login ou utilize outro email.'})
+        flash('Email ja cadastrado. Faca login ou utilize outro email.', 'erro')
+        return redirect(url_for('main.cadastro'))
 
     
 
