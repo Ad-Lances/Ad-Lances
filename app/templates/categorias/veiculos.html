@@ -36,13 +36,24 @@
                 </div>
             </li>
 
+            {% if session.get('logado') %}
             <li>
+                <div id="nav-item">
+                    <div id="img-nav">
+                        <a href="perfil"><img src="{{ url_for('static', filename='img/icons-img/profile-icon.png') }}"></a>
+                    </div>
+                </div>
+            </li>
+
+            {% else %}
                 <div id="nav-item">
                     <div id="img-nav">
                         <a href="login"><img src="{{ url_for('static', filename='img/icons-img/profile-icon.png') }}"></a>
                     </div>
                 </div>
-            </li>
+            {% endif %}
+            </div>
+        </li>
         </ul>
     </nav>
 

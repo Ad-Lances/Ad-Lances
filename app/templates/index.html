@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <meta http-equiv="refresh" content="0;url=mailto:seuemail@exemplo.com">
     <script src="https://kit.fontawesome.com/301e8f1b49.js" crossorigin="anonymous"></script>
     <title>Ad-Lances</title>
 </head>
@@ -33,7 +34,7 @@
 
             <li>
                 <div id="nav-item">
-                    <a href="#">Fale conosco</a>
+                    <a href="mailto:adlances@gmail.com">Fale conosco</a>
                 </div>
             </li>
 
@@ -155,7 +156,6 @@
         </div>
     </div>
 
-    <!-- PAGINAÇÃO ENCERRANDO EM BREVE -->
     {% if leiloes_encerrando and leiloes_encerrando.pages > 1 %}
     <div class="paginacao-container">
         <div class="paginacao">
@@ -259,7 +259,6 @@
         </div>
     </div>
 
-    <!-- PAGINAÇÃO MAIS RECENTES -->
     {% if leiloes_recentes and leiloes_recentes.pages > 1 %}
     <div class="paginacao-container">
         <div class="paginacao">
