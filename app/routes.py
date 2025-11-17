@@ -7,11 +7,9 @@ import cloudinary.uploader
 import re
 from app import stripe
 from config import Config
-from validators_user import (
+from app.validators_user import (
     verificar_idade,
-    verificar_email,
-    verificar_senha,
-    verificar_campos
+    verificar_email
 )
 
 bp = Blueprint('main', __name__)
@@ -39,9 +37,13 @@ def cadastrar():
         
     usuario_exist = UserModel.query.filter_by(email=dados.get('email')).first()
 
-    erro = verificar_campos(request.form)
+    erro = verificar_idade(dados.get("datanasc"))
     if erro:
         return jsonify({"erro": erro}), 400
+
+    erro = verificar_email(dados.get('email'))
+    if erro:
+        return jsonify({'erro': erro}), 400
     
     if not usuario_exist:
         novo_usuario = UserModel(
