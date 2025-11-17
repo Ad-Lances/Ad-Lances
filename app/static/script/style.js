@@ -203,7 +203,7 @@ function scrollerro(){
 
 
 function exibirCampo() {
-    const tipo = document.getElementById('tipo_pessoa').value;
+    const tipo = document.getElementById('tipo-de-conta').value;
     const campoCpf = document.getElementById('campoCpf');
     const campoCnpj = document.getElementById('campoCnpj');
     const campoEmpresa = document.getElementById('nomeEmpresa');
@@ -214,10 +214,10 @@ function exibirCampo() {
     campoEmpresa.classList.add("hidden");
     avisosjs.classList.add("hidden")
 
-    if (tipo === "fisica") {
+    if (tipo === "Pessoa Física") {
         campoCpf.classList.remove("hidden");
     } 
-    else if (tipo === "juridica") {
+    else if (tipo === "Pessoa Jurídica") {
         campoCnpj.classList.remove("hidden");
         campoEmpresa.classList.remove("hidden");
     }
