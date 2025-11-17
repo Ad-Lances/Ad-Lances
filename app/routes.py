@@ -8,6 +8,12 @@ import re
 from sqlalchemy import select
 from app import stripe, socketio, sqids
 from config import Config
+from validators_user import (
+    verificar_idade,
+    verificar_email,
+    verificar_senha,
+    verificar_campos
+)
 
 bp = Blueprint('main', __name__)
 
@@ -69,6 +75,10 @@ def cadastrar():
         return jsonify({'erro': 'Digite um email válido.'})
         
     usuario_exist = UserModel.query.filter_by(email=dados.get('email')).first()
+
+    erro = verificar_campos(request.form)
+    if erro:
+        return jsonify({"erro": erro}), 400
     
     if not usuario_exist:
         novo_usuario = UserModel(
@@ -93,55 +103,6 @@ def cadastrar():
     else:
         return jsonify({'erro': 'Email já cadastrado. Faça login ou utilize outro email.'})
 
-def validar_cpf(cpf: str) -> bool:
-    dados = request.get_json()
-    cpf = dados['cpf']
-
- 
-    if len(cpf) != 11:
-        return False
-
-    if cpf == cpf[0] * 11:
-        return False
-
-    def calcular_digito(cpf, peso_inicial):
-        soma = 0
-        peso = peso_inicial
-        for num in cpf:
-            soma += int(num) * peso
-            peso -= 1
-        resto = soma % 11
-        return '0' if resto < 2 else str(11 - resto)
-
-    digito1 = calcular_digito(cpf[:9], 10)
-    digito2 = calcular_digito(cpf[:10], 11)
-    return cpf[-2:] == digito1 + digito2
-
-def validar_campos(nome, estado, cidade, logradouro, cep, bairro, numeroCasa, email, senha, telefone_celular, tipopessoa, cpf, cnpj):
-    if (not nome or not estado or not cidade or not logradouro or not cep or not numeroCasa or not bairro or not email or not senha or not telefone_celular or not tipopessoa):
-        return 'Por favor, preencha todos os campos obrigatórios'; 
-
-@bp.route('/validarcadastro', methods=['POST'])
-def validarcadastro():
-    dados = request.get_json()
-    nome = dados['nome']
-    cpf = dados['cpf']
-    datanasc=dados['datanasc']
-    cep=dados['cep']
-    unid_federativa=dados['unid_federativa']
-    cidade=dados['cidade']
-    rua=dados['rua']
-    numero=dados['numero_casa']
-    email=dados['email']
-
-    if not nome or len(nome) < 3:
-        flash("O nome deve ter pelo menos 3 caracteres.")
-        return redirect(url_for('bp.cadastro'))
-
-    if not validar_cpf(cpf):
-        flash("CPF inválido. Verifique e tente novamente.")
-        return redirect(url_for('bp.cadastro'))
-    
 
 @bp.route('/login')
 def login():
