@@ -1,9 +1,5 @@
 mensagem = document.getElementById('mensagem');
 
-document.addEventListener('DOMContentLoaded', function() {
-    adicionarToggleSenha();
-});
-
 function estilizarmensagem(mensagem){
     if (!mensagem) {
         console.error('Elemento mensagem não encontrado!');
@@ -142,6 +138,7 @@ function exibirCampo(){
     }
 }
 
+// função para aplicar o formato nos campos
 document.addEventListener('DOMContentLoaded', () => {
     function aplicarMascara(input, tipo) {
         let valor = input.value.replace(/\D/g, '');
@@ -375,4 +372,21 @@ function exibirCampoDados(){
     })
 }
 
-//
+// função para exibir os campos de editar leilão na página de detalhes
+function exibir_campos_edicao(){
+    const editarLeilaoBotao = document.getElementById('botao-editar-leilao');
+    const camposParaEditar = document.getElementById('campos-edicao');
+    const botaoCancelarEdicao = document.getElementById('btn-cancelar');
+
+    editarLeilaoBotao.addEventListener('click', function(){
+            camposParaEditar.style.display = 'flex';
+    })
+
+    botaoCancelarEdicao.addEventListener('click', function(){
+        camposParaEditar.style.display = 'none';
+    })
+}
+
+function esconder_campos_edicao(){
+    
+}

@@ -55,9 +55,15 @@ def cadastro():
 def cadastrar():
     dados = request.get_json()
     
-    for i in list(dados.values()):
-        if i == '':
-            return jsonify({'erro': 'Preencha todos os campos.'})
+    campos_obrigatorios = [
+        'nome', 'unid_federativa', 'cidade', 'rua', 'bairro', 
+        'cep', 'numero_casa', 'email', 'senha', 'telefone',
+        'tipo_pessoa', 'datanasc'
+    ]
+
+    for campo in campos_obrigatorios:
+        if campo not in dados or not dados[campo]:
+            return jsonify({'erro': f'Campo {campo} é obrigatório.'})
         
     if re.match(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$', dados['email']) is None:
         return jsonify({'erro': 'Digite um email válido.'})
@@ -74,15 +80,16 @@ def cadastrar():
             unid_federativa=dados['unid_federativa'],
             cidade=dados['cidade'],
             rua=dados['rua'],
+            bairro=dados['bairro'],
             numero=dados['numero_casa'],
             email=dados['email']
         )
         novo_usuario.set_senha(dados['senha'])
     
-        db.session.add(novo_usuario)
-        db.session.commit()
+        if salvar_dados(novo_usuario):
+            return jsonify({'sucesso': f'Usuário {novo_usuario.nome_completo} cadastrado com sucesso!'})
+        return jsonify({'erro': 'Erro ao salvar usuário no banco de dados. Tente novamente'})
     
-        return jsonify({'sucesso': f'Usuário {novo_usuario.nome_completo} cadastrado com sucesso!'})
     else:
         return jsonify({'erro': 'Email já cadastrado. Faça login ou utilize outro email.'})
 

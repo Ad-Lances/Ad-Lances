@@ -35,8 +35,14 @@ function verificar_senha(senha){
    return null;
 }
 
-function verificar_campos(nome, estado, cidade, logradouro, cep, bairro, numeroCasa, email, senha, telefone_celular, tipopessoa, ccpf, ccnpj){
-    if (!nome || !estado || !cidade || !logradouro || !cep || !numeroCasa || !bairro || !email || !senha || !telefone_celular || !tipopessoa) {
+function verificar_campos(nome, estado, cidade, logradouro, cep, bairro, numeroCasa, email, senha, confirmarSenha, telefone_celular, tipopessoa, ccpf, ccnpj, data_nasc){
+    if (!nome || !estado || !cidade || !logradouro || !cep || !numeroCasa || !bairro || !email || !senha || !confirmarSenha || !telefone_celular || !tipopessoa || tipopessoa === '' || !data_nasc) {
+        console.log('Campos faltando:', {
+            nome: !nome, estado: !estado, cidade: !cidade, logradouro: !logradouro,
+            cep: !cep, numeroCasa: !numeroCasa, bairro: !bairro, email: !email,
+            senha: !senha, confirmarSenha: !confirmarSenha, telefone_celular: !telefone_celular,
+            tipopessoa: !tipopessoa, data_nasc: !data_nasc
+        })
         return 'Por favor, preencha todos os campos obrigatórios';
     }
 

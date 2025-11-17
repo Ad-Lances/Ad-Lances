@@ -96,12 +96,20 @@
                         <form id="form-lance">
                             <div class="lance-input-group">
                                 <input type="number" id="novo-lance-input" name="novo-lance" placeholder="R$0,00" step="0.01">
-                                <button type="click" id="botao-lance">Lançar</button>
+                                <button type="button" id="botao-lance">Lançar</button>
                             </div>
                         </form>
                         <p id="mensagem"></p>
                         <div class="contador-lances" id="total-lances">Total de lances: {{ leilao.lances|length }}</div>
                     </div>
+
+                    <!--Exibe o campo de botões para controle do leilão caso o usuário logado seja o criador do leilão-->
+                    {% if session.get('usuario_id') == leilao.user.id %}
+                        <div class="controlar-leilao">
+                            <button type="button" id="botao-editar-leilao" onclick="exibir_campos_edicao()">Editar leilão</button>
+                            <button type="button" id="botao-encerrar-leilao">Encerrar leilão</button>
+                        </div>
+                    {% endif %}
                 {% else %}
                     <div id="mensagem-login">
                         <h3>Você está quase lá!</h3>
@@ -116,10 +124,70 @@
                         </section>
                     </div>
                 
-                    {% endif %}
+                {% endif %}
 
             </div>
         </div>
+
+    <div id="campos-edicao">
+    <form id="form-editar-leilao">
+        <div id="campo-data">
+            <label for="input-editar-data">Data de Término</label>
+            <input type="datetime" 
+            name="input-editar-data" 
+            id="input-editar-data" 
+            value="{{ leilao.get_data_fim_str() }}">
+        </div>
+
+        <div id="campo-descricao">
+            <label for="input-editar-descricao">Descrição do Leilão</label>
+            <input type="text"
+            name="input-editar-descricao"
+            id="input-editar-descricao"
+            value="{{ leilao.descricao }}">
+        </div>
+
+        <div id="campo-entrega">
+            <div>
+                <label for="input-editar-cep-leilao">CEP</label>
+                <input type="text"
+                name="input-editar-cep-leilao"
+                id="input-editar-cep-leilao"
+                value="01311-030">
+            </div>
+
+            <div>
+                <label for="input-editar-logradouro-leilao">Logradouro</label>
+                <input type="text" 
+                name="input-editar-logradouro-leilao" 
+                id="input-editar-logradouro-leilao"
+                value="Avenida Paulista">
+            </div>
+
+            <div>
+                <label for="input-editar-bairro-leilao">Bairro</label>
+                <input type="text" 
+                name="input-editar-bairro-leilao" 
+                id="input-editar-bairro-leilao"
+                value="Bela Vista">
+            </div>
+
+            <div>
+                <label for="input-editar-numero-leilao">Número</label>
+                <input type="text" 
+                name="input-editar-numero-leilao" 
+                id="input-editar-numero-leilao"
+                value="10">
+            </div>
+        </div>
+
+        <div class="botoes-acao">
+            <button type="button" id="btn-salvar">Salvar alterações</button>
+            <button type="button" id="btn-cancelar">Cancelar</button>
+        </div>
+    </form>
+    </div>
+</div>
 
         <div id="infos-leiloeiro">
             <div class="leiloeiro-content">
@@ -131,55 +199,10 @@
         <div class="info-section">
             <h3 class="section-title">Descrição</h3>
             <p class="description-text">
-                Na AdLances, você tem a chance de arrematar um HB20 seminovo em ótimo estado, com baixa quilometragem e pronto para rodar. Um modelo que combina design moderno, tecnologia embarcada, conforto e excelente economia de combustível. Ideal para quem busca um carro confiável e sofisticado, o Pulse oferece a experiência de dirigir um veículo praticamente novo, mas com um preço muito mais atrativo. Aproveite essa oportunidade exclusiva e faça já o seu lance!
+                {{ leilao.descricao }}
             </p>
         </div>
 
-        <div class="info-section">
-            <h3 class="section-title">Detalhes do Produto</h3>
-            <div class="details-grid">
-                <div class="detail-item">
-                    <span class="detail-label">Marca/Modelo:</span>
-                    <span class="detail-value">Hyundai HB20</span>
-                </div>
-                <div class="detail-item">
-                    <span class="detail-label">Categoria:</span>
-                    <span class="detail-value">SUV Compacto</span>
-                </div>
-                <div class="detail-item">
-                    <span class="detail-label">Ano:</span>
-                    <span class="detail-value">2018</span>
-                </div>
-                <div class="detail-item">
-                    <span class="detail-label">Motorização:</span>
-                    <span class="detail-value">1.0 Turbo</span>
-                </div>
-                <div class="detail-item">
-                    <span class="detail-label">Potência:</span>
-                    <span class="detail-value">até 150 cv</span>
-                </div>
-                <div class="detail-item">
-                    <span class="detail-label">Transmissão:</span>
-                    <span class="detail-value">Automática CVT</span>
-                </div>
-                <div class="detail-item">
-                    <span class="detail-label">Combustível:</span>
-                    <span class="detail-value">Flex (Gasolina/Etanol)</span>
-                </div>
-                <div class="detail-item">
-                    <span class="detail-label">Quilometragem:</span>
-                    <span class="detail-value">Baixa – seminovo</span>
-                </div>
-                <div class="detail-item">
-                    <span class="detail-label">Cor:</span>
-                    <span class="detail-value">Branco</span>
-                </div>
-                <div class="detail-item">
-                    <span class="detail-label">Porta-malas:</span>
-                    <span class="detail-value">370 L</span>
-                </div>
-            </div>
-        </div>
 
         <div class="info-section">
             <h3 class="section-title">Localização</h3>
@@ -196,6 +219,9 @@
                 </div>
                 <div class="condition-item">
                     <strong>Retirada no local</strong>
+                </div>
+                <div class="condition-item">
+                    <strong>{{ leilao.pagamentos }}</strong>
                 </div>
             </div>
         </div>
@@ -292,5 +318,7 @@
             <p>© AdLances. Todos os direitos reservados.</p>
         </div>
     </footer>
+
+    <script src="{{ url_for('static', filename='script/style.js') }}"></script>
 </body>
 </html>

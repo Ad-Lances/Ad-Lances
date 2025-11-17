@@ -20,7 +20,7 @@
                 <div id="search-container">
                     <form>
                         <input type="text" placeholder="Digite aqui...">
-                        <button type="submit"><img src="{{ url_for('static', filename='img/search-icon.png') }}" id="searchimg"></button>
+                        <button type="button"><img src="{{ url_for('static', filename='img/search-icon.png') }}" id="searchimg"></button>
                     </form>
                 </div>
             </li>
@@ -66,7 +66,7 @@
             <div>
                 <label for="tipo-de-conta" class="label-tipo-conta">Tipo de pessoa:</label>
                 <select name="tipo-de-conta" id="tipo-de-conta" onchange="exibirCampo()">
-                    <option value="none">Selecione uma opção...</option>
+                    <option value="">Selecione uma opção...</option>
                     <option value="Pessoa Física">Pessoa Física</option>
                     <option value="Pessoa Jurídica">Pessoa Jurídica</option>
                 </select>

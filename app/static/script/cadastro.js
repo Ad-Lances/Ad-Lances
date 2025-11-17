@@ -25,7 +25,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const confirmar_senhaInput = document.getElementById('confirmar-senha');
 
     const mensagem = document.getElementById('mensagem');
-    if (mensagem) mensagem.innerHTML = '';
 
     formularioCadastro.addEventListener('submit', async (event) => {
         event.preventDefault();
@@ -52,30 +51,35 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const erroCampos = verificar_campos(
             nome, estado, cidade, logradouro, cep, bairro,
-            numeroCasa, emailCadastro, senhaCadastro,
-            telefone_celular, tipopessoa, ccpf, ccnpj
+            numeroCasa, emailCadastro, senhaCadastro, confirmarSenha,
+            telefone_celular, tipopessoa, ccpf, ccnpj, data_nasc
         );
         if (erroCampos) {
+            console.log(erroCampos);
             mensagem_erros.push(erroCampos);
         }
 
         const erroCEP = validarCEP();
         if (erroCEP) {
+            console.log(erroCEP);
             mensagem_erros.push(erroCEP);
         }
 
         const erroIdade = verificar_idade(data_nasc);
         if (erroIdade) {
+            console.log(erroIdade);
             mensagem_erros.push(erroIdade);
         }
 
         const erroEmail = verificar_email(emailCadastro);
         if (erroEmail) {
+            console.log(erroEmail)
             mensagem_erros.push(erroEmail);
         }
 
         const erroSenha = verificar_senha(senhaCadastro);
         if (erroSenha) {
+            console.log(erroSenha);
             mensagem_erros.push(erroSenha);
         } else if (senhaCadastro !== confirmarSenha) {
             mensagem_erros.push('As senhas não coincidem');
@@ -179,12 +183,12 @@ document.addEventListener('DOMContentLoaded', function () {
             email: emailCadastro,
             senha: senhaCadastro,
             telefone: telefoneCelInput.value.trim(),
-            telefone_res: telefoneResInput.value.trim(),
-            cpf: ccpf,
-            cnpj: ccnpj,
+            ...(telefoneResInput.value.trim() && { telefone_res: telefoneResInput.value.trim() }),
+            ...(ccpf && { cpf: ccpf }),
+            ...(ccnpj && { cnpj: ccnpj }),
             tipo_pessoa: tipopessoa,
             datanasc: data_nasc
-        };
+        };
 
         const resposta = await fetch('/cadastrar', {
             method: 'POST',
