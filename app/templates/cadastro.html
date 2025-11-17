@@ -51,18 +51,22 @@
     <ul id="mensagem">
 
     </ul> 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        <ul class="flashes">  
-            <li class="{{ category }}">{{ message }}</li>
-                    {% if category == 'sucesso' %}
-                        <ul class="flashsucess">
-                            <li class="{{ category }}">{{ message }}</li>
-                        </ul>
-                    {% endif %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <ul class="flashes">
+            {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+
+                {% if category == 'sucesso' %}
+                    <ul class="flashsucess">
+                        <li>{{ message }}</li>
+                    </ul>
+                {% endif %}
+
+            {% endfor %}
         </ul>
-        {% endif %}
-    {% endwith %}
+    {% endif %}
+{% endwith %}
 
    <form id="formularioCadastro" action="/cadastrar" method="POST">
     <div class="form-section">
@@ -123,18 +127,11 @@
                 <input type="text" name="cep" data-mask="cep" placeholder="00000-000" class="input-cep" id="cep" maxlength="9">
             </div>
 
-            <div>
+               <div>
                 <label for="estado" class="label-estado">Unidade Federativa (UF):</label>
-<<<<<<< HEAD
-<<<<<<< HEAD
-                <input type="text" class="input-estado" id="estado" placeholder="Digite a unidade federativa">
-=======
-                <input type="text" id="estado" name="estado">
->>>>>>> 6ba9f1c (Correção de erros geral envolvendo a validação em JS do cadastro e corrição da validação no py, alterações em erros de concordancias no código, continuação da implementação de validação no flask.)
-=======
-                <input type="text" id="estado" name="estado">
->>>>>>> bab30636b1361e3025fcfad7c35af4c2fcaed63b
+                <input type="text" class="input-estado" id="estado" name="estado" placeholder="Digite a unidade federativa">
             </div>
+
 
             <div>
                 <label for="cidade" class="label-cidade">Cidade:</label>

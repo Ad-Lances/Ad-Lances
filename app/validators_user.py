@@ -31,6 +31,7 @@ def verificar_senha(senha: str):
     especiais = bool(re.search(r"[!@#$%^&*()_+\-=\[\]{};':\"\\|,.<>\/?]", senha))
 
     if len(senha) < 6:
+        print("senha mortta")
         return "A senha deve ter mais de 6 caracteres."
     if not especiais:
         return "A senha deve conter ao menos um caractere especial."
@@ -51,7 +52,7 @@ def verificar_campos(dados):
     email = dados.get("email")
     senha = dados.get("senha")
     telefone = dados.get("telefone_celular")
-    tipo_pessoa = dados.get("tipo_pessoa")
+    tipo_pessoa = dados.get("tipo-de-conta")
     cpf = dados.get("cpf")
     cnpj = dados.get("cnpj")
     nome_empresa = dados.get("nome_empresa")
@@ -65,14 +66,14 @@ def verificar_campos(dados):
     if any(not campo for campo in obrigatorios):
         return "Por favor, preencha todos os campos obrigatorios."
 
-    if tipo_pessoa not in ["fisica", "juridica"]:
+    if tipo_pessoa not in ["Pessoa Física", "Pessoa Jurídica"]:
         return "Selecione um tipo de pessoa."
 
-    if tipo_pessoa == "fisica":
+    if tipo_pessoa == "Pessoa Física":
         if not cpf:
             return "CPF obrigatorio para Pessoa Fisica."
 
-    elif tipo_pessoa == "juridica":
+    elif tipo_pessoa == "Pessoa Jurídica":
         if not cnpj:
             return "CNPJ obrigatorio para Pessoa Juridica."
         if not nome_empresa:

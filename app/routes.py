@@ -35,7 +35,7 @@ def get_leilao(hashid):
         return LeilaoModel.query.get(dihsah[0])
     return None     
 
-@bp.route('/')
+
 @bp.route('/')
 def index():
     pagina = request.args.get('pagina', 1, type=int)
@@ -69,19 +69,24 @@ def cadastrar():
 
     erro = verificar_campos(dados)
     if erro:
-        return flash("erro", erro), 400
+        flash(erro, 'erro')
+        return redirect(url_for('main.cadastro'))
 
     erro = verificar_idade(dados.get("datanasc"))
     if erro:
-        return flash("erro", erro), 400
+        flash(erro, 'erro')
+        return redirect(url_for('main.cadastro'))
 
     erro = verificar_email(dados.get('email'))
     if erro:
-        return flash('erro', erro), 400
+        flash(erro, 'erro')
+        return redirect(url_for('main.cadastro'))
     
     erro = verificar_senha(dados.get('senha'))
     if erro:
-        flash('erro', erro), 400
+        print("oillucas")
+        flash(erro, 'erro')
+        return redirect(url_for('main.cadastro'))
     
     
     if not usuario_exist:
@@ -224,7 +229,11 @@ def pagina_criar_leilao():
 @bp.route('/<hashid>')
 def detalhes_leilao(hashid):
     leilao = get_leilao(hashid)
+    horas = datetime.now()
     if leilao:
+        if horas <= leilao.data_fim:
+            leilao.status = "Encerrado."
+            db.session.commit
         return render_template('detalhes_leilao.html', leilao=leilao)
     return redirect(url_for('main.index'))
 
@@ -296,12 +305,15 @@ def criar_leilao():
 @bp.post('/<hashid>/novolance')
 def novo_lance(hashid):
     dados = request.get_json()
+    horas = datetime.now()
     leilao = get_leilao(hashid)
     
     if leilao is None:
         return jsonify({'erro': 'Leilão não encontrado.'})
     
-    if leilao.data_fim < datetime.now():
+    if leilao.data_fim < horas:
+        leilao.status = 'Encerrado'
+        db.session.commit()
         return jsonify({'erro': 'Leilão já encerrado.'})
     
     try:
