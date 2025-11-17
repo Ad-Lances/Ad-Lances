@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
     <meta http-equiv="refresh" content="0;url=mailto:seuemail@exemplo.com">
     <script src="https://kit.fontawesome.com/301e8f1b49.js" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='script/pesquisa.js') }}" defer></script>
     <title>Ad-Lances</title>
 </head>
 <body>
@@ -20,7 +21,7 @@
             <li>
                 <div id="search-container">
                     <form>
-                        <input type="text" placeholder="Digite aqui...">
+                        <input type="text" id="barra-pesquisa" placeholder="Digite aqui...">
                         <button type="button"><img src="{{ url_for('static', filename='img/search-icon.png') }}" id="searchimg"></button>
                     </form>
                 </div>
@@ -99,7 +100,7 @@
         <h2>Leilões encerrando em breve</h2><br>
         <hr>
     </div>
-
+    <div id="leiloes"></div>
     <div id="encerrando-em-breve">
         <div id="arrow-img" class="arrow-left" onclick="moverCarrossel('encerrando-em-breve', -1)">
             <img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}">

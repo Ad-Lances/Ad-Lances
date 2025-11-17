@@ -5,7 +5,7 @@ from . import cloudinary
 from datetime import datetime, date, timedelta
 import cloudinary.uploader
 import re
-from sqlalchemy import select
+from sqlalchemy import select, or_
 from app import stripe, socketio, sqids
 from config import Config
 from app.controllers.user_controller import (
@@ -52,6 +52,23 @@ def index():
     )
     
     return render_template('index.html', leiloes=leiloes_paginados)
+
+@bp.route('/pesquisar')
+def pesquisar():
+    busca = request.args.get('p', '').lower()
+
+    if not busca:
+        return jsonify([])
+    
+    resultados = LeilaoModel.query.filter(
+        or_(
+            LeilaoModel.nome.ilike(f'%{busca}%'),
+            LeilaoModel.descricao.ilike(f'%{busca}%')
+        )
+    ).limit(10).all()
+    
+    dados_results = [{"hashid": leilao.hashid, "nome": leilao.nome, "descricao": leilao.descricao} for leilao in resultados]
+    return jsonify(dados_results)
 
 @bp.route('/cadastro')
 def cadastro():
