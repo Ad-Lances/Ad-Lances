@@ -40,7 +40,7 @@ def get_leilao(hashid):
 def index():
     pagina = request.args.get('pagina', 1, type=int)
     por_pagina = request.args.get('por_pagina', 12, type=int)
-    
+    leiloes = LeilaoModel.query.all()
     leiloes_paginados = LeilaoModel.query.filter(
         LeilaoModel.data_fim > datetime.now()
     ).order_by(
@@ -50,7 +50,8 @@ def index():
         per_page=por_pagina,
         error_out=False
     )
-    
+    for i in leiloes:
+        print(i.hashid)
     return render_template('index.html', leiloes=leiloes_paginados)
 
 @bp.route('/pesquisar')
