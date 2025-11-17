@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, jsonify, session, redirect, url_for
+from flask import Blueprint, render_template, request, jsonify, session, redirect, url_for, flash
 from app.models import *
 from . import db
 from . import cloudinary
@@ -8,6 +8,12 @@ import re
 from sqlalchemy import select
 from app import stripe, socketio, sqids
 from config import Config
+from app.validators_user import (
+    verificar_idade,
+    verificar_email,
+    verificar_senha,
+    verificar_campos
+)
 
 bp = Blueprint('main', __name__)
 
@@ -29,7 +35,7 @@ def get_leilao(hashid):
         return LeilaoModel.query.get(dihsah[0])
     return None     
 
-@bp.route('/')
+
 @bp.route('/')
 def index():
     pagina = request.args.get('pagina', 1, type=int)
@@ -53,22 +59,35 @@ def cadastro():
 
 @bp.route('/cadastrar', methods=['POST'])
 def cadastrar():
-    dados = request.get_json()
-    
-    campos_obrigatorios = [
-        'nome', 'unid_federativa', 'cidade', 'rua', 'bairro', 
-        'cep', 'numero_casa', 'email', 'senha', 'telefone',
-        'tipo_pessoa', 'datanasc'
-    ]
-
-    for campo in campos_obrigatorios:
-        if campo not in dados or not dados[campo]:
-            return jsonify({'erro': f'Campo {campo} é obrigatório.'})
-        
-    if re.match(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$', dados['email']) is None:
-        return jsonify({'erro': 'Digite um email válido.'})
+    if request.is_json:
+        dados = request.get_json()
+    else:
+        dados = request.form.to_dict()
+    print('ta validando')
         
     usuario_exist = UserModel.query.filter_by(email=dados.get('email')).first()
+
+    erro = verificar_campos(dados)
+    if erro:
+        flash(erro, 'erro')
+        return redirect(url_for('main.cadastro'))
+
+    erro = verificar_idade(dados.get("datanasc"))
+    if erro:
+        flash(erro, 'erro')
+        return redirect(url_for('main.cadastro'))
+
+    erro = verificar_email(dados.get('email'))
+    if erro:
+        flash(erro, 'erro')
+        return redirect(url_for('main.cadastro'))
+    
+    erro = verificar_senha(dados.get('senha'))
+    if erro:
+        print("oillucas")
+        flash(erro, 'erro')
+        return redirect(url_for('main.cadastro'))
+    
     
     if not usuario_exist:
         novo_usuario = UserModel(
@@ -87,11 +106,17 @@ def cadastrar():
         novo_usuario.set_senha(dados['senha'])
     
         if salvar_dados(novo_usuario):
-            return jsonify({'sucesso': f'Usuário {novo_usuario.nome_completo} cadastrado com sucesso!'})
-        return jsonify({'erro': 'Erro ao salvar usuário no banco de dados. Tente novamente'})
-    
+            flash(f'Usuário {novo_usuario.nome_completo} cadastrado com sucesso!', 'sucesso')
+            return redirect(url_for('main.login'))
+        flash('Erro ao salvar usuário no banco de dados. Tente novamente', 'erro')
+        return redirect(url_for('main.cadastro'))
+
     else:
-        return jsonify({'erro': 'Email já cadastrado. Faça login ou utilize outro email.'})
+        flash('Email ja cadastrado. Faca login ou utilize outro email.', 'erro')
+        return redirect(url_for('main.cadastro'))
+
+    
+
 
 @bp.route('/login')
 def login():
@@ -204,7 +229,11 @@ def pagina_criar_leilao():
 @bp.route('/<hashid>')
 def detalhes_leilao(hashid):
     leilao = get_leilao(hashid)
+    horas = datetime.now()
     if leilao:
+        if horas <= leilao.data_fim:
+            leilao.status = "Encerrado."
+            db.session.commit
         return render_template('detalhes_leilao.html', leilao=leilao)
     return redirect(url_for('main.index'))
 
@@ -276,12 +305,15 @@ def criar_leilao():
 @bp.post('/<hashid>/novolance')
 def novo_lance(hashid):
     dados = request.get_json()
+    horas = datetime.now()
     leilao = get_leilao(hashid)
     
     if leilao is None:
         return jsonify({'erro': 'Leilão não encontrado.'})
     
-    if leilao.data_fim < datetime.now():
+    if leilao.data_fim < horas:
+        leilao.status = 'Encerrado'
+        db.session.commit()
         return jsonify({'erro': 'Leilão já encerrado.'})
     
     try:

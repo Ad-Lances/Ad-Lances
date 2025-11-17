@@ -202,27 +202,24 @@ function scrollerro(){
 }
 
 
-function exibirCampo(){
-    const tipoDeConta = document.getElementById('tipo-de-conta');
-    const campoCPF = document.getElementById('campoCpf');
-    const campoCNPJ = document.getElementById('campoCnpj');
-    const campoNomeEmpresa = document.getElementById('nomeEmpresa');
-    
-    if (tipoDeConta.value === 'Pessoa Física'){
-        campoCPF.style.display = 'block';
-        campoCPF.style.width = '50%';
-        campoCNPJ.style.display = 'none';
-        campoNomeEmpresa.style.display = 'none';
-    } else if(tipoDeConta.value === 'Pessoa Jurídica'){
-        campoCPF.style.display = 'none';
-        campoCNPJ.style.display = 'block';
-        campoNomeEmpresa.style.display = 'block';
-        campoNomeEmpresa.style.width = '50%';
-        campoCNPJ.style.width = '50%';
-    } else{
-        campoCPF.style.display = 'none';
-        campoCNPJ.style.display = 'none';
-        campoNomeEmpresa.style.display = 'none';
+function exibirCampo() {
+    const tipo = document.getElementById('tipo_pessoa').value;
+    const campoCpf = document.getElementById('campoCpf');
+    const campoCnpj = document.getElementById('campoCnpj');
+    const campoEmpresa = document.getElementById('nomeEmpresa');
+    const avisosjs = document.getElementById('avisojs');
+
+    campoCpf.classList.add("hidden");
+    campoCnpj.classList.add("hidden");
+    campoEmpresa.classList.add("hidden");
+    avisosjs.classList.add("hidden")
+
+    if (tipo === "fisica") {
+        campoCpf.classList.remove("hidden");
+    } 
+    else if (tipo === "juridica") {
+        campoCnpj.classList.remove("hidden");
+        campoEmpresa.classList.remove("hidden");
     }
 }
 
