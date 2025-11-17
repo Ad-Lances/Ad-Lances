@@ -440,14 +440,14 @@ def webhook():
         
     return "", 200
 
-@bp.route('/401')
-def erro_401():
-    return render_template('error-pages/401.html')
+@bp.errorhandler(401)
+def erro_401(error):
+    return render_template('error-pages/401.html'), 401
 
-@bp.route('/404')
-def erro_404():
-    return render_template('error-pages/404.html')
+@bp.errorhandler(404)
+def page_not_found(error):
+    return render_template('error-pages/404.html'), 404
 
-@bp.route('/500')
-def erro_500():
-    return render_template('error-pages/500.html')
+@bp.errorhandler(500)
+def erro_500(error):
+    return render_template('error-pages/500.html'), 500

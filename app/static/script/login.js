@@ -13,7 +13,7 @@ function verificar_email(email){
         return 'Insira um e-mail válido';
     }
 
-    return null·;
+    return null;
 }
 
 document.addEventListener('DOMContentLoaded', function(){
