@@ -46,19 +46,20 @@ function verificar_campos(nome, estado, cidade, logradouro, cep, bairro, numeroC
         return 'Por favor, preencha todos os campos obrigatórios';
     }
 
-    if (tipopessoa === 'Pessoa Física') {
+    if (tipopessoa === 'fisica') {
         if (!ccpf) {
-            return 'O CPF é obrigatório para contas do tipo pessoa física';
+            return 'O CPF é obrigatório para contas de Pessoa Física';
         }
-    } else if (tipopessoa === 'Pessoa Jurídica') {
+    }
+
+    if (tipopessoa === 'juridica') {
         if (!ccnpj) {
-            return 'O CNPJ é obrigatório para contas do tipo Pessoa Jurídica';
+            return 'O CNPJ é obrigatório para contas de Pessoa Jurídica';
         }
-        if (!document.getElementById('nome-empresa').value.trim()) {
-            return 'Nome da Empresa é obrigatório para Pessoa Jurídica';
+        const nomeEmpresa = document.getElementById('nome-empresa')?.value.trim();
+        if (!nomeEmpresa) {
+            return 'O nome da empresa é obrigatório';
         }
-    } else {
-        return 'Por favor, preencha todos os campos obrigatórios';
     }
 
     return null;

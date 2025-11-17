@@ -1,5 +1,7 @@
 from datetime import datetime
 import re
+from flask import request
+
 
 def verificar_idade(data_nasc: str):
     try:
@@ -33,6 +35,45 @@ def verificar_senha(senha: str):
     if not especiais:
         return "A senha deve conter ao menos um caractere especial."
     if not maiuscula:
-        return "A senha deve conter ao menos um caractere maiúsculo."
+        return "A senha deve conter ao menos um caractere maiusculo."
+
+    return None
+
+def verificar_campos(dados):
+
+    nome = dados.get("nome")
+    estado = dados.get("unid_federativa")
+    cidade = dados.get("cidade")
+    logradouro = dados.get("rua")
+    cep = dados.get("cep")
+    bairro = dados.get("bairro")
+    numero_casa = dados.get("numero_casa")
+    email = dados.get("email")
+    senha = dados.get("senha")
+    telefone = dados.get("telefone")
+    tipo_pessoa = dados.get("tipo_pessoa")
+    cpf = dados.get("cpf")
+    cnpj = dados.get("cnpj")
+    nome_empresa = dados.get("nome_empresa")
+
+    obrigatorios = [
+        nome, estado, cidade, logradouro, cep, bairro, numero_casa, email, senha, telefone, tipo_pessoa
+    ]
+
+    if any(not campo for campo in obrigatorios):
+        return "Por favor, preencha todos os campos obrigatorios."
+
+    if tipo_pessoa not in ["fisica", "juridica"]:
+        return "Selecione um tipo de pessoa."
+
+    if tipo_pessoa == "fisica":
+        if not cpf:
+            return "CPF obrigatorio para Pessoa Fisica."
+
+    elif tipo_pessoa == "juridica":
+        if not cnpj:
+            return "CNPJ obrigatorio para Pessoa Juridica."
+        if not nome_empresa:
+            return "Nome da empresa obrigatorio."
 
     return None

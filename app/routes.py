@@ -11,7 +11,8 @@ from config import Config
 from app.validators_user import (
     verificar_idade,
     verificar_email,
-    verificar_senha
+    verificar_senha,
+    verificar_campos
 )
 
 bp = Blueprint('main', __name__)
@@ -58,22 +59,17 @@ def cadastro():
 
 @bp.route('/cadastrar', methods=['POST'])
 def cadastrar():
-    dados = request.get_json()
-    
-    campos_obrigatorios = [
-        'nome', 'unid_federativa', 'cidade', 'rua', 'bairro', 
-        'cep', 'numero_casa', 'email', 'senha', 'telefone',
-        'tipo_pessoa', 'datanasc'
-    ]
-
-    for campo in campos_obrigatorios:
-        if campo not in dados or not dados[campo]:
-            return jsonify({'erro': f'Campo {campo} é obrigatório.'})
-        
-    if re.match(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$', dados['email']) is None:
-        return jsonify({'erro': 'Digite um email válido.'})
+    if request.is_json:
+        dados = request.get_json()
+    else:
+        dados = request.form.to_dict()
+    print('ta validando')
         
     usuario_exist = UserModel.query.filter_by(email=dados.get('email')).first()
+
+    erro = verificar_campos(dados)
+    if erro:
+        return jsonify({"erro": erro}), 400
 
     erro = verificar_idade(dados.get("datanasc"))
     if erro:
@@ -86,6 +82,10 @@ def cadastrar():
     erro = verificar_senha(dados.get('senha'))
     if erro:
         return jsonify({'erro': erro}), 400
+    
+
+    
+
     
     if not usuario_exist:
         novo_usuario = UserModel(
@@ -105,10 +105,12 @@ def cadastrar():
     
         if salvar_dados(novo_usuario):
             return jsonify({'sucesso': f'Usuário {novo_usuario.nome_completo} cadastrado com sucesso!'})
-        return jsonify({'erro': 'Erro ao salvar usuário no banco de dados. Tente novamente'})
-    
+        return jsonify({'erro': 'Erro ao salvar usuário no banco de dados. Tente novamente'})
+
     else:
         return jsonify({'erro': 'Email já cadastrado. Faça login ou utilize outro email.'})
+
+    
 
 
 @bp.route('/login')
