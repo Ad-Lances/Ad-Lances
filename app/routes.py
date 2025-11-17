@@ -8,7 +8,7 @@ import re
 from sqlalchemy import select
 from app import stripe, socketio, sqids
 from config import Config
-from app.validators_user import (
+from app.controllers.user_controller import (
     verificar_idade,
     verificar_email,
     verificar_senha,
