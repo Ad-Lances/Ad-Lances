@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://kit.fontawesome.com/301e8f1b49.js" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='script/pesquisa.js') }}" defer></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    {% block other_style %}{% endblock %}
+    <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
     <nav id="nav">
         <ul>
             <li>
-                <div id="nav-item">
+                <div class="nav-item"> <!-- MUDADO: id para class -->
                     <a href="/"><img id="logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo"></a>
                 </div>
             </li>
@@ -24,69 +26,31 @@
                 </div>
             </li>
             <li>
-                <div id="nav-item">
+                <div class="nav-item"> <!-- MUDADO: id para class -->
                     <a href="verificarstripe" target="blank">Criar leilão</a>
                 </div>
             </li>
             <li>
-                <div id="nav-item">
+                <div class="nav-item"> <!-- MUDADO: id para class -->
                     <a href="mailto:adlances@gmail.com">Fale conosco</a>
                 </div>
             </li>
             <li>
-                <div id="nav-item">
-                    <div id="img-nav">
+                <div class="nav-item"> <!-- MUDADO: id para class -->
+                    <div class="img-nav"> <!-- MUDADO: id para class -->
                         <a href="login"><img src="{{ url_for('static', filename='img/icons-img/profile-icon.png') }}" alt="Perfil"></a>
                     </div>
                 </div>
             </li>
         </ul>
     </nav>
-
-    <h1>Entre na sua conta</h1>
     
-    <section id="mensagem"></section>
+    {% block content %}
+    {% endblock %}
 
-    <div id="formularioLogin">
-        <form id="form">
-            <div class="form-section">
-                <i class="fa-solid fa-circle-user fa-lg" style="color: #034660;"></i>
-                <h3>Dados de Acesso</h3>
-                <hr>
-                <div class="form-grid">
-                    <div class="full-width">
-                        <div id="campo-email">
-                            <label for="email">E-mail:</label>
-                            <input type="email" id="email" name="email" placeholder="Digite seu email">
-                        </div>
-                    </div>
-                    
-                    <div class="full-width">
-                        <div id="campo-senha">
-                            <label for="password">Senha:</label>
-                            <div class="password-container">
-                                <input type="password" id="password" name="password" placeholder="Digite sua senha">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <button type="submit" id="botao-login">Entrar</button>
-
-            <div id="link-cadastro">
-                <a href="cadastro">Não tem uma conta? Cadastre-se</a>
-            </div>
-
-            <div id="link-cadastro">
-                <a href="/redefinirsenha">Esqueci a senha</a>
-            </div>
-        </form>
-    </div>
-
-     <footer id="footer">
+    <footer id="footer">
         <div id="footer-container">
-            <div id="footer-section">
+            <div class="footer-section"> <!-- MUDADO: id para class -->
                 <h4>Sobre nós</h4>
                 <ul>
                     <li><a href="#">A empresa</a></li>
@@ -96,48 +60,45 @@
                 </ul>
             </div>
 
-            <div id="footer-section">
+            <div class="footer-section"> <!-- MUDADO: id para class -->
                 <h4>Contato</h4>
                 <p><strong>E-mail:</strong> adlances@gmail.com</p>
                 <p><strong>Telefone:</strong> (11) 5567-3452</p>
                 <p><a href="#">Perguntas frequentes</a></p>
             </div>
 
-            <div id="footer-section">
+            <div class="footer-section"> <!-- MUDADO: id para class -->
                 <h4>Redes sociais</h4>
                 <div id="social-icons">
                     <a href="#" aria-label="Instagram">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="24" height="24">
                             <path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9a5.5 5.5 0 0 1-5.5 5.5h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2zm0 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4h-9zm4.5 3a5.5 5.5 0 1 1 0 11a5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7zm5.25-.75a.75.75 0 1 1 0 1.5a.75.75 0 0 1 0-1.5z"/>
                         </svg>
-                     </a>
-
+                    </a>
                     <a href="#" aria-label="Facebook">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="24" height="24">
                             <path d="M13.5 22V12.75h3l.5-4h-3.5V6.5c0-1.1.3-1.9 2-1.9h1.6V1.2c-.3 0-1.4-.2-2.7-.2c-2.7 0-4.6 1.6-4.6 4.7V8.7H7v4h3.8V22h2.7z"/>
                         </svg>
                     </a>
-
                     <a href="#" aria-label="LinkedIn">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="24" height="24">
                             <path d="M4.98 3.5A2.5 2.5 0 1 1 5 8.5a2.5 2.5 0 0 1-.02-5zM3 9h4v12H3zm7 0h3.7v1.6h.1c.5-.9 1.7-1.8 3.4-1.8c3.6 0 4.3 2.4 4.3 5.6V21h-4v-5.2c0-1.2 0-2.7-1.7-2.7c-1.8 0-2 1.3-2 2.6V21h-4z"/>
                         </svg>
                     </a>
+                </div>
             </div>
-        </div>
 
-        <div id="footer-section">
-            <h4>Localização</h4>
-            <p>Av. Paulista, 1167 - Bela Vista</p>
-        </div>
+            <div class="footer-section"> <!-- MUDADO: id para class -->
+                <h4>Localização</h4>
+                <p>Av. Paulista, 1167 - Bela Vista</p>
+            </div>
         </div>
         <div id="footer-bottom">
             <p>© AdLances. Todos os direitos reservados.</p>
         </div>
     </footer>
 
-    <script src="{{ url_for('static', filename='script/style.js')}}"></script>
-    <script src="{{ url_for('static', filename='script/validacao_login.js')}}"></script>
-    <script src="{{ url_for('static', filename='script/login.js')}}"></script>
+    {% block scripts %}
+    {% endblock %}
 </body>
 </html>

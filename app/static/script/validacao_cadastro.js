@@ -56,7 +56,7 @@ function verificar_campos(nome, estado, cidade, logradouro, cep, bairro, numeroC
         if (!ccnpj) {
             return 'O CNPJ é obrigatório para contas de Pessoa Jurídica';
         }
-        const nomeEmpresa = document.getElementById('nome-empresa')?.value.trim();
+        const nomeEmpresa = document.getElementById('nome-empresa').value.trim();
         if (!nomeEmpresa) {
             return 'O nome da empresa é obrigatório';
         }

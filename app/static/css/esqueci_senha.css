@@ -1,0 +1,213 @@
+/* esqueci_senha.css */
+#titulo {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+#titulo h2 {
+    color: #034660;
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+#formulario-div {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    max-width: 450px;
+    margin: 0 auto 30px;
+    border: 1px solid #e9ecef;
+}
+
+#formulario-redefinir {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+#nova_senha_label,
+#confirmar_nova_senha_label {
+    font-weight: 500;
+    margin-bottom: 2px;
+    color: black;
+    display: block;
+}
+
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+#nova_senha_input,
+#confirmar_ns_input {
+    padding: 12px 40px 12px 12px; /* Espaço para o ícone */
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 100%;
+}
+
+#nova_senha_input:focus,
+#confirmar_ns_input:focus {
+    outline: none;
+    border-color: #034660;
+    background-color: white;
+    box-shadow: 0 0 0 3px rgba(3, 70, 96, 0.1);
+}
+
+#nova_senha_input::placeholder,
+#confirmar_ns_input::placeholder {
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    margin: 0;
+    font-size: 16px;
+    color: #666;
+    transition: color 0.3s ease;
+    z-index: 10;
+}
+
+.toggle-password:hover {
+    color: #034660;
+}
+
+
+#botao-redefinir {
+    background-color: #034660;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+#botao-redefinir:hover {
+    background-color: #02344d;
+}
+
+
+#botao-redefinir:active {
+    transform: translateY(0);
+}
+
+.full-width {
+    width: 100%;
+}
+
+#orientacao-senha {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+}
+
+#orientacao-senha ul {
+    list-style-type: disc;
+    margin-left: 20px;
+}
+
+#orientacao-senha h3 {
+    color: #034660;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+#orientacao-senha ul li {
+    padding: 8px 0;
+    padding-left: 25px;
+    position: relative;
+    color: #495057;
+    font-size: 14px;
+}
+
+#orientacao-senha ul li:before {
+    content: "•";
+    color: #034660;
+    font-weight: bold;
+    position: absolute;
+    left: 10px;
+    font-size: 16px;
+}
+
+/* Estados de validação */
+#nova_senha_input.valid,
+#confirmar_ns_input.valid {
+    border-color: #28a745;
+}
+
+#nova_senha_input.invalid,
+#confirmar_ns_input.invalid {
+    border-color: #dc3545;
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+    #formulario-div {
+        margin: 0 15px 20px;
+        padding: 20px;
+    }
+    
+    #titulo h2 {
+        font-size: 24px;
+    }
+    
+    #nova_senha_input,
+    #confirmar_ns_input {
+        padding: 12px;
+        font-size: 14px;
+    }
+    
+    #botao-redefinir {
+        padding: 12px;
+        font-size: 15px;
+    }
+    
+    #orientacao-senha {
+        margin: 0 15px;
+        padding: 15px;
+    }
+}
+
+/* Animações suaves */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#formulario-div,
+#orientacao-senha {
+    animation: fadeIn 0.6s ease-out;
+}
+
+#orientacao-senha {
+    animation-delay: 0.2s;
+    animation-fill-mode: both;
+}

@@ -55,7 +55,8 @@ body {
     height: auto;
 }
 
-#nav ul li a{
+#nav-item a{
+    color: white;
     text-decoration: none;
 }
 

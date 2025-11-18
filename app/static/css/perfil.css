@@ -55,14 +55,14 @@ body {
     height: auto;
 }
 
-#nav-item a {
-    text-decoration: none;
+#nav-item a{
     color: white;
-    font-size: 0.8em;
+    text-decoration: none;
 }
 
-#nav-item a:hover {
+#nav ul li a:hover{
     text-decoration: underline;
+    cursor: pointer;
 }
 
 #search-container {

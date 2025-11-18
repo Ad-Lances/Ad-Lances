@@ -1,6 +1,6 @@
 mensagem = document.getElementById('mensagem');
 
-function estilizarmensagem(mensagem){
+function estilizarmensagem(mensagem,){
     if (!mensagem) {
         console.error('Elemento mensagem não encontrado!');
         return;
@@ -134,58 +134,51 @@ if (mensagem_erros.length > 0) {
         return;
     }
 }
-
 function adicionarToggleSenha() {
-    const senhaInputCadastro = document.getElementById('password');
-    const confirmarSenhaInput = document.getElementById('confirmar-senha');
+    // IDs de todos os campos de senha possíveis
+    const camposSenha = [
+        'password',           // Login e Cadastro
+        'confirmar-senha',    // Cadastro
+        'nova_senha_input',   // Redefinir Senha
+        'confirmar_ns_input'  // Redefinir Senha
+    ];
     
-    const senhaInputLogin = document.getElementById('password');
-    
-    if (senhaInputCadastro && confirmarSenhaInput) {
-        const senhaContainer = senhaInputCadastro.parentElement;
-        const confirmarContainer = confirmarSenhaInput.parentElement;
-        
-        if (senhaContainer && !senhaContainer.querySelector('.toggle-password')) {
-            senhaContainer.style.position = 'relative';
-            adicionarBotaoToggle(senhaContainer, senhaInputCadastro);
+    camposSenha.forEach(id => {
+        const input = document.getElementById(id);
+        if (input && input.type === 'password') {
+            const container = input.parentElement;
+            
+            // Verificar se já existe toggle button
+            if (container && !container.querySelector('.toggle-password')) {
+                container.style.position = 'relative';
+                adicionarBotaoToggle(container, input);
+            }
         }
-        
-        if (confirmarContainer && !confirmarContainer.querySelector('.toggle-password')) {
-            confirmarContainer.style.position = 'relative';
-            adicionarBotaoToggle(confirmarContainer, confirmarSenhaInput);
-        }
-    }
-    
-    else if (senhaInputLogin && !confirmarSenhaInput) {
-        const senhaContainer = senhaInputLogin.parentElement;
-        
-        if (senhaContainer && !senhaContainer.querySelector('.toggle-password')) {
-            senhaContainer.style.position = 'relative';
-            adicionarBotaoToggle(senhaContainer, senhaInputLogin);
-        }
-    }
+    });
 }
 
 function adicionarBotaoToggle(container, input) {
     const toggleBtn = document.createElement('button');
     toggleBtn.type = 'button';
     toggleBtn.className = 'toggle-password';
-    toggleBtn.innerHTML = '<i class="fa-solid fa-eye" style="color: #034660;"></i>';
+    toggleBtn.innerHTML = '<i class="fa-solid fa-eye"></i>';
     toggleBtn.setAttribute('aria-label', 'Mostrar senha');
     
     toggleBtn.addEventListener('click', function() {
-        const type = input.type === 'password' ? 'text' : 'password';
-        input.type = type;
-        
-        toggleBtn.innerHTML = type === 'password' 
-            ? '<i class="fa-solid fa-eye" style="color: #034660;"></i>' 
-            : '<i class="fa-solid fa-eye-slash" style="color: #034660;"></i>';
-            
-        toggleBtn.setAttribute('aria-label', type === 'password' ? 'Mostrar senha' : 'Ocultar senha');
+        if (input.type === 'password') {
+            input.type = 'text';
+            toggleBtn.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
+            toggleBtn.setAttribute('aria-label', 'Ocultar senha');
+        } else {
+            input.type = 'password';
+            toggleBtn.innerHTML = '<i class="fa-solid fa-eye"></i>';
+            toggleBtn.setAttribute('aria-label', 'Mostrar senha');
+        }
     });
     
     container.appendChild(toggleBtn);
 }
+
 
 function scrollerro(){
     if (mensagem) {

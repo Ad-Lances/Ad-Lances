@@ -214,7 +214,7 @@ function validarCEP() {
     return cepErro;
 }
 
-const socketio = io.connect("https://ad-lances.onrender.com")
+const socketio = io.connect("/")
 const lanceatual = document.getElementById('lance-atual')
 const totallances = document.getElementById('total-lances')
 

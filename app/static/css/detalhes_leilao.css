@@ -300,6 +300,8 @@ body {
     width: 100%;
     max-width: 500px;
     margin: 0 auto;
+    margin-top: 35px;
+    margin-bottom: 15px;
 }
 
 .section-title {
