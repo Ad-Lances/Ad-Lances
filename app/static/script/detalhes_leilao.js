@@ -174,7 +174,7 @@ function validarCEP() {
 const socketio = io.connect("/")
 const lanceatual = document.getElementById('lance-atual')
 const totallances = document.getElementById('total-lances')
-
+const temp = document.getElementById('temp')
 socketio.on("novo_lance", (lance_atual, total_lances) => {
     const valor = Number(lance_atual);
     lanceatual.innerHTML = valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -186,9 +186,9 @@ let ultsinc = null;
 const data_fim = new Date(document.getElementById('temporizador').dataset.fim)
 const temporizador = document.getElementById('temporizador')
 async function sincron() {
-    const resposta = await fetch('https://worldtimeapi.org/api/timezone/America/Sao_Paulo');
+    const resposta = await fetch('/api/horas');
     const resultado = await resposta.json();
-    horaapi = new Date(resultado.datetime);
+    horaapi = new Date(resultado.horas);
     ultsinc = new Date();
 }
 sincron();
@@ -208,8 +208,9 @@ function temporiz() {
     }
     const s = Math.floor(diff / 1000) % 60;
     const m = Math.floor(diff / 1000 / 60) % 60;
-    const h = Math.floor(diff / 1000 / 60 / 60);
-    temporizador.innerText = `${h}h ${m}m ${s}s`;
+    const h = Math.floor(diff / 1000 / 60 / 60) % 24;
+    const d = Math.floor(diff / 1000 / 60 / 60 / 24);
+    temp.innerHTML = `${d}d ${h}h ${m}m ${s}s`;
     
 }
 setInterval(temporiz, 1000);
