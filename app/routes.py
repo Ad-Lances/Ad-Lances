@@ -340,7 +340,7 @@ def criar_leilao():
             nome=dados['nome'],
             descricao=dados['descricao'],
             id_subcategoria=dados['id_subcategoria'],
-            data_inicio=dados['data_inicio'],
+            data_inicio=dados['data_inicio'].replace(tzinfo=ZoneInfo("America/Sao_Paulo")),
             data_fim=dados['data_fim'],
             lance_inicial=dados['lance_inicial'],
             min_incremento=dados['min_incremento'] if dados['min_incremento'] != '' else 0.1,
@@ -499,7 +499,7 @@ def webhook():
 @bp.get('/api/horas')
 def get_horas():
     horas = datetime.now(ZoneInfo("America/Sao_Paulo")).replace(microsecond=0)
-    return jsonify({"horas": horas.isoformat().replace("-03:00", "Z")})
+    return jsonify({"horas": horas.isoformat()})
 
 @bp.errorhandler(401)
 def erro_401(error):
