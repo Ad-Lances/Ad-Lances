@@ -186,7 +186,6 @@ let ultsinc = null;
 const data_fim = new Date(document.getElementById('temporizador').dataset.fim)
 const temporizador = document.getElementById('temporizador')
 async function sincron() {
-
     const resposta = await fetch('/api/horas');
     const resultado = await resposta.json();
     horaapi = new Date(resultado.horas);
