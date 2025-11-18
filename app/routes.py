@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, jsonify, session, redirect, url_for, flash
+from flask import Blueprint, render_template, request, jsonify, session, redirect, url_for, flash, abort
 from app.models import *
 from . import db
 from . import cloudinary
@@ -273,7 +273,8 @@ def detalhes_leilao(hashid):
             leilao.status = "Encerrado."
             db.session.commit
         return render_template('detalhes_leilao.html', leilao=leilao)
-    return redirect(url_for('main.index'))
+    
+    abort(404)
 
 @bp.route('/verificarstripe')
 def verificar_stripe():
@@ -472,3 +473,7 @@ def page_not_found(error):
 @bp.errorhandler(500)
 def erro_500(error):
     return render_template('error-pages/500.html'), 500
+
+@bp.route('/forcar404')
+def forcar404():
+    abort(404)
