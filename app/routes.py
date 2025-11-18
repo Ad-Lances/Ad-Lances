@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, jsonify, session, redirect, url_for, flash
+from flask import Blueprint, render_template, request, jsonify, session, redirect, url_for, flash, abort
 from app.models import *
 from . import db
 from . import cloudinary
@@ -12,7 +12,8 @@ from app.controllers.user_controller import (
     verificar_idade,
     verificar_email,
     verificar_senha,
-    verificar_campos
+    verificar_campos,
+    verificar_camposlog
 )
 
 bp = Blueprint('main', __name__)
@@ -87,24 +88,23 @@ def cadastrar():
 
     erro = verificar_campos(dados)
     if erro:
-        flash(erro, 'erro')
-        return redirect(url_for('main.cadastro'))
+
+        return jsonify({'erro': erro})
 
     erro = verificar_idade(dados.get("datanasc"))
     if erro:
-        flash(erro, 'erro')
-        return redirect(url_for('main.cadastro'))
+
+        return jsonify({'erro': erro})
 
     erro = verificar_email(dados.get('email'))
     if erro:
-        flash(erro, 'erro')
-        return redirect(url_for('main.cadastro'))
+
+        return jsonify({'erro': erro})
     
     erro = verificar_senha(dados.get('senha'))
     if erro:
         print("oillucas")
-        flash(erro, 'erro')
-        return redirect(url_for('main.cadastro'))
+        return jsonify({'erro': erro})
     
     
     if not usuario_exist:
@@ -125,13 +125,12 @@ def cadastrar():
     
         if salvar_dados(novo_usuario):
             flash(f'Usuário {novo_usuario.nome_completo} cadastrado com sucesso!', 'sucesso')
-            return redirect(url_for('main.login'))
-        flash('Erro ao salvar usuário no banco de dados. Tente novamente', 'erro')
-        return redirect(url_for('main.cadastro'))
+            return redirect(url_for("login.html"))
+        return jsonify({'erro': "Erro ao salvar usuário no banco de dados. Tente novamente"})
 
     else:
-        flash('Email ja cadastrado. Faca login ou utilize outro email.', 'erro')
-        return redirect(url_for('main.cadastro'))
+
+        return jsonify({'erro': "Email ja cadastrado. Faca login ou utilize outro email."})
 
     
 
@@ -142,21 +141,38 @@ def login():
 
 @bp.route('/logar', methods=['POST'])
 def logar():
-    dados = request.get_json()
-    
-    email = dados['email']
-    senha = dados['senha']
-    
+
+    if request.is_json:
+        dados = request.get_json()
+    else:
+        dados = request.form.to_dict()
+
+
+    email = dados.get('email')
+    senha = dados.get('senha')
+    print("DADOS RECEBIDOS:", dados)
+    print("EMAIL:", repr(email))
+    print("SENHA:", repr(senha))
+    erro = verificar_camposlog(email, senha)
+    if erro:
+        return jsonify({'erro': erro})
+
+    erro = verificar_email(email)
+    if erro:
+        return jsonify({'erro': erro})
+
     usuario = UserModel.query.filter_by(email=email).first()
+
     if usuario and usuario.verify_senha(senha):
         session['logado'] = True
         session['usuario_id'] = usuario.id
         session['nome_completo'] = usuario.nome_completo
 
-        return jsonify({"sucesso": 'Bem-vindo!', "redirect": "/"})
+        return redirect(url_for('main.index'))
     else:
         return jsonify({"erro": "Email ou senha inválidos."})
-    
+
+
 @bp.route('/logout', methods=['POST'])
 def logout():
     session.clear()
@@ -257,7 +273,8 @@ def detalhes_leilao(hashid):
             leilao.status = "Encerrado."
             db.session.commit
         return render_template('detalhes_leilao.html', leilao=leilao)
-    return redirect(url_for('main.index'))
+    
+    abort(404)
 
 @bp.route('/verificarstripe')
 def verificar_stripe():
@@ -456,3 +473,7 @@ def page_not_found(error):
 @bp.errorhandler(500)
 def erro_500(error):
     return render_template('error-pages/500.html'), 500
+
+@bp.route('/forcar404')
+def forcar404():
+    abort(404)
