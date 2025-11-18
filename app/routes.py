@@ -259,6 +259,10 @@ def pagina_criar_leilao():
 def redefinirsenha():
     return render_template('esqueci_senha.html')
 
+@bp.route('/redefinirsenha', methods=['POST'])
+def redefinicao():
+    return None
+
 @bp.route('/<hashid>')
 def detalhes_leilao(hashid):
     leilao = get_leilao(hashid)

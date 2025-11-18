@@ -1,4 +1,4 @@
-import { verificar_email, verificar_senha } from '.script/valdacao_cadastro.js';
+import { verificar_email, verificar_senha } from '.script/validacao_cadastro.js';
 import { estilizarmensagem } from '.script/style.js';
 
 document.addEventListener('DOMContentLoaded', function(){

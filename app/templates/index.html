@@ -1,12 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='img/guia-icone.png') }}" type="image/x-icon">
+
     <script src="https://kit.fontawesome.com/301e8f1b49.js" crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename='script/pesquisa.js') }}" defer></script>
+
     <title>Ad-Lances</title>
 </head>
 <body>
@@ -36,6 +41,12 @@
             <li>
                 <div id="nav-item">
                     <a href="mailto:adlances@gmail.com">Fale conosco</a>
+                </div>
+            </li>
+
+            <li>
+                <div id="nav-item">
+                    <button type="submit" id="btntema"></button>
                 </div>
             </li>
 

@@ -1,0 +1,22 @@
+:root {
+    --cor-bg: #F3F3F3;          /* fundo principal */
+    --cor-texto: #262626;       /* texto padrão */
+    --cor-texto-invertido: #FFFFFF; /* texto sobre elementos escuros */
+    --cor-primaria: #034366;    /* botões, CTA, elementos importantes */
+    --cor-primaria-hover: #04507A; /* mais clara para hover */
+    --cor-card: #FFFFFF;        /* fundo de cards, caixas, inputs */
+    --cor-borda: #D9D9D9;       /* bordas sutis */
+    --cor-shadow: rgba(0, 0, 0, 0.08); /* sombreamento suave */
+
+}
+
+html[data-theme="dark"] {
+    --cor-bg: #0F1A20;               /* fundo quase azul petróleo, evita o preto puro */
+    --cor-texto: #E6E6E6;            /* cinza clarão para leitura confortável */
+    --cor-texto-invertido: #FFFFFF;  /* branco verdadeiro para botões */
+    --cor-primaria: #0A6AA1;         /* azul mais vibrante no dark */
+    --cor-primaria-hover: #0D7FBE;   /* destaque suave */
+    --cor-card: #17232A;             /* caixas e cards */
+    --cor-borda: #2A3A42;            /* bordas frias e discretas */
+    --cor-shadow: rgba(0, 0, 0, 0.4); /* sombra profunda */
+}
