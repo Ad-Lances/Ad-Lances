@@ -3,6 +3,7 @@ from app.models import *
 from . import db
 from . import cloudinary
 from datetime import datetime, date, timedelta
+from zoneinfo import ZoneInfo
 import cloudinary.uploader
 import re
 from sqlalchemy import select, or_
@@ -34,7 +35,8 @@ def get_leilao(hashid):
     dihsah = sqids.decode(hashid)
     if dihsah:
         return LeilaoModel.query.get(dihsah[0])
-    return None     
+    else: 
+        return None     
 
 
 @bp.route('/')
@@ -43,7 +45,7 @@ def index():
     por_pagina = request.args.get('por_pagina', 12, type=int)
     leiloes = LeilaoModel.query.all()
     leiloes_paginados = LeilaoModel.query.filter(
-        LeilaoModel.data_fim > datetime.now()
+        LeilaoModel.data_fim > datetime.now(ZoneInfo("America/Sao_Paulo"))
     ).order_by(
         LeilaoModel.data_inicio.desc()
     ).paginate(
@@ -199,8 +201,8 @@ def imoveis(categoria):
                 # Leilões encerrando em breve da subcategoria
                 leiloes_encerrando = LeilaoModel.query.filter(
                     LeilaoModel.id_subcategoria == subcategoria_obj.id,
-                    LeilaoModel.data_fim > datetime.now(),
-                    LeilaoModel.data_fim <= datetime.now() + timedelta(hours=24)  # Próximas 24h
+                    LeilaoModel.data_fim > datetime.now(ZoneInfo("America/Sao_Paulo")),
+                    LeilaoModel.data_fim <= datetime.now(ZoneInfo("America/Sao_Paulo")) + timedelta(hours=24)  # Próximas 24h
                 ).order_by(
                     LeilaoModel.data_fim.asc()
                 ).limit(5).all()
@@ -208,7 +210,7 @@ def imoveis(categoria):
                 # Todos os leilões da subcategoria (com paginação)
                 leiloes = LeilaoModel.query.filter(
                     LeilaoModel.id_subcategoria == subcategoria_obj.id,
-                    LeilaoModel.data_fim > datetime.now()
+                    LeilaoModel.data_fim > datetime.now(ZoneInfo("America/Sao_Paulo"))
                 ).order_by(
                     LeilaoModel.data_inicio.desc()
                 ).paginate(
@@ -223,8 +225,8 @@ def imoveis(categoria):
             # Leilões encerrando em breve de toda a categoria
             leiloes_encerrando = LeilaoModel.query.filter(
                 LeilaoModel.id_subcategoria.in_([sub.id for sub in categoria_exist.subcategorias]),
-                LeilaoModel.data_fim > datetime.now(),
-                LeilaoModel.data_fim <= datetime.now() + timedelta(hours=24)
+                LeilaoModel.data_fim > datetime.now(ZoneInfo("America/Sao_Paulo")),
+                LeilaoModel.data_fim <= datetime.now(ZoneInfo("America/Sao_Paulo")) + timedelta(hours=24)
             ).order_by(
                 LeilaoModel.data_fim.asc()
             ).limit(5).all()
@@ -232,7 +234,7 @@ def imoveis(categoria):
             # Todos os leilões da categoria (com paginação)
             leiloes = LeilaoModel.query.filter(
                 LeilaoModel.id_subcategoria.in_([sub.id for sub in categoria_exist.subcategorias]),
-                LeilaoModel.data_fim > datetime.now()
+                LeilaoModel.data_fim > datetime.now(ZoneInfo("America/Sao_Paulo"))
             ).order_by(
                 LeilaoModel.data_inicio.desc()
             ).paginate(
@@ -262,12 +264,15 @@ def redefinirsenha():
 @bp.route('/<hashid>')
 def detalhes_leilao(hashid):
     leilao = get_leilao(hashid)
-    horas = datetime.now()
+
     if leilao:
-        if horas <= leilao.data_fim:
-            leilao.status = "Encerrado."
+        horas = datetime.now(ZoneInfo("America/Sao_Paulo")).replace(microsecond=0)
+        data_fim = leilao.data_fim.replace(tzinfo=ZoneInfo("America/Sao_Paulo"))
+        
+        if horas >= data_fim:
+            leilao.status = "Encerrado"
             db.session.commit
-        return render_template('detalhes_leilao.html', leilao=leilao)
+        return render_template('detalhes_leilao.html', leilao=leilao, data_fim=data_fim.isoformat())
     
     abort(404)
 
@@ -339,13 +344,13 @@ def criar_leilao():
 @bp.post('/<hashid>/novolance')
 def novo_lance(hashid):
     dados = request.get_json()
-    horas = datetime.now()
+    horas = datetime.now(ZoneInfo("America/Sao_Paulo"))
     leilao = get_leilao(hashid)
     
     if leilao is None:
         return jsonify({'erro': 'Leilão não encontrado.'})
     
-    if leilao.data_fim < horas:
+    if leilao.data_fim < horas or leilao.status == 'Encerrado':
         leilao.status = 'Encerrado'
         db.session.commit()
         return jsonify({'erro': 'Leilão já encerrado.'})
@@ -377,13 +382,13 @@ def novo_lance(hashid):
             db.session.rollback()
             return jsonify({'erro': 'O valor do lance deve ser maior que o lance atual + incremento mínimo.'})
         
-        if ultimo_lance and ultimo_lance.horario > datetime.now() - timedelta(seconds=5):
+        if ultimo_lance and ultimo_lance.horario > datetime.now(ZoneInfo("America/Sao_Paulo")) - timedelta(seconds=5):
             db.session.rollback()
             return jsonify({'erro': 'Espere um pouco para fazer outro lance...'})
         
         novo_lance = LanceModel(
             valor=valor_lance,
-            horario=datetime.now(),
+            horario=datetime.now(ZoneInfo("America/Sao_Paulo")),
             id_leilao=leilao.id,
             id_usuario=session['usuario_id']
         )
@@ -456,6 +461,11 @@ def webhook():
         print(account)
         
     return "", 200
+
+@bp.get('/api/horas')
+def get_horas():
+    horas = datetime.now(ZoneInfo("America/Sao_Paulo")).replace(microsecond=0)
+    return jsonify({"horas": horas.isoformat().replace("-03:00", "Z")})
 
 @bp.errorhandler(401)
 def erro_401(error):
