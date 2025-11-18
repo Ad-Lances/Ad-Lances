@@ -1,13 +1,14 @@
 document.addEventListener('DOMContentLoaded', function () {
     adicionarToggleSenha();
     exibirCampo();
+    
 
     const formularioCadastro = document.getElementById('formularioCadastro');
     const nomeInput = document.getElementById('nome');
     const cpf = document.getElementById('cpf');
     const cnpj = document.getElementById('cnpj');
     const nome_empresa = document.getElementById("nome-empresa");
-    const tipo_pessoa = document.getElementById('tipo_pessoa');
+    const tipo_pessoa = document.getElementById('tipo-de-conta');
     const datanascInput = document.getElementById('datanasc');
 
     const estadoInput = document.getElementById('estado');
@@ -22,11 +23,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const telefoneCelInput = document.getElementById('telefone_celular');
     const telefoneResInput = document.getElementById('telefone_residencial');
     const emailCadastroInput = document.getElementById('email');
-    const senhaCadastroInput = document.getElementById('password');
+    const senhaCadastroInput = document.getElementById('senha');
     const confirmar_senhaInput = document.getElementById('confirmar-senha');
 
     const mensagem = document.getElementById('mensagem');
 
+    
     formularioCadastro.addEventListener('submit', async (event) => {
         event.preventDefault();
 
@@ -193,7 +195,7 @@ document.addEventListener('DOMContentLoaded', function () {
             tipo_pessoa: tipopessoa,
             datanasc: data_nasc
         };
-
+        console.log(dados)
         const resposta = await fetch('/cadastrar', {
             method: 'POST',
             headers: {

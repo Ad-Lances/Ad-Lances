@@ -46,13 +46,13 @@ function verificar_campos(nome, estado, cidade, logradouro, cep, bairro, numeroC
         return 'Por favor, preencha todos os campos obrigatórios';
     }
 
-    if (tipopessoa === 'fisica') {
+    if (tipopessoa === 'Pessoa Física') {
         if (!ccpf) {
             return 'O CPF é obrigatório para contas de Pessoa Física';
         }
     }
 
-    if (tipopessoa === 'juridica') {
+    if (tipopessoa === 'Pessoa Jurídica') {
         if (!ccnpj) {
             return 'O CNPJ é obrigatório para contas de Pessoa Jurídica';
         }

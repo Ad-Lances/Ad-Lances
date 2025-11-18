@@ -51,22 +51,6 @@
     <ul id="mensagem">
 
     </ul> 
-{% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-        <ul class="flashes">
-            {% for category, message in messages %}
-                <li class="{{ category }}">{{ message }}</li>
-
-                {% if category == 'sucesso' %}
-                    <ul class="flashsucess">
-                        <li>{{ message }}</li>
-                    </ul>
-                {% endif %}
-
-            {% endfor %}
-        </ul>
-    {% endif %}
-{% endwith %}
 
    <form id="formularioCadastro" action="/cadastrar" method="POST">
     <div class="form-section">

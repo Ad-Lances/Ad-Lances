@@ -42,41 +42,49 @@ def verificar_senha(senha: str):
 
 def verificar_campos(dados):
 
-    nome = dados.get("nome")
-    unid_federativa = dados.get("estado")
-    cidade = dados.get("cidade")
-    rua = dados.get("logradouro")
-    cep = dados.get("cep")
-    bairro = dados.get("bairro")
-    numero_casa = dados.get("numero_casa")
-    email = dados.get("email")
-    senha = dados.get("senha")
-    telefone = dados.get("telefone_celular")
-    tipo_pessoa = dados.get("tipo-de-conta")
-    cpf = dados.get("cpf")
-    cnpj = dados.get("cnpj")
-    nome_empresa = dados.get("nome_empresa")
+    nome = dados.get('nome')
+    unid_federativa = dados.get('unid_federativa')
+    cidade = dados.get('cidade')
+    rua = dados.get('rua')
+    cep = dados.get('cep')
+    bairro = dados.get('bairro')
+    numero_casa = dados.get('numero_casa')
+    email = dados.get('email')
+    senha = dados.get('senha')
+    telefone = dados.get('telefone_res')
+    tipo_pessoa = dados.get('tipo_pessoa')
+    cpf = dados.get('cpf')
+    cnpj = dados.get('cnpj')
+    nome_empresa = dados.get('nome_empresa')
 
-    obrigatorios = [
-        nome, unid_federativa, cidade, rua, cep, bairro, numero_casa, email, senha, telefone, tipo_pessoa
-    ]
+    obrigatorios = [nome, unid_federativa, cidade, rua, cep, bairro, numero_casa, email, senha, telefone, tipo_pessoa]
 
     print(obrigatorios)
     print(dados)
     if any(not campo for campo in obrigatorios):
+        print("capo obriado")
         return "Por favor, preencha todos os campos obrigatorios."
 
     if tipo_pessoa not in ["Pessoa Física", "Pessoa Jurídica"]:
+        print("Oipessoa")
         return "Selecione um tipo de pessoa."
 
     if tipo_pessoa == "Pessoa Física":
         if not cpf:
+            print("cpf")
             return "CPF obrigatorio para Pessoa Fisica."
 
     elif tipo_pessoa == "Pessoa Jurídica":
         if not cnpj:
+            print("cnpj")
             return "CNPJ obrigatorio para Pessoa Juridica."
         if not nome_empresa:
             return "Nome da empresa obrigatorio."
 
+    return None
+
+def verificar_camposlog(email, senha):
+
+    if not senha or not email:
+        return "Por favor, preencha todos os campos corretamente" 
     return None
