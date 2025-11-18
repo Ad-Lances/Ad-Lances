@@ -3,6 +3,7 @@ from app.models import *
 from . import db
 from . import cloudinary
 from datetime import datetime, date, timedelta
+from zoneinfo import ZoneInfo
 import cloudinary.uploader
 import re
 from sqlalchemy import select, or_
@@ -34,7 +35,8 @@ def get_leilao(hashid):
     dihsah = sqids.decode(hashid)
     if dihsah:
         return LeilaoModel.query.get(dihsah[0])
-    return None     
+    else: 
+        return None     
 
 
 @bp.route('/')
@@ -43,7 +45,7 @@ def index():
     por_pagina = request.args.get('por_pagina', 12, type=int)
     leiloes = LeilaoModel.query.all()
     leiloes_paginados = LeilaoModel.query.filter(
-        LeilaoModel.data_fim > datetime.now()
+        LeilaoModel.data_fim > datetime.now(ZoneInfo("America/Sao_Paulo"))
     ).order_by(
         LeilaoModel.data_inicio.desc()
     ).paginate(
@@ -199,8 +201,8 @@ def imoveis(categoria):
                 # Leilões encerrando em breve da subcategoria
                 leiloes_encerrando = LeilaoModel.query.filter(
                     LeilaoModel.id_subcategoria == subcategoria_obj.id,
-                    LeilaoModel.data_fim > datetime.now(),
-                    LeilaoModel.data_fim <= datetime.now() + timedelta(hours=24)  # Próximas 24h
+                    LeilaoModel.data_fim > datetime.now(ZoneInfo("America/Sao_Paulo")),
+                    LeilaoModel.data_fim <= datetime.now(ZoneInfo("America/Sao_Paulo")) + timedelta(hours=24)  # Próximas 24h
                 ).order_by(
                     LeilaoModel.data_fim.asc()
                 ).limit(5).all()
@@ -208,7 +210,7 @@ def imoveis(categoria):
                 # Todos os leilões da subcategoria (com paginação)
                 leiloes = LeilaoModel.query.filter(
                     LeilaoModel.id_subcategoria == subcategoria_obj.id,
-                    LeilaoModel.data_fim > datetime.now()
+                    LeilaoModel.data_fim > datetime.now(ZoneInfo("America/Sao_Paulo"))
                 ).order_by(
                     LeilaoModel.data_inicio.desc()
                 ).paginate(
@@ -223,8 +225,8 @@ def imoveis(categoria):
             # Leilões encerrando em breve de toda a categoria
             leiloes_encerrando = LeilaoModel.query.filter(
                 LeilaoModel.id_subcategoria.in_([sub.id for sub in categoria_exist.subcategorias]),
-                LeilaoModel.data_fim > datetime.now(),
-                LeilaoModel.data_fim <= datetime.now() + timedelta(hours=24)
+                LeilaoModel.data_fim > datetime.now(ZoneInfo("America/Sao_Paulo")),
+                LeilaoModel.data_fim <= datetime.now(ZoneInfo("America/Sao_Paulo")) + timedelta(hours=24)
             ).order_by(
                 LeilaoModel.data_fim.asc()
             ).limit(5).all()
@@ -232,7 +234,7 @@ def imoveis(categoria):
             # Todos os leilões da categoria (com paginação)
             leiloes = LeilaoModel.query.filter(
                 LeilaoModel.id_subcategoria.in_([sub.id for sub in categoria_exist.subcategorias]),
-                LeilaoModel.data_fim > datetime.now()
+                LeilaoModel.data_fim > datetime.now(ZoneInfo("America/Sao_Paulo"))
             ).order_by(
                 LeilaoModel.data_inicio.desc()
             ).paginate(
@@ -266,12 +268,18 @@ def redefinicao():
 @bp.route('/<hashid>')
 def detalhes_leilao(hashid):
     leilao = get_leilao(hashid)
-    horas = datetime.now()
+
     if leilao:
-        if horas <= leilao.data_fim:
-            leilao.status = "Encerrado."
+        horas = datetime.now(ZoneInfo("America/Sao_Paulo")).replace(microsecond=0)
+        data_fim = leilao.data_fim.replace(tzinfo=ZoneInfo("America/Sao_Paulo"))
+        
+        if horas >= data_fim:
+            leilao.status = "Encerrado"
             db.session.commit
-        return render_template('detalhes_leilao.html', leilao=leilao)
+        if len(leilao.lances) == 0:
+            return render_template('detalhes_leilao.html', leilao=leilao, data_fim=data_fim.isoformat())
+        lance_atual = LanceModel.get_ultimo_lance()
+        return render_template('detalhes_leilao.html', leilao=leilao, data_fim=data_fim.isoformat(), lance_atual = lance_atual)
     
     abort(404)
 
@@ -280,6 +288,8 @@ def verificar_stripe():
     if session.get('usuario_id') is None:
         return redirect(url_for('main.login'))
     usuario = UserModel.query.get(session['usuario_id'])
+    if usuario is None:
+        return redirect(url_for('main.login'))
     if usuario.id_stripe is None:
         stripe_conta = stripe.Account.create(type="express")
         link = stripe.AccountLink.create(
@@ -307,7 +317,15 @@ def criar_leilao():
         "data_fim": request.form.get("data_fim"),
         "lance_inicial": request.form.get("lance_inicial"),
         "min_incremento": request.form.get("min_incremento"),
-        "parcelas": request.form.get("parcelas")
+        "pagamentos": request.form.get("pagamento"),
+        "parcelas": request.form.get("parcelas"),
+        "cep": request.form.get("cep"),
+        "uf": request.form.get("uf"),
+        "cidade": request.form.get("cidade"),
+        "bairro": request.form.get("bairro"),
+        "logradouro": request.form.get("logradouro"),
+        "numero_morada": request.form.get("numero_morada"),
+        "complemento": request.form.get("complemento")
     }
     foto = request.files.get("foto")
 
@@ -325,11 +343,17 @@ def criar_leilao():
             data_inicio=dados['data_inicio'],
             data_fim=dados['data_fim'],
             lance_inicial=dados['lance_inicial'],
-            lance_atual=dados['lance_inicial'],
-            min_incremento=dados['min_incremento'],
+            min_incremento=dados['min_incremento'] if dados['min_incremento'] != '' else 0.1,
             parcelas=dados['parcelas'],
             foto=url_imagem,
-            id_user=session['usuario_id']
+            id_user=session['usuario_id'],
+            cep=dados['cep'],
+            uf=dados['uf'],
+            cidade=dados['cidade'],
+            bairro=dados['bairro'],
+            logradouro=dados['logradouro'],
+            numero_morada=dados['numero_morada'],
+            complemento=dados['complemento']
         )    
     except Exception:
         return jsonify({'erro': 'Erro ao criar leilão. Tente novamente.'})
@@ -337,19 +361,30 @@ def criar_leilao():
     if salvar_dados(novo_leilao):
         novo_leilao.hashid = sqids.encode([novo_leilao.id])
         db.session.commit()
+        
+        pagamentoslist = dados["pagamentos"].split(",")
+
+        for pagamento in pagamentoslist:
+            novo_leilaopagamento = LeilaoPagamentoModel(
+                id_leilao = novo_leilao.id,
+                id_pagamento = pagamento
+            )
+            db.session.add(novo_leilaopagamento)
+            db.session.commit()
+        
         return jsonify({'sucesso': f'Leilão {novo_leilao.nome} criado com sucesso!', "redirect": 'detalhes'})
     return jsonify({'erro': 'Erro ao salvar leilão no banco de dados. Tente novamente.'})
 
 @bp.post('/<hashid>/novolance')
 def novo_lance(hashid):
     dados = request.get_json()
-    horas = datetime.now()
+    horas = datetime.now(ZoneInfo("America/Sao_Paulo"))
     leilao = get_leilao(hashid)
     
     if leilao is None:
         return jsonify({'erro': 'Leilão não encontrado.'})
     
-    if leilao.data_fim < horas:
+    if leilao.data_fim < horas or leilao.status == 'Encerrado':
         leilao.status = 'Encerrado'
         db.session.commit()
         return jsonify({'erro': 'Leilão já encerrado.'})
@@ -381,13 +416,13 @@ def novo_lance(hashid):
             db.session.rollback()
             return jsonify({'erro': 'O valor do lance deve ser maior que o lance atual + incremento mínimo.'})
         
-        if ultimo_lance and ultimo_lance.horario > datetime.now() - timedelta(seconds=5):
+        if ultimo_lance and ultimo_lance.horario > datetime.now(ZoneInfo("America/Sao_Paulo")) - timedelta(seconds=5):
             db.session.rollback()
             return jsonify({'erro': 'Espere um pouco para fazer outro lance...'})
         
         novo_lance = LanceModel(
             valor=valor_lance,
-            horario=datetime.now(),
+            horario=datetime.now(ZoneInfo("America/Sao_Paulo")),
             id_leilao=leilao.id,
             id_usuario=session['usuario_id']
         )
@@ -460,6 +495,11 @@ def webhook():
         print(account)
         
     return "", 200
+
+@bp.get('/api/horas')
+def get_horas():
+    horas = datetime.now(ZoneInfo("America/Sao_Paulo")).replace(microsecond=0)
+    return jsonify({"horas": horas.isoformat().replace("-03:00", "Z")})
 
 @bp.errorhandler(401)
 def erro_401(error):

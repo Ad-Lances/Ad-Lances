@@ -96,50 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
         enviarLanceBtn.innerText = 'Lançar'
     });
 
-    let horaapi = null;
-    let ultsinc = null;
-    const data_fim = new Date(document.getElementById('temporizador').dataset.fim)
-    const temporizador = document.getElementById('temporizador')
-    async function sincron() {
-        const resposta = await fetch('https://worldtimeapi.org/api/timezone/America/Sao_Paulo');
-        const resultado = await resposta.json();
-
-        horaapi = new Date(resultado.datetime);
-        ultsinc = new Date();
-    }
-    sincron();
-
-    function getHora() {
-        if (!horaapi) return null;
-
-        const horapc = Date.now();
-        const timestamp = horapc - ultsinc
-
-        return new Date(horaapi.getTime() + timestamp)
-    }
-
-    function temporiz() {
-        const exactum = getHora()
-        if (!exactum) return;
-
-        const diff = data_fim - exactum;
-
-        if (diff <= 0) {
-            temporizador.innerText = 'Leilão encerrado.';
-            return;
-        }
-
-        const s = Math.floor(diff / 1000) % 60;
-        const m = Math.floor(diff / 1000 / 60) % 60;
-        const h = Math.floor(diff / 1000 / 60 / 60);
-
-        temporizador.innerText = `${h}h ${m}m ${s}s`;
-
-        
-    }
-    setInterval(temporiz, 1000);
-
-    setInterval(sincron, 300000);
+    
 });
 
 let cepErro = null;
@@ -217,9 +174,44 @@ function validarCEP() {
 const socketio = io.connect("/")
 const lanceatual = document.getElementById('lance-atual')
 const totallances = document.getElementById('total-lances')
-
+const temp = document.getElementById('temp')
 socketio.on("novo_lance", (lance_atual, total_lances) => {
     const valor = Number(lance_atual);
     lanceatual.innerHTML = valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     totallances.innerHTML = 'Total de lances: ' + total_lances
 })
+
+let horaapi = null;
+let ultsinc = null;
+const data_fim = new Date(document.getElementById('temporizador').dataset.fim)
+const temporizador = document.getElementById('temporizador')
+async function sincron() {
+    const resposta = await fetch('/api/horas');
+    const resultado = await resposta.json();
+    horaapi = new Date(resultado.horas);
+    ultsinc = new Date();
+}
+sincron();
+function getHora() {
+    if (!horaapi) return null;
+    const horapc = Date.now();
+    const timestamp = horapc - ultsinc
+    return new Date(horaapi.getTime() + timestamp)
+}
+function temporiz() {
+    const exactum = getHora()
+    if (!exactum) return;
+    const diff = data_fim - exactum;
+    if (diff <= 0) {
+        temporizador.innerText = 'Leilão encerrado.';
+        return;
+    }
+    const s = Math.floor(diff / 1000) % 60;
+    const m = Math.floor(diff / 1000 / 60) % 60;
+    const h = Math.floor(diff / 1000 / 60 / 60) % 24;
+    const d = Math.floor(diff / 1000 / 60 / 60 / 24);
+    temp.innerHTML = `${d}d ${h}h ${m}m ${s}s`;
+    
+}
+setInterval(temporiz, 1000);
+setInterval(sincron, 300000);

@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
     const UFLeilaoInput = document.getElementById('estado-leilao-input');
     const cidadeLeilaoInput = document.getElementById('cidade-leilao-input');
+    const bairroLeilaoInput = document.getElementById('bairro-leilao-input')
     const CEPLeilaoInput = document.getElementById('cep-leilao-input');
     const ruaLeilaoInput = document.getElementById('rua-leilao-input');
     const numeroLeilaoInput = document.getElementById('numero-leilao-input');
@@ -53,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
         const UFLeilao = UFLeilaoInput.value.trim();
         const cidadeLeilao = cidadeLeilaoInput.value.trim();
+        const bairroLeilao = bairroLeilaoInput.value.trim();
         const CEPLeilao = CEPLeilaoInput.value.trim();
         const ruaLeilao = ruaLeilaoInput.value.trim();
         const numeroLeilao = numeroLeilaoInput.value.trim();
@@ -71,10 +73,10 @@ document.addEventListener('DOMContentLoaded', function(){
             mensagem_erros.push(erroCamposLeilao);
         }
 
-        if (pagamentoCartao) forma_pagamento.push("Cartão de crédito");
-        if (pagamentoPIX) forma_pagamento.push("PIX");
-        if (pagamentoFGTS) forma_pagamento.push("FGTS");
-        if (pagamentoFinanciamento) forma_pagamento.push("Financiamento");
+        if (pagamentoCartao) forma_pagamento.push("1");
+        if (pagamentoPIX) forma_pagamento.push("2");
+        if (pagamentoFGTS) forma_pagamento.push("3");
+        if (pagamentoFinanciamento) forma_pagamento.push("4");
 
         if (forma_pagamento.length === 0){
             mensagem_erros.push("Selecione ao menos uma forma de pagamento");
@@ -192,9 +194,17 @@ document.addEventListener('DOMContentLoaded', function(){
         formData.append("data_inicio", dataInicio)
         formData.append("data_fim", dataFim)
         formData.append("lance_inicial", lanceInicial)
+        formData.append("min_incremento", '')
         formData.append("pagamento", forma_pagamento)
         formData.append("parcelas", parcelasPermitidas)
         formData.append("foto", imgProduto)
+        formData.append("cep", CEPLeilao)
+        formData.append("uf", UFLeilao)
+        formData.append("cidade", cidadeLeilao)
+        formData.append("bairro", bairroLeilao)
+        formData.append("logradouro", ruaLeilao)
+        formData.append("numero_morada", numeroLeilao)
+        formData.append("complemento", complementoLeilao)
 
         const resposta = await fetch('/criarleilao', {
             method: 'POST',

@@ -22,4 +22,5 @@ stripe
 flask-socketio
 gevent
 sqids
+tzdata
 gunicorn
