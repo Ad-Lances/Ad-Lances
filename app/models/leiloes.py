@@ -37,14 +37,13 @@ class LeilaoModel(db.Model):
     data_inicio = db.Column(db.DateTime(timezone=True), nullable=False)
     data_fim = db.Column(db.DateTime(timezone=True), nullable=False)
     lance_inicial = db.Column(db.Float, nullable=False)
-    lance_atual = db.Column(db.Integer, db.ForeignKey('lances.id'), nullable=True)
     min_incremento = db.Column(db.Float, nullable=False, server_default="0.1")
     parcelas = db.Column(db.String(3), nullable=False)
     foto = db.Column(db.String(255), nullable=False)
     id_user = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     hashid = db.Column(db.String(16), nullable=True)
     status = db.Column(db.String(10), nullable=False, server_default="Aberto")
-    cep = db.Column(db.String(8), nullable=False)
+    cep = db.Column(db.String(9), nullable=False)
     uf = db.Column(db.String(2), nullable=False)
     cidade = db.Column(db.String(70), nullable=False)
     bairro = db.Column(db.String(70), nullable=False)
@@ -68,10 +67,6 @@ class LeilaoModel(db.Model):
     def get_lance_inicial_str(self):
         """Retorna o lance inicial formatado como string monetária."""
         return f"R$ {self.lance_inicial:,.2f}".replace(',', 'p').replace('.', ',').replace('p', '.')
-    
-    def get_lance_atual_str(self):
-        """Retorna o lance atual formatado como string monetária."""
-        return f"R$ {self.lance_atual:,.2f}".replace(',', 'p').replace('.', ',').replace('p', '.')
     
     def get_foto(self):
         """Retorna a URL da foto do leilão ou uma imagem padrão se não houver foto."""

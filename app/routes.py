@@ -276,7 +276,10 @@ def detalhes_leilao(hashid):
         if horas >= data_fim:
             leilao.status = "Encerrado"
             db.session.commit
-        return render_template('detalhes_leilao.html', leilao=leilao, data_fim=data_fim.isoformat())
+        if len(leilao.lances) == 0:
+            return render_template('detalhes_leilao.html', leilao=leilao, data_fim=data_fim.isoformat())
+        lance_atual = LanceModel.get_ultimo_lance()
+        return render_template('detalhes_leilao.html', leilao=leilao, data_fim=data_fim.isoformat(), lance_atual = lance_atual)
     
     abort(404)
 
@@ -285,6 +288,8 @@ def verificar_stripe():
     if session.get('usuario_id') is None:
         return redirect(url_for('main.login'))
     usuario = UserModel.query.get(session['usuario_id'])
+    if usuario is None:
+        return redirect(url_for('main.login'))
     if usuario.id_stripe is None:
         stripe_conta = stripe.Account.create(type="express")
         link = stripe.AccountLink.create(
@@ -312,7 +317,15 @@ def criar_leilao():
         "data_fim": request.form.get("data_fim"),
         "lance_inicial": request.form.get("lance_inicial"),
         "min_incremento": request.form.get("min_incremento"),
-        "parcelas": request.form.get("parcelas")
+        "pagamentos": request.form.get("pagamento"),
+        "parcelas": request.form.get("parcelas"),
+        "cep": request.form.get("cep"),
+        "uf": request.form.get("uf"),
+        "cidade": request.form.get("cidade"),
+        "bairro": request.form.get("bairro"),
+        "logradouro": request.form.get("logradouro"),
+        "numero_morada": request.form.get("numero_morada"),
+        "complemento": request.form.get("complemento")
     }
     foto = request.files.get("foto")
 
@@ -330,11 +343,17 @@ def criar_leilao():
             data_inicio=dados['data_inicio'],
             data_fim=dados['data_fim'],
             lance_inicial=dados['lance_inicial'],
-            lance_atual=dados['lance_inicial'],
-            min_incremento=dados['min_incremento'],
+            min_incremento=dados['min_incremento'] if dados['min_incremento'] != '' else 0.1,
             parcelas=dados['parcelas'],
             foto=url_imagem,
-            id_user=session['usuario_id']
+            id_user=session['usuario_id'],
+            cep=dados['cep'],
+            uf=dados['uf'],
+            cidade=dados['cidade'],
+            bairro=dados['bairro'],
+            logradouro=dados['logradouro'],
+            numero_morada=dados['numero_morada'],
+            complemento=dados['complemento']
         )    
     except Exception:
         return jsonify({'erro': 'Erro ao criar leilão. Tente novamente.'})
@@ -342,6 +361,17 @@ def criar_leilao():
     if salvar_dados(novo_leilao):
         novo_leilao.hashid = sqids.encode([novo_leilao.id])
         db.session.commit()
+        
+        pagamentoslist = dados["pagamentos"].split(",")
+
+        for pagamento in pagamentoslist:
+            novo_leilaopagamento = LeilaoPagamentoModel(
+                id_leilao = novo_leilao.id,
+                id_pagamento = pagamento
+            )
+            db.session.add(novo_leilaopagamento)
+            db.session.commit()
+        
         return jsonify({'sucesso': f'Leilão {novo_leilao.nome} criado com sucesso!', "redirect": 'detalhes'})
     return jsonify({'erro': 'Erro ao salvar leilão no banco de dados. Tente novamente.'})
 

@@ -86,7 +86,7 @@
 
                 <div class="info-item" style="grid-column: 1 / -1; text-align: center; margin: 10px 0;">
                     <span class="info-label">Lance Atual</span>
-                    <div class="lance-atual" id="lance-atual">{{ leilao.get_lance_atual_str() }}</div>
+                    <div class="lance-atual" id="lance-atual">{% if lance_atual %}{{ lance_atual.get_valor_ultimo_lance() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</div>
                 </div>
 
                 {% if session.get('logado') %}

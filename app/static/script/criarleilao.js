@@ -73,10 +73,10 @@ document.addEventListener('DOMContentLoaded', function(){
             mensagem_erros.push(erroCamposLeilao);
         }
 
-        if (pagamentoCartao) forma_pagamento.push("Cartão de crédito");
-        if (pagamentoPIX) forma_pagamento.push("PIX");
-        if (pagamentoFGTS) forma_pagamento.push("FGTS");
-        if (pagamentoFinanciamento) forma_pagamento.push("Financiamento");
+        if (pagamentoCartao) forma_pagamento.push("1");
+        if (pagamentoPIX) forma_pagamento.push("2");
+        if (pagamentoFGTS) forma_pagamento.push("3");
+        if (pagamentoFinanciamento) forma_pagamento.push("4");
 
         if (forma_pagamento.length === 0){
             mensagem_erros.push("Selecione ao menos uma forma de pagamento");
@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', function(){
         formData.append("data_inicio", dataInicio)
         formData.append("data_fim", dataFim)
         formData.append("lance_inicial", lanceInicial)
-        formData.append("min_incremento", min_incremento)
+        formData.append("min_incremento", '')
         formData.append("pagamento", forma_pagamento)
         formData.append("parcelas", parcelasPermitidas)
         formData.append("foto", imgProduto)
