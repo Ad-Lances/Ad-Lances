@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     adicionarToggleSenha();
     exibirCampo();
+    
 
     const formularioCadastro = document.getElementById('formularioCadastro');
     const nomeInput = document.getElementById('nome');
@@ -27,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const mensagem = document.getElementById('mensagem');
 
+    
     formularioCadastro.addEventListener('submit', async (event) => {
         event.preventDefault();
 
@@ -193,7 +195,7 @@ document.addEventListener('DOMContentLoaded', function () {
             tipo_pessoa: tipopessoa,
             datanasc: data_nasc
         };
-
+        console.log(dados)
         const resposta = await fetch('/cadastrar', {
             method: 'POST',
             headers: {
