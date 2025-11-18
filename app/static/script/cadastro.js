@@ -194,8 +194,8 @@ document.addEventListener('DOMContentLoaded', function () {
             ...(nomeEmpresa && { nome_empresa: nomeEmpresa }),
             tipo_pessoa: tipopessoa,
             datanasc: data_nasc
-        };
-        console.log(dados)
+        };
+
         const resposta = await fetch('/cadastrar', {
             method: 'POST',
             headers: {
@@ -203,20 +203,28 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             body: JSON.stringify(dados)
         });
+        const textoBruto = await resposta.text();
 
-        const resultado = await resposta.json();
 
+        let resultado = {};
+        try {
+            resultado = JSON.parse(textoBruto);
+        } catch (e) {
+            console.error("DEU ERRO AO PARSEAR JSON:", e);
+            mensagem.innerHTML = "Erro inesperado. Tente novamente.";
+            return;
+        }
         if (resultado.sucesso) {
+            estilizarMensagemSucesso();
             mensagem.innerHTML = resultado.sucesso;
-            mensagem.style.color = 'green';
             scrollerro();
             setTimeout(() => {
-                window.location.href = '/login';
-            }, 1500);
+               window.location.href = '/';
+            }, 1500); 
         } else {
+            scrollerro();
             estilizarmensagem(mensagem);
             mensagem.innerHTML = resultado.erro;
-            scrollerro();
         }
     });
 });

@@ -55,11 +55,8 @@ document.addEventListener('DOMContentLoaded', function(){
             },
             body: JSON.stringify(dados)
         });
-        console.log("STATUS:", resposta.status);
-        console.log("HEADERS:", resposta.headers.get("content-type"));
-
         const textoBruto = await resposta.text();
-        console.log("RAW RESPONSE:", textoBruto);
+
 
         let resultado = {};
         try {
@@ -70,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function(){
             return;
         }
         if (resultado.sucesso) {
-            estilizarMensagemSucesso(mensagem);
+            estilizarMensagemSucesso();
             mensagem.innerHTML = resultado.sucesso;
             setTimeout(() => {
                window.location.href = '/';

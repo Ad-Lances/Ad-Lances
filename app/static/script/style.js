@@ -1,6 +1,6 @@
 mensagem = document.getElementById('mensagem');
 
-function estilizarmensagem(mensagem,){
+function estilizarmensagem(mensagem){
     if (!mensagem) {
         console.error('Elemento mensagem não encontrado!');
         return;
@@ -36,8 +36,8 @@ function estilizarMensagemSucesso(){
             text-align: center;
             font-weight: 500;
             font-size: 15px;
-            box-shadow: 0 4px 15px rgba(194, 74, 74, 0.3);
-            border: 1px solid #b84545;
+            box-shadow: 0 4px 15px rgba(121, 250, 125, 0.3);
+            border: 1px solid #014006ff;
             width: fit-content;
             max-width: 90%;
             backdrop-filter: blur(10px);

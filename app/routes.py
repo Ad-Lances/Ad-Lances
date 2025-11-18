@@ -88,17 +88,14 @@ def cadastrar():
 
     erro = verificar_campos(dados)
     if erro:
-
         return jsonify({'erro': erro})
 
     erro = verificar_idade(dados.get("datanasc"))
     if erro:
-
         return jsonify({'erro': erro})
 
     erro = verificar_email(dados.get('email'))
     if erro:
-
         return jsonify({'erro': erro})
     
     erro = verificar_senha(dados.get('senha'))
@@ -124,8 +121,9 @@ def cadastrar():
         novo_usuario.set_senha(dados['senha'])
     
         if salvar_dados(novo_usuario):
-            flash(f'Usuário {novo_usuario.nome_completo} cadastrado com sucesso!', 'sucesso')
-            return redirect(url_for("main.login"))
+            return jsonify({
+            'sucesso': f"Usuário {novo_usuario.nome_completo} cadastrado com sucesso!"
+        })
         return jsonify({'erro': "Erro ao salvar usuário no banco de dados. Tente novamente"})
 
     else:
