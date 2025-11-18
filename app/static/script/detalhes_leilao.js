@@ -186,15 +186,9 @@ let ultsinc = null;
 const data_fim = new Date(document.getElementById('temporizador').dataset.fim)
 const temporizador = document.getElementById('temporizador')
 async function sincron() {
-<<<<<<< HEAD
     const resposta = await fetch('/api/horas');
     const resultado = await resposta.json();
     horaapi = new Date(resultado.horas);
-=======
-    const resposta = await fetch('https://worldtimeapi.org/api/timezone/America/Sao_Paulo');
-    const resultado = await resposta.json();
-    horaapi = new Date(resultado.datetime);
->>>>>>> fa69273 (tentativa de correção)
     ultsinc = new Date();
 }
 sincron();
