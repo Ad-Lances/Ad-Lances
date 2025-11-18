@@ -55,8 +55,20 @@ document.addEventListener('DOMContentLoaded', function(){
             },
             body: JSON.stringify(dados)
         });
-        const resultado = await resposta.json();
-    
+        console.log("STATUS:", resposta.status);
+        console.log("HEADERS:", resposta.headers.get("content-type"));
+
+        const textoBruto = await resposta.text();
+        console.log("RAW RESPONSE:", textoBruto);
+
+        let resultado = {};
+        try {
+            resultado = JSON.parse(textoBruto);
+        } catch (e) {
+            console.error("DEU ERRO AO PARSEAR JSON:", e);
+            mensagem.innerHTML = "Erro inesperado. Tente novamente.";
+            return;
+        }
         if (resultado.sucesso) {
             estilizarMensagemSucesso(mensagem);
             mensagem.innerHTML = resultado.sucesso;

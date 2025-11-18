@@ -125,15 +125,12 @@ def cadastrar():
     
         if salvar_dados(novo_usuario):
             flash(f'Usuário {novo_usuario.nome_completo} cadastrado com sucesso!', 'sucesso')
-            return redirect(url_for("login.html"))
+            return redirect(url_for("main.login"))
         return jsonify({'erro': "Erro ao salvar usuário no banco de dados. Tente novamente"})
 
     else:
 
         return jsonify({'erro': "Email ja cadastrado. Faca login ou utilize outro email."})
-
-    
-
 
 @bp.route('/login')
 def login():
@@ -147,12 +144,9 @@ def logar():
     else:
         dados = request.form.to_dict()
 
-
     email = dados.get('email')
     senha = dados.get('senha')
-    print("DADOS RECEBIDOS:", dados)
-    print("EMAIL:", repr(email))
-    print("SENHA:", repr(senha))
+
     erro = verificar_camposlog(email, senha)
     if erro:
         return jsonify({'erro': erro})
@@ -168,9 +162,12 @@ def logar():
         session['usuario_id'] = usuario.id
         session['nome_completo'] = usuario.nome_completo
 
-        return redirect(url_for('main.index'))
-    else:
-        return jsonify({"erro": "Email ou senha inválidos."})
+        return jsonify({
+            "sucesso": f"Bem-Vindo, {usuario.nome_completo}!",
+            "redirect": url_for('main.index')
+        })
+
+    return jsonify({"erro": "Email ou senha inválidos."})
 
 
 @bp.route('/logout', methods=['POST'])
