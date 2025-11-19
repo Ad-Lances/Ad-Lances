@@ -1,19 +1,14 @@
-function verificarCamposLeilao(img_produto, nome_produto, lance_inicial, descricao_produto, categoria_produto, subcategoria_produto,
+function verificarCamposLeilao(img_produto, nome_produto, lance_inicial, incremento, descricao_produto, categoria_produto, subcategoria_produto,
     data_inicio, data_fim,
     pagamentoCartao, pagamentoPIX, pagamentoFGTS, pagamentoFinanciamento, parcelas,
     uf_leilao, cidade_leilao, cep_leilao, rua_leilao, numero_leilao,
     termo_veracidade, termos_condicoes){
-     console.log(rua_leilao, numero_leilao, termo_veracidade, termos_condicoes);
-     console.log(img_produto, nome_produto, lance_inicial, descricao_produto, categoria_produto, subcategoria_produto,
-        data_inicio, data_fim,
-        pagamentoCartao, pagamentoPIX, pagamentoFGTS, pagamentoFinanciamento, parcelas,
-        uf_leilao, cidade_leilao, cep_leilao, rua_leilao, numero_leilao,
-        termo_veracidade, termos_condicoes);   
     const temFormaPagamento = pagamentoCartao || pagamentoPIX || pagamentoFGTS || pagamentoFinanciamento;
 
     if(!img_produto ||
        !nome_produto || nome_produto.trim() === '' ||
        !lance_inicial || lance_inicial.trim() === '' ||
+       !incremento || incremento.trim() == '' ||
        !descricao_produto || descricao_produto.trim() === '' ||
        !categoria_produto || categoria_produto === 'none' ||
        !subcategoria_produto || subcategoria_produto === 'none' ||
@@ -49,7 +44,7 @@ function verificarDatas(dataInicio, dataFim) {
         const dataAtual = new Date();
 
         if (inicio >= fim) {
-            return 'A data de início deve ser anterior à data de fim.';
+            return 'A data de início deve ser anterior à data de fim';
         } else if(inicio <= dataAtual){
             return 'Insira uma data de início válida';
         }

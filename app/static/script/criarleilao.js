@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function(){
     const imgProdutoInput = document.getElementById('img-produto-input');
     const nomeProdutoInput = document.getElementById('nome-produto-input');
     const lanceInicialInput = document.getElementById('lance-inicial-input');
+    const incrementoInput = document.getElementById('incremento-input');
     const descricaoProdutoInput = document.getElementById('descricao-produto-input');
     const categoriaProdutoInput = document.getElementById('categoria-produto-select');
     const subcategoriaProdutoInput = document.getElementById('subcategoria-produto-select');
@@ -40,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function(){
         const imgProduto = imgProdutoInput.files.length > 0 ? imgProdutoInput.files[0] : null;        
         const nomeProduto = nomeProdutoInput.value.trim();
         const lanceInicial = lanceInicialInput.value.trim();
+        const incremento = incrementoInput.value.trim();
         const descricaoProduto = descricaoProdutoInput.value.trim();
         const categoriaProduto = categoriaProdutoInput.value.trim();
         const subcategoriaProduto = subcategoriaProdutoInput.value.trim();
@@ -62,9 +64,9 @@ document.addEventListener('DOMContentLoaded', function(){
         
         const termosVeracidade = termosVeracidadeInput.checked;
         const termosCondicoes = termosCondicoesInput.checked;
-        console.log(ruaLeilao, numeroLeilao, termosVeracidade, termosCondicoes);
+        
         const erroCamposLeilao = verificarCamposLeilao(
-            imgProduto, nomeProduto, lanceInicial, descricaoProduto,
+            imgProduto, nomeProduto, lanceInicial, incremento, descricaoProduto,
             categoriaProduto, subcategoriaProduto, dataInicio, dataFim, pagamentoCartao, pagamentoPIX, pagamentoFGTS,pagamentoFinanciamento, parcelasPermitidas,
             UFLeilao, cidadeLeilao, CEPLeilao, ruaLeilao, numeroLeilao,
             termosVeracidade, termosCondicoes
@@ -194,7 +196,7 @@ document.addEventListener('DOMContentLoaded', function(){
         formData.append("data_inicio", dataInicio)
         formData.append("data_fim", dataFim)
         formData.append("lance_inicial", lanceInicial)
-        formData.append("min_incremento", '')
+        formData.append("min_incremento", incremento)
         formData.append("pagamento", forma_pagamento)
         formData.append("parcelas", parcelasPermitidas)
         formData.append("foto", imgProduto)

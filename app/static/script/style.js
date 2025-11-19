@@ -137,7 +137,8 @@ if (mensagem_erros.length > 0) {
 function adicionarToggleSenha() {
     // IDs de todos os campos de senha possíveis
     const camposSenha = [
-        'password',           // Login e Cadastro
+        'password',
+        'senha',          
         'confirmar-senha',    // Cadastro
         'nova_senha_input',   // Redefinir Senha
         'confirmar_ns_input'  // Redefinir Senha

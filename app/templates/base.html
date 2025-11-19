@@ -1,11 +1,15 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/301e8f1b49.js" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='script/style.js') }}"></script>
     <script src="{{ url_for('static', filename='script/pesquisa.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='script/tema.js')}}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='img/guia-icone.png') }}" type="image/x-icon">
     {% block other_style %}{% endblock %}
     <title>{% block title %}{% endblock %}</title>
 </head>
@@ -13,7 +17,7 @@
     <nav id="nav">
         <ul>
             <li>
-                <div class="nav-item"> <!-- MUDADO: id para class -->
+                <div class="nav-item"> 
                     <a href="/"><img id="logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo"></a>
                 </div>
             </li>
@@ -21,27 +25,41 @@
                 <div id="search-container">
                     <form>
                         <input type="text" placeholder="Digite aqui...">
-                        <button type="submit"><img src="{{ url_for('static', filename='img/search-icon.png') }}" id="searchimg" alt="Pesquisar"></button>
+                        <button type="button"><i class="fa-solid fa-magnifying-glass fa-rotate-90" style="color: #ffffff;"></i></button>
                     </form>
                 </div>
             </li>
             <li>
-                <div class="nav-item"> <!-- MUDADO: id para class -->
+                <div class="nav-item"> 
                     <a href="verificarstripe" target="blank">Criar leilão</a>
                 </div>
             </li>
             <li>
-                <div class="nav-item"> <!-- MUDADO: id para class -->
+                <div class="nav-item"> 
                     <a href="mailto:adlances@gmail.com">Fale conosco</a>
                 </div>
             </li>
             <li>
-                <div class="nav-item"> <!-- MUDADO: id para class -->
-                    <div class="img-nav"> <!-- MUDADO: id para class -->
-                        <a href="login"><img src="{{ url_for('static', filename='img/icons-img/profile-icon.png') }}" alt="Perfil"></a>
-                    </div>
+                <div id="nav-item">
+                    <button type="submit" id="btntema" alt="Mudar para tema escuro"></button>
                 </div>
             </li>
+
+            {% if session.get('logado') %}
+                <li>
+                    <div id="nav-item">
+                        <div id="img-nav">
+                            <a href="perfil"><i class="fa-solid fa-circle-user fa-2xl" style="color: #ffffff;"></i></a>
+                        </div>
+                    </div>
+                </li>
+            {% else %}
+                <li>
+                    <div id="nav-item">
+                        <a href="login">Login</a>
+                    </div>
+                </li>
+            {% endif %}
         </ul>
     </nav>
     
@@ -50,7 +68,7 @@
 
     <footer id="footer">
         <div id="footer-container">
-            <div class="footer-section"> <!-- MUDADO: id para class -->
+            <div class="footer-section"> 
                 <h4>Sobre nós</h4>
                 <ul>
                     <li><a href="#">A empresa</a></li>
@@ -60,14 +78,14 @@
                 </ul>
             </div>
 
-            <div class="footer-section"> <!-- MUDADO: id para class -->
+            <div class="footer-section"> 
                 <h4>Contato</h4>
                 <p><strong>E-mail:</strong> adlances@gmail.com</p>
                 <p><strong>Telefone:</strong> (11) 5567-3452</p>
                 <p><a href="#">Perguntas frequentes</a></p>
             </div>
 
-            <div class="footer-section"> <!-- MUDADO: id para class -->
+            <div class="footer-section"> 
                 <h4>Redes sociais</h4>
                 <div id="social-icons">
                     <a href="#" aria-label="Instagram">
@@ -88,7 +106,7 @@
                 </div>
             </div>
 
-            <div class="footer-section"> <!-- MUDADO: id para class -->
+            <div class="footer-section"> 
                 <h4>Localização</h4>
                 <p>Av. Paulista, 1167 - Bela Vista</p>
             </div>
@@ -100,5 +118,6 @@
 
     {% block scripts %}
     {% endblock %}
+
 </body>
 </html>
