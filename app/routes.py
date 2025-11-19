@@ -375,6 +375,15 @@ def criar_leilao():
         return jsonify({'sucesso': f'Leilão {novo_leilao.nome} criado com sucesso!', "redirect": 'detalhes'})
     return jsonify({'erro': 'Erro ao salvar leilão no banco de dados. Tente novamente.'})
 
+@bp.get("/<hashid>/encerrar_leilao")
+def encerrar_leilao(hashid):
+    leilao = get_leilao(hashid)
+    if leilao:
+        leilao.status = "Encerrado"
+        db.session.commit()
+        return jsonify({"sucesso": f"Leilão {leilao.nome} encerrado com sucesso"})
+    abort(404)
+
 @bp.post('/<hashid>/novolance')
 def novo_lance(hashid):
     dados = request.get_json()

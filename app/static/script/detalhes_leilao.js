@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('form-lance');
     const formEdicao = document.getElementById('form-editar-leilao');
     const enviarLanceBtn = document.getElementById('botao-lance');
+    const encerrarBtn = document.getElementById('botao-encerrar-leilao')
 
     const cepInput = document.getElementById('input-editar-cep-leilao');
     if (cepInput) {
@@ -63,6 +64,16 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (resultado.erro) {
             mensagem.innerHTML = resultado.erro;
         }
+
+        encerrarBtn.addEventListener('click', async () => {
+            resposta = fetch(window.location.pathname + "encerrar_leilao")
+            resultado = resposta.json();
+            if (resultado.sucesso) {
+                mensagem.innerHTML = resultado.sucesso;
+            } else {
+                mensagem.innerHTML = resultado.erro;
+            }
+        })
     });
     
     enviarLanceBtn.addEventListener('click', async (e) => {
