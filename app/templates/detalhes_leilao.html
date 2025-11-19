@@ -37,9 +37,9 @@
                     </div>
                 </div>
 
-                <div class="info-item" style="grid-column: 1 / -1; text-align: center; margin: 10px 0; ">
-                    <br><br><span class="info-label">Lance Atual</span>
-                    <div class="lance-atual" id="lance-atual">{% if lance_atual %}{{ lance_atual.get_valor_ultimo_lance() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</div>
+                <div class="info-item" style="grid-column: 1 / -1; text-align: center; margin: 10px 0;">
+                    <span class="info-label">Lance Atual</span>
+                    <div class="lance-atual" id="lance-atual">{% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</div>
                 </div>
 
                 {% if session.get('logado') %}
@@ -173,7 +173,11 @@
                     <strong>Retirada no local</strong>
                 </div>
                 <div class="condition-item">
-                    <strong>{{ leilao.pagamentos.tipo }}</strong>
+                    <strong>
+                        {% for pagamento in leilao.pagamentos %}
+                        {{ pagamento.tipo }}
+                        {% endfor %}
+                    </strong>
                 </div>
             </div>
         </div>
@@ -190,12 +194,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% if lances and lances.length>0 %}
-                    {% for lance in lances %}
+                    {% if leilao.lances and (leilao.lances|length > 0) %}
+                    {% for lance in leilao.lances %}
                     <tr>
                         <td>{{ lance.user.nome_completo }}</td>
-                        <td class="lance-amount">R$ {{ "%.2f"|format(lance.user.valor) }}</td>
-                        <td class="lance-date">{{ i.user.horario }}</td>
+                        <td class="lance-amount">{{ lance.get_valor_str() }}</td>
+                        <td class="lance-date">{{ lance.user.horario }}</td>
                         <td class="lance-installments">Parcelado em 20x</td>
                     </tr>
                     {% endfor %}

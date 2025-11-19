@@ -273,12 +273,12 @@ def detalhes_leilao(hashid):
         horas = datetime.now(ZoneInfo("America/Sao_Paulo")).replace(microsecond=0)
         data_fim = leilao.data_fim.replace(tzinfo=ZoneInfo("America/Sao_Paulo"))
         
-        if horas >= data_fim:
+        if horas >= data_fim and leilao.status == "Aberto":
             leilao.status = "Encerrado"
             db.session.commit
         if len(leilao.lances) == 0:
             return render_template('detalhes_leilao.html', leilao=leilao, data_fim=data_fim.isoformat())
-        lance_atual = LanceModel.get_ultimo_lance()
+        lance_atual = LanceModel.get_ultimo_lance(leilao.id)
         return render_template('detalhes_leilao.html', leilao=leilao, data_fim=data_fim.isoformat(), lance_atual = lance_atual)
     
     abort(404)
@@ -340,7 +340,7 @@ def criar_leilao():
             nome=dados['nome'],
             descricao=dados['descricao'],
             id_subcategoria=dados['id_subcategoria'],
-            data_inicio=dados['data_inicio'].replace(tzinfo=ZoneInfo("America/Sao_Paulo")),
+            data_inicio=dados['data_inicio'],
             data_fim=dados['data_fim'],
             lance_inicial=dados['lance_inicial'],
             min_incremento=dados['min_incremento'] if dados['min_incremento'] != '' else 0.1,
@@ -375,6 +375,15 @@ def criar_leilao():
         return jsonify({'sucesso': f'Leilão {novo_leilao.nome} criado com sucesso!', "redirect": 'detalhes'})
     return jsonify({'erro': 'Erro ao salvar leilão no banco de dados. Tente novamente.'})
 
+@bp.get("/<hashid>/encerrar_leilao")
+def encerrar_leilao(hashid):
+    leilao = get_leilao(hashid)
+    if leilao:
+        leilao.status = "Encerrado"
+        db.session.commit()
+        return jsonify({"sucesso": f"Leilão {leilao.nome} encerrado com sucesso"})
+    abort(404)
+
 @bp.post('/<hashid>/novolance')
 def novo_lance(hashid):
     dados = request.get_json()
@@ -384,7 +393,7 @@ def novo_lance(hashid):
     if leilao is None:
         return jsonify({'erro': 'Leilão não encontrado.'})
     
-    if leilao.data_fim < horas or leilao.status == 'Encerrado':
+    if leilao.data_fim.replace(tzinfo=ZoneInfo("America/Sao_Paulo")) < horas and leilao.status == "Aberto":
         leilao.status = 'Encerrado'
         db.session.commit()
         return jsonify({'erro': 'Leilão já encerrado.'})
@@ -394,7 +403,7 @@ def novo_lance(hashid):
     except:
         return jsonify({'erro': 'Digite um lance válido.'})
     
-    if valor_lance < leilao.lance_atual + leilao.min_incremento:
+    if valor_lance < (LanceModel.get_ultimo_lance(leilao.id).valor if len(leilao.lances) > 0 else leilao.lance_inicial) + leilao.min_incremento:
         return jsonify({'erro': 'O valor do lance deve ser maior que o lance atual + incremento mínimo.'})
     
     try:
@@ -402,6 +411,14 @@ def novo_lance(hashid):
             select(LeilaoModel).
             where(LeilaoModel.id == leilao.id).
             with_for_update()
+        ).scalar_one_or_none()
+        
+        lance_atual = db.session.execute(
+            select(LanceModel)
+            .where(LanceModel.id_leilao == leilao.id)
+            .order_by(LanceModel.horario.desc())
+            .with_for_update()
+            .limit(1)
         ).scalar_one_or_none()
         
         ultimo_lance = db.session.execute(
@@ -412,11 +429,12 @@ def novo_lance(hashid):
             .limit(1)
         ).scalar_one_or_none()
         
-        if valor_lance < locked.lance_atual + locked.min_incremento: 
+        valor_atual = lance_atual.valor if lance_atual else locked.lance_inicial
+        if valor_lance < valor_atual + locked.min_incremento: 
             db.session.rollback()
             return jsonify({'erro': 'O valor do lance deve ser maior que o lance atual + incremento mínimo.'})
         
-        if ultimo_lance and ultimo_lance.horario > datetime.now(ZoneInfo("America/Sao_Paulo")) - timedelta(seconds=5):
+        if ultimo_lance and ultimo_lance.horario.replace(tzinfo=ZoneInfo("America/Sao_Paulo")) > datetime.now(ZoneInfo("America/Sao_Paulo")) - timedelta(seconds=5):
             db.session.rollback()
             return jsonify({'erro': 'Espere um pouco para fazer outro lance...'})
         
@@ -426,10 +444,9 @@ def novo_lance(hashid):
             id_leilao=leilao.id,
             id_usuario=session['usuario_id']
         )
-        db.session.add(novo_lance)
-        locked.lance_atual = valor_lance            
+        db.session.add(novo_lance)            
         db.session.commit()
-        socketio.emit("novo_lance", (leilao.lance_atual, len(leilao.lances)))
+        socketio.emit("novo_lance", (valor_lance, len(leilao.lances)))
     except Exception as e:
         db.session.rollback()
         print(e)
@@ -452,7 +469,7 @@ def criar_pagamento(hashid):
                         'name': leilao.nome,
                         'description': leilao.descricao,
                     },
-                    'unit_amount': int(leilao.lance_atual * 100),
+                    'unit_amount': int(LanceModel.get_ultimo_lance(leilao.id).valor * 100),
                 },
                 'quantity': 1,
             }],
