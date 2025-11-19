@@ -11,8 +11,8 @@ class LanceModel(db.Model):
     user = db.relationship('UserModel', back_populates='lances')
     leilao = db.relationship('LeilaoModel', back_populates='lances')
     
-    def get_ultimo_lance(id_leilao):
+    def get_ultimo_lance(id_leilao:int):
         return LanceModel.query.filter_by(id_leilao=id_leilao).order_by(LanceModel.horario.desc()).first()
     
-    def get_valor(self):
+    def get_valor_str(self):
         return f"R$ {self.valor:,.2f}".replace(",", "p").replace(".", ",").replace("p", ".")
