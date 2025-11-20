@@ -384,9 +384,14 @@ def criar_leilao():
 def encerrar_leilao(hashid):
     leilao = get_leilao(hashid)
     if leilao:
-        leilao.status = "Encerrado"
-        db.session.commit()
-        return jsonify({"sucesso": f"Leilão {leilao.nome} encerrado com sucesso"})
+        if leilao.id_user == session.get('usuario_id'):
+            if leilao.status == "Aberto" or leilao.status == "Não iniciado":
+                leilao.status = "Encerrado"
+                db.session.commit()
+                return jsonify({"sucesso": f"Leilão {leilao.nome} encerrado com sucesso."})
+            else:
+                return jsonify({"sucesso": "Leilão já encerrado."})
+        abort(401)
     abort(404)
 
 @bp.post('/<hashid>/novolance')
@@ -402,6 +407,8 @@ def novo_lance(hashid):
         leilao.status = 'Encerrado'
         db.session.commit()
         return jsonify({'erro': 'Leilão já encerrado.'})
+    if leilao.status == "Encerrado":
+        return jsonify({"erro": "Leilão já encerrado."})
     
     try:
         valor_lance = float(dados['lance'])
@@ -429,7 +436,7 @@ def novo_lance(hashid):
         ultimo_lance = db.session.execute(
             select(LanceModel)
             .where(LanceModel.id_leilao == leilao.id)
-            .where(LanceModel.id_usuario == session['usuario_id'])
+            .where(LanceModel.id_user == session['usuario_id'])
             .order_by(LanceModel.id.desc())
             .limit(1)
         ).scalar_one_or_none()
@@ -447,7 +454,7 @@ def novo_lance(hashid):
             valor=valor_lance,
             horario=datetime.now(ZoneInfo("America/Sao_Paulo")),
             id_leilao=leilao.id,
-            id_usuario=session['usuario_id']
+            id_user=session['usuario_id']
         )
         db.session.add(novo_lance)            
         db.session.commit()

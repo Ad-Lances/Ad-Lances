@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const formEdicao = document.getElementById('form-editar-leilao');
     const enviarLanceBtn = document.getElementById('botao-lance');
     const encerrarBtn = document.getElementById('botao-encerrar-leilao')
-
+    const mensagem = document.getElementById('mensagem');
     const cepInput = document.getElementById('input-editar-cep-leilao');
     if (cepInput) {
         cepInput.addEventListener('input', function() {
@@ -53,7 +53,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         const resultado = await resposta.json();
-        const mensagem = document.getElementById('mensagem');
         
         if (resultado.sucesso) {
             mensagem.innerHTML = resultado.sucesso;
@@ -64,18 +63,18 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (resultado.erro) {
             mensagem.innerHTML = resultado.erro;
         }
-
-        encerrarBtn.addEventListener('click', async () => {
-            resposta = fetch(window.location.pathname + "encerrar_leilao")
-            resultado = resposta.json();
-            if (resultado.sucesso) {
-                mensagem.innerHTML = resultado.sucesso;
-            } else {
-                mensagem.innerHTML = resultado.erro;
-            }
-        })
     });
     
+    encerrarBtn.addEventListener("click", async () => {
+        const resposta = await fetch(window.location.pathname + '/encerrar_leilao')
+        const resultado = await resposta.json();
+        if (resultado.sucesso) {
+            mensagem.innerHTML = resultado.sucesso;
+        } else {
+            mensagem.innerHTML = 'Erro no banco de dados.';
+        }
+    })
+
     enviarLanceBtn.addEventListener('click', async (e) => {
         e.preventDefault();
         enviarLanceBtn.disabled = true

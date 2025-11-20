@@ -42,7 +42,7 @@
                     <div class="lance-atual" id="lance-atual">{% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</div>
                 </div>
 
-                {% if session.get('logado') %}
+                {% if session.get('logado') and leilao.status == "Aberto" %}
                     <div class="lance-container">
                         <div class="info-label" style="font-size: 16px; font-weight: 600;">Fazer um Lance</div>
                         <form id="form-lance">
@@ -63,6 +63,15 @@
                             <button type="button" id="botao-encerrar-leilao">Encerrar leilão</button>
                         </div>
                     {% endif %}
+                {% elif leilao.status == "Encerrado" %}
+                    <div class="mensagem-encerramento">
+                        <h3 id="mensagem-encerramento">Leilão encerrado</h3>
+                    </div>
+                    <script>
+                        document.getElementById('bloco-temporizador').innerHTML = ""
+                        document.getElementById('mensagem-encerramento').style.color = "red"
+                    </script>
+
                 {% else %}
                     <div id="mensagem-login">
                         <h3>Você está quase lá!</h3>
@@ -76,7 +85,6 @@
                             <a href="login"><button id="redirect-login">Faça login</button></a>
                         </section>
                     </div>
-                
                 {% endif %}
 
             </div>
