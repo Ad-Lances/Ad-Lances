@@ -35,34 +35,77 @@ function verificar_senha(senha){
    return null;
 }
 
-function verificar_campos(nome, estado, cidade, logradouro, cep, bairro, numeroCasa, email, senha, confirmarSenha, telefone_celular, tipopessoa, ccpf, ccnpj, data_nasc){
-    if (!nome || !estado || !cidade || !logradouro || !cep || !numeroCasa || !bairro || !email || !senha || !confirmarSenha || !telefone_celular || !tipopessoa || tipopessoa === '' || !data_nasc) {
-        console.log('Campos faltando:', {
-            nome: !nome, estado: !estado, cidade: !cidade, logradouro: !logradouro,
-            cep: !cep, numeroCasa: !numeroCasa, bairro: !bairro, email: !email,
-            senha: !senha, confirmarSenha: !confirmarSenha, telefone_celular: !telefone_celular,
-            tipopessoa: !tipopessoa, data_nasc: !data_nasc
-        })
-        return 'Por favor, preencha todos os campos obrigatórios';
+function validar_input(campoInput) {
+    const id = campoInput.id;
+    
+    let valor;
+    if (campoInput.type === 'select-one') {
+        valor = campoInput.value;
+    } else {
+        valor = campoInput.value.trim();
+    }
+    
+    const erroElemento = document.getElementById(`erro-${id}`);
+
+    if (!erroElemento) {
+        return true;
     }
 
-    if (tipopessoa === 'Pessoa Física') {
-        if (!ccpf) {
-            return 'O CPF é obrigatório para contas de Pessoa Física';
-        }
+    let mensagemErro = '';
+    let valido = true;
+
+    switch(id){
+        case 'nome':
+        case 'estado':
+        case 'cidade':
+        case 'logradouro':
+        case 'bairro':
+        case 'numero_casa':
+        case 'telefone_celular':
+        case 'cpf':
+        case 'cnpj':
+        case 'nome-empresa':
+        case 'datanasc':
+        case 'complemento':
+        case 'telefone_residencial':
+        case 'email':
+        case 'senha':
+        case 'confirmar-senha':
+            if(valor === ''){
+                mensagemErro = 'Esse campo é obrigatório';
+                valido = false;
+            }
+            break;
+        
+        case 'cep':
+            if(valor === ''){
+                mensagemErro = 'CEP é obrigatório';
+                valido = false;
+            } else if (valor.replace(/\D/g, '').length !== 8) {
+                mensagemErro = 'CEP deve ter 8 dígitos';
+                valido = false;
+            }
+            break;
+        
+        case 'tipo-de-conta':
+            if(valor === ''){
+                mensagemErro = 'Selecione o tipo de pessoa';
+                valido = false;
+            }
+            break;
     }
 
-    if (tipopessoa === 'Pessoa Jurídica') {
-        if (!ccnpj) {
-            return 'O CNPJ é obrigatório para contas de Pessoa Jurídica';
-        }
-        const nomeEmpresa = document.getElementById('nome-empresa').value.trim();
-        if (!nomeEmpresa) {
-            return 'O nome da empresa é obrigatório';
-        }
+    if (!valido) {
+        erroElemento.textContent = mensagemErro;
+        erroElemento.classList.add('mostrar-erro');
+        campoInput.classList.add('campo-invalido');
+    } else {
+        erroElemento.textContent = '';
+        erroElemento.classList.remove('mostrar-erro');
+        campoInput.classList.remove('campo-invalido');
     }
-
-    return null;
+    
+    return valido;
 }
 
 // Funções para busca automática de CEP

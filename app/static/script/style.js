@@ -203,17 +203,18 @@ function exibirCampo() {
     const campoEmpresa = document.getElementById('nomeEmpresa');
     const avisosjs = document.getElementById('avisojs');
 
-    campoCpf.classList.add("hidden");
-    campoCnpj.classList.add("hidden");
-    campoEmpresa.classList.add("hidden");
-    avisosjs.classList.add("hidden")
-
     if (tipo === "Pessoa Física") {
-        campoCpf.classList.remove("hidden");
+        campoCpf.style.display = 'block';
+        campoCnpj.style.display = 'none';
     } 
     else if (tipo === "Pessoa Jurídica") {
-        campoCnpj.classList.remove("hidden");
-        campoEmpresa.classList.remove("hidden");
+        campoCnpj.style.display = 'block';
+        campoEmpresa.style.display = 'block';
+        campoCpf.style.display = 'none';
+    } else{
+        campoCpf.style.display = 'none';
+        campoCnpj.style.display = 'none';
+        campoEmpresa.style.display = 'none';
     }
 }
 

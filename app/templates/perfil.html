@@ -99,43 +99,45 @@
         <!-- Leilões teste -->
         <div id="leiloes-criados">
             <div id="carrossel-leiloes">
-                <div id="leilao">
-                    <img src="{{ url_for('static', filename='img/eletrodom-img/eb2.webp') }}"><br>
-                    Fogão Atlas Mônaco Plus 4 bocas
-                    <br><p id="local">Rio de Janeiro - RJ</p><br>
+                {% if leiloes %}
+                    {% for leilao in leiloes %}
+                        <a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid)}}" class="leilao-link">
+                        <div id="leilao">
+                            <img src="{{ leilao.get_foto() }}"><br>
+                            {{ leilao.nome }}
+                            <br><p id="local">{{ leilao.cidade }} - {{ leilao.uf }}</p><br>
                 
-                    <div id="infos-leiloeiro">
-                        <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                        <span id="leiloeiro-texto">João Silva Santos</span>
-                    </div>
+                            <div id="infos-leiloeiro">
+                                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                                <span id="leiloeiro-texto">{{ leilao.user.nome_completo }}</span>
+                            </div>
                 
-                    <div id="views-img">
-                        <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                        <span id="views-count">1000 participantes</span>
-                    </div><br>
+                            <div id="views-img">
+                                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                                <span id="views-count">{{ leilao.lances|length }} lances</span>
+                            </div><br>
+                        
+                            <span id="lance">
+                                Lance atual: 
+                                {% if leilao.lances %}
+                                    {{ (leilao.lances|sort(attribute='valor')|last).get_valor_str() }}
+                                {% else %}
+                                    {{ leilao.get_lance_inicial_str() }}
+                                {% endif %}
+                            </span><br>
+                            <span id="temporizador">Encerra em: {{ leilao.data_fim }}</span>
+                        </div>
+                        </a>
+                    {% endfor %}
                 
-                    <span id="lance">Lance atual:</span><br>
-                    <span id="temporizador">Encerra em: </span>
-                </div>
-
-                <div id="leilao">
-                    <img src="{{ url_for('static', filename='img/moveis-img/eb1.webp') }}"><br>
-                    Cômoda Coliseu J&A Off-White
-                    <br><p id="local">São João de Meriti - RJ</p><br>
-
-                    <div id="infos-leiloeiro">
-                        <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                        <span id="leiloeiro-texto">João Silva Santos</span>
-                    </div>
-
-                    <div id="views-img">
-                        <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                        <span id="views-count">1000 participantes</span>
-                    </div><br>
-
-                    <span id="lance">Lance atual: </span><br>
-                    <span id="temporizador">Encerra em: </span>
-                </div>
+                {% else %}
+                    <section class="mensagem-semleilao">
+                        Você ainda não criou nenhum leilão<br>
+                        Vá para nossa página inicial e explore os leilões disponíveis!<br>
+                        <button type="click" id="btn-home">Página inicial</button>
+                    </section>
+                {% endif %}
+                
             </div>
         </div>
 
@@ -269,12 +271,14 @@
             </tr>
         </thead>
         <tbody>
+            {% for lances in lances_usuario %}
             <tr>
-                <td>Motocicleta BMW R1250</td>
-                <td>R$ 65.250,00</td>
-                <td>01/11/2024 14:30</td>
+                <td>{{ lance.id_leilao.nome }}</td>
+                <td>{{ lance.valor }}</td>
+                <td>{{ lance.horario }}</td>
                 <td class="status-ativo">Ativo</td>
             </tr>
+            {% endfor %}
             <tr>
                 <td>Notebook Acer Nitro V15 ANV15-51-58AZ 13ª Geração</td>
                 <td>R$ 4.900,00</td>

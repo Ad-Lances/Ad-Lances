@@ -27,6 +27,20 @@ document.addEventListener('DOMContentLoaded', function () {
     const confirmar_senhaInput = document.getElementById('confirmar-senha');
 
     const mensagem = document.getElementById('mensagem');
+    const erroNome = document.getElementById('erro-nome');
+
+    const camposObrigatorios = [nomeInput, estadoInput, cidadeInput, logradouroInput, cepInput, bairroInput,
+    numeroCasaInput, emailCadastroInput, senhaCadastroInput, confirmar_senhaInput,
+    telefoneCelInput, cpf, cnpj, datanascInput, tipo_pessoa];
+
+    camposObrigatorios.forEach(input => {
+        if (input) {
+            input.addEventListener('blur', function() {
+                validar_input(this);
+            });
+        }
+    });
+
 
     
     formularioCadastro.addEventListener('submit', async (event) => {
@@ -34,35 +48,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
         let mensagem_erros = [];
 
-        const nome = nomeInput.value.trim();
-        const estado = estadoInput.value.trim();
-        const cidade = cidadeInput.value.trim();
-        const logradouro = logradouroInput.value.trim();
+
         const cep = cepInput.value.replace(/\D/g, '').trim();
-        const numeroCasa = numeroCasaInput.value.trim();
-        const complemento = complementoInput.value.trim();
-        const bairro = bairroInput.value.trim();
-        const telefone_celular = telefoneCelInput.value.replace(/\D/g, '').trim();
-        const telefone_residencial = telefoneResInput.value.replace(/\D/g, '').trim();
         const emailCadastro = emailCadastroInput.value.trim();
         const senhaCadastro = senhaCadastroInput.value.trim();
         const confirmarSenha = confirmar_senhaInput.value.trim();
-        const ccpf = cpf.value.replace(/\D/g, '').trim();
-        const ccnpj = cnpj.value.replace(/\D/g, '').trim();
-        const tipopessoa = tipo_pessoa.value;
         const data_nasc = datanascInput.value.trim(); 
-        const nomeEmpresa = nome_empresa.value.trim();
-
-
-        const erroCampos = verificar_campos(
-            nome, estado, cidade, logradouro, cep, bairro,
-            numeroCasa, emailCadastro, senhaCadastro, confirmarSenha,
-            telefone_celular, tipopessoa, ccpf, ccnpj, data_nasc
-        );
-        if (erroCampos) {
-            console.log(erroCampos);
-            mensagem_erros.push(erroCampos);
-        }
 
         const erroCEP = validarCEP();
         if (erroCEP) {
@@ -203,17 +194,9 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             body: JSON.stringify(dados)
         });
-        const textoBruto = await resposta.text();
 
+        const resultado = await resposta.json();
 
-        let resultado = {};
-        try {
-            resultado = JSON.parse(textoBruto);
-        } catch (e) {
-            console.error("DEU ERRO AO PARSEAR JSON:", e);
-            mensagem.innerHTML = "Erro inesperado. Tente novamente.";
-            return;
-        }
         if (resultado.sucesso) {
             estilizarMensagemSucesso();
             mensagem.innerHTML = resultado.sucesso;

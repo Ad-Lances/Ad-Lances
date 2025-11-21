@@ -178,7 +178,12 @@ def logout():
 @bp.route('/perfil')
 def perfil_user():
     usuario = UserModel.query.get(session['usuario_id'])
-    return render_template('perfil.html', usuario=usuario)
+    leiloes_usuario = LeilaoModel.query.filter_by(id_user=session['usuario_id']).all()
+    lances_usuario = LanceModel.query.filter_by(id_user=session['usuario_id']).all()
+    #leiloes_usuario_participou
+    #leiloes_usuario_ganhou
+
+    return render_template('perfil.html', usuario=usuario, leiloes=leiloes_usuario, lances=lances_usuario)
 
 @bp.route('/categorias/<string:categoria>')
 def imoveis(categoria):
