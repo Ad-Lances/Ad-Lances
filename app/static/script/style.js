@@ -203,6 +203,8 @@ function exibirCampo() {
     const campoEmpresa = document.getElementById('nomeEmpresa');
     const avisosjs = document.getElementById('avisojs');
 
+    avisosjs.classList.add("hidden")
+
     if (tipo === "Pessoa Física") {
         campoCpf.style.display = 'block';
         campoCnpj.style.display = 'none';
