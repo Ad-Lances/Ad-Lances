@@ -288,6 +288,26 @@ def detalhes_leilao(hashid):
     
     abort(404)
 
+@bp.post('/<hashid>/editar')
+def edit_leilao(hashid):
+    leilao = get_leilao(hashid)
+    
+    if leilao:
+        if session.get('usuario_id') == leilao.id_user:
+            dados = request.get_json()
+            
+            leilao.data_fim = dados['input-editar-data'] if dados['input-editar-data'] else leilao.data_fim
+            leilao.descricao = dados['input-editar-descricao'] if dados['input-editar-descricao'] else leilao.descricao
+            leilao.cep = dados['input-editar-cep-leilao'] if dados['input-editar-cep-leilao'] else leilao.cep
+            leilao.logradouro = dados['input-editar-logradouro-leilao'] if dados['input-editar-logradouro-leilao'] else leilao.logradouro
+            leilao.bairro = dados['input-editar-bairro-leilao'] if dados['input-editar-bairro-leilao'] else leilao.bairro
+            leilao.numero_morada = dados['input-editar-numero-leilao'] if dados['input-editar-numero-leilao'] else leilao.numero_morada
+            db.session.commit()
+            
+            return jsonify({'sucesso': 'Alterações salvas.'})
+        abort(401)
+    abort(404)    
+
 @bp.route('/verificarstripe')
 def verificar_stripe():
     if session.get('usuario_id') is None:

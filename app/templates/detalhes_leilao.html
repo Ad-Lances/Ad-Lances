@@ -89,15 +89,15 @@
 
             </div>
         </div>
-
+    {% if leilao.user.id == session.get("usuario_id") %}
     <div id="campos-edicao">
     <form id="form-editar-leilao">
         <div id="campo-data">
             <label for="input-editar-data">Data de Término</label>
-            <input type="datetime" 
+            <input type="datetime-local" 
             name="input-editar-data" 
             id="input-editar-data" 
-            value="{{ leilao.get_data_fim_str() }}">
+            value="{{ leilao.data_fim.isoformat() }}">
         </div>
 
         <div id="campo-descricao">
@@ -143,11 +143,12 @@
         </div>
 
         <div class="botoes-acao">
-            <button type="button" id="btn-salvar">Salvar alterações</button>
+            <button type="submit" id="btn-salvar">Salvar alterações</button>
             <button type="button" id="btn-cancelar">Cancelar</button>
         </div>
     </form>
     </div>
+    {% endif %}
 </div>
 
         <div id="infos-leiloeiro">

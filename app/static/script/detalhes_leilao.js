@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const encerrarBtn = document.getElementById('botao-encerrar-leilao')
     const mensagem = document.getElementById('mensagem');
     const cepInput = document.getElementById('input-editar-cep-leilao');
+    const lanceInput = document.getElementById('novo-lance-input');
     if (cepInput) {
         cepInput.addEventListener('input', function() {
             const cepNumeros = this.value.replace(/\D/g, '');
@@ -65,6 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
+    if (encerrarBtn) {
     encerrarBtn.addEventListener("click", async () => {
         const resposta = await fetch(window.location.pathname + '/encerrar_leilao')
         const resultado = await resposta.json();
@@ -73,14 +75,12 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             mensagem.innerHTML = 'Erro no banco de dados.';
         }
-    })
+    })}
 
     enviarLanceBtn.addEventListener('click', async (e) => {
         e.preventDefault();
         enviarLanceBtn.disabled = true
         enviarLanceBtn.innerText = 'Lançando...'
-        const lanceInput = document.getElementById('novo-lance-input');
-        const mensagem = document.getElementById('mensagem');
         const lancevalor = parseFloat(lanceInput.value);
         
         if (lanceInput.value === '' || isNaN(lancevalor) || lancevalor <= 0) {
