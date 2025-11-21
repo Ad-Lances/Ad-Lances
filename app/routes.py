@@ -472,7 +472,8 @@ def criar_pagamento(hashid):
     leilao = get_leilao(hashid)
     
     if user and leilao:
-        session = stripe.checkout.Session.create(
+        ultimo_lance = LanceModel.get_ultimo_lance(leilao.id)
+        session_stripe = stripe.checkout.Session.create(
             payment_method_types=['card'],
             line_items=[{
                 'price_data': {
@@ -481,7 +482,7 @@ def criar_pagamento(hashid):
                         'name': leilao.nome,
                         'description': leilao.descricao,
                     },
-                    'unit_amount': int(LanceModel.get_ultimo_lance(leilao.id).valor * 100),
+                    'unit_amount': int(ultimo_lance.valor * 100),
                 },
                 'quantity': 1,
             }],
@@ -495,7 +496,7 @@ def criar_pagamento(hashid):
             success_url=url_for('main.perfil_user', _external=True) + '?payment_success=true',
             cancel_url=url_for('main.perfil_user', _external=True) + '?payment_canceled=true',
         )
-        return jsonify({'url_pagamento': session.url})
+        return jsonify({'url': session_stripe.url})
     return jsonify({'erro': 'Usuário ou leilão não encontrado.'})
 
 @bp.post('/webhook')
@@ -515,7 +516,7 @@ def webhook():
     if event is None:
         return "", 400
         
-    if event["type"]=="payment_intent.succeeded":
+    if event["type"]=="checkout.session.completed":
         payment = event["data"]["object"]
         print(payment)
         
