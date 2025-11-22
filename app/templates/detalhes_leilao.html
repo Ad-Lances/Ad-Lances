@@ -42,7 +42,7 @@
                     <div class="lance-atual" id="lance-atual">{% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</div>
                 </div>
 
-                {% if session.get('logado') %}
+                {% if session.get('logado') and leilao.status == "Aberto" %}
                     <div class="lance-container">
                         <div class="info-label" style="font-size: 16px; font-weight: 600;">Fazer um Lance</div>
                         <form id="form-lance">
@@ -63,6 +63,15 @@
                             <button type="button" id="botao-encerrar-leilao">Encerrar leilão</button>
                         </div>
                     {% endif %}
+                {% elif leilao.status == "Encerrado" %}
+                    <div class="mensagem-encerramento">
+                        <h3 id="mensagem-encerramento">Leilão encerrado</h3>
+                    </div>
+                    <script>
+                        document.getElementById('bloco-temporizador').innerHTML = ""
+                        document.getElementById('mensagem-encerramento').style.color = "red"
+                    </script>
+
                 {% else %}
                     <div id="mensagem-login">
                         <h3>Você está quase lá!</h3>
@@ -76,20 +85,19 @@
                             <a href="login"><button id="redirect-login">Faça login</button></a>
                         </section>
                     </div>
-                
                 {% endif %}
 
             </div>
         </div>
-
+    {% if leilao.user.id == session.get("usuario_id") %}
     <div id="campos-edicao">
     <form id="form-editar-leilao">
         <div id="campo-data">
             <label for="input-editar-data">Data de Término</label>
-            <input type="datetime" 
+            <input type="datetime-local" 
             name="input-editar-data" 
             id="input-editar-data" 
-            value="{{ leilao.get_data_fim_str() }}">
+            value="{{ leilao.data_fim.isoformat() }}">
         </div>
 
         <div id="campo-descricao">
@@ -135,11 +143,12 @@
         </div>
 
         <div class="botoes-acao">
-            <button type="button" id="btn-salvar">Salvar alterações</button>
+            <button type="submit" id="btn-salvar">Salvar alterações</button>
             <button type="button" id="btn-cancelar">Cancelar</button>
         </div>
     </form>
     </div>
+    {% endif %}
 </div>
 
         <div id="infos-leiloeiro">

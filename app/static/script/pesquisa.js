@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
             leiloes.appendChild(div)
         });
     }
-
+    if (barra_pesquisa) {
     barra_pesquisa.addEventListener("input", async (e) => {
         e.preventDefault();
         const pesquisa = barra_pesquisa.value.trim();
@@ -29,5 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
         carregar(resultado)
         
     })
+    }
 
 })

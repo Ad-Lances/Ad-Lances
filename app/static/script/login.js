@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function(){
     const formularioLogin = document.getElementById('formularioLogin');
     const mensagem = document.getElementById('mensagem');
     
-    
+    if (formularioLogin) {
     formularioLogin.addEventListener('submit', async (event) => {
         event.preventDefault();
 
@@ -79,4 +79,5 @@ document.addEventListener('DOMContentLoaded', function(){
         }
         
 });
+    }
 })

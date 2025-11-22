@@ -1,11 +1,10 @@
 from flask import Blueprint, render_template, request, jsonify, session, redirect, url_for, flash, abort
 from app.models import *
-from . import db
-from . import cloudinary
+from . import db, cloudinary
+from .email_utils import *
 from datetime import datetime, date, timedelta
 from zoneinfo import ZoneInfo
 import cloudinary.uploader
-import re
 from sqlalchemy import select, or_
 from app import stripe, socketio, sqids
 from config import Config
@@ -84,7 +83,6 @@ def cadastrar():
         dados = request.get_json()
     else:
         dados = request.form.to_dict()
-    print('ta validando')
         
     usuario_exist = UserModel.query.filter_by(email=dados.get('email')).first()
 
@@ -102,7 +100,6 @@ def cadastrar():
     
     erro = verificar_senha(dados.get('senha'))
     if erro:
-        print("oillucas")
         return jsonify({'erro': erro})
     
     
@@ -262,13 +259,34 @@ def imoveis(categoria):
 def pagina_criar_leilao():
     return render_template('criarleilao.html')
 
-@bp.route('/esqueciasenha')
-def redefinirsenha():
+@bp.route('/esqueciasenha', methods=['GET', 'POST'])
+def esqueciasenha():
+    if request.method == 'POST':
+        email = request.form.get("email")
+        if email:
+            user = UserModel.query.filter_by(email=email).first()
+            if not user:
+                return jsonify({'erro': 'Email inválido.'}), 404
+            enviar_email(email)
+            return jsonify({'sucesso': 'Um link foi enviado por email para a redefinição da sua senha.'})
     return render_template('esqueci_senha.html')
 
-@bp.route('/redefinirsenha', methods=['POST'])
-def redefinicao():
-    return None
+@bp.route('/redefinirsenha/<token>', methods=['GET', 'POST'])
+def redefinirsenha(token):
+    email = verificar_token(token)
+
+    if not email:
+        abort(404)
+    if request.method == 'POST':
+        dados = request.get_json()
+        nova_senha = dados.get('senha')
+        if nova_senha:
+            user = UserModel.query.filter_by(email=email).first()
+            user.set_senha(nova_senha)
+            db.session.commit()
+            return jsonify({'sucesso': 'Senha alterada com sucesso.'})
+        return jsonify({'erro': 'Digite a nova senha.'})
+    return render_template('redefinir_senha.html', token=token)
 
 @bp.route('/<hashid>')
 def detalhes_leilao(hashid):
@@ -287,6 +305,26 @@ def detalhes_leilao(hashid):
         return render_template('detalhes_leilao.html', leilao=leilao, data_fim=data_fim.isoformat(), lance_atual = lance_atual)
     
     abort(404)
+
+@bp.post('/<hashid>/editar')
+def edit_leilao(hashid):
+    leilao = get_leilao(hashid)
+    
+    if leilao:
+        if session.get('usuario_id') == leilao.id_user:
+            dados = request.get_json()
+            
+            leilao.data_fim = dados['input-editar-data'] if dados['input-editar-data'] else leilao.data_fim
+            leilao.descricao = dados['input-editar-descricao'] if dados['input-editar-descricao'] else leilao.descricao
+            leilao.cep = dados['input-editar-cep-leilao'] if dados['input-editar-cep-leilao'] else leilao.cep
+            leilao.logradouro = dados['input-editar-logradouro-leilao'] if dados['input-editar-logradouro-leilao'] else leilao.logradouro
+            leilao.bairro = dados['input-editar-bairro-leilao'] if dados['input-editar-bairro-leilao'] else leilao.bairro
+            leilao.numero_morada = dados['input-editar-numero-leilao'] if dados['input-editar-numero-leilao'] else leilao.numero_morada
+            db.session.commit()
+            
+            return jsonify({'sucesso': 'Alterações salvas.'})
+        abort(401)
+    abort(404)    
 
 @bp.route('/verificarstripe')
 def verificar_stripe():
@@ -384,9 +422,14 @@ def criar_leilao():
 def encerrar_leilao(hashid):
     leilao = get_leilao(hashid)
     if leilao:
-        leilao.status = "Encerrado"
-        db.session.commit()
-        return jsonify({"sucesso": f"Leilão {leilao.nome} encerrado com sucesso"})
+        if leilao.id_user == session.get('usuario_id'):
+            if leilao.status == "Aberto" or leilao.status == "Não iniciado":
+                leilao.status = "Encerrado"
+                db.session.commit()
+                return jsonify({"sucesso": f"Leilão {leilao.nome} encerrado com sucesso."})
+            else:
+                return jsonify({"sucesso": "Leilão já encerrado."})
+        abort(401)
     abort(404)
 
 @bp.post('/<hashid>/novolance')
@@ -402,6 +445,8 @@ def novo_lance(hashid):
         leilao.status = 'Encerrado'
         db.session.commit()
         return jsonify({'erro': 'Leilão já encerrado.'})
+    if leilao.status == "Encerrado":
+        return jsonify({"erro": "Leilão já encerrado."})
     
     try:
         valor_lance = float(dados['lance'])
@@ -429,7 +474,7 @@ def novo_lance(hashid):
         ultimo_lance = db.session.execute(
             select(LanceModel)
             .where(LanceModel.id_leilao == leilao.id)
-            .where(LanceModel.id_usuario == session['usuario_id'])
+            .where(LanceModel.id_user == session['usuario_id'])
             .order_by(LanceModel.id.desc())
             .limit(1)
         ).scalar_one_or_none()
@@ -447,7 +492,7 @@ def novo_lance(hashid):
             valor=valor_lance,
             horario=datetime.now(ZoneInfo("America/Sao_Paulo")),
             id_leilao=leilao.id,
-            id_usuario=session['usuario_id']
+            id_user=session['usuario_id']
         )
         db.session.add(novo_lance)            
         db.session.commit()
@@ -465,7 +510,8 @@ def criar_pagamento(hashid):
     leilao = get_leilao(hashid)
     
     if user and leilao:
-        session = stripe.checkout.Session.create(
+        ultimo_lance = LanceModel.get_ultimo_lance(leilao.id)
+        session_stripe = stripe.checkout.Session.create(
             payment_method_types=['card'],
             line_items=[{
                 'price_data': {
@@ -474,7 +520,7 @@ def criar_pagamento(hashid):
                         'name': leilao.nome,
                         'description': leilao.descricao,
                     },
-                    'unit_amount': int(LanceModel.get_ultimo_lance(leilao.id).valor * 100),
+                    'unit_amount': int(ultimo_lance.valor * 100),
                 },
                 'quantity': 1,
             }],
@@ -488,7 +534,7 @@ def criar_pagamento(hashid):
             success_url=url_for('main.perfil_user', _external=True) + '?payment_success=true',
             cancel_url=url_for('main.perfil_user', _external=True) + '?payment_canceled=true',
         )
-        return jsonify({'url_pagamento': session.url})
+        return jsonify({'url': session_stripe.url})
     return jsonify({'erro': 'Usuário ou leilão não encontrado.'})
 
 @bp.post('/webhook')
@@ -508,7 +554,7 @@ def webhook():
     if event is None:
         return "", 400
         
-    if event["type"]=="payment_intent.succeeded":
+    if event["type"]=="checkout.session.completed":
         payment = event["data"]["object"]
         print(payment)
         

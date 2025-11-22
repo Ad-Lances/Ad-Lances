@@ -45,7 +45,8 @@
 }
 
 #nova_senha_input,
-#confirmar_ns_input {
+#confirmar_ns_input,
+#email_input {
     padding: 12px 40px 12px 12px; /* Espaço para o ícone */
     border: 2px solid #ddd;
     border-radius: 5px;
@@ -54,7 +55,8 @@
 }
 
 #nova_senha_input:focus,
-#confirmar_ns_input:focus {
+#confirmar_ns_input:focus,
+#email_input:focus {
     outline: none;
     border-color: #034660;
     background-color: white;
@@ -62,7 +64,8 @@
 }
 
 #nova_senha_input::placeholder,
-#confirmar_ns_input::placeholder {
+#confirmar_ns_input::placeholder,
+#email_input::placeholder {
     color: #6c757d;
     font-size: 14px;
 }
