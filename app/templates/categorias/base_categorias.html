@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+        {% block other_style %}
+            <link rel="stylesheet" href="{{ url_for('static', filename='css/base_categorias.css')}}">
+
+            {% block categorias_style %}
+            {% endblock %}
+        {% endblock %}
+    
+
+{% block content %}
+    <div id="header">
+        {% block header_content %}
+        {% endblock %}
+    </div>
+
+   <div id="nav-categorias">
+    <ul>
+        <li>Categorias</li>
+        
+        {% block icon_imoveis %}
+        <li>
+            <a href="{{ url_for('main.imoveis', categoria='Imoveis') }}">
+                <img src="{{ url_for('static', filename='img/img-nav/house-icon.png') }}" alt="Imóveis">
+            </a>
+        </li>
+        {% endblock %}
+        
+        {% block icon_veiculos %}
+        <li>
+            <a href="{{ url_for('main.imoveis', categoria='Veiculos') }}">
+                <img src="{{ url_for('static', filename='img/img-nav/car-icon.png') }}" alt="Veículos">
+            </a>
+        </li>
+        {% endblock %}
+        
+        {% block icon_eletronicos %}
+        <li>
+            <a href="{{ url_for('main.imoveis', categoria='Eletronicos') }}">
+                <img src="{{ url_for('static', filename='img/img-nav/screen-icon.png') }}" alt="Eletrônicos">
+            </a>
+        </li>
+        {% endblock %}
+        
+        {% block icon_eletrodomesticos %}
+        <li>
+            <a href="{{ url_for('main.imoveis', categoria='Eletrodomesticos') }}">
+                <img src="{{ url_for('static', filename='img/img-nav/houseitems-icon.png') }}" alt="Eletrodomésticos">
+            </a>
+        </li>
+        {% endblock %}
+        
+        {% block icon_moveis %}
+        <li>
+            <a href="{{ url_for('main.imoveis', categoria='Moveis') }}">
+                <img src="{{ url_for('static', filename='img/img-nav/office-icon.png') }}" alt="Móveis">
+            </a>
+        </li>
+        {% endblock %}
+        
+        {% block icon_industriais %}
+        <li>
+            <a href="{{ url_for('main.imoveis', categoria='Industriais') }}">
+                <img src="{{ url_for('static', filename='img/img-nav/machine-icon.png') }}" alt="Industriais">
+            </a>
+        </li>
+        {% endblock %}
+    </ul>
+</div>
+
+    {% block categoria_content %}
+
+    {% endblock %}
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='script/carrossel.js')}}"></script>
+{% endblock %}

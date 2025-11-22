@@ -1,66 +1,24 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends "categorias/base_categorias.html" %}
+
+{% block other_style %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/categorias/industriais.css') }}">
-    <title>Industriais</title>
-</head>
-<body>
-    <nav id="nav">
-        <ul>
-            <li>
-                <div id="nav-item">
-                <a href="/"><img id="logo" src="{{ url_for('static', filename='img/logo.png') }}"></a>
-                </div>
-            </li>
+{% endblock %}
+    
+{% block title %}Industriais{% endblock %}
 
-            <li>
-                <div id="search-container">
-                    <form>
-                        <input type="text" placeholder="Digite aqui...">
-                        <button type="submit"><img src="{{ url_for('static', filename='img/search-icon.png') }}" id="searchimg"></button>
-                    </form>
-                </div>
-            </li>
+{% block icon_industriais %}
+        <li>
+            <a href="{{ url_for('main.imoveis', categoria='Industriais') }}">
+                <img src="{{ url_for('static', filename='img/img-nav/machine-icon-color.png') }}" alt="Industriais">
+            </a>
+        </li>
+{% endblock %}
 
-            <li>
-                <div id="nav-item">
-                    <a href="verificarstripe" target="blank">Criar leilão</a>
-                </div>
-            </li>
-
-            <li>
-                <div id="nav-item"><a href="#">Fale conosco</a></div>
-            </li>
-
-            <li>
-                <div id="nav-item">
-                    <div id="img-nav">
-                        <a href="login"><img src="{{ url_for('static', filename='img/icons-img/profile-icon.png') }}"></a>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </nav>
-
-    <div id="nav-categorias">
-        <ul>
-            <li>Categorias</li>
-            <a href="imoveis"><li><img src="{{ url_for('static', filename='img/img-nav/house-icon.png') }}"></li></a>
-            <a href="veiculos"><li><img src="{{ url_for('static', filename='img/img-nav/car-icon.png') }}"></li></a>
-            <a href="eletronicos"><li><img src="{{ url_for('static', filename='img/img-nav/screen-icon.png') }}"></li></a>
-            <a href="eletrodomesticos"><li><img src="{{ url_for('static', filename='img/img-nav/houseitems-icon.png') }}"></li></a>
-            <a href="moveis"><li><img src="{{ url_for('static', filename='img/img-nav/office-icon.png') }}"></li></a>
-            <li><img src="{{ url_for('static', filename='img/img-nav/machine-icon-color.png') }}"></li>
-            <li><img src="{{ url_for('static', filename='img/img-nav/decoration-icon.png') }}"></li>
-        </ul>
-    </div>
-
-    <div id="header">
+    {% block header_content %}
         <img src="{{ url_for('static', filename='img/banners/banner-industriais.png')}}">
-    </div>
+    {% endblock %}
 
+{% block categoria_content %}
     <!--Categorias-->
     <div id="categorias">
         <div id="item-cat">
@@ -517,6 +475,8 @@
 
         <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
     </div>
-</body>
-<script src="{{ url_for('static', filename='script/script.js')}}"></script>
-</html>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='script/script.js')}}"></script>
+{% endblock %}

@@ -56,7 +56,7 @@
             <img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}">
         </div>
         
-        <div class="carrossel-container">
+         <div class="carrossel-container">
             {% if leiloes_encerrando %}
                 {% for leilao in leiloes_encerrando.items %}
                 <div id="item" class="carrossel-item">
@@ -111,9 +111,8 @@
     <div class="paginacao-container">
         <div class="paginacao">
             {% if leiloes_encerrando.has_prev %}
-                <a href="{{ url_for('main.index', pagina_encerrando=leiloes_encerrando.prev_num, pagina_recentes=request.args.get('pagina_recentes', 1)) }}" class="pagina-link">
-                    ‹ Anterior
-                </a>
+                <a href="{{ url_for('main.index', pagina_encerrando=leiloes_encerrando.prev_num, pagina_recentes=request.args.get('pagina_recentes', 1)) }}" 
+                   class="pagina-link">‹ Anterior</a>
             {% endif %}
 
             {% for page_num in leiloes_encerrando.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
@@ -121,9 +120,8 @@
                     {% if page_num == leiloes_encerrando.page %}
                         <span class="pagina-atual">{{ page_num }}</span>
                     {% else %}
-                        <a href="{{ url_for('main.index', pagina_encerrando=page_num, pagina_recentes=request.args.get('pagina_recentes', 1)) }}" class="pagina-link">
-                            {{ page_num }}
-                        </a>
+                        <a href="{{ url_for('main.index', pagina_encerrando=page_num, pagina_recentes=request.args.get('pagina_recentes', 1)) }}" 
+                           class="pagina-link">{{ page_num }}</a>
                     {% endif %}
                 {% else %}
                     <span class="pontos">...</span>
@@ -131,14 +129,13 @@
             {% endfor %}
 
             {% if leiloes_encerrando.has_next %}
-                <a href="{{ url_for('main.index', pagina_encerrando=leiloes_encerrando.next_num, pagina_recentes=request.args.get('pagina_recentes', 1)) }}" class="pagina-link">
-                    Próxima ›
-                </a>
+                <a href="{{ url_for('main.index', pagina_encerrando=leiloes_encerrando.next_num, pagina_recentes=request.args.get('pagina_recentes', 1)) }}" 
+                   class="pagina-link">Próxima ›</a>
             {% endif %}
         </div>
         <div class="info-paginacao">
             Página {{ leiloes_encerrando.page }} de {{ leiloes_encerrando.pages }} - 
-            {{ leiloes_encerrando.total }} leilões no total
+            {{ leiloes_encerrando.total }} leilões encerrando em breve
         </div>
     </div>
     {% endif %}
@@ -159,7 +156,7 @@
             <img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}">
         </div>
         
-        <div class="carrossel-container">
+         <div class="carrossel-container">
             {% if leiloes_recentes %}
                 {% for leilao in leiloes_recentes.items %}
                 <div id="item" class="carrossel-item">
@@ -210,13 +207,12 @@
         </div>
     </div>
 
-    {% if leiloes_recentes and leiloes_recentes.pages > 1 %}
+     {% if leiloes_recentes and leiloes_recentes.pages > 1 %}
     <div class="paginacao-container">
         <div class="paginacao">
             {% if leiloes_recentes.has_prev %}
-                <a href="{{ url_for('main.index', pagina_recentes=leiloes_recentes.prev_num, pagina_encerrando=request.args.get('pagina_encerrando', 1)) }}" class="pagina-link">
-                    ‹ Anterior
-                </a>
+                <a href="{{ url_for('main.index', pagina_recentes=leiloes_recentes.prev_num, pagina_encerrando=request.args.get('pagina_encerrando', 1)) }}" 
+                   class="pagina-link">‹ Anterior</a>
             {% endif %}
 
             {% for page_num in leiloes_recentes.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
@@ -224,9 +220,8 @@
                     {% if page_num == leiloes_recentes.page %}
                         <span class="pagina-atual">{{ page_num }}</span>
                     {% else %}
-                        <a href="{{ url_for('main.index', pagina_recentes=page_num, pagina_encerrando=request.args.get('pagina_encerrando', 1)) }}" class="pagina-link">
-                            {{ page_num }}
-                        </a>
+                        <a href="{{ url_for('main.index', pagina_recentes=page_num, pagina_encerrando=request.args.get('pagina_encerrando', 1)) }}" 
+                           class="pagina-link">{{ page_num }}</a>
                     {% endif %}
                 {% else %}
                     <span class="pontos">...</span>
@@ -234,14 +229,13 @@
             {% endfor %}
 
             {% if leiloes_recentes.has_next %}
-                <a href="{{ url_for('main.index', pagina_recentes=leiloes_recentes.next_num, pagina_encerrando=request.args.get('pagina_encerrando', 1)) }}" class="pagina-link">
-                    Próxima ›
-                </a>
+                <a href="{{ url_for('main.index', pagina_recentes=leiloes_recentes.next_num, pagina_encerrando=request.args.get('pagina_encerrando', 1)) }}" 
+                   class="pagina-link">Próxima ›</a>
             {% endif %}
         </div>
         <div class="info-paginacao">
             Página {{ leiloes_recentes.page }} de {{ leiloes_recentes.pages }} - 
-            {{ leiloes_recentes.total }} leilões no total
+            {{ leiloes_recentes.total }} leilões recentes
         </div>
     </div>
     {% endif %}

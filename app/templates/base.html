@@ -7,10 +7,12 @@
     <script src="{{ url_for('static', filename='script/style.js') }}"></script>
     <script src="{{ url_for('static', filename='script/pesquisa.js') }}" defer></script>
     <script src="{{ url_for('static', filename='script/tema.js')}}"></script>
+    
+        {% block other_style %}{% endblock %}
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='img/guia-icone.png') }}" type="image/x-icon">
-    {% block other_style %}{% endblock %}
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
@@ -25,7 +27,7 @@
                 <div id="search-container">
                     <form>
                         <input type="text" placeholder="Digite aqui...">
-                        <button type="button"><i class="fa-solid fa-magnifying-glass fa-rotate-90" style="color: #ffffff;"></i></button>
+                        <button type="button" action="/pesquisar"><i class="fa-solid fa-magnifying-glass fa-rotate-90" style="color: #ffffff;"></i></button>
                     </form>
                 </div>
             </li>
@@ -40,14 +42,14 @@
                 </div>
             </li>
             <li>
-                <div id="nav-item">
+                <div class="nav-item">
                     <button type="submit" id="btntema" alt="Mudar para tema escuro"></button>
                 </div>
             </li>
 
             {% if session.get('logado') %}
                 <li>
-                    <div id="nav-item">
+                    <div class="nav-item">
                         <div id="img-nav">
                             <a href="perfil"><i class="fa-solid fa-circle-user fa-2xl" style="color: #ffffff;"></i></a>
                         </div>
@@ -55,7 +57,7 @@
                 </li>
             {% else %}
                 <li>
-                    <div id="nav-item">
+                    <div class="nav-item">
                         <a href="login">Login</a>
                     </div>
                 </li>
