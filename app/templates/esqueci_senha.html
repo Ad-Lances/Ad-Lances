@@ -14,38 +14,19 @@
     <section id="mensagem"></section>
 
     <div id="formulario-div">
-        <form id="formulario-redefinir" action="/redefinirsenha" method="POST">
+        <form id="formulario-redefinir" action="/esqueciasenha" method="POST">
 
-            <label for="nova_senha_input" id="nova_senha_label">Nova senha:</label>
+            <label for="email" id="nova_senha_label">Digite seu email:</label>
             <div class="password-container">
-                <input type="password" name="nova_senha_input" id="nova_senha_input" placeholder="Digite sua nova senha">
+                <input type="email" name="email" id="email_input" placeholder="exemplo@email.com">
             </div>
-
-            <label for="confirmar_ns_input" id="confirmar_nova_senha_label">Confirme a nova senha:</label>
-            <div class="password-container">
-                <input type="password" name="confirmar_ns_input" id="confirmar_ns_input" placeholder="Redigite a nova senha">
-            </div>
-
-            <button type="submit" id="botao-redefinir">Redefinir Senha</button>
+            <button type="submit" id="botao-redefinir">Redefinir senha</button>
         </form>
-    </div>
-
-    <div class="full-width">
-        <section id="orientacao-senha">
-            <ul>
-                <li>Mínimo de 6 caracteres</li>
-                <li>Um caractere maiúsculo</li>
-                <li>Caracteres minúsculos</li>
-                <li>Um caractere especial (#, @, _)</li>
-            </ul>
-        </section>
     </div>
 
 {% endblock %}
 
 {% block scripts %}
 <script src="{{ url_for('static', filename='script/style.js')}}"></script>
-<script src="{{ url_for('static', filename='script/validacao_cadastro.js') }}"></script>
-<script src="{{ url_for('static', filename='script/login.js') }}"></script>
-<script src="{{ url_for('static', filename='script/esqueci_senha.js') }}"></script>
+
 {% endblock %}

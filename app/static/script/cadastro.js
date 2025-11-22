@@ -168,22 +168,22 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         const dados = {
-            nome: nome,
-            unid_federativa: estado,
-            cidade: cidade,
-            rua: logradouro,
-            bairro: bairro,
+            nome: nomeInput.value,
+            unid_federativa: estadoInput.value,
+            cidade: cidadeInput.value,
+            rua: logradouroInput.value,
+            bairro: bairroInput.value,
             cep: cep,
-            numero_casa: numeroCasa,
+            numero_casa: numeroCasaInput.value,
             complemento: complemento,
             email: emailCadastro,
             senha: senhaCadastro,
             telefone: telefoneCelInput.value.trim(),
             ...(telefoneResInput.value.trim() && { telefone_res: telefoneResInput.value.trim() }),
-            ...(ccpf && { cpf: ccpf }),
-            ...(ccnpj && { cnpj: ccnpj }),
+            ...(cpf && { cpf: cpf.value.replace(".", "").replace("-", "").replace(".", "") }),
+            ...(cnpj && { cnpj: cnpj.value }),
             ...(nomeEmpresa && { nome_empresa: nomeEmpresa }),
-            tipo_pessoa: tipopessoa,
+            tipo_pessoa: tipo_pessoa.value,
             datanasc: data_nasc
         };
 

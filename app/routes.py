@@ -1,11 +1,10 @@
 from flask import Blueprint, render_template, request, jsonify, session, redirect, url_for, flash, abort
 from app.models import *
-from . import db
-from . import cloudinary
+from . import db, cloudinary
+from .email_utils import *
 from datetime import datetime, date, timedelta
 from zoneinfo import ZoneInfo
 import cloudinary.uploader
-import re
 from sqlalchemy import select, or_
 from app import stripe, socketio, sqids
 from config import Config
@@ -84,7 +83,6 @@ def cadastrar():
         dados = request.get_json()
     else:
         dados = request.form.to_dict()
-    print('ta validando')
         
     usuario_exist = UserModel.query.filter_by(email=dados.get('email')).first()
 
@@ -102,7 +100,6 @@ def cadastrar():
     
     erro = verificar_senha(dados.get('senha'))
     if erro:
-        print("oillucas")
         return jsonify({'erro': erro})
     
     
@@ -262,13 +259,34 @@ def imoveis(categoria):
 def pagina_criar_leilao():
     return render_template('criarleilao.html')
 
-@bp.route('/esqueciasenha')
-def redefinirsenha():
+@bp.route('/esqueciasenha', methods=['GET', 'POST'])
+def esqueciasenha():
+    if request.method == 'POST':
+        email = request.form.get("email")
+        if email:
+            user = UserModel.query.filter_by(email=email).first()
+            if not user:
+                return jsonify({'erro': 'Email inválido.'}), 404
+            enviar_email(email)
+            return jsonify({'sucesso': 'Um link foi enviado por email para a redefinição da sua senha.'})
     return render_template('esqueci_senha.html')
 
-@bp.route('/redefinirsenha', methods=['POST'])
-def redefinicao():
-    return None
+@bp.route('/redefinirsenha/<token>', methods=['GET', 'POST'])
+def redefinirsenha(token):
+    email = verificar_token(token)
+
+    if not email:
+        abort(404)
+    if request.method == 'POST':
+        dados = request.get_json()
+        nova_senha = dados.get('senha')
+        if nova_senha:
+            user = UserModel.query.filter_by(email=email).first()
+            user.set_senha(nova_senha)
+            db.session.commit()
+            return jsonify({'sucesso': 'Senha alterada com sucesso.'})
+        return jsonify({'erro': 'Digite a nova senha.'})
+    return render_template('redefinir_senha.html', token=token)
 
 @bp.route('/<hashid>')
 def detalhes_leilao(hashid):
