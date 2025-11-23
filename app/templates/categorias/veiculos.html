@@ -1,470 +1,277 @@
 {% extends "categorias/base_categorias.html" %}
-    {% block other_style %}
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/categorias/veiculos.css') }}">
-    {% endblock %}
-    {% block title %}Veículos{% endblock %}
 
-    {% block header_content %}
-        <img src="{{ url_for('static', filename='img/banners/banner-veiculos.png')}}">
-    {% endblock %}
-
-    {% block icon_veiculos %}
-        <li>
-            <a href="{{ url_for('main.imoveis', categoria='Veiculos') }}">
-                <img src="{{ url_for('static', filename='img/img-nav/car-icon-color.png') }}" alt="Veículos">
-            </a>
-        </li>
-    {% endblock %}
-
-{% block categoria_content %}
-    <!--Categorias-->
-    <div id="categorias">
-        <div id="item-cat">
-            <img src="{{ url_for('static', filename='img/veiculos-img/cat1.jpg') }}"><br>
-            <div id="texto-cat">Carros</div>
-        </div>
-
-        <div id="item-cat">
-            <img src="{{ url_for('static', filename='img/veiculos-img/cat2.webp') }}" alt="motos"><br>
-            <div id="texto-cat">Motocicletas</div>
-        </div>
-
-        <div id="item-cat">
-            <img src="{{ url_for('static', filename='img/veiculos-img/cat3.jpg') }}" alt="caminhões"><br>
-            <div id="texto-cat">Caminhões</div>
-        </div>
-    </div>
-
-    <!--Acontecendo agora-->
-    <div id="secaotitulo">
-        <h2>Leilões encerrando em breve</h2><br>
-        <hr>
-    </div>
-
-    <div id="encerrando-em-breve">
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/veiculos-img/aa1.webp') }}"><br>
-            Motocicleta BMW R1250
-            <br><p id="local">Curitiba - PR</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Detran</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/veiculos-img/aa2.webp') }}"><br>
-            Carro Renault Sandero EXP 16
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Tribunal de Justiça de São Paulo</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/veiculos-img/aa3.jpeg') }}"><br>
-            Mercedes-Benz/Atego 1418 (2006)
-            <br><p id="local">Carnaíba - MG</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Detran MG</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/veiculos-img/aa4.webp') }}"><br>
-            Fiat Toro Freedom 1.8 AT6
-            <br><p id="local">Porto Alegre - RS</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Fiat Automóveis</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/veiculos-img/aa5.png') }}"><br>
-            Kawasaki Z1000 (2025)
-            <br><p id="local">Rio de Janeiro - RJ</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Usuário</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
-    </div>
-
-    <!--Carros-->
-    <div id="secaotitulo">
-        <h2>Carros</h2><br>
-        <hr>
-    </div>
-
-    <div id="carros">
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
-        
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/veiculos-img/c1.webp') }}"><br>
-            Volkswagen Gol 1.6 (2022) (Seminovo)
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Guaíra Veículos</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/veiculos-img/c2.jpg') }}"><br>
-            Volkswagen T-Cross Comfortline 200 Flex Automático (2023) (Seminovo)
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Localiza Seminovos</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/veiculos-img/c3.jpeg') }}"><br>
-            Fiat Mobi Like 2020 1.0 Manual
-            <br><p id="local">Rio de Janeiro - RJ</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Guaíra Veículos</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/veiculos-img/c4.jpeg') }}"><br>
-            Hyundai HB20 1.6 Comfort Plus Automático (2018) (Seminovo)
-            <br><p id="local">Recife - PE</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Grupo R1 Autos</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/veiculos-img/c5.jpg') }}"><br>
-            Renault Captur Intense 2.0 Automático (2020) (Seminovo)
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Usuário</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
-    </div>
-
-    <!--Motos-->
-    <div id="secaotitulo">
-        <h2>Motocicletas</h2><br>
-        <hr>
-    </div>
-
-    <div id="motos">
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
-        
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/veiculos-img/m1.webp') }}"><br>
-            Yamaha XTZ 250 Ténere Blueflex (2017) (Seminovo)
-            <br><p id="local">Osasco - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Chaves Multimarcas</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/veiculos-img/m2.webp') }}"><br>
-            Suzuki GSX - 8S (2024)
-            <br><p id="local">São Bernardo do Campo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Mais Brasil Motos</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/veiculos-img/m3.webp') }}"><br>
-            Dafra CityCom HD 300i Automático (2023) (Seminovo)
-            <br><p id="local">Santo André - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Mais Brasil Motos</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/veiculos-img/m4.jpg') }}"><br>
-            Honda CB 300F Twister CBS Manual (2025)
-            <br><p id="local">Carapicuíba - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Japauto Carapicuíba</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/veiculos-img/m5.webp') }}"><br>
-            Dafra Cruisym 150 Automático (2025)
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">A17 Motos Mooca</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
-    </div>
-
-    <!--Caminhões-->
-    <div id="secaotitulo">
-        <h2>Caminhões</h2><br>
-        <hr>
-    </div>
-
-    <div id="caminhoes">
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
-        
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/veiculos-img/ca1.webp') }}"><br>
-            Conjunto Completo Volvo FH 540 (2013) + Carreta SR Recrusul (2010)
-            <br><p id="local">Francisco Beltrão - PR</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Usuário</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/veiculos-img/ca2.webp') }}"><br>
-            Cavalo Mecânico VW 28.480 6x2 Cabine Estendida + Carreta Facchini SRF CA (2025)
-            <br><p id="local">Guarapuava - PR</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Usuário</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/veiculos-img/ca3.webp') }}"><br>
-            Volkswagen Meteor Automático (2020)
-            <br><p id="local">Bayeux - PB</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Usuário</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/veiculos-img/ca4.jpg') }}"><br>
-            Volkswagen Delivery Express 2P Manual (2022) (Seminovo)
-            <br><p id="local">Ribeirão Preto - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Localiza Seminovos</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/veiculos-img/ca5.jpg') }}"><br>
-            Hyundai HR 2.5 CRDI Longo Manual (2022) (Seminovo)
-            <br><p id="local">Campinas - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Localiza Seminovos</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
-    </div>
+{% block other_style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/categorias/veiculos.css') }}">
 {% endblock %}
 
-{% block scripts %}
-    <script src="{{ url_for('static', filename='script/script.js') }}"></script>
+{% block title %}Veículos{% endblock %}
+
+{% block header_content %}
+    <img src="{{ url_for('static', filename='img/banners/banner-veiculos.png')}}">
+{% endblock %}
+
+{% block icon_veiculos %}
+    <li>
+        <a href="{{ url_for('main.imoveis', categoria='Veiculos') }}">
+            <img src="{{ url_for('static', filename='img/img-nav/car-icon-color.png') }}" alt="Veículos">
+        </a>
+    </li>
+{% endblock %}
+
+{% block categoria_content %}
+    <div id="categorias">
+        <a href="{{ url_for('main.imoveis', categoria='Veiculos') }}" class="btn-subcategoria {% if not subcategoria %}ativo{% endif %}">
+            <div id="item-cat">
+                <img src="{{ url_for('static', filename='img/veiculos-img/cat1.jpg') }}">
+                <div id="texto-cat">Todos</div>
+            </div>
+        </a>
+
+        <a href="{{ url_for('main.imoveis', categoria='Veiculos', subcategoria='Carros') }}" class="btn-subcategoria {% if subcategoria == 'Carros' %}ativo{% endif %}">
+            <div id="item-cat">
+                <img src="{{ url_for('static', filename='img/veiculos-img/cat1.jpg') }}">
+                <div id="texto-cat">Carros</div>
+            </div>
+        </a>
+
+        <a href="{{ url_for('main.imoveis', categoria='Veiculos', subcategoria='Motocicletas') }}" class="btn-subcategoria {% if subcategoria == 'Motocicletas' %}ativo{% endif %}">
+            <div id="item-cat">
+                <img src="{{ url_for('static', filename='img/veiculos-img/cat2.webp') }}">
+                <div id="texto-cat">Motocicletas</div>
+            </div>
+        </a>
+
+        <a href="{{ url_for('main.imoveis', categoria='Veiculos', subcategoria='Caminhões') }}" class="btn-subcategoria {% if subcategoria == 'Caminhões' %}ativo{% endif %}">
+            <div id="item-cat">
+                <img src="{{ url_for('static', filename='img/veiculos-img/cat3.jpg') }}">
+                <div id="texto-cat">Caminhões</div>
+            </div>
+        </a>
+    </div>
+
+
+    <br><br><br><br>
+
+    <div id="conteudo-principal">
+        {% if subcategoria %}
+            <div id="secaotitulo">
+                <h2> Encerrando em Breve - {{ subcategoria }}</h2>
+                <hr>
+            </div>
+
+            {% if leiloes_encerrando %}
+                <div id="encerrando-em-breve">
+                    <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
+                    
+                    {% for leilao in leiloes_encerrando %}
+                    <a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="leilao-link">
+                        <div id="item">
+                            <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
+                            <br>{{ leilao.nome }}
+                            <br><p id="local">{{ leilao.cidade }}{% if leilao.uf %} - {{ leilao.uf }}{% endif %}</p>
+
+                            <div id="infos-leiloeiro">
+                                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                                <span id="leiloeiro-texto">{{ leilao.user.nome_completo if leilao.user else 'Leiloeiro' }}</span>
+                            </div>
+
+                            <div id="views-img">
+                                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                                <span id="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
+                            </div>
+
+                            <span id="lance">Lance atual: R$ {{ "%.2f"|format(leilao.lance_atual) }}</span><br>
+                            <span id="temporizador">{{ leilao.data_fim.strftime('%d/%m %H:%M') }}</span>
+                        </div>
+                    </a>
+                    {% endfor %}
+
+                    <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
+                </div>
+            {% else %}
+                <div class="sem-resultados">
+                    <p>Nenhum leilão encerrando em breve para {{ subcategoria }}</p>
+                </div>
+            {% endif %}
+
+            <div id="secaotitulo">
+                <h2>Todos os Leilões - {{ subcategoria }}</h2><br>
+                <hr>
+            </div>
+
+            {% if leiloes.items %}
+                <div id="leiloes-container">
+                    {% for leilao in leiloes.items %}
+                    <a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="leilao-link">
+                        <div id="item">
+                            <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
+                            <br>{{ leilao.nome }}
+                            <br><p id="local">{{ leilao.cidade }}{% if leilao.uf %} - {{ leilao.uf }}{% endif %}</p>
+
+                            
+                            <div id="infos-leiloeiro">
+                                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                                <span id="leiloeiro-texto">{{ leilao.user.nome_completo if leilao.user else 'Leiloeiro' }}</span>
+                            </div>
+
+                            <div id="views-img">
+                                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                                <span id="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
+                            </div>
+
+                            <br>
+
+                            <span id="lance">Lance atual: R$ {{ "%.2f"|format(leilao.lance_atual) }}</span><br>
+                            <span id="temporizador">Encerra: {{ leilao.data_fim.strftime('%d/%m/%Y %H:%M') }}</span>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+
+                {% if leiloes.pages > 1 %}
+                <div class="paginacao-container">
+                    <div class="paginacao">
+                        {% if leiloes.has_prev %}
+                            <a href="{{ url_for('main.imoveis', categoria='Veiculos', subcategoria=subcategoria, pagina=leiloes.prev_num) }}" class="pagina-link">‹ Anterior</a>
+                        {% endif %}
+
+                        {% for num in leiloes.iter_pages() %}
+                            {% if num %}
+                                {% if num == leiloes.page %}
+                                    <span class="pagina-atual">{{ num }}</span>
+                                {% else %}
+                                    <a href="{{ url_for('main.imoveis', categoria='Veiculos', subcategoria=subcategoria, pagina=num) }}" class="pagina-link">{{ num }}</a>
+                                {% endif %}
+                            {% else %}
+                                <span class="pontos">...</span>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if leiloes.has_next %}
+                            <a href="{{ url_for('main.imoveis', categoria='Veiculos', subcategoria=subcategoria, pagina=leiloes.next_num) }}" class="pagina-link">Próxima ›</a>
+                        {% endif %}
+                    </div>
+                    <div class="info-paginacao">
+                        Página {{ leiloes.page }} de {{ leiloes.pages }} - {{ leiloes.total }} leilões encontrados
+                    </div>
+                </div>
+                {% endif %}
+
+            {% else %}
+                <div class="sem-resultados">
+                    <p>Nenhum leilão encontrado para {{ subcategoria }}</p>
+                </div>
+            {% endif %}
+
+        {% else %}
+
+            <div id="secaotitulo">
+                <h2>Encerrando em Breve</h2><br>
+                <hr>
+            </div>
+
+            {% if leiloes_encerrando %}
+                <div id="encerrando-em-breve">
+                    <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
+                    
+                    {% for leilao in leiloes_encerrando %}
+                    <a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="leilao-link">
+                        <div id="item">
+                            <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
+                            <br>{{ leilao.nome }}
+                            <br><p id="local">{{ leilao.cidade }}{% if leilao.uf %} - {{ leilao.uf }}{% endif %}</p>
+
+                            <div id="infos-leiloeiro">
+                                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                                <span id="leiloeiro-texto">{{ leilao.user.nome_completo if leilao.user else 'Leiloeiro' }}</span>
+                            </div>
+
+                            <div id="views-img">
+                                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                                <span id="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
+                            </div>
+
+                            <span id="lance">Lance atual: R$ {{ "%.2f"|format(leilao.lance_atual) }}</span><br>
+                            <span id="temporizador">{{ leilao.data_fim.strftime('%d/%m %H:%M') }}</span>
+                        </div>
+                    </a>
+                    {% endfor %}
+
+                    <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
+                </div>
+            {% else %}
+                <div class="sem-resultados">
+                    <p>Nenhum leilão encerrando em breve</p>
+                </div>
+            {% endif %}
+
+            <br><br><br><br><br><br>
+
+            <div id="secaotitulo">
+                <h2>Todos os Veículos</h2>
+                <hr>
+            </div>
+
+            {% if leiloes.items %}
+                <div id="leiloes-container">
+                    {% for leilao in leiloes.items %}
+                    <a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="leilao-link">
+                        <div id="item">
+                            <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
+                            <br>{{ leilao.nome }}
+                            <br><p id="local">{{ leilao.cidade }}{% if leilao.uf %} - {{ leilao.uf }}{% endif %}</p>
+
+                            <div id="infos-leiloeiro">
+                                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                                <span id="leiloeiro-texto">{{ leilao.user.nome_completo if leilao.user else 'Leiloeiro' }}</span>
+                            </div>
+
+                            <div id="views-img">
+                                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                                <span id="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
+                            </div>
+
+                            <span id="lance">Lance atual: R$ {{ "%.2f"|format(leilao.lance_atual) }}</span><br>
+                            <span id="temporizador">Encerra: {{ leilao.data_fim.strftime('%d/%m/%Y %H:%M') }}</span>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+
+                {% if leiloes.pages > 1 %}
+                <div class="paginacao-container">
+                    <div class="paginacao">
+                        {% if leiloes.has_prev %}
+                            <a href="{{ url_for('main.imoveis', categoria='Veiculos', pagina=leiloes.prev_num) }}" class="pagina-link">‹ Anterior</a>
+                        {% endif %}
+
+                        {% for num in leiloes.iter_pages() %}
+                            {% if num %}
+                                {% if num == leiloes.page %}
+                                    <span class="pagina-atual">{{ num }}</span>
+                                {% else %}
+                                    <a href="{{ url_for('main.imoveis', categoria='Veiculos', pagina=num) }}" class="pagina-link">{{ num }}</a>
+                                {% endif %}
+                            {% else %}
+                                <span class="pontos">...</span>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if leiloes.has_next %}
+                            <a href="{{ url_for('main.imoveis', categoria='Veiculos', pagina=leiloes.next_num) }}" class="pagina-link">Próxima ›</a>
+                        {% endif %}
+                    </div>
+                    <div class="info-paginacao">
+                        Página {{ leiloes.page }} de {{ leiloes.pages }} - {{ leiloes.total }} leilões encontrados
+                    </div>
+                </div>
+                {% endif %}
+
+            {% else %}
+                <div class="sem-resultados">
+                    <p>Nenhum leilão de veículos encontrado</p>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
 {% endblock %}

@@ -187,73 +187,133 @@ def imoveis(categoria):
     # Obter parâmetros
     subcategoria = request.args.get('subcategoria', '')
     pagina = request.args.get('pagina', 1, type=int)
-    por_pagina = 10
+    por_pagina = 12
 
-    categoria_exist = CategoriaModel.query.filter_by(nome=categoria).first()
+    # Buscar categoria - mais flexível
+    categoria_exist = CategoriaModel.query.filter(
+        db.func.lower(CategoriaModel.nome) == db.func.lower(categoria)
+    ).first()
     
-    if categoria_exist:
-        if subcategoria:
-            # Filtrar por subcategoria específica
-            subcategoria_obj = SubcategoriaModel.query.filter_by(
-                id_categoria=categoria_exist.id,
-                nome=subcategoria
-            ).first()
-            
-            if subcategoria_obj:
-                # Leilões encerrando em breve da subcategoria
-                leiloes_encerrando = LeilaoModel.query.filter(
-                    LeilaoModel.id_subcategoria == subcategoria_obj.id,
-                    LeilaoModel.data_fim > datetime.now(ZoneInfo("America/Sao_Paulo")),
-                    LeilaoModel.data_fim <= datetime.now(ZoneInfo("America/Sao_Paulo")) + timedelta(hours=24)  # Próximas 24h
-                ).order_by(
-                    LeilaoModel.data_fim.asc()
-                ).limit(5).all()
-
-                # Todos os leilões da subcategoria (com paginação)
-                leiloes = LeilaoModel.query.filter(
-                    LeilaoModel.id_subcategoria == subcategoria_obj.id,
-                    LeilaoModel.data_fim > datetime.now(ZoneInfo("America/Sao_Paulo"))
-                ).order_by(
-                    LeilaoModel.data_inicio.desc()
-                ).paginate(
-                    page=pagina,
-                    per_page=por_pagina,
-                    error_out=False
-                )
-            else:
-                leiloes_encerrando = []
-                leiloes = None
-        else:
-            # Leilões encerrando em breve de toda a categoria
-            leiloes_encerrando = LeilaoModel.query.filter(
-                LeilaoModel.id_subcategoria.in_([sub.id for sub in categoria_exist.subcategorias]),
-                LeilaoModel.data_fim > datetime.now(ZoneInfo("America/Sao_Paulo")),
-                LeilaoModel.data_fim <= datetime.now(ZoneInfo("America/Sao_Paulo")) + timedelta(hours=24)
-            ).order_by(
-                LeilaoModel.data_fim.asc()
-            ).limit(5).all()
-
-            # Todos os leilões da categoria (com paginação)
-            leiloes = LeilaoModel.query.filter(
-                LeilaoModel.id_subcategoria.in_([sub.id for sub in categoria_exist.subcategorias]),
-                LeilaoModel.data_fim > datetime.now(ZoneInfo("America/Sao_Paulo"))
-            ).order_by(
-                LeilaoModel.data_inicio.desc()
-            ).paginate(
-                page=pagina,
-                per_page=por_pagina,
-                error_out=False
-            )
-
-        return render_template(
-            f'categorias/{categoria_exist.slug}.html', 
-            leiloes=leiloes,
-            leiloes_encerrando=leiloes_encerrando,
-            subcategoria=subcategoria,
-            categoria=categoria_exist
-        )
-    else:
+    if not categoria_exist:
+        # Tentar buscar pelo slug também
+        categoria_exist = CategoriaModel.query.filter(
+            db.func.lower(CategoriaModel.slug) == db.func.lower(categoria)
+        ).first()
+    
+    if not categoria_exist:
+        flash('Categoria não encontrada.', 'error')
         return redirect(url_for('main.index'))
+    
+    subcategoria_obj = None
+    if subcategoria:
+        # Buscar subcategoria - mais flexível
+        subcategoria_obj = SubcategoriaModel.query.filter(
+            SubcategoriaModel.id_categoria == categoria_exist.id,
+            db.func.lower(SubcategoriaModel.nome) == db.func.lower(subcategoria)
+        ).first()
+        
+        if not subcategoria_obj:
+            # Tentar buscar pelo slug
+            subcategoria_obj = SubcategoriaModel.query.filter(
+                SubcategoriaModel.id_categoria == categoria_exist.id,
+                db.func.lower(SubcategoriaModel.slug) == db.func.lower(subcategoria)
+            ).first()
+        
+        if not subcategoria_obj:
+            flash(f'Subcategoria "{subcategoria}" não encontrada.', 'warning')
+            # Continua mostrando a categoria sem filtro de subcategoria
+
+    # Definir filtro base
+    agora = datetime.now(ZoneInfo("America/Sao_Paulo"))
+    
+    if subcategoria_obj:
+        # Filtrar por subcategoria específica
+        filtro_subcategoria = LeilaoModel.id_subcategoria == subcategoria_obj.id
+        titulo_filtro = subcategoria_obj.nome
+    else:
+        # Filtrar por toda a categoria
+        subcategorias_ids = [sub.id for sub in categoria_exist.subcategorias]
+        if not subcategorias_ids:
+            # Se não há subcategorias, não mostrar leilões
+            leiloes_encerrando = []
+            leiloes = LeilaoModel.query.filter(False).paginate(
+                page=pagina, per_page=por_pagina, error_out=False
+            )
+        else:
+            filtro_subcategoria = LeilaoModel.id_subcategoria.in_(subcategorias_ids)
+        titulo_filtro = categoria_exist.nome
+
+    # Leilões encerrando em breve (apenas se há subcategorias)
+    if 'subcategorias_ids' in locals() and subcategorias_ids:
+        leiloes_encerrando_query = LeilaoModel.query.filter(
+            filtro_subcategoria,
+            LeilaoModel.data_fim > agora,
+            LeilaoModel.data_fim <= agora + timedelta(hours=24),
+            LeilaoModel.status == "Aberto"
+        ).order_by(
+            LeilaoModel.data_fim.asc()
+        ).limit(5).all()
+        
+        # Calcular lance atual para cada leilão
+        leiloes_encerrando = []
+        for leilao in leiloes_encerrando_query:
+            leilao_com_lance = calcular_lance_atual(leilao)
+            leiloes_encerrando.append(leilao_com_lance)
+    else:
+        leiloes_encerrando = []
+
+    # Todos os leilões (com paginação)
+    if 'subcategorias_ids' in locals() and subcategorias_ids:
+        leiloes_query = LeilaoModel.query.filter(
+            filtro_subcategoria,
+            LeilaoModel.data_fim > agora,
+            LeilaoModel.status.in_(["Aberto", "Não iniciado"])
+        ).order_by(
+            LeilaoModel.data_inicio.desc()
+        ).paginate(
+            page=pagina,
+            per_page=por_pagina,
+            error_out=False
+        )
+        
+        # Calcular lance atual para cada leilão na paginação
+        leiloes_com_lance = []
+        for leilao in leiloes_query.items:
+            leilao_com_lance = calcular_lance_atual(leilao)
+            leiloes_com_lance.append(leilao_com_lance)
+        
+        # Substituir os items da paginação
+        leiloes_query.items = leiloes_com_lance
+        leiloes = leiloes_query
+    else:
+        leiloes = LeilaoModel.query.filter(False).paginate(
+            page=pagina, per_page=por_pagina, error_out=False
+        )
+
+    return render_template(
+        f'categorias/{categoria_exist.slug}.html', 
+        leiloes=leiloes,
+        leiloes_encerrando=leiloes_encerrando,
+        subcategoria=subcategoria,  # Nome da subcategoria da query
+        subcategoria_obj=subcategoria_obj,  # Objeto completo
+        categoria=categoria_exist,
+        titulo_filtro=titulo_filtro,
+        agora=agora
+    )
+
+def calcular_lance_atual(leilao):
+    """
+    Calcula o lance atual baseado nos lances do leilão
+    """
+    if leilao.lances:
+        # Ordena os lances por valor (maior primeiro) e pega o primeiro
+        lance_maior = max(leilao.lances, key=lambda x: x.valor)
+        leilao.lance_atual = lance_maior.valor
+    else:
+        # Se não há lances, usa o lance inicial
+        leilao.lance_atual = leilao.lance_inicial
+    
+    return leilao
 
 @bp.route('/novoleilao')
 def pagina_criar_leilao():
