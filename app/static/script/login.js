@@ -24,6 +24,7 @@ function mostrarCaptcha() {
         btnCaptcha = grecaptcha.render("g-recaptcha", {
             sitekey: "6LfyOxYsAAAAAJnowmln6KG34CtnAooeHKMbDcsY"
         })
+        grecaptcha.reset();
     }
 }
 
@@ -98,6 +99,7 @@ document.addEventListener('DOMContentLoaded', function(){
         if (resultado.erro === "Faça o captcha.") {
             mensagem.innerHTML = resultado.erro
             mostrarCaptcha()
+            grecaptcha.reset();
             return;
         }
         
