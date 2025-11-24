@@ -6,7 +6,8 @@ from datetime import datetime, date, timedelta
 from zoneinfo import ZoneInfo
 import cloudinary.uploader
 from sqlalchemy import select, or_
-from app import stripe, socketio, sqids
+from app import stripe, socketio, sqids, limiter, red
+import requests
 from config import Config
 from app.controllers.user_controller import (
     verificar_idade,
@@ -20,6 +21,7 @@ bp = Blueprint('main', __name__)
 
 ENDPOINTS = [Config.STRIPE_WEBHOOK_ACCOUNT, Config.STRIPE_WEBHOOK_PAYMENT]
 
+# Funções importantes para o funcionamento e fácil manuseio do código
 def salvar_dados(dados: object) -> bool:
     try:
         db.session.add(dados)
@@ -37,6 +39,22 @@ def get_leilao(hashid):
     else: 
         return None     
 
+def chave(ip, email):
+    return f"{ip}-{email}"
+
+def tentativa(ip, email):
+    key = chave(ip, email)
+    red.incr(key)
+    red.expire(key, 900)
+
+def reset_tentativa(ip, email):
+    red.delete(chave(ip, email))
+    
+def captcha(ip, email):
+    tentativas = red.get(chave(ip, email))
+    if not tentativas:
+        return False
+    return int(tentativas) >= 5
 
 @bp.route('/')
 def index():
@@ -154,8 +172,8 @@ def login():
     return render_template('login.html')
 
 @bp.route('/logar', methods=['POST'])
+@limiter.limit("5 per minute")
 def logar():
-
     if request.is_json:
         dados = request.get_json()
     else:
@@ -163,6 +181,8 @@ def logar():
 
     email = dados.get('email')
     senha = dados.get('senha')
+    ip = request.remote_addr
+    g_captcha = dados.get('captcha')
 
     erro = verificar_camposlog(email, senha)
     if erro:
@@ -171,10 +191,26 @@ def logar():
     erro = verificar_email(email)
     if erro:
         return jsonify({'erro': erro})
+    
+    if captcha(ip, email):
+        if not g_captcha:
+            return jsonify({'erro': 'Faça o captcha.'})
 
+        payload = {
+            "secret": Config.RECAPTCHA_SECRET,
+            "response": g_captcha,
+            "remoteip": ip
+        }
+        resposta = requests.post("https://www.google.com/recaptcha/api/siteverify", data=payload)
+        resultado = resposta.json()
+        
+        if not resultado.get("success"):
+            return jsonify({'erro': 'captcha inválido'})
+        
     usuario = UserModel.query.filter_by(email=email).first()
 
     if usuario and usuario.verify_senha(senha):
+        reset_tentativa(ip, email)
         session['logado'] = True
         session['usuario_id'] = usuario.id
         session['nome_completo'] = usuario.nome_completo
@@ -183,7 +219,7 @@ def logar():
             "sucesso": f"Bem-Vindo, {usuario.nome_completo}!",
             "redirect": url_for('main.index')
         })
-
+    tentativa(ip, email)
     return jsonify({"erro": "Email ou senha inválidos."})
 
 

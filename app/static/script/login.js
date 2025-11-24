@@ -16,9 +16,16 @@ function verificar_email(email){
     return null;
 }
 
+function mostrarCaptcha() {
+    if (!captchavisible) {
+        captchavisible = true;
+        document.getElementById("captcha-area").style.display = "none";
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function(){
     adicionarToggleSenha();
-
+    let captchavisible = false;
     const formularioLogin = document.getElementById('formularioLogin');
     const mensagem = document.getElementById('mensagem');
     
@@ -47,7 +54,15 @@ document.addEventListener('DOMContentLoaded', function(){
             email: email,
             senha: senha
         }
-    
+        if (captchavisible) {
+            const g_recaptcha = grecaptcha.getResponse();
+            if (!g_recaptcha) {
+                mensagem.innerHTML = "Faça o captcha.";
+                return;
+            }
+            dados.captcha = g_recaptcha   
+        }
+
         const resposta = await fetch('/logar', {
             method: 'POST',
             headers: {
@@ -69,13 +84,17 @@ document.addEventListener('DOMContentLoaded', function(){
         if (resultado.sucesso) {
             estilizarMensagemSucesso();
             mensagem.innerHTML = resultado.sucesso;
+            grecaptcha.reset();
+            captchavisible = false;
+            document.getElementById('captcha-area').style.display = "none";
             setTimeout(() => {
                window.location.href = '/';
             }, 1500); 
-        } else {
-            scrollerro();
-            estilizarmensagem(mensagem);
-            mensagem.innerHTML = resultado.erro;
+        } 
+        if (resultado.erro === "Faça o captcha.") {
+            mensagem.innerHTML = resultado.erro
+            mostrarCaptcha()
+            return;
         }
         
 });

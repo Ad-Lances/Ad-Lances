@@ -18,3 +18,4 @@ class Config:
     MAIL_USERNAME = 'adlances.noreply@gmail.com'
     MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
     MAIL_DEFAULT_SENDER = 'adlances.noreply@gmail.com'
+    RECAPTCHA_SECRET= os.getenv('RECAPTCHA_SECRET')
