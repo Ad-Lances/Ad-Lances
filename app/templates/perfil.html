@@ -96,7 +96,6 @@
             <hr>
         </section>
 
-        <!-- Leilões teste -->
         <div id="leiloes-criados">
             <div id="carrossel-leiloes">
                 {% if leiloes %}
@@ -151,8 +150,8 @@
                 {% if leiloes %}
                     {% for leilao in leiloes %}
                         {% if lance in leilao.lances %}
-                            {% for lance in lances %}
-                                {% if lance.id_user == session.get('user.id') %}
+                            {% for lance in leilao.lances %}
+                                {% if lance.id_user == session.get('usuario_id') %}
                                     <div id="leilao">
                                         <img src="{{ leilao.get_foto() }}"><br>
                                         {{ leilao.nome }}
@@ -175,6 +174,11 @@
                                         {% endif %}</span>
                                         <span id="temporizador">Encerra em: {{ leilao.data_fim }}</span>
                                     </div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
 
                 <div id="leilao">
                     <img src="{{ url_for('static', filename='img/eletronicos-img/n1.webp') }}"><br>

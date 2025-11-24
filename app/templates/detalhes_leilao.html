@@ -203,7 +203,6 @@
                         <th>Nome</th>
                         <th>Valor</th>
                         <th>Data/Hora</th>
-                        <th>Condição</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -212,8 +211,7 @@
                     <tr>
                         <td>{{ lance.user.nome_completo }}</td>
                         <td class="lance-amount">{{ lance.get_valor_str() }}</td>
-                        <td class="lance-date">{{ lance.user.horario }}</td>
-                        <td class="lance-installments">Parcelado em 20x</td>
+                        <td class="lance-date">{{ lance.get_horario_str() }}</td>
                     </tr>
                     {% endfor %}
                     

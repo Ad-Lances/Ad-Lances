@@ -204,10 +204,9 @@ def perfil_user():
 
 @bp.route('/categorias/<string:categoria>')
 def imoveis(categoria):
-    # Obter parâmetros
     subcategoria = request.args.get('subcategoria', '')
     pagina = request.args.get('pagina', 1, type=int)
-    por_pagina = 12  # Aumentei para mostrar mais itens
+    por_pagina = 12 
 
     categoria_exist = CategoriaModel.query.filter_by(nome=categoria).first()
     
