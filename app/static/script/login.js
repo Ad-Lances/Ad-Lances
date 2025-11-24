@@ -15,7 +15,7 @@ function verificar_email(email){
 
     return null;
 }
-
+let captchavisible = false;
 function mostrarCaptcha() {
     if (!captchavisible) {
         captchavisible = true;
@@ -25,7 +25,7 @@ function mostrarCaptcha() {
 
 document.addEventListener('DOMContentLoaded', function(){
     adicionarToggleSenha();
-    let captchavisible = false;
+    
     const formularioLogin = document.getElementById('formularioLogin');
     const mensagem = document.getElementById('mensagem');
     
