@@ -19,7 +19,7 @@ function verificar_email(email){
 function mostrarCaptcha() {
     if (!captchavisible) {
         captchavisible = true;
-        document.getElementById("captcha-area").style.display = "none";
+        document.getElementById("captcha-area").style.display = "block";
     }
 }
 
