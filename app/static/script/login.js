@@ -65,6 +65,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 return;
             }
             dados.captcha = g_recaptcha   
+            console.log(dados)
         }
 
         const resposta = await fetch('/logar', {
@@ -88,7 +89,6 @@ document.addEventListener('DOMContentLoaded', function(){
         if (resultado.sucesso) {
             estilizarMensagemSucesso();
             mensagem.innerHTML = resultado.sucesso;
-            grecaptcha.reset();
             captchavisible = false;
             document.getElementById('captcha-area').style.display = "none";
             setTimeout(() => {
@@ -96,12 +96,19 @@ document.addEventListener('DOMContentLoaded', function(){
             }, 1500); 
         } 
         if (resultado.erro === "Faça o captcha.") {
-            mensagem.innerHTML = resultado.erro
-            mostrarCaptcha()
+            setTimeout(() => {
+                mensagem.innerHTML = resultado.erro
+                mostrarCaptcha()
+            }, 3000)
+
+            if (captchavisible) {
             grecaptcha.reset(btnCaptcha);
-            return;
+            }
         } else{
-            mensagem.innerHTML = resultado.erro
+            setTimeout(() => {
+                mensagem.innerHTML = resultado.erro
+            }, 5000)
+            
         }
         
 });
