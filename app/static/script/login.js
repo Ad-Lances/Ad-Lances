@@ -97,12 +97,12 @@ document.addEventListener('DOMContentLoaded', function(){
         } 
         if (resultado.erro === "Faça o captcha.") {
             setTimeout(() => {
-                mensagem.innerHTML = resultado.erro
-                mostrarCaptcha()
+                mensagem.innerHTML = resultado.erro   
             }, 3000)
+            mostrarCaptcha()
 
             if (captchavisible) {
-            grecaptcha.reset(btnCaptcha);
+                btnCaptcha = grecaptcha.render("g-recaptcha", {sitekey: "6LfyOxYsAAAAAJnowmln6KG34CtnAooeHKMbDcsY"})
             }
         } else{
             setTimeout(() => {
