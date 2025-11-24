@@ -148,24 +148,33 @@
             </section>
 
             <div id="carrossel-leiloes">
-                <div id="leilao">
-                    <img src="{{ url_for('static', filename='img/veiculos-img/aa1.webp') }}"><br>
-                    Motocicleta BMW R1250
-                    <br><p id="local">Curitiba - PR</p><br>
-
-                    <div id="infos-leiloeiro">
-                        <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                        <span id="leiloeiro-texto">Detran</span>
-                    </div>
-
-                    <div id="views-img">
-                        <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                        <span id="views-count">1000 participantes</span>
-                    </div><br>
-
-                    <span id="lance">Lance atual: </span>
-                    <span id="temporizador">Encerra em: </span>
-                </div>
+                {% if leiloes %}
+                    {% for leilao in leiloes %}
+                        {% if lance in leilao.lances %}
+                            {% for lance in lances %}
+                                {% if lance.id_user == session.get('user.id') %}
+                                    <div id="leilao">
+                                        <img src="{{ leilao.get_foto() }}"><br>
+                                        {{ leilao.nome }}
+                                        <br><p id="local">{{ leilao.cidade }} - {{ leilao.uf }}</p><br>
+                                    
+                                        <div id="infos-leiloeiro">
+                                            <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                                            <span id="leiloeiro-texto">{{ leilao.user.nome_completo }}</span>
+                                        </div>
+                                    
+                                        <div id="views-img">
+                                            <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                                            <span id="views-count">{{ leilao.lances|length }} lances</span>
+                                        </div><br>
+                                    
+                                        <span id="lance">Lance atual: {% if leilao.lances %}
+                                            {{ (leilao.lances|sort(attribute='valor')|last).get_valor_str() }}
+                                        {% else %}
+                                            {{ leilao.get_lance_inicial_str() }}
+                                        {% endif %}</span>
+                                        <span id="temporizador">Encerra em: {{ leilao.data_fim }}</span>
+                                    </div>
 
                 <div id="leilao">
                     <img src="{{ url_for('static', filename='img/eletronicos-img/n1.webp') }}"><br>
@@ -267,17 +276,17 @@
                 <th>Produto</th>
                 <th>Valor do Lance</th>
                 <th>Data/Hora</th>
-                <th>Status</th>
             </tr>
         </thead>
         <tbody>
-            {% for lances in lances_usuario %}
-            <tr>
-                <td>{{ lance.id_leilao.nome }}</td>
-                <td>{{ lance.valor }}</td>
-                <td>{{ lance.horario }}</td>
-                <td class="status-ativo">Ativo</td>
-            </tr>
+            {% for lances in lances %}
+                {% if lances._user == session.get("usuario_id") %}
+                    <tr>
+                        <td>{{ lance.id_leilao.nome }}</td>
+                        <td>{{ lance.valor }}</td>
+                        <td>{{ lance.horario }}</td>
+                    </tr>
+                {% endif %}
             {% endfor %}
             <tr>
                 <td>Notebook Acer Nitro V15 ANV15-51-58AZ 13ª Geração</td>

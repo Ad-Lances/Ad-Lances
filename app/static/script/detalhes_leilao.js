@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    if (formEdicao){
     formEdicao.addEventListener('submit', async(event) =>{
         event.preventDefault();
         
@@ -65,6 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
             mensagem.innerHTML = resultado.erro;
         }
     });
+    }
     
     if (encerrarBtn) {
     encerrarBtn.addEventListener("click", async () => {
