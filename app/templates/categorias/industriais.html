@@ -7,476 +7,289 @@
 {% block title %}Industriais{% endblock %}
 
 {% block icon_industriais %}
-        <li>
-            <a href="{{ url_for('main.imoveis', categoria='Industriais') }}">
-                <img src="{{ url_for('static', filename='img/img-nav/machine-icon-color.png') }}" alt="Industriais">
-            </a>
-        </li>
+    <li>
+        <a href="{{ url_for('main.imoveis', categoria='Industriais') }}">
+            <img src="{{ url_for('static', filename='img/img-nav/machine-icon-color.png') }}" alt="Industriais">
+        </a>
+    </li>
 {% endblock %}
 
-    {% block header_content %}
-        <img src="{{ url_for('static', filename='img/banners/banner-industriais.png')}}">
-    {% endblock %}
+{% block header_content %}
+    <img src="{{ url_for('static', filename='img/banners/banner-industriais.png')}}">
+{% endblock %}
 
 {% block categoria_content %}
-    <!--Categorias-->
+    <!--Subcategorias-->
     <div id="categorias">
-        <div id="item-cat">
-            <img src="{{ url_for('static', filename='img/industriais-img/cat1.jpg')}}"><br>
-            <div id="texto-cat">Máquinas e Equipamentos Pesados</div>
-        </div>
+        <a href="{{ url_for('main.imoveis', categoria='Industriais') }}" class="btn-subcategoria {% if not subcategoria %}ativo{% endif %}">
+            <div id="item-cat">
+                <img src="{{ url_for('static', filename='img/industriais-img/cat1.jpg')}}">
+                <div id="texto-cat">Todos</div>
+            </div>
+        </a>
 
-        <div id="item-cat">
-            <img src="{{ url_for('static', filename='img/industriais-img/fe3.webp') }}"><br>
-            <div id="texto-cat">Materiais e Insumos Industriais</div>
-        </div>
+        <a href="{{ url_for('main.imoveis', categoria='Industriais', subcategoria='Máquinas e Equipamentos Pesados') }}" class="btn-subcategoria {% if subcategoria == 'Máquinas e Equipamentos Pesados' %}ativo{% endif %}">
+            <div id="item-cat">
+                <img src="{{ url_for('static', filename='img/industriais-img/cat1.jpg')}}">
+                <div id="texto-cat">Máquinas e Equipamentos Pesados</div>
+            </div>
+        </a>
 
-        <div id="item-cat">
-            <img src="{{ url_for('static', filename='img/industriais-img/cat3.jpg') }}"><br>
-            <div id="texto-cat">Ferramentas e Equipamentos de Oficina</div>
-        </div>
+        <a href="{{ url_for('main.imoveis', categoria='Industriais', subcategoria='Materiais e Insumos Industriais') }}" class="btn-subcategoria {% if subcategoria == 'Materiais e Insumos Industriais' %}ativo{% endif %}">
+            <div id="item-cat">
+                <img src="{{ url_for('static', filename='img/industriais-img/fe3.webp') }}">
+                <div id="texto-cat">Materiais e Insumos Industriais</div>
+            </div>
+        </a>
 
-        <div id="item-cat">
-            <img src="{{ url_for('static', filename='img/industriais-img/cat4.jpg') }}"><br>
-            <div id="texto-cat">Acessórios de Máquinas</div>
-        </div>
+        <a href="{{ url_for('main.imoveis', categoria='Industriais', subcategoria='Ferramentas e Equipamentos de Oficina') }}" class="btn-subcategoria {% if subcategoria == 'Ferramentas e Equipamentos de Oficina' %}ativo{% endif %}">
+            <div id="item-cat">
+                <img src="{{ url_for('static', filename='img/industriais-img/cat3.jpg') }}">
+                <div id="texto-cat">Ferramentas e Equipamentos de Oficina</div>
+            </div>
+        </a>
 
-        <div id="item-cat">
-            <img src="{{ url_for('static', filename='img/industriais-img/cat5.jpg') }}"><br>
-            <div id="texto-cat">Automação, Robótica e Controle</div>
-        </div>
+        <a href="{{ url_for('main.imoveis', categoria='Industriais', subcategoria='Acessórios de Máquinas') }}" class="btn-subcategoria {% if subcategoria == 'Acessórios de Máquinas' %}ativo{% endif %}">
+            <div id="item-cat">
+                <img src="{{ url_for('static', filename='img/industriais-img/cat4.jpg') }}">
+                <div id="texto-cat">Acessórios de Máquinas</div>
+            </div>
+        </a>
 
+        <a href="{{ url_for('main.imoveis', categoria='Industriais', subcategoria='Automação, Robótica e Controle') }}" class="btn-subcategoria {% if subcategoria == 'Automação, Robótica e Controle' %}ativo{% endif %}">
+            <div id="item-cat">
+                <img src="{{ url_for('static', filename='img/industriais-img/cat5.jpg') }}">
+                <div id="texto-cat">Automação, Robótica e Controle</div>
+            </div>
+        </a>
     </div>
 
-    <!--Encerrando em breve-->
-    <div id="secaotitulo">
-        <h2>Leilões encerrando em breve</h2><br>
-        <hr>
-    </div>
+    <br><br><br><br>
 
-    <div id="encerrando-em-breve">
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/industriais-img/eb1.webp') }}"><br>
-            Plataforma Elevatória 12m Tesoura Hidráulica Móvel Autopropulsão 320kg
-            <br><p id="local">Diadema - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Agrotama</span>
+    <div id="conteudo-principal">
+        {% if subcategoria %}
+            <div id="secaotitulo">
+                <h2> Encerrando em Breve - {{ subcategoria }}</h2>
+                <hr>
             </div>
 
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
+            {% if leiloes_encerrando %}
+                <div id="encerrando-em-breve">
+                    <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
+                    
+                    {% for leilao in leiloes_encerrando %}
+                    <a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="leilao-link">
+                        <div class="item">
+                            <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
+                            <br>{{ leilao.nome }}
+                            <br><p class="local">{{ leilao.cidade }}{% if leilao.uf %} - {{ leilao.uf }}{% endif %}</p>
 
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
+                            <div class="infos-leiloeiro">
+                                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                                <span class="leiloeiro-texto">{{ leilao.user.nome_completo if leilao.user else 'Leiloeiro' }}</span>
+                            </div>
 
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/industriais-img/eb2.webp') }}"><br>
-            Acessórios De Fixação Coladeira Flex - Maksiwa-FF.500
-            <br><p id="local">Diadema - SP</p><br>
+                            <div class="views-img">
+                                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                                <span class="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
+                            </div>
 
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Angatu Máquinas</span>
+                            <span class="lance">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span><br>
+                            <span class="temporizador">{{ leilao.data_fim.strftime('%d/%m %H:%M') }}</span>
+                        </div>
+                    </a>
+                    {% endfor %}
+
+                    <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
+                </div>
+            {% else %}
+                <div class="sem-resultados">
+                    <p>Nenhum leilão encerrando em breve para {{ subcategoria }}</p>
+                </div>
+            {% endif %}
+
+            <div id="secaotitulo">
+                <h2>Todos os Leilões - {{ subcategoria }}</h2><br>
+                <hr>
             </div>
 
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
+            {% if leiloes.items %}
+                <div id="leiloes-container">
+                    {% for leilao in leiloes.items %}
+                    <a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="leilao-link">
+                        <div class="item">
+                            <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
+                            <br>{{ leilao.nome }}
+                            <br><p class="local">{{ leilao.cidade }}{% if leilao.uf %} - {{ leilao.uf }}{% endif %}</p>
 
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
+                            <div class="infos-leiloeiro">
+                                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                                <span class="leiloeiro-texto">{{ leilao.user.nome_completo if leilao.user else 'Leiloeiro' }}</span>
+                            </div>
 
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/industriais-img/eb3.webp') }}"><br>
-            Painel Elétrico Para Estação Elevatória 2 Bomba 3cv 220v Apr
-            <br><p id="local">Marília - SP</p><br>
+                            <div class="views-img">
+                                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                                <span class="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
+                            </div>
 
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">APR SOluções Industriais</span>
+                            <br>
+
+                            <span class="lance">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span><br>
+                            <span class="temporizador">Encerra: {{ leilao.data_fim.strftime('%d/%m/%Y %H:%M') }}</span>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+
+                {% if leiloes.pages > 1 %}
+                <div class="paginacao-container">
+                    <div class="paginacao">
+                        {% if leiloes.has_prev %}
+                            <a href="{{ url_for('main.imoveis', categoria='Industriais', subcategoria=subcategoria, pagina=leiloes.prev_num) }}" class="pagina-link">‹ Anterior</a>
+                        {% endif %}
+
+                        {% for num in leiloes.iter_pages() %}
+                            {% if num %}
+                                {% if num == leiloes.page %}
+                                    <span class="pagina-atual">{{ num }}</span>
+                                {% else %}
+                                    <a href="{{ url_for('main.imoveis', categoria='Industriais', subcategoria=subcategoria, pagina=num) }}" class="pagina-link">{{ num }}</a>
+                                {% endif %}
+                            {% else %}
+                                <span class="pontos">...</span>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if leiloes.has_next %}
+                            <a href="{{ url_for('main.imoveis', categoria='Industriais', subcategoria=subcategoria, pagina=leiloes.next_num) }}" class="pagina-link">Próxima ›</a>
+                        {% endif %}
+                    </div>
+                    <div class="info-paginacao">
+                        Página {{ leiloes.page }} de {{ leiloes.pages }} - {{ leiloes.total }} leilões encontrados
+                    </div>
+                </div>
+                {% endif %}
+
+            {% else %}
+                <div class="sem-resultados">
+                    <p>Nenhum leilão encontrado para {{ subcategoria }}</p>
+                </div>
+            {% endif %}
+
+        {% else %}
+
+            <div id="secaotitulo">
+                <h2>Encerrando em Breve</h2><br>
+                <hr>
             </div>
 
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
+            {% if leiloes_encerrando %}
+                <div id="encerrando-em-breve">
+                    <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
+                    
+                    {% for leilao in leiloes_encerrando %}
+                    <a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="leilao-link">
+                        <div class="item">
+                            <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
+                            <br>{{ leilao.nome }}
+                            <br><p class="local">{{ leilao.cidade }}{% if leilao.uf %} - {{ leilao.uf }}{% endif %}</p>
 
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
+                            <div class="infos-leiloeiro">
+                                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                                <span class="leiloeiro-texto">{{ leilao.user.nome_completo if leilao.user else 'Leiloeiro' }}</span>
+                            </div>
 
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/industriais-img/eb4.webp') }}"><br>
-            Motor VR L100L4 5CV 4P 220/380/440/760V T 60HZ
-            <br><p id="local">Araraquara - SP</p><br>
+                            <div class="views-img">
+                                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                                <span class="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
+                            </div>
 
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Industrial Motors</span>
+                            <span class="lance">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span><br>
+                            <span class="temporizador">{{ leilao.data_fim.strftime('%d/%m %H:%M') }}</span>
+                        </div>
+                    </a>
+                    {% endfor %}
+
+                    <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
+                </div>
+            {% else %}
+                <div class="sem-resultados">
+                    <p>Nenhum leilão encerrando em breve</p>
+                </div>
+            {% endif %}
+
+            <br><br><br><br><br><br>
+
+            <div id="secaotitulo">
+                <h2>Todos os Industriais</h2>
+                <hr>
             </div>
 
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/industriais-img/eb5.jpg') }}"><br>
-            Contator Principal Tripolar 105A A S4 2NA+2NF 380VCA V 60HZ 3TS50 Siemens
-            <br><p id="local">Porto Alegre - RS</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Plenobras</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
-    </div>
-
-    <!--Máquinas e Equipamentos Pesados-->
-    <div id="secaotitulo">
-        <h2>Máquinas e Equipamentos Pesados</h2><br>
-        <hr>
-    </div>
-
-    <div id="maquinas-equipamentos-pesados">
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/industriais-img/eb1.webp') }}"><br>
-            Plataforma Elevatória 12m Tesoura Hidráulica Móvel Autopropulsão 320kg
-            <br><p id="local">Diadema - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Agrotama</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/industriais-img/vp1.webp') }}"><br>
-            Pá Carregadeira BRUTATEC BR 931 Caçamba de 1T e Garfo Paleteiro - Multivisi
-            <br><p id="local">Fortaleza - CE</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Multivisi</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/industriais-img/vp2.webp') }}"><br>
-            Talha Elétrica 3T 9m com Trolley
-            <br><p id="local">Diadema - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Nagano Materiais</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/industriais-img/vp3.webp') }}"><br>
-            Trator Agrícola Kawashima TRY 253 Super Compacto 4x4 Diesel 25 HP
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Santamaq</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/industriais-img/vp4.webp') }}"><br>
-            Betoneira 400L Prime 220V Menegotti
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Leroy Merlin</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
-    </div>
-
-    <!--Materiais e Insumos Industriais-->
-    <div id="secaotitulo">
-        <h2>Materiais e Insumos Industriais</h2><br>
-        <hr>
-    </div>
-
-    <div id="materiais-e-insumos">
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/industriais-img/eb4.webp') }}"><br>
-            Motor VR L100L4 5CV 4P 220/380/440/760V T 60HZ
-            <br><p id="local">Araraquara - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Industrial Motors</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/industriais-img/mi1.webp') }}"><br>
-            Motor Trifásico Hércules IP 55 IR3 4P 5CV
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Vendas MBM</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/industriais-img/mi2.webp') }}"><br>
-            Contator 2Na+2Nf 12A 60Hz Tripolar 380Vca CWM122230V41
-            <br><p id="local">Garuya - SC</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Weg Ferramentas</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/industriais-img/mi3.webp') }}"><br>
-            Rolamento NX35Z PS 35x47x30
-            <br><p id="local">Piracicaba - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Daaz Rolamentos</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/industriais-img/mi4.webp') }}"><br>
-            Motor Elétrico Trifásico 2CV Weg 220/380v 2 Polos Aberto
-            <br><p id="local">Piracicaba - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Loja do Mecânico</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
-    </div>
-
-    <!--Ferramentas e Equipamentos de Oficina-->
-    <div id="secaotitulo">
-        <h2>Ferramentas e Equipamentos de Oficina</h2><br>
-        <hr>
-    </div>
-
-    <div id="ferramentas-equipamentos">
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/industriais-img/eb2.webp') }}"><br>
-            Acessórios De Fixação Coladeira Flex - Maksiwa-FF.500 
-            <br><p id="local">Diadema - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Angatu Máquinas</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-        
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/industriais-img/fe1.webp') }}"><br>
-            Desmontadora Pneumática com Braço Auxiliar Monofásica 220V Vermelha FORTGPRO-FG1420
-            <br><p id="local">Piracicaba - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Loja do Mecânico</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/industriais-img/fe2.png') }}"><br>
-            Compressor de Ar Monofásico 10pcm 140psi 100L 2Hp Bivolt Worker
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Ferramentas Kennedy</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/industriais-img/fe3.webp') }}"><br>
-            Elevador Hidráulico 4 Toneladas Double Lock Azul com Parabolts FORTGPRO-FG1001L
-            <br><p id="local">Piracicaba - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Loja do Mecânico</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/industriais-img/fe3.webp') }}">
-            Elevador Hidráulico 4 Toneladas Double Lock Azul com Parabolts FORTGPRO-FG1001L
-            <p id="local">Piracicaba - SP</p>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Loja do Mecânico</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
+            {% if leiloes.items %}
+                <div id="leiloes-container">
+                    {% for leilao in leiloes.items %}
+                    <a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="leilao-link">
+                        <div class="item">
+                            <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
+                            <br>{{ leilao.nome }}
+                            <br><p class="local">{{ leilao.cidade }}{% if leilao.uf %} - {{ leilao.uf }}{% endif %}</p>
+
+                            <div class="infos-leiloeiro">
+                                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                                <span class="leiloeiro-texto">{{ leilao.user.nome_completo if leilao.user else 'Leiloeiro' }}</span>
+                            </div>
+
+                            <div class="views-img">
+                                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                                <span class="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
+                            </div>
+
+                            <span class="lance">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span><br>
+                            <span class="temporizador">Encerra: {{ leilao.data_fim.strftime('%d/%m/%Y %H:%M') }}</span>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+
+                {% if leiloes.pages > 1 %}
+                <div class="paginacao-container">
+                    <div class="paginacao">
+                        {% if leiloes.has_prev %}
+                            <a href="{{ url_for('main.imoveis', categoria='Industriais', pagina=leiloes.prev_num) }}" class="pagina-link">‹ Anterior</a>
+                        {% endif %}
+
+                        {% for num in leiloes.iter_pages() %}
+                            {% if num %}
+                                {% if num == leiloes.page %}
+                                    <span class="pagina-atual">{{ num }}</span>
+                                {% else %}
+                                    <a href="{{ url_for('main.imoveis', categoria='Industriais', pagina=num) }}" class="pagina-link">{{ num }}</a>
+                                {% endif %}
+                            {% else %}
+                                <span class="pontos">...</span>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if leiloes.has_next %}
+                            <a href="{{ url_for('main.imoveis', categoria='Industriais', pagina=leiloes.next_num) }}" class="pagina-link">Próxima ›</a>
+                        {% endif %}
+                    </div>
+                    <div class="info-paginacao">
+                        Página {{ leiloes.page }} de {{ leiloes.pages }} - {{ leiloes.total }} leilões encontrados
+                    </div>
+                </div>
+                {% endif %}
+
+            {% else %}
+                <div class="sem-resultados">
+                    <p>Nenhum leilão industrial encontrado</p>
+                </div>
+            {% endif %}
+        {% endif %}
     </div>
 {% endblock %}
 
 {% block scripts %}
-    <script src="{{ url_for('static', filename='script/script.js')}}"></script>
+    <script src="{{ url_for('static', filename='script/carrossel.js') }}"></script>
+    <script src="{{ url_for('static', filename='script/style.js') }}"></script>
 {% endblock %}

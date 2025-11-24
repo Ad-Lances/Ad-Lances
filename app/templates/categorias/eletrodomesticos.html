@@ -6,469 +6,276 @@
     
 {% block title %}Eletrodomésticos{% endblock %}
 
-    {% block icon_eletrodomesticos %}
-        <li>
-            <a href="{{ url_for('main.imoveis', categoria='Eletrodomesticos') }}">
-                <img src="{{ url_for('static', filename='img/img-nav/houseitems-icon-color.png') }}" alt="Eletrodomésticos">
-            </a>
-        </li>
-    {% endblock %}
+{% block icon_eletrodomesticos %}
+    <li>
+        <a href="{{ url_for('main.imoveis', categoria='Eletrodomesticos') }}">
+            <img src="{{ url_for('static', filename='img/img-nav/houseitems-icon-color.png') }}" alt="Eletrodomésticos">
+        </a>
+    </li>
+{% endblock %}
 
+{% block header_content %}
+    <img src="{{ url_for('static', filename='img/banners/banner-eletrodomesticos.png') }}">
+{% endblock %}
 
-    {% block header_content %}
-        <img src="{{ url_for('static', filename='img/banners/banner-eletrodomesticos.png') }}">
-    {% endblock %}
-
-    
-    {% block categoria_content %}
+{% block categoria_content %}
     <!--Subcategorias-->
     <div id="categorias">
-        <div id="item-cat">
-            <img src="{{ url_for('static', filename='img/eletrodom-img/cat1.png') }}"><br>
-            <div id="texto-cat">Cozinha</div>
-        </div>
+        <a href="{{ url_for('main.imoveis', categoria='Eletrodomesticos') }}" class="btn-subcategoria {% if not subcategoria %}ativo{% endif %}">
+            <div id="item-cat">
+                <img src="{{ url_for('static', filename='img/eletrodom-img/cat1.png') }}">
+                <div id="texto-cat">Todos</div>
+            </div>
+        </a>
 
-        <div id="item-cat">
-            <img src="{{ url_for('static', filename='img/eletrodom-img/cat2.webp')}}"><br>
-            <div id="texto-cat">Limpeza</div>
-        </div>
+        <a href="{{ url_for('main.imoveis', categoria='Eletrodomesticos', subcategoria='Cozinha') }}" class="btn-subcategoria {% if subcategoria == 'Cozinha' %}ativo{% endif %}">
+            <div id="item-cat">
+                <img src="{{ url_for('static', filename='img/eletrodom-img/cat1.png') }}">
+                <div id="texto-cat">Cozinha</div>
+            </div>
+        </a>
 
-        <div id="item-cat">
-            <img src="{{ url_for('static', filename='img/eletrodom-img/cat3.jpg')}}"><br>
-            <div id="texto-cat">Eletroportáteis</div>
-        </div>
+        <a href="{{ url_for('main.imoveis', categoria='Eletrodomesticos', subcategoria='Limpeza') }}" class="btn-subcategoria {% if subcategoria == 'Limpeza' %}ativo{% endif %}">
+            <div id="item-cat">
+                <img src="{{ url_for('static', filename='img/eletrodom-img/cat2.webp')}}">
+                <div id="texto-cat">Limpeza</div>
+            </div>
+        </a>
+
+        <a href="{{ url_for('main.imoveis', categoria='Eletrodomesticos', subcategoria='Eletroportáteis') }}" class="btn-subcategoria {% if subcategoria == 'Eletroportáteis' %}ativo{% endif %}">
+            <div id="item-cat">
+                <img src="{{ url_for('static', filename='img/eletrodom-img/cat3.jpg')}}">
+                <div id="texto-cat">Eletroportáteis</div>
+            </div>
+        </a>
     </div>
 
-    <!--Encerrando em breve-->
-    <div id="secaotitulo">
-        <h2>Leilões encerrando em breve</h2><br>
-        <hr>
+    <br><br><br><br>
+
+    <div id="conteudo-principal">
+        {% if subcategoria %}
+            <div id="secaotitulo">
+                <h2> Encerrando em Breve - {{ subcategoria }}</h2>
+                <hr>
+            </div>
+
+            {% if leiloes_encerrando %}
+                <div id="encerrando-em-breve">
+                    <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
+                    
+                    {% for leilao in leiloes_encerrando %}
+                    <a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="leilao-link">
+                        <div class="item">
+                            <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
+                            <br>{{ leilao.nome }}
+                            <br><p class="local">{{ leilao.cidade }}{% if leilao.uf %} - {{ leilao.uf }}{% endif %}</p>
+
+                            <div class="infos-leiloeiro">
+                                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                                <span class="leiloeiro-texto">{{ leilao.user.nome_completo if leilao.user else 'Leiloeiro' }}</span>
+                            </div>
+
+                            <div class="views-img">
+                                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                                <span class="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
+                            </div>
+
+                            <span class="lance">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span><br>
+                            <span class="temporizador">{{ leilao.data_fim.strftime('%d/%m %H:%M') }}</span>
+                        </div>
+                    </a>
+                    {% endfor %}
+
+                    <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
+                </div>
+            {% else %}
+                <div class="sem-resultados">
+                    <p>Nenhum leilão encerrando em breve para {{ subcategoria }}</p>
+                </div>
+            {% endif %}
+
+            <div id="secaotitulo">
+                <h2>Todos os Leilões - {{ subcategoria }}</h2><br>
+                <hr>
+            </div>
+
+            {% if leiloes.items %}
+                <div id="leiloes-container">
+                    {% for leilao in leiloes.items %}
+                    <a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="leilao-link">
+                        <div class="item">
+                            <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
+                            <br>{{ leilao.nome }}
+                            <br><p class="local">{{ leilao.cidade }}{% if leilao.uf %} - {{ leilao.uf }}{% endif %}</p>
+
+                            <div class="infos-leiloeiro">
+                                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                                <span class="leiloeiro-texto">{{ leilao.user.nome_completo if leilao.user else 'Leiloeiro' }}</span>
+                            </div>
+
+                            <div class="views-img">
+                                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                                <span class="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
+                            </div>
+
+                            <br>
+
+                            <span class="lance">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span><br>
+                            <span class="temporizador">Encerra: {{ leilao.data_fim.strftime('%d/%m/%Y %H:%M') }}</span>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+
+                {% if leiloes.pages > 1 %}
+                <div class="paginacao-container">
+                    <div class="paginacao">
+                        {% if leiloes.has_prev %}
+                            <a href="{{ url_for('main.imoveis', categoria='Eletrodomesticos', subcategoria=subcategoria, pagina=leiloes.prev_num) }}" class="pagina-link">‹ Anterior</a>
+                        {% endif %}
+
+                        {% for num in leiloes.iter_pages() %}
+                            {% if num %}
+                                {% if num == leiloes.page %}
+                                    <span class="pagina-atual">{{ num }}</span>
+                                {% else %}
+                                    <a href="{{ url_for('main.imoveis', categoria='Eletrodomesticos', subcategoria=subcategoria, pagina=num) }}" class="pagina-link">{{ num }}</a>
+                                {% endif %}
+                            {% else %}
+                                <span class="pontos">...</span>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if leiloes.has_next %}
+                            <a href="{{ url_for('main.imoveis', categoria='Eletrodomesticos', subcategoria=subcategoria, pagina=leiloes.next_num) }}" class="pagina-link">Próxima ›</a>
+                        {% endif %}
+                    </div>
+                    <div class="info-paginacao">
+                        Página {{ leiloes.page }} de {{ leiloes.pages }} - {{ leiloes.total }} leilões encontrados
+                    </div>
+                </div>
+                {% endif %}
+
+            {% else %}
+                <div class="sem-resultados">
+                    <p>Nenhum leilão encontrado para {{ subcategoria }}</p>
+                </div>
+            {% endif %}
+
+        {% else %}
+
+            <div id="secaotitulo">
+                <h2>Encerrando em Breve</h2><br>
+                <hr>
+            </div>
+
+            {% if leiloes_encerrando %}
+                <div id="encerrando-em-breve">
+                    <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
+                    
+                    {% for leilao in leiloes_encerrando %}
+                    <a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="leilao-link">
+                        <div class="item">
+                            <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
+                            <br>{{ leilao.nome }}
+                            <br><p class="local">{{ leilao.cidade }}{% if leilao.uf %} - {{ leilao.uf }}{% endif %}</p>
+
+                            <div class="infos-leiloeiro">
+                                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                                <span class="leiloeiro-texto">{{ leilao.user.nome_completo if leilao.user else 'Leiloeiro' }}</span>
+                            </div>
+
+                            <div class="views-img">
+                                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                                <span class="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
+                            </div>
+
+                            <span class="lance">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span><br>
+                            <span class="temporizador">{{ leilao.data_fim.strftime('%d/%m %H:%M') }}</span>
+                        </div>
+                    </a>
+                    {% endfor %}
+
+                    <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
+                </div>
+            {% else %}
+                <div class="sem-resultados">
+                    <p>Nenhum leilão encerrando em breve</p>
+                </div>
+            {% endif %}
+
+            <br><br><br><br><br><br>
+
+            <div id="secaotitulo">
+                <h2>Todos os Eletrodomésticos</h2>
+                <hr>
+            </div>
+
+            {% if leiloes.items %}
+                <div id="leiloes-container">
+                    {% for leilao in leiloes.items %}
+                    <a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="leilao-link">
+                        <div class="item">
+                            <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
+                            <br>{{ leilao.nome }}
+                            <br><p class="local">{{ leilao.cidade }}{% if leilao.uf %} - {{ leilao.uf }}{% endif %}</p>
+
+                            <div class="infos-leiloeiro">
+                                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                                <span class="leiloeiro-texto">{{ leilao.user.nome_completo if leilao.user else 'Leiloeiro' }}</span>
+                            </div>
+
+                            <div class="views-img">
+                                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                                <span class="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
+                            </div>
+
+                            <span class="lance">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span><br>
+                            <span class="temporizador">Encerra: {{ leilao.data_fim.strftime('%d/%m/%Y %H:%M') }}</span>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+
+                {% if leiloes.pages > 1 %}
+                <div class="paginacao-container">
+                    <div class="paginacao">
+                        {% if leiloes.has_prev %}
+                            <a href="{{ url_for('main.imoveis', categoria='Eletrodomesticos', pagina=leiloes.prev_num) }}" class="pagina-link">‹ Anterior</a>
+                        {% endif %}
+
+                        {% for num in leiloes.iter_pages() %}
+                            {% if num %}
+                                {% if num == leiloes.page %}
+                                    <span class="pagina-atual">{{ num }}</span>
+                                {% else %}
+                                    <a href="{{ url_for('main.imoveis', categoria='Eletrodomesticos', pagina=num) }}" class="pagina-link">{{ num }}</a>
+                                {% endif %}
+                            {% else %}
+                                <span class="pontos">...</span>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if leiloes.has_next %}
+                            <a href="{{ url_for('main.imoveis', categoria='Eletrodomesticos', pagina=leiloes.next_num) }}" class="pagina-link">Próxima ›</a>
+                        {% endif %}
+                    </div>
+                    <div class="info-paginacao">
+                        Página {{ leiloes.page }} de {{ leiloes.pages }} - {{ leiloes.total }} leilões encontrados
+                    </div>
+                </div>
+                {% endif %}
+
+            {% else %}
+                <div class="sem-resultados">
+                    <p>Nenhum leilão de eletrodomésticos encontrado</p>
+                </div>
+            {% endif %}
+        {% endif %}
     </div>
-
-    <div id="encerrando-em-breve">
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletrodom-img/eb-1.webp ')}}"><br>
-            Geladeira Electrolux 590L Frost Free Inverter
-            <br><p id="local">Salvador - BA</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Magazineluiza</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletrodom-img/eb2.webp') }}"><br>
-            Fogão Atlas Mônaco Plus 4 bocas
-            <br><p id="local">Rio de Janeiro - RJ</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Americanas Brasil</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual:</span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletrodom-img/eb3.webp') }}"><br>
-            Lava Louças Midea 14 Serviços Preta
-            <br><p id="local">Curitiba - PR</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Midea Store</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletrodom-img/eb4.webp')}}"><br>
-            Máquina de Lavar Consul 9kg Branca
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Leroy Merlin</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletrodom-img/eb5.webp')}}"><br>
-            Cafeteira Nespresso Off White (Usada)
-            <br><p id="local">Porto Alegre - RS</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Fast Shop</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual:</span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
-    </div>
-    
-    <!--Cozinha-->
-    <div id="secaotitulo">
-        <h2>Cozinha</h2><br>
-        <hr>
-    </div>
-
-    <div id="cozinha">
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletrodom-img/eb-1.webp ')}}"><br>
-            Geladeira Electrolux 590L Frost Free Inverter
-            <br><p id="local">Salvador - BA</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Magazineluiza</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletrodom-img/eb2.webp') }}"><br>
-            Fogão Atlas Mônaco Plus 4 bocas
-            <br><p id="local">Rio de Janeiro - RJ</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Americanas Brasil</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual:</span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletrodom-img/co1.jpg') }}"><br>
-            Frigobar Eos Ice Compact 90l Preto Efb100p 110V
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Amazon Brasil</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletrodom-img/co2.avif') }}"><br>
-            Fogão Esmaltec Topázio 4 Bocas com Forno Autolimpante, Acendimento Automático e Timer Sonoro - Bivolt
-            <br><p id="local">Rio de Janeiro - RJ</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Pontofrio</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletrodom-img/co3.avif') }}"><br>
-            Freezer e Refrigerador Horizontal EOS 100 Litros EcoGelo EFH110X 110V - Frigelar Comércio e Indústria
-            <br><p id="local">Porto Alegre - RS</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Frigelar Comércio e Indústria</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
-    </div>
-
-    <!--Limpeza-->
-    <div id="secaotitulo">
-        <h2>Limpeza</h2><br>
-        <hr>
-    </div>
-
-    <div id="limpeza">
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletrodom-img/eb3.webp') }}"><br>
-            Lava Louças Midea 14 Serviços Preta
-            <br><p id="local">Curitiba - PR</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Midea Store</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletrodom-img/eb4.webp')}}"><br>
-            Máquina de Lavar Consul 9kg Branca
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Leroy Merlin</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletrodom-img/li1.webp')}}"><br>
-            Secadora De Roupas Electrolux 12kg Premium Care 220V SFP12
-            <br><p id="local">Manaus - AM</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Bemol Eletrodomésticos</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletrodom-img/li2.avif') }}"><br>
-            Lava e Seca Digital Inverter Samsung Ecobubble™ WD10M Branca 10.1kg - 110V
-            <br><p id="local">Recife - PE</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Fast Shop</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletrodom-img/li3.webp') }}"><br>
-            Máquina de Lavar Panasonic Função Antibactéria AG 16kg Branco - NA-F160B6W
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Panasonic Brasil</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-        
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
-    </div>
-
-    <!--Eletroportáteis-->
-    <div id="secaotitulo">
-        <h2>Eletroportáteis</h2><br>
-        <hr>
-    </div>
-
-    <div id="eletroportateis">
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletrodom-img/eb5.webp')}}"><br>
-            Cafeteira Nespresso Off White (Usada)
-            <br><p id="local">Porto Alegre - RS</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Fast Shop</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual:</span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletrodom-img/elp1.jpg')}}"><br>
-            Aspirador de Água e Pó Philco 1500W 20L PAS80 127V
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Amazon Brasil</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual:</span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletrodom-img/elp2.webp')}}"><br>
-            Micro-ondas Electrolux 27L - MB37R (Usado)
-            <br><p id="local">Jundiaí - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Ilha das Cozinhas</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual:</span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletrodom-img/elp3.webp')}}"><br>
-            Aspirador de Pó e Água WAP GTW10 1400W - Amarelo e Preto
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Ferragens Portugal</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual:</span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletrodom-img/elp4.jpg')}}"><br>
-            Fritadeira Philco Air Fryer Oven 12L PFR2200P - 127V
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Amazon Brasil</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual:</span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>       
-    </div>
-
-   {% endblock %}
+{% endblock %}
 
 {% block scripts %}
-    <script src="{{ url_for('static', filename='script/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='script/style.js') }}"></script>
+    <script src="{{ url_for('static', filename='script/carrossel.js') }}"></script>
 {% endblock %}

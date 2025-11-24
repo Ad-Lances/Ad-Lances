@@ -2,7 +2,7 @@ function initCarousel() {
     console.log('=== INICIANDO CARROSSEL RESPONSIVO ===');
     
     const sections = [
-        'encerrando-em-breve',
+        'encerrando-em-breve', 'carrossel-container',
         'maquinas-equipamentos-pesados', 'materiais-e-insumos', 'ferramentas-equipamentos',
         'mais-recentes',
         'casas', 'apartamentos', 'comerciais', 'industriais-e-galpoes', 'terrenos',

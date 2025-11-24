@@ -45,55 +45,60 @@
 
     <br><br>
 
-    <!-- SEÇÃO: LEILÕES ENCERRANDO EM BREVE -->
     <div id="secaotitulo">
         <h2>Leilões encerrando em breve</h2><br>
         <hr>
     </div>
-    <div id="leiloes"></div>
+
     <div id="encerrando-em-breve">
-        <div id="arrow-img" class="arrow-left" onclick="moverCarrossel('encerrando-em-breve', -1)">
-            <img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}">
+        <div id="arrow-img" class="arrow-left">
+            <img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}" alt="Anterior">
         </div>
         
-         <div class="carrossel-container">
+        <div class="carrossel-container">
             {% if leiloes_encerrando %}
                 {% for leilao in leiloes_encerrando.items %}
-                <div id="item" class="carrossel-item">
-                    <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
-                    <br>{{ leilao.nome }}
-                    <br><p id="local">
-                        {% if leilao.subcategoria and leilao.subcategoria.categoria %}
-                            {{ leilao.subcategoria.categoria.nome }}
-                        {% else %}
-                            Categoria não definida
-                        {% endif %}
-                    </p><br>
-
-                    <div id="infos-leiloeiro">
-                        <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                        <span id="leiloeiro-texto">
-                            {% if leilao.user %}
-                                {{ leilao.user.nome_completo }}
+                <a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="leilao-link">
+                    <div id="item">
+                        <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
+                        <br><strong>{{ leilao.nome }}</strong>
+                        <br><p id="local">
+                            {% if leilao.subcategoria and leilao.subcategoria.categoria %}
+                                {{ leilao.subcategoria.categoria.nome }}
                             {% else %}
-                                Anônimo
+                                Categoria não definida
                             {% endif %}
-                        </span>
+                        </p>
+
+                        <div id="infos-leiloeiro">
+                            <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                            <span id="leiloeiro-texto">
+                                {% if leilao.user %}
+                                    {{ leilao.user.nome_completo }}
+                                {% else %}
+                                    Anônimo
+                                {% endif %}
+                            </span>
+                        </div>
+
+                        <div id="views-img">
+                            <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                            <span id="views-count">
+                                {% set total_lances = leilao.lances|length %}
+                                {{ total_lances }} participante{% if total_lances != 1 %}s{% endif %}
+                            </span>
+                        </div>
+
+                        <span id="lance">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span><br>
+                        <span id="temporizador">Encerra em: {{ leilao.data_fim.strftime('%d/%m/%Y %H:%M') }}</span>
+                        
+                        <div class="btn-ver-detalhes-container">
+                            <a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="btn-ver-detalhes">
+                                Ver detalhes
+                            </a>
+                        </div>
                     </div>
-
-                    <div id="views-img">
-                        <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                        <span id="views-count">
-                            {% set total_lances = leilao.lances|length %}
-                            {{ total_lances }} participante{% if total_lances != 1 %}s{% endif %}
-                        </span>
-                    </div><br>
-
-                    <span id="lance">Lance atual: R$ {{ "%.2f"|format(leilao.lance_atual) }}</span><br>
-                    <span id="temporizador">Encerra em: {{ leilao.data_fim.strftime('%d/%m/%Y %H:%M') }}</span>
-                    <br>
-                    <a href="{{ url_for('main.detalhes_leilao', id_leilao=leilao.id) }}" class="btn-ver-detalhes">Ver detalhes</a>
-                </div>
+                </a>
                 {% endfor %}
             {% else %}
                 <div id="item">
@@ -102,8 +107,8 @@
             {% endif %}
         </div>
 
-        <div id="arrow-img" class="arrow-right" onclick="moverCarrossel('encerrando-em-breve', 1)">
-            <img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}">
+        <div id="arrow-img" class="arrow-right">
+            <img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}" alt="Próximo">
         </div>
     </div>
 
@@ -141,59 +146,64 @@
     {% endif %}
 
     <div id="banners-menores">
-        <a href="categorias/Veículos"><img src="{{ url_for('static', filename='img/banners/veiculos.png') }}"></a>
-        <a href="categorias/Eletrodomésticos"><img src="{{ url_for('static', filename='img/banners/eletrodomesticos.png') }}"></a>
+        <a href="categorias/Veículos"><img src="{{ url_for('static', filename='img/banners/veiculos.png') }}" alt="Veículos"></a>
+        <a href="categorias/Eletrodomésticos"><img src="{{ url_for('static', filename='img/banners/eletrodomesticos.png') }}" alt="Eletrodomésticos"></a>
     </div>
 
-    <!-- SEÇÃO: MAIS RECENTES -->
     <div id="secaotitulo">
         <h2>Mais recentes</h2><br>
         <hr>
     </div>
 
     <div id="mais-recentes">
-        <div id="arrow-img" class="arrow-left" onclick="moverCarrossel('mais-recentes', -1)">
-            <img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}">
+        <div id="arrow-img" class="arrow-left">
+            <img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}" alt="Anterior">
         </div>
         
-         <div class="carrossel-container">
+        <div class="carrossel-container">
             {% if leiloes_recentes %}
                 {% for leilao in leiloes_recentes.items %}
-                <div id="item" class="carrossel-item">
-                    <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
-                    <br>{{ leilao.nome }}
-                    <br><p id="local">
-                        {% if leilao.subcategoria and leilao.subcategoria.categoria %}
-                            {{ leilao.subcategoria.categoria.nome }}
-                        {% else %}
-                            Categoria não definida
-                        {% endif %}
-                    </p><br>
-
-                    <div id="infos-leiloeiro">
-                        <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                        <span id="leiloeiro-texto">
-                            {% if leilao.user %}
-                                {{ leilao.user.nome_completo }}
+                <a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="leilao-link">
+                    <div id="item">
+                        <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
+                        <br><strong>{{ leilao.nome }}</strong>
+                        <br><p id="local">
+                            {% if leilao.subcategoria and leilao.subcategoria.categoria %}
+                                {{ leilao.subcategoria.categoria.nome }}
                             {% else %}
-                                Anônimo
+                                Categoria não definida
                             {% endif %}
-                        </span>
+                        </p>
+
+                        <div id="infos-leiloeiro">
+                            <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                            <span id="leiloeiro-texto">
+                                {% if leilao.user %}
+                                    {{ leilao.user.nome_completo }}
+                                {% else %}
+                                    Anônimo
+                                {% endif %}
+                            </span>
+                        </div>
+
+                        <div id="views-img">
+                            <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                            <span id="views-count">
+                                {% set total_lances = leilao.lances|length %}
+                                {{ total_lances }} participante{% if total_lances != 1 %}s{% endif %}
+                            </span>
+                        </div>
+
+                        <span id="lance">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span>
+                        <span id="temporizador">Encerra em: {{ leilao.data_fim.strftime('%d/%m/%Y %H:%M') }}</span>
+                        
+                        <div class="btn-ver-detalhes-container">
+                            <a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="btn-ver-detalhes">
+                                Ver detalhes
+                            </a>
+                        </div>
                     </div>
-
-                    <div id="views-img">
-                        <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                        <span id="views-count">
-                            {% set total_lances = leilao.lances|length %}
-                            {{ total_lances }} participante{% if total_lances != 1 %}s{% endif %}
-                        </span>
-                    </div><br>
-
-                    <span id="lance">Lance atual: R$ {{ "%.2f"|format(leilao.lance_atual) }}</span><br>
-                    <span id="temporizador">Encerra em: {{ leilao.data_fim.strftime('%d/%m/%Y %H:%M') }}</span>
-                    <br>
-                    <a href="{{ url_for('main.detalhes_leilao', id_leilao=leilao.id) }}" class="btn-ver-detalhes">Ver detalhes</a>
-                </div>
+                </a>
                 {% endfor %}
             {% else %}
                 <div id="item">
@@ -202,12 +212,12 @@
             {% endif %}
         </div>
 
-        <div id="arrow-img" class="arrow-right" onclick="moverCarrossel('mais-recentes', 1)">
-            <img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}">
+        <div id="arrow-img" class="arrow-right">
+            <img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}" alt="Próximo">
         </div>
     </div>
 
-     {% if leiloes_recentes and leiloes_recentes.pages > 1 %}
+    {% if leiloes_recentes and leiloes_recentes.pages > 1 %}
     <div class="paginacao-container">
         <div class="paginacao">
             {% if leiloes_recentes.has_prev %}
@@ -241,7 +251,7 @@
     {% endif %}
 
     <div id="banners-maiores">
-        <img src="{{ url_for('static', filename='img/banners/bannermaior.png') }}">
+        <img src="{{ url_for('static', filename='img/banners/bannermaior.png') }}" alt="Banner maior">
     </div>
 
     <div id="secaotitulo">
@@ -252,7 +262,6 @@
     <div id="carrossel-empresas-automatico">
         <div class="carrossel-track">
             <div class="carrossel-inner">
-                <!-- Primeira cópia -->
                 <div class="empresa-item">
                     <img src="{{ url_for('static', filename='img/empresas/corpore.jpg') }}" alt="Corpore">
                 </div>
@@ -281,7 +290,6 @@
                     <img src="{{ url_for('static', filename='img/empresas/santander.png') }}" alt="Santander">
                 </div>
                 
-                <!-- Segunda cópia para efeito infinito -->
                 <div class="empresa-item">
                     <img src="{{ url_for('static', filename='img/empresas/corpore.jpg') }}" alt="Corpore">
                 </div>
@@ -317,4 +325,5 @@
 
 {% block scripts %}
     <script src="{{ url_for('static', filename='script/carrossel.js') }}"></script>
+    <script src="{{ url_for('static', filename='script/style.js') }}"></script>
 {% endblock %}

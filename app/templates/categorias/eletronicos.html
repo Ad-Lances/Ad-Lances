@@ -1,591 +1,286 @@
 {% extends "categorias/base_categorias.html" %}
 
-    {% block other_style %}
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/categorias/eletronicos.css') }}">
-    {% endblock %}
+{% block other_style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/categorias/eletronicos.css') }}">
+{% endblock %}
 
-    {% block title %}Eletrônicos{% endblock %}
+{% block title %}Eletrônicos{% endblock %}
 
-    {% block icon_eletronicos %}
-        <li>
-            <a href="{{ url_for('main.imoveis', categoria='Eletronicos') }}">
-                <img src="{{ url_for('static', filename='img/img-nav/screen-icon-color.png') }}" alt="Eletrônicos">
-            </a>
-        </li>
-    {% endblock %}
+{% block icon_eletronicos %}
+    <li>
+        <a href="{{ url_for('main.imoveis', categoria='Eletronicos') }}">
+            <img src="{{ url_for('static', filename='img/img-nav/screen-icon-color.png') }}" alt="Eletrônicos">
+        </a>
+    </li>
+{% endblock %}
 
+{% block header_content %}
+    <img src="{{ url_for('static', filename='img/banners/banner-eletronicos.png')}}">
+{% endblock %}
 
-    {% block header_content %}
-        <img src="{{ url_for('static', filename='img/banners/banner-eletronicos.png')}}">
-    {% endblock %}
-
-    {% block categoria_content %}
-
-    <!--Subcategorias-->
+{% block categoria_content %}
     <div id="categorias">
-        <div id="item-cat">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/cat1.jpg') }}"><br>
-            <div id="texto-cat">Computadores</div>
-        </div>
+        <a href="{{ url_for('main.imoveis', categoria='Eletronicos') }}" class="btn-subcategoria {% if not subcategoria %}ativo{% endif %}">
+            <div id="item-cat">
+                <img src="{{ url_for('static', filename='img/eletronicos-img/cat1.jpg') }}">
+                <div id="texto-cat">Todos</div>
+            </div>
+        </a>
 
-        <div id="item-cat">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/cat2.png') }}"><br>
-            <div id="texto-cat">Áudio e Vídeo</div>
-        </div>
+        <a href="{{ url_for('main.imoveis', categoria='Eletronicos', subcategoria='Computadores') }}" class="btn-subcategoria {% if subcategoria == 'Computadores' %}ativo{% endif %}">
+            <div id="item-cat">
+                <img src="{{ url_for('static', filename='img/eletronicos-img/cat1.jpg') }}">
+                <div id="texto-cat">Computadores</div>
+            </div>
+        </a>
 
-        <div id="item-cat">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/cat3.jpg') }}"><br>
-            <div id="texto-cat">Videogames</div>
-        </div>
+        <a href="{{ url_for('main.imoveis', categoria='Eletronicos', subcategoria='Áudio e Vídeo') }}" class="btn-subcategoria {% if subcategoria == 'Áudio e Vídeo' %}ativo{% endif %}">
+            <div id="item-cat">
+                <img src="{{ url_for('static', filename='img/eletronicos-img/cat2.png') }}">
+                <div id="texto-cat">Áudio e Vídeo</div>
+            </div>
+        </a>
 
-        <div id="item-cat">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/cat4.jpeg')}}"><br>
-            <div id="texto-cat">Componentes eletrônicos</div>
-        </div>
+        <a href="{{ url_for('main.imoveis', categoria='Eletronicos', subcategoria='Videogames') }}" class="btn-subcategoria {% if subcategoria == 'Videogames' %}ativo{% endif %}">
+            <div id="item-cat">
+                <img src="{{ url_for('static', filename='img/eletronicos-img/cat3.jpg') }}">
+                <div id="texto-cat">Videogames</div>
+            </div>
+        </a>
+
+        <a href="{{ url_for('main.imoveis', categoria='Eletronicos', subcategoria='Componentes eletrônicos') }}" class="btn-subcategoria {% if subcategoria == 'Componentes eletrônicos' %}ativo{% endif %}">
+            <div id="item-cat">
+                <img src="{{ url_for('static', filename='img/eletronicos-img/cat4.jpeg')}}">
+                <div id="texto-cat">Componentes eletrônicos</div>
+            </div>
+        </a>
     </div>
 
-    <div id="secaotitulo">
-        <h2>Leilões encerrando em breve</h2><br>
-        <hr>
+    <br><br><br><br>
+
+    <div id="conteudo-principal">
+        {% if subcategoria %}
+            <div id="secaotitulo">
+                <h2> Encerrando em Breve - {{ subcategoria }}</h2>
+                <hr>
+            </div>
+
+            {% if leiloes_encerrando %}
+                <div id="encerrando-em-breve">
+                    <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
+                    
+                    {% for leilao in leiloes_encerrando %}
+                    <a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="leilao-link">
+                        <div id="item">
+                            <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
+                            <br>{{ leilao.nome }}
+                            <br><p id="local">{{ leilao.cidade }}{% if leilao.uf %} - {{ leilao.uf }}{% endif %}</p>
+
+                            <div id="infos-leiloeiro">
+                                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                                <span id="leiloeiro-texto">{{ leilao.user.nome_completo if leilao.user else 'Leiloeiro' }}</span>
+                            </div>
+
+                            <div id="views-img">
+                                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                                <span id="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
+                            </div>
+
+                            <span id="lance">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span><br>
+                            <span id="temporizador">{{ leilao.data_fim.strftime('%d/%m %H:%M') }}</span>
+                        </div>
+                    </a>
+                    {% endfor %}
+
+                    <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
+                </div>
+            {% else %}
+                <div class="sem-resultados">
+                    <p>Nenhum leilão encerrando em breve para {{ subcategoria }}</p>
+                </div>
+            {% endif %}
+
+            <div id="secaotitulo">
+                <h2>Todos os Leilões - {{ subcategoria }}</h2><br>
+                <hr>
+            </div>
+
+            {% if leiloes.items %}
+                <div id="leiloes-container">
+                    {% for leilao in leiloes.items %}
+                    <a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="leilao-link">
+                        <div id="item">
+                            <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
+                            <br>{{ leilao.nome }}
+                            <br><p id="local">{{ leilao.cidade }}{% if leilao.uf %} - {{ leilao.uf }}{% endif %}</p>
+
+                            <div id="infos-leiloeiro">
+                                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                                <span id="leiloeiro-texto">{{ leilao.user.nome_completo if leilao.user else 'Leiloeiro' }}</span>
+                            </div>
+
+                            <div id="views-img">
+                                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                                <span id="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
+                            </div>
+
+                            <br>
+
+                            <span id="lance">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span><br>
+                            <span id="temporizador">Encerra: {{ leilao.data_fim.strftime('%d/%m/%Y %H:%M') }}</span>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+
+                {% if leiloes.pages > 1 %}
+                <div class="paginacao-container">
+                    <div class="paginacao">
+                        {% if leiloes.has_prev %}
+                            <a href="{{ url_for('main.imoveis', categoria='Eletronicos', subcategoria=subcategoria, pagina=leiloes.prev_num) }}" class="pagina-link">‹ Anterior</a>
+                        {% endif %}
+
+                        {% for num in leiloes.iter_pages() %}
+                            {% if num %}
+                                {% if num == leiloes.page %}
+                                    <span class="pagina-atual">{{ num }}</span>
+                                {% else %}
+                                    <a href="{{ url_for('main.imoveis', categoria='Eletronicos', subcategoria=subcategoria, pagina=num) }}" class="pagina-link">{{ num }}</a>
+                                {% endif %}
+                            {% else %}
+                                <span class="pontos">...</span>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if leiloes.has_next %}
+                            <a href="{{ url_for('main.imoveis', categoria='Eletronicos', subcategoria=subcategoria, pagina=leiloes.next_num) }}" class="pagina-link">Próxima ›</a>
+                        {% endif %}
+                    </div>
+                    <div class="info-paginacao">
+                        Página {{ leiloes.page }} de {{ leiloes.pages }} - {{ leiloes.total }} leilões encontrados
+                    </div>
+                </div>
+                {% endif %}
+
+            {% else %}
+                <div class="sem-resultados">
+                    <p>Nenhum leilão encontrado para {{ subcategoria }}</p>
+                </div>
+            {% endif %}
+
+        {% else %}
+
+            <div id="secaotitulo">
+                <h2>Encerrando em Breve</h2><br>
+                <hr>
+            </div>
+
+            {% if leiloes_encerrando %}
+                <div id="encerrando-em-breve">
+                    <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
+                    
+                    {% for leilao in leiloes_encerrando %}
+<a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="leilao-link">                        <div id="item">
+                            <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
+                            <br>{{ leilao.nome }}
+                            <br><p id="local">{{ leilao.cidade }}{% if leilao.uf %} - {{ leilao.uf }}{% endif %}</p>
+
+                            <div id="infos-leiloeiro">
+                                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                                <span id="leiloeiro-texto">{{ leilao.user.nome_completo if leilao.user else 'Leiloeiro' }}</span>
+                            </div>
+
+                            <div id="views-img">
+                                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                                <span id="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
+                            </div>
+
+                            <span id="lance">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span><br>
+                            <span id="temporizador">{{ leilao.data_fim.strftime('%d/%m %H:%M') }}</span>
+                        </div>
+                    </a>
+                    {% endfor %}
+
+                    <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
+                </div>
+            {% else %}
+                <div class="sem-resultados">
+                    <p>Nenhum leilão encerrando em breve</p>
+                </div>
+            {% endif %}
+
+            <br><br><br><br><br><br>
+
+            <div id="secaotitulo">
+                <h2>Todos os Eletrônicos</h2>
+                <hr>
+            </div>
+
+            {% if leiloes.items %}
+                <div id="leiloes-container">
+                    {% for leilao in leiloes.items %}
+                    <a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="leilao-link">
+                        <div id="item">
+                            <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
+                            <br>{{ leilao.nome }}
+                            <br><p id="local">{{ leilao.cidade }}{% if leilao.uf %} - {{ leilao.uf }}{% endif %}</p>
+
+                            <div id="infos-leiloeiro">
+                                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                                <span id="leiloeiro-texto">{{ leilao.user.nome_completo if leilao.user else 'Leiloeiro' }}</span>
+                            </div>
+
+                            <div id="views-img">
+                                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                                <span id="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
+                            </div>
+
+                            <span id="lance">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span><br>
+                            <span id="temporizador">Encerra: {{ leilao.data_fim.strftime('%d/%m/%Y %H:%M') }}</span>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+
+                {% if leiloes.pages > 1 %}
+                <div class="paginacao-container">
+                    <div class="paginacao">
+                        {% if leiloes.has_prev %}
+                            <a href="{{ url_for('main.imoveis', categoria='Eletronicos', pagina=leiloes.prev_num) }}" class="pagina-link">‹ Anterior</a>
+                        {% endif %}
+
+                        {% for num in leiloes.iter_pages() %}
+                            {% if num %}
+                                {% if num == leiloes.page %}
+                                    <span class="pagina-atual">{{ num }}</span>
+                                {% else %}
+                                    <a href="{{ url_for('main.imoveis', categoria='Eletronicos', pagina=num) }}" class="pagina-link">{{ num }}</a>
+                                {% endif %}
+                            {% else %}
+                                <span class="pontos">...</span>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if leiloes.has_next %}
+                            <a href="{{ url_for('main.imoveis', categoria='Eletronicos', pagina=leiloes.next_num) }}" class="pagina-link">Próxima ›</a>
+                        {% endif %}
+                    </div>
+                    <div class="info-paginacao">
+                        Página {{ leiloes.page }} de {{ leiloes.pages }} - {{ leiloes.total }} leilões encontrados
+                    </div>
+                </div>
+                {% endif %}
+
+            {% else %}
+                <div class="sem-resultados">
+                    <p>Nenhum leilão de eletrônicos encontrado</p>
+                </div>
+            {% endif %}
+        {% endif %}
     </div>
+{% endblock %}
 
-    <!--Encerrando em breve-->
-    <div id="encerrando-em-breve">
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/n1.webp') }}"><br>
-            Notebook Acer Nitro V15 ANV15-51-58AZ 13ª Geração
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Amazon Brasil</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/aa2.webp') }}"><br>
-            Monitor Dell P1917s Com Tela De 19 polegadas 60hz
-            <br><p id="local">Curitiba - PR</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Note Space</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/aa3.avif') }}"><br>
-            Tablet Samsung Galaxy Tab A9+ SM-X216 11" Android 13 Octa-Core WiFi + 5G 64GB 8MP Grafite
-            <br><p id="local">Rio de Janeiro - RJ</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Casas Bahia</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/aa4.jpg') }}"><br>
-            Kit Componentes Eletrônicos 111 peças
-            <br><p id="local">Santo Ângelo - RS</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Usina Info</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/aa5.webp') }}"><br>
-            Videogame Sony Playstation Classic Mini Usado
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Mundo Joy</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
-    </div>
-
-    <!--Computadores-->
-    <div id="secaotitulo">
-        <h2>Computadores</h2><br>
-        <hr>
-    </div>
-
-    <div id="computadores">
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/comp1.webp') }}"><br>
-            Computador Completo Dell Optiplex 3050, I5, 7° Geração, 8GB, SSD 480GB (Seminovo)
-            <br><p id="local">Limeira - SP</p>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Amorim Tech</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/comp2.jpg' )}}"><br>
-            Notebook ASUS Vivobook GO 15, Intel Celeron Dual Core N4500, 4 GB, 128 GB Star Black
-            <br><p id="local">Cuiabá - MT</p>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Amazon Brasil</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/comp3.webp')}}">
-            Notebook Dell Vostro 3550 - Core i3,  2ª geração, 120GB SSD, 8GB DDR3, 14"
-            <br><p id="local">São José dos Campos - SP</p>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">MeuPC Informática</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/comp4.webp') }}"><br>
-            Notebook Acer Aspire E1-510 - Celeron, 4GER, 120GB SSD, 8GB DDR4, 15,6
-            <br><p id="local">São José dos Campos - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">MeuPC Informática</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/comp5.webp') }}"><br>
-            Computador Completo Dell OptiPlex, Intel i3, 128GB, 8GB (Seminovo)
-            <br><p id="local">São Luís - MA</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Soares Informática</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
-    </div>
-
-    <!--Áudio e Vídeo-->
-    <div id="secaotitulo">
-        <h2>Áudio e Vídeo</h2><br>
-        <hr>
-    </div>
-
-    <div id="audio-e-video">
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/av1.jpg' )}}"><br>
-            Caixa de Som Bluetooth LTomex AL-1098
-            <br><p id="local">Franca - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Usuário</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/av2.webp')}}"><br>
-            Smart TV Android TV Philips 32' (Usado)
-            <br><p id="local">Macapá - AP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Center Kennedy</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/av3.jpg') }}"><br>
-            Smart TV 43" LG Full HD 43LR6700 Processador A5
-            <br><p id="local">Rio de Janeiro - RJ</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Amazon Brasil</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/av4.webp') }}"><br>
-            Smart TV 32” Full HD LED TCL 32S5400AF Android 
-            <br><p id="local">Salvador - BA</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Magazineluiza</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/av5.jpg') }}"><br>
-            Caixa de Som JBL Party Box 120 (Bluetooth)
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">SOLD Eletrônicos</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-        
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
-    </div>
-
-    <!--Consoles de videogame-->
-    <div id="secaotitulo">
-        <h2>Videogames</h2><br>
-        <hr>
-    </div>
-
-    <div id="videogames">
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/vi1.webp') }}"><br>
-            Console PS5 Slim Digital + Astro Bot + Gran Turismo 7
-            <br><p id="local">Embu Das Artes - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Webfones</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-        
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/vi2.webp') }}"><br>
-            Console Xbox One S 1TB - Microsoft (Usado)
-            <br><p id="local">Curitiba - PR</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Usuário</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/vi3.webp') }}"><br>
-            Console Nintendo Switch OLED 64GB Standard
-            <br><p id="local">Belém - PA</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">WM Comércio Eletrônicos</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/vi4.webp') }}"><br>
-            Console PlayStation 1 Slim Sony (Usado)
-            <br><p id="local">Curitiba - PR</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Usuário</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/vi5.webp') }}"><br>
-            Console PlayStation 4 Fat 500GB (Usado)
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Imperial Games</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
-    </div>
-
-    <!--Componentes eletrônicos-->
-    <div id="secaotitulo">
-        <h2>Componentes eletrônicos</h2><br>
-        <hr>
-    </div>
-
-    <div id="componentes">
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/ce1.webp') }}"><br>
-            Kit Componentes Eletrônicos (97 Peças)
-            <br><p id="local">Belo Horizonte - MG</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Eletrogate</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/ce2.webp') }}"><br>
-            Monitor VST 23, 23'', Full HD
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Pichau</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/ce3.webp') }}"><br>
-            Gabinete para PC Alltek ATK20S
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <<div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">BF Tech</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/ce4.webp') }}"><br>
-            Kit Componentes Eletrônicos Arduino Uno R3 (400 peças)
-            <br><p id="local">São Paulo - SP</p>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Amazon Brasil</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/eletronicos-img/ce5.avif') }}"><br>
-            Teclado sem fio Logitech K400 Plus - Kalunga
-            <br><p id="local">Rio de Janeiro - RJ</p>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Kalunga</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
-    </div>
-    {% endblock %}
-    
 {% block scripts %}
-    <script src="{{ url_for('static', filename='script/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='script/style.js') }}"></script>
+    <script src="{{ url_for('static', filename='script/carrossel.js') }}"></script>
 {% endblock %}

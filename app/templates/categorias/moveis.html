@@ -7,689 +7,289 @@
 {% block title %}Móveis{% endblock %}
 
 {% block icon_moveis %}
-        <li>
-            <a href="{{ url_for('main.imoveis', categoria='Moveis') }}">
-                <img src="{{ url_for('static', filename='img/img-nav/office-icon-color.png') }}" alt="Móveis">
-            </a>
-        </li>
+    <li>
+        <a href="{{ url_for('main.imoveis', categoria='Moveis') }}">
+            <img src="{{ url_for('static', filename='img/img-nav/office-icon-color.png') }}" alt="Móveis">
+        </a>
+    </li>
 {% endblock %}
 
-{% block header %}
+{% block header_content %}
     <img src="{{ url_for('static', filename='img/banners/banner-moveis.png')}}">
 {% endblock %}
 
 {% block categoria_content %}
-    <!--Categorias-->
+    <!--Subcategorias-->
     <div id="categorias">
-        <div id="item-cat">
-            <img src="{{ url_for('static', filename='img/moveis-img/cat1.webp')}}"><br>
-            <div id="texto-cat">Sala de Estar</div>
-        </div>
+        <a href="{{ url_for('main.imoveis', categoria='Moveis') }}" class="btn-subcategoria {% if not subcategoria %}ativo{% endif %}">
+            <div id="item-cat">
+                <img src="{{ url_for('static', filename='img/moveis-img/cat1.webp')}}">
+                <div id="texto-cat">Todos</div>
+            </div>
+        </a>
 
-        <div id="item-cat">
-            <img src="{{ url_for('static', filename='img/moveis-img/cat2.jpeg') }}"><br>
-            <div id="texto-cat">Cozinha</div>
-        </div>
+        <a href="{{ url_for('main.imoveis', categoria='Moveis', subcategoria='Sala de Estar') }}" class="btn-subcategoria {% if subcategoria == 'Sala de Estar' %}ativo{% endif %}">
+            <div id="item-cat">
+                <img src="{{ url_for('static', filename='img/moveis-img/cat1.webp')}}">
+                <div id="texto-cat">Sala de Estar</div>
+            </div>
+        </a>
 
-        <div id="item-cat">
-            <img src="{{ url_for('static', filename='img/moveis-img/cat3.jpeg') }}"><br>
-            <div id="texto-cat">Quarto</div>
-        </div>
+        <a href="{{ url_for('main.imoveis', categoria='Moveis', subcategoria='Cozinha') }}" class="btn-subcategoria {% if subcategoria == 'Cozinha' %}ativo{% endif %}">
+            <div id="item-cat">
+                <img src="{{ url_for('static', filename='img/moveis-img/cat2.jpeg') }}">
+                <div id="texto-cat">Cozinha</div>
+            </div>
+        </a>
 
-        <div id="item-cat">
-            <img src="{{ url_for('static', filename='img/moveis-img/cat4.jpg') }}"><br>
-            <div id="texto-cat">Banheiro</div>
-        </div>
+        <a href="{{ url_for('main.imoveis', categoria='Moveis', subcategoria='Quarto') }}" class="btn-subcategoria {% if subcategoria == 'Quarto' %}ativo{% endif %}">
+            <div id="item-cat">
+                <img src="{{ url_for('static', filename='img/moveis-img/cat3.jpeg') }}">
+                <div id="texto-cat">Quarto</div>
+            </div>
+        </a>
 
-        <div id="item-cat">
-            <img src="{{ url_for('static', filename='img/moveis-img/cat5.jpg') }}"><br>
-            <div id="texto-cat">Escritório</div>
-        </div>
+        <a href="{{ url_for('main.imoveis', categoria='Moveis', subcategoria='Banheiro') }}" class="btn-subcategoria {% if subcategoria == 'Banheiro' %}ativo{% endif %}">
+            <div id="item-cat">
+                <img src="{{ url_for('static', filename='img/moveis-img/cat4.jpg') }}">
+                <div id="texto-cat">Banheiro</div>
+            </div>
+        </a>
+
+        <a href="{{ url_for('main.imoveis', categoria='Moveis', subcategoria='Escritório') }}" class="btn-subcategoria {% if subcategoria == 'Escritório' %}ativo{% endif %}">
+            <div id="item-cat">
+                <img src="{{ url_for('static', filename='img/moveis-img/cat5.jpg') }}">
+                <div id="texto-cat">Escritório</div>
+            </div>
+        </a>
     </div>
 
-    <!--Encerrando em breve-->
-    <div id="secaotitulo">
-        <h2>Leilões encerrando em breve</h2><br>
-        <hr>
-    </div>
+    <br><br><br><br>
 
-    <div id="encerrando-em-breve">
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/moveis-img/eb1.webp') }}"><br>
-            Cômoda Coliseu J&A Off-White
-            <br><p id="local">São João de Meriti - RJ</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Móveis Jequitiba</span>
+    <div id="conteudo-principal">
+        {% if subcategoria %}
+            <div id="secaotitulo">
+                <h2> Encerrando em Breve - {{ subcategoria }}</h2>
+                <hr>
             </div>
 
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
+            {% if leiloes_encerrando %}
+                <div id="encerrando-em-breve">
+                    <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
+                    
+                    {% for leilao in leiloes_encerrando %}
+                    <a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="leilao-link">
+                        <div class="item">
+                            <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
+                            <br>{{ leilao.nome }}
+                            <br><p class="local">{{ leilao.cidade }}{% if leilao.uf %} - {{ leilao.uf }}{% endif %}</p>
 
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
+                            <div class="infos-leiloeiro">
+                                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                                <span class="leiloeiro-texto">{{ leilao.user.nome_completo if leilao.user else 'Leiloeiro' }}</span>
+                            </div>
 
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/moveis-img/eb2.jpg') }}"><br>
-            Mesa de Jantar Noah Madeira (Usado)
-            <br><p id="local">Guarulhos - SP</p><br>
+                            <div class="views-img">
+                                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                                <span class="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
+                            </div>
 
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Tok&Stok</span>
+                            <span class="lance">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span><br>
+                            <span class="temporizador">{{ leilao.data_fim.strftime('%d/%m %H:%M') }}</span>
+                        </div>
+                    </a>
+                    {% endfor %}
+
+                    <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
+                </div>
+            {% else %}
+                <div class="sem-resultados">
+                    <p>Nenhum leilão encerrando em breve para {{ subcategoria }}</p>
+                </div>
+            {% endif %}
+
+            <div id="secaotitulo">
+                <h2>Todos os Leilões - {{ subcategoria }}</h2><br>
+                <hr>
             </div>
 
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
+            {% if leiloes.items %}
+                <div id="leiloes-container">
+                    {% for leilao in leiloes.items %}
+                    <a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="leilao-link">
+                        <div class="item">
+                            <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
+                            <br>{{ leilao.nome }}
+                            <br><p class="local">{{ leilao.cidade }}{% if leilao.uf %} - {{ leilao.uf }}{% endif %}</p>
 
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
+                            <div class="infos-leiloeiro">
+                                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                                <span class="leiloeiro-texto">{{ leilao.user.nome_completo if leilao.user else 'Leiloeiro' }}</span>
+                            </div>
 
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/moveis-img/eb3.webp') }}"><br>
-            Cama Solteiro Lion Marrom
-            <br><p id="local">Rio de Janeiro - RJ</p><br>
+                            <div class="views-img">
+                                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                                <span class="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
+                            </div>
 
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Toque Final Móveis</span>
+                            <br>
+
+                            <span class="lance">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span><br>
+                            <span class="temporizador">Encerra: {{ leilao.data_fim.strftime('%d/%m/%Y %H:%M') }}</span>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+
+                {% if leiloes.pages > 1 %}
+                <div class="paginacao-container">
+                    <div class="paginacao">
+                        {% if leiloes.has_prev %}
+                            <a href="{{ url_for('main.imoveis', categoria='Moveis', subcategoria=subcategoria, pagina=leiloes.prev_num) }}" class="pagina-link">‹ Anterior</a>
+                        {% endif %}
+
+                        {% for num in leiloes.iter_pages() %}
+                            {% if num %}
+                                {% if num == leiloes.page %}
+                                    <span class="pagina-atual">{{ num }}</span>
+                                {% else %}
+                                    <a href="{{ url_for('main.imoveis', categoria='Moveis', subcategoria=subcategoria, pagina=num) }}" class="pagina-link">{{ num }}</a>
+                                {% endif %}
+                            {% else %}
+                                <span class="pontos">...</span>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if leiloes.has_next %}
+                            <a href="{{ url_for('main.imoveis', categoria='Moveis', subcategoria=subcategoria, pagina=leiloes.next_num) }}" class="pagina-link">Próxima ›</a>
+                        {% endif %}
+                    </div>
+                    <div class="info-paginacao">
+                        Página {{ leiloes.page }} de {{ leiloes.pages }} - {{ leiloes.total }} leilões encontrados
+                    </div>
+                </div>
+                {% endif %}
+
+            {% else %}
+                <div class="sem-resultados">
+                    <p>Nenhum leilão encontrado para {{ subcategoria }}</p>
+                </div>
+            {% endif %}
+
+        {% else %}
+
+            <div id="secaotitulo">
+                <h2>Encerrando em Breve</h2><br>
+                <hr>
             </div>
 
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
+            {% if leiloes_encerrando %}
+                <div id="encerrando-em-breve">
+                    <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
+                    
+                    {% for leilao in leiloes_encerrando %}
+                    <a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="leilao-link">
+                        <div class="item">
+                            <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
+                            <br>{{ leilao.nome }}
+                            <br><p class="local">{{ leilao.cidade }}{% if leilao.uf %} - {{ leilao.uf }}{% endif %}</p>
 
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
+                            <div class="infos-leiloeiro">
+                                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                                <span class="leiloeiro-texto">{{ leilao.user.nome_completo if leilao.user else 'Leiloeiro' }}</span>
+                            </div>
 
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/moveis-img/eb4.webp') }}"><br>
-            Armário de Cozinha 8 Portas 2 Gavetas Freijó/Soft
-            <br><p id="local">São Paulo - SP</p><br>
+                            <div class="views-img">
+                                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                                <span class="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
+                            </div>
 
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">MadeiraMadeira</span>
+                            <span class="lance">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span><br>
+                            <span class="temporizador">{{ leilao.data_fim.strftime('%d/%m %H:%M') }}</span>
+                        </div>
+                    </a>
+                    {% endfor %}
+
+                    <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
+                </div>
+            {% else %}
+                <div class="sem-resultados">
+                    <p>Nenhum leilão encerrando em breve</p>
+                </div>
+            {% endif %}
+
+            <br><br><br><br><br><br>
+
+            <div id="secaotitulo">
+                <h2>Todos os Móveis</h2>
+                <hr>
             </div>
 
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/moveis-img/eb5.webp') }}"><br>
-            Armário de Cozinha 6 Portas e 1 Gaveta Cinza Escuro
-            <br><p id="local">Toledo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Multiloja</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
-    </div>
-
-    <!--Sala de Estar-->
-    <div id="secaotitulo">
-        <h2>Sala de Estar</h2><br>
-        <hr>
-    </div>
-
-    <div id="sala-de-estar">
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/moveis-img/se1.webp') }}"><br>
-            Mesa de Centro Antiga Design Anos 60 Pinho de Riga e Formica
-            <br><p id="local">Nova Iguaçu - RJ</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Usuário</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/moveis-img/se2.webp') }}"><br>
-            Rack para TV até 50 Polegadas 2 Portas 2 Prateleiras Pés em Madeira Maciça Rubi Cinamomo/Branco
-            <br><p id="local">Nova Iguaçu - RJ</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">MadeiraMadeira</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/moveis-img/se3.jpg') }}"><br>
-            Sofá 3 Lugares Beny Base de Madeira Linho Cotton Cru
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Mobly</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/moveis-img/se4.jpg') }}"><br>
-            Mesa de Centro Ameba Anos 50 (Usado)
-            <br><p id="local">Rio de Janeiro - RJ</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Usuário</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/moveis-img/se5.webp') }}"><br>
-            Mesa Lateral Madeira Maciça Vanilla (Amêndoa/Branco)
-            <br><p id="local">Curitiba - PR</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">YesCasa</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
-    </div>
-
-    <!--Cozinha-->
-    <div id="secaotitulo">
-        <h2>Cozinha</h2><br>
-        <hr>
-    </div>
-
-    <div id="cozinha">
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/moveis-img/eb4.webp') }}"><br>
-            Armário de Cozinha 8 Portas 2 Gavetas Freijó/Soft
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">MadeiraMadeira</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/moveis-img/eb5.webp') }}"><br>
-            Armário de Cozinha 6 Portas e 1 Gaveta Cinza Escuro
-            <br><p id="local">Toledo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Multiloja</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/moveis-img/co1.webp') }}"><br>
-            Armário de Cozinha 12 portas e 1 gaveta Branco
-            <br><p id="local">Curitiba - PR</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">YesCasa</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/moveis-img/co2.webp') }}"><br>
-            Cozinha Completa 3 peças com Torre Quente Branca
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">MadeiraMadeira</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/moveis-img/co3.webp') }}"><br>
-            Nicho para Microondas Arizona CabeCasa MadeiraOriginals Branco
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">MadeiraMadeira</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
-    </div>
-
-    <!--Quarto-->
-    <div id="secaotitulo">
-        <h2>Quarto</h2><br>
-        <hr>
-    </div>
-
-    <div id="quarto">
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/moveis-img/eb3.webp') }}"><br>
-            Cama Solteiro Lion Marrom
-            <br><p id="local">Rio de Janeiro - RJ</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Toque Final Móveis</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/moveis-img/eb1.webp') }}"><br>
-            Cômoda Coliseu J&A Off-White
-            <br><p id="local">São João de Meriti - RJ</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Móveis Jequitiba</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/moveis-img/qu2.jpg') }}"><br>
-            Conjunto 2 Mesas de Cabeceira Império 3 Gavetas Benetil Cinamomo
-            <br><p id="local">Rio de Janeiro - RJ</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Vyle Móveis</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/moveis-img/qu3.jpg') }}"><br>
-            Cama Box Mônaco Casal TCIL Cinamono
-            <br><p id="local">Rio de Janeiro - RJ</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Vyle Móveis</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/moveis-img/qu4.jpg') }}"><br>
-            Cama Box com Colchão Queen Classic com Espuma D40 Cinza
-            <br><p id="local">Rio de Janeiro - RJ</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Mobly</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
-    </div>
-
-    <!--Banheiro-->
-    <div id="secaotitulo">
-        <h2>Banheiro</h2><br>
-        <hr>
-    </div>
-
-    <div id="banheiro">
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/moveis-img/ba1.jpg') }}"><br>
-            Armário de Banheiro com Espelho Helena 2 Portas Mel e Arenas
-            <br><p id="local">Porto Alegre - RS</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Modern Móveis</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/moveis-img/ba2.jpg') }}"><br>
-           Gabinete de Banheiro com Cuba Cecília II 3 Portas Grafite e Mel
-            <br><p id="local">Porto Alegre - RS</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Modern Móveis</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/moveis-img/ba5.jpg') }}"><br>
-            Gabinete de Banheiro de Coluna Slim 1 Porta Branco
-            <br><p id="local">Porto Alegre - RS</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Modern Móveis</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/moveis-img/ba3.webp') }}"><br>
-            Lavatório em Porcelanato para Banheiro Slim 60cm com Cuba Esculpida Travertino
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">MadeiraMadeira</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/moveis-img/ba6.webp') }}"><br>
-            Espelheira para Banheiro 2 Portas 2 Prateleiras Malbec Branco
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">MadeiraMadeira</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
-    </div>
-
-    <!--Escritório-->
-    <div id="secaotitulo">
-        <h2>Escritório</h2><br>
-        <hr>
-    </div>
-
-    <div id="escritorio">
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/moveis-img/es1.webp') }}"><br>
-            Mesa de Escritório em L 2 Gavetas 3 Nichos Office Branco
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">MadeiraMadeira</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/moveis-img/es2.jpg') }}"><br>
-            Mesa 120x70cm Munique Metal e MDP Kappesberg
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Leroy Merlin</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/moveis-img/es3.webp') }}"><br>
-            Mesa Gamer Escrivaninha 3 Gavetas DRX5000 Preto 
-            <br><p id="local">São Paulo - SP</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">MadeiraMadeira</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/moveis-img/es4.jpg') }}"><br>
-            Cadeira de Escritório Presidente Giratória com Relax Office Plus Preta
-            <br><p id="local">Rio de Janeiro - RJ</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Mobly</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="item">
-            <img src="{{ url_for('static', filename='img/moveis-img/es5.jpg') }}"><br>
-            Armário de Escritório Corp 4 PT Branco e Cinza Cristal
-            <br><p id="local">Belo Horizonte - MG</p><br>
-
-            <div id="infos-leiloeiro">
-                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                <span id="leiloeiro-texto">Bramov Móveis</span>
-            </div>
-
-            <div id="views-img">
-                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                <span id="views-count">1000 participantes</span>
-            </div><br>
-
-            <span id="lance">Lance atual: </span><br>
-            <span id="temporizador">Encerra em: </span>
-        </div>
-
-        <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>      
+            {% if leiloes.items %}
+                <div id="leiloes-container">
+                    {% for leilao in leiloes.items %}
+                    <a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="leilao-link">
+                        <div class="item">
+                            <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
+                            <br>{{ leilao.nome }}
+                            <br><p class="local">{{ leilao.cidade }}{% if leilao.uf %} - {{ leilao.uf }}{% endif %}</p>
+
+                            <div class="infos-leiloeiro">
+                                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                                <span class="leiloeiro-texto">{{ leilao.user.nome_completo if leilao.user else 'Leiloeiro' }}</span>
+                            </div>
+
+                            <div class="views-img">
+                                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                                <span class="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
+                            </div>
+
+                            <span class="lance">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span><br>
+                            <span class="temporizador">Encerra: {{ leilao.data_fim.strftime('%d/%m/%Y %H:%M') }}</span>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+
+                {% if leiloes.pages > 1 %}
+                <div class="paginacao-container">
+                    <div class="paginacao">
+                        {% if leiloes.has_prev %}
+                            <a href="{{ url_for('main.imoveis', categoria='Moveis', pagina=leiloes.prev_num) }}" class="pagina-link">‹ Anterior</a>
+                        {% endif %}
+
+                        {% for num in leiloes.iter_pages() %}
+                            {% if num %}
+                                {% if num == leiloes.page %}
+                                    <span class="pagina-atual">{{ num }}</span>
+                                {% else %}
+                                    <a href="{{ url_for('main.imoveis', categoria='Moveis', pagina=num) }}" class="pagina-link">{{ num }}</a>
+                                {% endif %}
+                            {% else %}
+                                <span class="pontos">...</span>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if leiloes.has_next %}
+                            <a href="{{ url_for('main.imoveis', categoria='Moveis', pagina=leiloes.next_num) }}" class="pagina-link">Próxima ›</a>
+                        {% endif %}
+                    </div>
+                    <div class="info-paginacao">
+                        Página {{ leiloes.page }} de {{ leiloes.pages }} - {{ leiloes.total }} leilões encontrados
+                    </div>
+                </div>
+                {% endif %}
+
+            {% else %}
+                <div class="sem-resultados">
+                    <p>Nenhum leilão de móveis encontrado</p>
+                </div>
+            {% endif %}
+        {% endif %}
     </div>
 {% endblock %}
 
 {% block scripts %}
-    <script src="{{ url_for('static', filename='script/script.js')}}"></script>
+    <script src="{{ url_for('static', filename='script/carrossel.js')}}"></script>
+    <script src="{{ url_for('static', filename='script/style.js')}}"></script>
 {% endblock %}

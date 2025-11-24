@@ -80,7 +80,7 @@
                                 <span id="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
                             </div>
 
-                            <span id="lance">Lance atual: R$ {{ "%.2f"|format(leilao.lance_atual) }}</span><br>
+                            <span id="lance">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span>
                             <span id="temporizador">{{ leilao.data_fim.strftime('%d/%m %H:%M') }}</span>
                         </div>
                     </a>
@@ -106,7 +106,7 @@
                         <div id="item">
                             <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
                             <br>{{ leilao.nome }}
-                            <br><p id="local">{{ leilao.cidade }}{% if leilao.uf %} - {{ leilao.uf }}{% endif %}</p>
+                            <br><p id="local">{{ leilao.cidade }}{% if leilao.uf %} - {{ leilao.uf }}{% endif %}</p><br>
 
                             
                             <div id="infos-leiloeiro">
@@ -121,8 +121,8 @@
 
                             <br>
 
-                            <span id="lance">Lance atual: R$ {{ "%.2f"|format(leilao.lance_atual) }}</span><br>
-                            <span id="temporizador">Encerra: {{ leilao.data_fim.strftime('%d/%m/%Y %H:%M') }}</span>
+                            <span id="lance">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span><br>
+                            <span id="temporizador">Encerra em: {{ leilao.data_fim.strftime('%d/%m/%Y %H:%M') }}</span>
                         </div>
                     </a>
                     {% endfor %}
@@ -191,8 +191,8 @@
                                 <span id="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
                             </div>
 
-                            <span id="lance">Lance atual: R$ {{ "%.2f"|format(leilao.lance_atual) }}</span><br>
-                            <span id="temporizador">{{ leilao.data_fim.strftime('%d/%m %H:%M') }}</span>
+                            <span id="lance">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span>
+                            <span id="temporizador">Encerra em: {{ leilao.data_fim.strftime('%d/%m %H:%M') }}</span>
                         </div>
                     </a>
                     {% endfor %}
@@ -231,7 +231,7 @@
                                 <span id="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
                             </div>
 
-                            <span id="lance">Lance atual: R$ {{ "%.2f"|format(leilao.lance_atual) }}</span><br>
+                            <span id="lance">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span><br>
                             <span id="temporizador">Encerra: {{ leilao.data_fim.strftime('%d/%m/%Y %H:%M') }}</span>
                         </div>
                     </a>
@@ -274,4 +274,9 @@
             {% endif %}
         {% endif %}
     </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='script/style.js') }}"></script>
+    <script src="{{ url_for('static', filename='script/carrossel.js') }}"></script>
 {% endblock %}

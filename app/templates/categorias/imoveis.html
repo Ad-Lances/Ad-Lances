@@ -1,60 +1,62 @@
 {% extends "categorias/base_categorias.html" %}
 
-    {% block other_style %}
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/categorias/imoveis.css')}}">
-    {% endblock %}
+{% block other_style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/categorias/imoveis.css')}}">
+{% endblock %}
 
-    {% block header_content %}
-        <img src="{{ url_for('static', filename='img/banners/banner-imoveis.png')}}">
-    {% endblock %}
+{% block title %}Imóveis{% endblock %}
 
-    {% block icon_imoveis %}
-        <li>
-            <a href="{{ url_for('main.imoveis', categoria='Imoveis') }}">
-                <img src="{{ url_for('static', filename='img/img-nav/house-icon-color.png') }}" alt="Imóveis">
-            </a>
-        </li>
-        {% endblock %}
+{% block header_content %}
+    <img src="{{ url_for('static', filename='img/banners/banner-imoveis.png')}}">
+{% endblock %}
 
-    {% block categoria_content %}
-    <!-- Botões das Subcategorias -->
+{% block icon_imoveis %}
+    <li>
+        <a href="{{ url_for('main.imoveis', categoria='Imoveis') }}">
+            <img src="{{ url_for('static', filename='img/img-nav/house-icon-color.png') }}" alt="Imóveis">
+        </a>
+    </li>
+{% endblock %}
+
+{% block categoria_content %}
+    <!--Subcategorias-->
     <div id="categorias">
-        <a href="{{ url_for('main.imoveis', categoria='Imóveis') }}" class="btn-subcategoria {% if not subcategoria %}ativo{% endif %}">
+        <a href="{{ url_for('main.imoveis', categoria='Imoveis') }}" class="btn-subcategoria {% if not subcategoria %}ativo{% endif %}">
             <div id="item-cat">
                 <img src="{{ url_for('static', filename='img/imoveis-img/cat1.png') }}">
                 <div id="texto-cat">Todos</div>
             </div>
         </a>
 
-        <a href="{{ url_for('main.imoveis', categoria='Imóveis', subcategoria='Casas') }}" class="btn-subcategoria {% if subcategoria == 'Casas' %}ativo{% endif %}">
+        <a href="{{ url_for('main.imoveis', categoria='Imoveis', subcategoria='Casas') }}" class="btn-subcategoria {% if subcategoria == 'Casas' %}ativo{% endif %}">
             <div id="item-cat">
                 <img src="{{ url_for('static', filename='img/imoveis-img/cat1.png') }}">
                 <div id="texto-cat">Casas</div>
             </div>
         </a>
 
-        <a href="{{ url_for('main.imoveis', categoria='Imóveis', subcategoria='Apartamentos') }}" class="btn-subcategoria {% if subcategoria == 'Apartamentos' %}ativo{% endif %}">
+        <a href="{{ url_for('main.imoveis', categoria='Imoveis', subcategoria='Apartamentos') }}" class="btn-subcategoria {% if subcategoria == 'Apartamentos' %}ativo{% endif %}">
             <div id="item-cat">
                 <img src="{{ url_for('static', filename='img/imoveis-img/cat2.png') }}">
                 <div id="texto-cat">Apartamentos</div>
             </div>
         </a>
 
-        <a href="{{ url_for('main.imoveis', categoria='Imóveis', subcategoria='Comerciais') }}" class="btn-subcategoria {% if subcategoria == 'Comerciais' %}ativo{% endif %}">
+        <a href="{{ url_for('main.imoveis', categoria='Imoveis', subcategoria='Comerciais') }}" class="btn-subcategoria {% if subcategoria == 'Comerciais' %}ativo{% endif %}">
             <div id="item-cat">
                 <img src="{{ url_for('static', filename='img/imoveis-img/cat3.png') }}">
                 <div id="texto-cat">Comerciais</div>
             </div>
         </a>
 
-        <a href="{{ url_for('main.imoveis', categoria='Imóveis', subcategoria='Industriais') }}" class="btn-subcategoria {% if subcategoria == 'Industriais' %}ativo{% endif %}">
+        <a href="{{ url_for('main.imoveis', categoria='Imoveis', subcategoria='Industriais') }}" class="btn-subcategoria {% if subcategoria == 'Industriais' %}ativo{% endif %}">
             <div id="item-cat">
                 <img src="{{ url_for('static', filename='img/imoveis-img/cat4.png') }}">
                 <div id="texto-cat">Industriais</div>
             </div>
         </a>
 
-        <a href="{{ url_for('main.imoveis', categoria='Imóveis', subcategoria='Terrenos') }}" class="btn-subcategoria {% if subcategoria == 'Terrenos' %}ativo{% endif %}">
+        <a href="{{ url_for('main.imoveis', categoria='Imoveis', subcategoria='Terrenos') }}" class="btn-subcategoria {% if subcategoria == 'Terrenos' %}ativo{% endif %}">
             <div id="item-cat">
                 <img src="{{ url_for('static', filename='img/imoveis-img/cat5.png') }}">
                 <div id="texto-cat">Terrenos</div>
@@ -75,26 +77,26 @@
                     <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
                     
                     {% for leilao in leiloes_encerrando %}
-                    <div id="item">
-                        <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
-                        <br>{{ leilao.nome }}
-                        <br><p id="local">{{ leilao.subcategoria.nome if leilao.subcategoria else 'Sem categoria' }}</p>
+                    <a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="leilao-link">
+                        <div class="item">
+                            <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
+                            <br>{{ leilao.nome }}
+                            <br><p class="local">{{ leilao.subcategoria.nome if leilao.subcategoria else 'Sem categoria' }}</p>
 
-                        <div id="infos-leiloeiro">
-                            <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                            <span id="leiloeiro-texto">{{ leilao.user.nome_completo if leilao.user else 'Anônimo' }}</span>
+                            <div class="infos-leiloeiro">
+                                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                                <span class="leiloeiro-texto">{{ leilao.user.nome_completo if leilao.user else 'Anônimo' }}</span>
+                            </div>
+
+                            <div class="views-img">
+                                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                                <span class="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
+                            </div>
+
+                            <span class="lance">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span><br>
+                            <span class="temporizador">{{ leilao.data_fim.strftime('%d/%m %H:%M') }}</span>
                         </div>
-
-                        <div id="views-img">
-                            <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                            <span id="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
-                        </div>
-
-                        <span id="lance">Lance atual: R$ {{ "%.2f"|format(leilao.lance_atual) }}</span><br>
-                        <span id="temporizador">{{ leilao.data_fim.strftime('%d/%m %H:%M') }}</span>
-                        <br>
-                        <a href="{{ url_for('main.detalhes_leilao', id_leilao=leilao.id) }}" class="btn-ver-detalhes">Ver detalhes</a>
-                    </div>
+                    </a>
                     {% endfor %}
 
                     <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
@@ -113,26 +115,26 @@
             {% if leiloes.items %}
                 <div id="leiloes-container">
                     {% for leilao in leiloes.items %}
-                    <div id="item">
-                        <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
-                        <br>{{ leilao.nome }}
-                        <br><p id="local">{{ leilao.subcategoria.nome if leilao.subcategoria else 'Sem categoria' }}</p>
+                    <a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="leilao-link">
+                        <div class="item">
+                            <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
+                            <br>{{ leilao.nome }}
+                            <br><p class="local">{{ leilao.subcategoria.nome if leilao.subcategoria else 'Sem categoria' }}</p>
 
-                        <div id="infos-leiloeiro">
-                            <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                            <span id="leiloeiro-texto">{{ leilao.user.nome_completo if leilao.user else 'Anônimo' }}</span>
+                            <div class="infos-leiloeiro">
+                                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                                <span class="leiloeiro-texto">{{ leilao.user.nome_completo if leilao.user else 'Anônimo' }}</span>
+                            </div>
+
+                            <div class="views-img">
+                                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                                <span class="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
+                            </div>
+
+                            <span class="lance">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span><br>
+                            <span class="temporizador">Encerra: {{ leilao.data_fim.strftime('%d/%m/%Y %H:%M') }}</span>
                         </div>
-
-                        <div id="views-img">
-                            <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                            <span id="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
-                        </div>
-
-                        <span id="lance">Lance atual: R$ {{ "%.2f"|format(leilao.lance_atual) }}</span><br>
-                        <span id="temporizador">Encerra: {{ leilao.data_fim.strftime('%d/%m/%Y %H:%M') }}</span>
-                        <br>
-                        <a href="{{ url_for('main.detalhes_leilao', id_leilao=leilao.id) }}" class="btn-ver-detalhes">Ver detalhes</a>
-                    </div>
+                    </a>
                     {% endfor %}
                 </div>
 
@@ -140,7 +142,7 @@
                 <div class="paginacao-container">
                     <div class="paginacao">
                         {% if leiloes.has_prev %}
-                            <a href="{{ url_for('main.imoveis', categoria='Imóveis', subcategoria=subcategoria, pagina=leiloes.prev_num) }}" class="pagina-link">‹ Anterior</a>
+                            <a href="{{ url_for('main.imoveis', categoria='Imoveis', subcategoria=subcategoria, pagina=leiloes.prev_num) }}" class="pagina-link">‹ Anterior</a>
                         {% endif %}
 
                         {% for num in leiloes.iter_pages() %}
@@ -148,7 +150,7 @@
                                 {% if num == leiloes.page %}
                                     <span class="pagina-atual">{{ num }}</span>
                                 {% else %}
-                                    <a href="{{ url_for('main.imoveis', categoria='Imóveis', subcategoria=subcategoria, pagina=num) }}" class="pagina-link">{{ num }}</a>
+                                    <a href="{{ url_for('main.imoveis', categoria='Imoveis', subcategoria=subcategoria, pagina=num) }}" class="pagina-link">{{ num }}</a>
                                 {% endif %}
                             {% else %}
                                 <span class="pontos">...</span>
@@ -156,7 +158,7 @@
                         {% endfor %}
 
                         {% if leiloes.has_next %}
-                            <a href="{{ url_for('main.imoveis', categoria='Imóveis', subcategoria=subcategoria, pagina=leiloes.next_num) }}" class="pagina-link">Próxima ›</a>
+                            <a href="{{ url_for('main.imoveis', categoria='Imoveis', subcategoria=subcategoria, pagina=leiloes.next_num) }}" class="pagina-link">Próxima ›</a>
                         {% endif %}
                     </div>
                     <div class="info-paginacao">
@@ -184,26 +186,26 @@
                     <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
                     
                     {% for leilao in leiloes_encerrando %}
-                    <div id="item">
-                        <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
-                        <br>{{ leilao.nome }}
-                        <br><p id="local">{{ leilao.subcategoria.nome if leilao.subcategoria else 'Sem categoria' }}</p>
+                    <a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="leilao-link">
+                        <div class="item">
+                            <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
+                            <br>{{ leilao.nome }}
+                            <br><p class="local">{{ leilao.subcategoria.nome if leilao.subcategoria else 'Sem categoria' }}</p>
 
-                        <div id="infos-leiloeiro">
-                            <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                            <span id="leiloeiro-texto">{{ leilao.user.nome_completo if leilao.user else 'Anônimo' }}</span>
+                            <div class="infos-leiloeiro">
+                                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                                <span class="leiloeiro-texto">{{ leilao.user.nome_completo if leilao.user else 'Anônimo' }}</span>
+                            </div>
+
+                            <div class="views-img">
+                                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                                <span class="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
+                            </div>
+
+                            <span class="lance">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span><br>
+                            <span class="temporizador">{{ leilao.data_fim.strftime('%d/%m %H:%M') }}</span>
                         </div>
-
-                        <div id="views-img">
-                            <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                            <span id="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
-                        </div>
-
-                        <span id="lance">Lance atual: R$ {{ "%.2f"|format(leilao.lance_atual) }}</span><br>
-                        <span id="temporizador">{{ leilao.data_fim.strftime('%d/%m %H:%M') }}</span>
-                        <br>
-                        <a href="{{ url_for('main.detalhes_leilao', id_leilao=leilao.id) }}" class="btn-ver-detalhes">Ver detalhes</a>
-                    </div>
+                    </a>
                     {% endfor %}
 
                     <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
@@ -223,26 +225,26 @@
             {% if leiloes.items %}
                 <div id="leiloes-container">
                     {% for leilao in leiloes.items %}
-                    <div id="item">
-                        <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
-                        <br>{{ leilao.nome }}
-                        <br><p id="local">{{ leilao.subcategoria.nome if leilao.subcategoria else 'Sem categoria' }}</p>
+                    <a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="leilao-link">
+                        <div class="item">
+                            <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
+                            <br>{{ leilao.nome }}
+                            <br><p class="local">{{ leilao.subcategoria.nome if leilao.subcategoria else 'Sem categoria' }}</p>
 
-                        <div id="infos-leiloeiro">
-                            <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                            <span id="leiloeiro-texto">{{ leilao.user.nome_completo if leilao.user else 'Anônimo' }}</span>
+                            <div class="infos-leiloeiro">
+                                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                                <span class="leiloeiro-texto">{{ leilao.user.nome_completo if leilao.user else 'Anônimo' }}</span>
+                            </div>
+
+                            <div class="views-img">
+                                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                                <span class="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
+                            </div>
+
+                            <span class="lance">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span><br>
+                            <span class="temporizador">Encerra: {{ leilao.data_fim.strftime('%d/%m/%Y %H:%M') }}</span>
                         </div>
-
-                        <div id="views-img">
-                            <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                            <span id="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
-                        </div>
-
-                        <span id="lance">Lance atual: R$ {{ "%.2f"|format(leilao.lance_atual) }}</span><br>
-                        <span id="temporizador">Encerra: {{ leilao.data_fim.strftime('%d/%m/%Y %H:%M') }}</span>
-                        <br>
-                        <a href="{{ url_for('main.detalhes_leilao', id_leilao=leilao.id) }}" class="btn-ver-detalhes">Ver detalhes</a>
-                    </div>
+                    </a>
                     {% endfor %}
                 </div>
 
@@ -251,7 +253,7 @@
                 <div class="paginacao-container">
                     <div class="paginacao">
                         {% if leiloes.has_prev %}
-                            <a href="{{ url_for('main.imoveis', categoria='Imóveis', pagina=leiloes.prev_num) }}" class="pagina-link">‹ Anterior</a>
+                            <a href="{{ url_for('main.imoveis', categoria='Imoveis', pagina=leiloes.prev_num) }}" class="pagina-link">‹ Anterior</a>
                         {% endif %}
 
                         {% for num in leiloes.iter_pages() %}
@@ -259,7 +261,7 @@
                                 {% if num == leiloes.page %}
                                     <span class="pagina-atual">{{ num }}</span>
                                 {% else %}
-                                    <a href="{{ url_for('main.imoveis', categoria='Imóveis', pagina=num) }}" class="pagina-link">{{ num }}</a>
+                                    <a href="{{ url_for('main.imoveis', categoria='Imoveis', pagina=num) }}" class="pagina-link">{{ num }}</a>
                                 {% endif %}
                             {% else %}
                                 <span class="pontos">...</span>
@@ -267,7 +269,7 @@
                         {% endfor %}
 
                         {% if leiloes.has_next %}
-                            <a href="{{ url_for('main.imoveis', categoria='Imóveis', pagina=leiloes.next_num) }}" class="pagina-link">Próxima ›</a>
+                            <a href="{{ url_for('main.imoveis', categoria='Imoveis', pagina=leiloes.next_num) }}" class="pagina-link">Próxima ›</a>
                         {% endif %}
                     </div>
                     <div class="info-paginacao">
@@ -283,4 +285,9 @@
             {% endif %}
         {% endif %}
     </div>
-    {% endblock %}
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='script/style.js') }}"></script>
+    <script src="{{ url_for('static', filename='script/carrossel.js') }}"></script>
+{% endblock %}
