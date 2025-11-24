@@ -172,7 +172,7 @@ def login():
     return render_template('login.html')
 
 @bp.route('/logar', methods=['POST'])
-@limiter.limit("5 per minute")
+@limiter.limit("50 per minute")
 def logar():
     if request.is_json:
         dados = request.get_json()

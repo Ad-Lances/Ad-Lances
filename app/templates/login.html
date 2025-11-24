@@ -36,7 +36,7 @@
                 </div>
             </div>
             <div id="captcha-area" style="display:none;">
-            <div class="g-recaptcha" data-sitekey="6LfyOxYsAAAAAJnowmln6KG34CtnAooeHKMbDcsY" id="g-recaptcha"></div>
+            <div class="g-recaptcha" id="g-recaptcha"></div>
             </div>
             <button type="submit" id="botao-login">Entrar</button>
 
@@ -52,7 +52,7 @@
 {% endblock %}
    
 {% block scripts %}
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://www.google.com/recaptcha/api.js?onload=captchaCarregado&render=explicit"></script>
     <script src="{{ url_for('static', filename='script/style.js')}}"></script>
     <script src="{{ url_for('static', filename='script/validacao_login.js')}}"></script>
     <script src="{{ url_for('static', filename='script/login.js')}}"></script>

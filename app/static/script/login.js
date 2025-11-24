@@ -16,10 +16,14 @@ function verificar_email(email){
     return null;
 }
 let captchavisible = false;
+let btnCaptcha = null;
 function mostrarCaptcha() {
     if (!captchavisible) {
         captchavisible = true;
         document.getElementById("captcha-area").style.display = "block";
+        btnCaptcha = grecaptcha.render("g-recaptcha", {
+            sitekey: "6LfyOxYsAAAAAJnowmln6KG34CtnAooeHKMbDcsY"
+        })
     }
 }
 
