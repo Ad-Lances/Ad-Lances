@@ -9,7 +9,7 @@ from flask_mail import Mail
 from itsdangerous import URLSafeTimedSerializer
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
-import redis
+from redis import Redis
 
 db = SQLAlchemy()
 socketio = SocketIO(cors_allowed_origins="*", async_mode='gevent')
@@ -17,13 +17,18 @@ sqids = Sqids(min_length=6)
 mail = Mail()
 serial = None
 limiter = Limiter(get_remote_address, default_limits=['100 per day', '30 per hour'])
-red = redis.Redis(host="localhost", port=6379, db=0, decode_responses=True)
+red = None
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
     cloudinary.config(cloudinary_url=app.config['CLOUDINARY_URL'], secure=True)
     stripe.api_key = app.config['STRIPE_KEY']
+    global red
+    red = Redis.from_url(
+        app.config['REDIS_URL'],
+        decode_responses = True
+    )
     
     socketio.init_app(app)
     db.init_app(app)

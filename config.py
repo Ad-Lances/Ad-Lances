@@ -19,3 +19,4 @@ class Config:
     MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
     MAIL_DEFAULT_SENDER = 'adlances.noreply@gmail.com'
     RECAPTCHA_SECRET= os.getenv('RECAPTCHA_SECRET')
+    REDIS_URL = os.getenv('REDIS_URL')
