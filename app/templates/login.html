@@ -49,11 +49,10 @@
             </div>
         </form>
     </div>
-    <button type="button" onclick="grecaptcha.reset()">fdasadfs</button>
 {% endblock %}
    
 {% block scripts %}
-    <script src="https://www.google.com/recaptcha/api.js?onload=captchaCarregado&render=explicit"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=explicit"></script>
     <script src="{{ url_for('static', filename='script/style.js')}}"></script>
     <script src="{{ url_for('static', filename='script/validacao_login.js')}}"></script>
     <script src="{{ url_for('static', filename='script/login.js')}}"></script>

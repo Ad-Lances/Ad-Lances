@@ -19,20 +19,18 @@ function verificar_email(email){
 
 document.addEventListener('DOMContentLoaded', function(){
     adicionarToggleSenha();
+
     let captchavisible = false;
     let btnCaptcha = null;
+
     function mostrarCaptcha() {
         if (!captchavisible) {
             captchavisible = true;
             document.getElementById("captcha-area").style.display = "block";
             btnCaptcha = grecaptcha.render("g-recaptcha", {sitekey: "6LfyOxYsAAAAAJnowmln6KG34CtnAooeHKMbDcsY"})
-        } else {
-            grecaptcha.reset(btnCaptcha)
         }
     }
-    function captchaCarregado() {
-        console.log("captcha carregado")   
-    }
+
     const formularioLogin = document.getElementById('formularioLogin');
     const mensagem = document.getElementById('mensagem');
     
@@ -65,11 +63,9 @@ document.addEventListener('DOMContentLoaded', function(){
             const g_recaptcha = grecaptcha.getResponse();
             if (!g_recaptcha) {
                 mensagem.innerHTML = "Faça o captcha.";
-                console.log("testestestst")
                 return;
             }
             dados.captcha = g_recaptcha   
-            console.log(dados)
         }
 
         const resposta = await fetch('/logar', {
