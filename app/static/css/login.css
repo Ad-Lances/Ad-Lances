@@ -199,6 +199,10 @@ hr {
     display: block;
 }
 
+#formularioLogin i{
+    color: var(--cor-primaria);
+}
+
 #campo-email, #campo-senha {
     width: 100%;
 }
@@ -263,7 +267,7 @@ hr {
 
 #orientacao-senha li::before {
     content: "•";
-    color: var(--cor-primaria);
+    color: var(--cor-fundo);
     font-weight: bold;
     position: absolute;
     left: 0;
@@ -284,7 +288,7 @@ hr {
 }
 
 #link-cadastro a:hover {
-    color: #046d92;
+    color: var(--cor-primaria-hover);
     text-decoration: underline;
 }
 
@@ -297,6 +301,8 @@ hr {
 .form-section {
     position: relative;
     margin-bottom: 70px;
+    background-color: var(--cor-primaria);
+    color: var(--cor-primaria);
 }
 
 .form-section > .fa-solid {
@@ -305,6 +311,7 @@ hr {
     vertical-align: middle;
     display: inline-flex;
     align-items: center;
+
 }
 
 .form-section h3 {
@@ -318,7 +325,7 @@ hr {
 .form-section hr {
     border: none;
     height: 1px;
-    background: linear-gradient(90deg, #034660, #046d92);
+    background: linear-gradient(90deg, var(--cor-primaria), #046d92);
     margin: 19px 0 19px 0; 
 }
 

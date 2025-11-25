@@ -41,8 +41,6 @@
 body {
     background: var(--cor-fundo);
     color: var(--cor-texto);
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
     transition: background 0.25s ease, color 0.25s ease;
 }
 
@@ -56,7 +54,6 @@ a:hover {
 
 /* Botões padrão */
 button {
-    padding: 10px 16px;
     background: var(--cor-primaria);
     color: #FFFFFF;
     border: none;
