@@ -66,12 +66,10 @@
             </div>
 
             {% if leiloes_encerrando %}
-                <div id="encerrando-em-breve">
-                    <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
-                    
+                <div class="items-container">
                     {% for leilao in leiloes_encerrando %}
                     <a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="leilao-link">
-                        <div id="item">
+                        <div class="item">
                             <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
                             <br>{{ leilao.nome }}
                             <br><p id="local">{{ leilao.cidade }}{% if leilao.uf %} - {{ leilao.uf }}{% endif %}</p>
@@ -92,13 +90,13 @@
                     </a>
                     {% endfor %}
 
-                    <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
                 </div>
             {% else %}
                 <div class="sem-resultados">
                     <p>Nenhum leilão encerrando em breve para {{ subcategoria }}</p>
                 </div>
             {% endif %}
+                </div>
 
             <div id="secaotitulo">
                 <h2>Todos os Leilões - {{ subcategoria }}</h2><br>
@@ -177,10 +175,10 @@
 
             {% if leiloes_encerrando %}
                 <div id="encerrando-em-breve">
-                    <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
                     
+                    <div class="items-container"></div>
                     {% for leilao in leiloes_encerrando %}
-<a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="leilao-link">                        <div id="item">
+                        <a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="leilao-link">                        <div id="item">
                             <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
                             <br>{{ leilao.nome }}
                             <br><p id="local">{{ leilao.cidade }}{% if leilao.uf %} - {{ leilao.uf }}{% endif %}</p>
@@ -201,7 +199,6 @@
                     </a>
                     {% endfor %}
 
-                    <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
                 </div>
             {% else %}
                 <div class="sem-resultados">

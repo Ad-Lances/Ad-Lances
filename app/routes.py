@@ -60,13 +60,12 @@ def captcha(ip, email):
 def index():
     pagina_encerrando = request.args.get('pagina_encerrando', 1, type=int)
     pagina_recentes = request.args.get('pagina_recentes', 1, type=int)
-    por_pagina = 8
+    por_pagina = 5  
 
     agora = datetime.now(ZoneInfo("America/Sao_Paulo"))
     amanha = agora + timedelta(hours=24)
     uma_hora_atras = agora - timedelta(hours=1)
 
-    # Leilões encerrando em breve (próximas 24 horas) ou que venceram na última hora
     leiloes_encerrando = LeilaoModel.query.filter(
         LeilaoModel.data_fim.between(uma_hora_atras, amanha)
     ).order_by(
@@ -77,7 +76,6 @@ def index():
         error_out=False
     )
 
-    # Leilões mais recentes (ativos)
     leiloes_recentes = LeilaoModel.query.filter(
         LeilaoModel.data_fim > agora
     ).order_by(

@@ -99,7 +99,6 @@
                     </a>
                     {% endfor %}
 
-                    <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
                 </div>
             {% else %}
                 <div class="sem-resultados">
@@ -183,7 +182,6 @@
 
             {% if leiloes_encerrando %}
                 <div id="encerrando-em-breve">
-                    <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}"></div>
                     
                     {% for leilao in leiloes_encerrando %}
                     <a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="leilao-link">
@@ -208,7 +206,6 @@
                     </a>
                     {% endfor %}
 
-                    <div id="arrow-img"><img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}"></div>
                 </div>
             {% else %}
                 <div class="sem-resultados">

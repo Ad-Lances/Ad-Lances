@@ -1,114 +1,96 @@
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".carrossel-leiloes").forEach(carrossel => {
+        const container = carrossel.querySelector(".carrossel-container");
+        const track = carrossel.querySelector(".carrossel-track");
+        const items = Array.from(track.querySelectorAll(".carrossel-item"));
+        const prevBtn = carrossel.querySelector(".prev-btn");
+        const nextBtn = carrossel.querySelector(".next-btn");
+        const currentSlideEl = carrossel.querySelector('.current-slide');
+        const totalSlidesEl = carrossel.querySelector('.total-slides');
 
-function iniciarCarrosseis() {
-    // Seleciona cada seção que tenha itens e setas
-    const secoes = document.querySelectorAll("div[id]");
+        if (!track || items.length === 0) return;
 
-    secoes.forEach(secao => {
-        const leftArrow = secao.querySelector(".arrow-left");
-        const rightArrow = secao.querySelector(".arrow-right");
-        const items = secao.querySelectorAll("#item");
+        let currentIndex = 0;
+        let autoPlayInterval;
+        let itemsPerSlide = 1;
 
-        if (!leftArrow || !rightArrow || items.length === 0) return;
+        const getItemsPerSlide = () => {
+            if (!container) return 1;
+            
+            const containerWidth = container.offsetWidth;
+            const itemWidth = items[0].offsetWidth;
+            const gap = 20;
+            const calculatedItems = Math.floor(containerWidth / (itemWidth + gap));
+            return Math.max(1, calculatedItems);
+        };
 
-        // Criar container se não existir
-        let container = secao.querySelector(".items-container");
-        if (!container) {
-            container = document.createElement("div");
-            container.classList.add("items-container");
-
-            items.forEach(item => container.appendChild(item));
-
-            leftArrow.remove();
-            rightArrow.remove();
-
-            secao.prepend(leftArrow);
-            secao.appendChild(container);
-            secao.appendChild(rightArrow);
-        }
-
-        let posicao = 0;
-
-        function larguraItem() {
-            const item = container.querySelector("#item");
-            if (!item) return 300;
-            const estilo = window.getComputedStyle(item);
-            return item.offsetWidth + parseInt(estilo.marginRight || 15);
-        }
-
-        function atualizar() {
-            container.style.transform = `translateX(-${posicao}px)`;
-
-            const max = container.scrollWidth - secao.offsetWidth;
-
-            leftArrow.style.opacity = posicao <= 0 ? .3 : 1;
-            rightArrow.style.opacity = posicao >= max ? .3 : 1;
-
-            leftArrow.style.pointerEvents = posicao <= 0 ? "none" : "auto";
-            rightArrow.style.pointerEvents = posicao >= max ? "none" : "auto";
-        }
-
-        function moverDireita() {
-            posicao += larguraItem() * itensVisiveis();
-            limitar();
-        }
-
-        function moverEsquerda() {
-            posicao -= larguraItem() * itensVisiveis();
-            limitar();
-        }
-
-        function limitar() {
-            const max = container.scrollWidth - secao.offsetWidth;
-            if (posicao < 0) posicao = 0;
-            if (posicao > max) posicao = max;
-            atualizar();
-        }
-
-        function itensVisiveis() {
-            return Math.max(1, Math.floor(secao.offsetWidth / larguraItem()));
-        }
-
-        leftArrow.addEventListener("click", moverEsquerda);
-        rightArrow.addEventListener("click", moverDireita);
-
-        // Swipe mobile
-        let startX = 0;
-        let moveX = 0;
-        let moving = false;
-
-        container.addEventListener("touchstart", (e) => {
-            startX = e.touches[0].clientX;
-            moving = true;
-            container.style.transition = "none";
-        });
-
-        container.addEventListener("touchmove", (e) => {
-            if (!moving) return;
-            moveX = e.touches[0].clientX;
-            const diff = startX - moveX;
-            container.style.transform = `translateX(-${posicao + diff}px)`;
-        });
-
-        container.addEventListener("touchend", () => {
-            moving = false;
-            container.style.transition = "transform .3s ease";
-            const diff = startX - moveX;
-
-            if (Math.abs(diff) > 50) {
-                diff > 0 ? moverDireita() : moverEsquerda();
-            } else {
-                atualizar();
+        const updateCarrossel = () => {
+            itemsPerSlide = getItemsPerSlide();
+            const itemWidth = items[0].offsetWidth;
+            const gap = 20;
+            const translateX = -currentIndex * (itemWidth + gap) * itemsPerSlide;
+            
+            track.style.transform = `translateX(${translateX}px)`;
+            
+            if (currentSlideEl && totalSlidesEl) {
+                currentSlideEl.textContent = currentIndex + 1;
+                totalSlidesEl.textContent = Math.ceil(items.length / itemsPerSlide);
             }
-        });
+            
+            if (prevBtn) prevBtn.disabled = currentIndex === 0;
+            if (nextBtn) {
+                const maxIndex = Math.ceil(items.length / itemsPerSlide) - 1;
+                nextBtn.disabled = currentIndex >= maxIndex;
+            }
+        };
 
-        atualizar();
-        window.addEventListener("resize", atualizar);
+        const nextSlide = () => {
+            const maxIndex = Math.ceil(items.length / itemsPerSlide) - 1;
+            if (currentIndex < maxIndex) {
+                currentIndex++;
+            } else {
+                currentIndex = 0;
+            }
+            updateCarrossel();
+        };
+
+        const prevSlide = () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+            } else {
+                const maxIndex = Math.ceil(items.length / itemsPerSlide) - 1;
+                currentIndex = maxIndex;
+            }
+            updateCarrossel();
+        };
+
+        if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+        if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+
+        const startAutoPlay = () => {
+            autoPlayInterval = setInterval(nextSlide, 5000);
+        };
+
+        const stopAutoPlay = () => {
+            clearInterval(autoPlayInterval);
+        };
+
+        carrossel.addEventListener('mouseenter', stopAutoPlay);
+        carrossel.addEventListener('mouseleave', startAutoPlay);
+
+        const handleResize = () => {
+            currentIndex = 0; // Reset para primeira página ao redimensionar
+            updateCarrossel();
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        // Inicialização
+        updateCarrossel();
+        startAutoPlay();
     });
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-    iniciarCarrosseis();
 });
+
 
 // script-carrosseis.js
 
