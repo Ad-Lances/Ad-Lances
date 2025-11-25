@@ -16,7 +16,7 @@ socketio = SocketIO(cors_allowed_origins="*", async_mode='gevent')
 sqids = Sqids(min_length=6)
 mail = Mail()
 serial = None
-limiter = Limiter(get_remote_address, default_limits=['1000 per day', '300 per hour'])
+limiter = Limiter(get_remote_address, default_limits=['30 per day', '20 per hour'])
 red = None
 
 def create_app():

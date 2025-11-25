@@ -172,7 +172,7 @@ def login():
     return render_template('login.html')
 
 @bp.route('/logar', methods=['POST'])
-@limiter.limit("50 per minute")
+@limiter.limit("5 per minute")
 def logar():
     if request.is_json:
         dados = request.get_json()
@@ -215,10 +215,7 @@ def logar():
         session['usuario_id'] = usuario.id
         session['nome_completo'] = usuario.nome_completo
 
-        return jsonify({
-            "sucesso": f"Bem-Vindo, {usuario.nome_completo}!",
-            "redirect": url_for('main.index')
-        })
+        return jsonify({"sucesso": f"Bem-Vindo, {usuario.nome_completo}!"})
     tentativa(ip, email)
     return jsonify({"erro": "Email ou senha inválidos."})
 
@@ -683,6 +680,10 @@ def erro_401(error):
 @bp.errorhandler(404)
 def page_not_found(error):
     return render_template('error-pages/404.html'), 404
+
+@bp.errorhandler(429)
+def too_many_requests(e):
+    return jsonify({'erro': f'Você fez muitas tentativas. Tente novamente mais tarde.'}), 429
 
 @bp.errorhandler(500)
 def erro_500(error):

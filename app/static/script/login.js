@@ -62,7 +62,9 @@ document.addEventListener('DOMContentLoaded', function(){
         if (captchavisible) {
             const g_recaptcha = grecaptcha.getResponse();
             if (!g_recaptcha) {
+                estilizarmensagem(mensagem)
                 mensagem.innerHTML = "Faça o captcha.";
+                scrollerro()
                 return;
             }
             dados.captcha = g_recaptcha   
@@ -75,43 +77,34 @@ document.addEventListener('DOMContentLoaded', function(){
             },
             body: JSON.stringify(dados)
         });
-        const textoBruto = await resposta.text();
+        const resultado = await resposta.json();
 
-
-        let resultado = {};
-        try {
-            resultado = JSON.parse(textoBruto);
-        } catch (e) {
-            console.error("DEU ERRO AO PARSEAR JSON:", e);
-            mensagem.innerHTML = "Erro inesperado. Tente novamente.";
-            return;
+        if (resposta.status === 429) {
+            mensagem.innerHTML = resultado.erro
+            estilizarmensagem(mensagem)
+            scrollerro()
         }
+
         if (resultado.sucesso) {
-            estilizarMensagemSucesso();
             mensagem.innerHTML = resultado.sucesso;
+            estilizarMensagemSucesso();
+            scrollerro();
             captchavisible = false;
             document.getElementById('captcha-area').style.display = "none";
             setTimeout(() => {
-               window.location.href = '/';
+                window.location.href = "/"
             }, 1500); 
         } 
         if (resultado.erro) {
             if (captchavisible){
                 grecaptcha.reset()
             }
+            mensagem.innerHTML = resultado.erro
+            estilizarmensagem(mensagem)
+            scrollerro()  
         }
         if (resultado.erro == "Faça o captcha.") {
-            setTimeout(() => {
-                mensagem.innerHTML = resultado.erro   
-            }, 3000)
             mostrarCaptcha()
-        } else{
-            setTimeout(() => {
-                mensagem.innerHTML = resultado.erro
-            }, 3000)
-            
-        }
-        
-});
-    }
+        } 
+})}
 })
