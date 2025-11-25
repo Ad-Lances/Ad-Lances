@@ -291,10 +291,8 @@
 }
 
 .explicacao h3{
-    color: #335e7d;
+    color: var(--cor-primaria);
 }
-
-
 
 .explicacao{
     font-size: 13px;

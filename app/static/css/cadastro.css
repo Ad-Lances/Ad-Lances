@@ -166,7 +166,7 @@ hr {
     color: var(--cor-texto-suave);
     margin-top: 5px;
     padding: 15px;
-    background: var(--cor-borda);
+    background: var(--cor-fundo);
     border-radius: 8px;
     border-left: 4px solid var(--cor-primaria);
     grid-column: 1 / -1;
@@ -230,7 +230,7 @@ hr {
 }
 
 #link-login a:hover {
-    color: #046d92;
+    color: var(--cor-primaria-hover);
     text-decoration: underline;
 }
 
@@ -250,6 +250,7 @@ hr {
     vertical-align: middle;
     display: inline-flex;
     align-items: center;
+    color: var(--cor-primaria);
 }
 
 .form-section h3 {

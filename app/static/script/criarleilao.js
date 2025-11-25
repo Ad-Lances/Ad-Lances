@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     padding-bottom: 12px;
                     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
                     font-size: 16px;
-                    color: #000000ff;
+                    color: var(--cor-texto);
                 ">
                     <i class="fa-solid fa-triangle-exclamation" style="color: #FF6B6B;"></i>
                     <strong>Corrija os seguintes erros:</strong>
@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     <li style="
                         padding: 12px 16px;
                         margin: 8px 0;
-                        background: rgba(255, 107, 107, 0.1);
+                        background: var(--cor-card);
                         border-radius: 8px;
                         border-left: 4px solid #FF6B6B;
                         border: 1px solid rgba(255, 107, 107, 0.3);
@@ -140,8 +140,8 @@ document.addEventListener('DOMContentLoaded', function(){
                         transition: all 0.2s ease;
                         font-size: 14px;
                         line-height: 1.4;
-                        color: #262626;
-                        background-color: #FFFFFF;
+                        color: var(--cor-texto);
+                        background-color: var(--cor-borda);
                     ">
                         <span style="
                             position: absolute;
@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function(){
                             font-size: 16px;
                             width: 24px;
                             height: 24px;
-                            background: rgba(255, 107, 107, 0.1);
+                            background: var(--cor-card);
                             border-radius: 50%;
                             display: flex;
                             align-items: center;
@@ -167,8 +167,8 @@ document.addEventListener('DOMContentLoaded', function(){
 
             mensagem.innerHTML = errosHTML;
             mensagem.style.cssText = `
-                color: #262626;
-                background: #FFFFFF;
+                color: var(--cor-texto);
+                background: var(--cor-fundo);
                 border-radius: 12px;
                 padding: 20px 24px;
                 margin: 20px auto;
