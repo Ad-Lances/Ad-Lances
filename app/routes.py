@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, jsonify, session, redirect, url_for, flash, abort
 from app.models import *
 from . import db, cloudinary
-from .email_utils import *
+from .utils.email_utils import *
 from datetime import datetime, date, timedelta
 from zoneinfo import ZoneInfo
 import cloudinary.uploader
@@ -9,7 +9,7 @@ from sqlalchemy import select, or_
 from app import stripe, socketio, sqids, limiter, red
 import requests
 from config import Config
-from app.controllers.user_controller import (
+from app.utils.user_utils import (
     verificar_idade,
     verificar_email,
     verificar_senha,
@@ -143,7 +143,8 @@ def cadastrar():
         novo_usuario = UserModel(
             nome_completo=dados['nome'],
             tipo_pessoa=dados['tipo_pessoa'],
-            cpf = dados['cpf'],
+            cpf=dados.get("cpf"),
+            cnpj=dados.get("cnpj"),
             datanasc=dados['datanasc'],
             cep=dados['cep'],
             unid_federativa=dados['unid_federativa'],
@@ -151,7 +152,9 @@ def cadastrar():
             rua=dados['rua'],
             bairro=dados['bairro'],
             numero=dados['numero_casa'],
-            email=dados['email']
+            email=dados['email'],
+            telefone_cel=dados.get("telefone"),
+            telefone_res=dados.get("telefone_res")
         )
         novo_usuario.set_senha(dados['senha'])
     
