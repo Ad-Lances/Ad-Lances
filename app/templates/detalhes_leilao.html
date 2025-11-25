@@ -177,10 +177,7 @@
             <h3 class="section-title">Condições</h3>
             <div class="conditions-grid">
                 <div class="condition-item">
-                    <strong>Pagamento à vista</strong>
-                </div>
-                <div class="condition-item">
-                    <strong>Retirada no local</strong>
+                    <strong>Parcelas permitidas: {{ leilao.parcelas }}</strong>
                 </div>
             </div>
         </div>
@@ -211,7 +208,7 @@
                     <tr>
                         <td>{{ lance.user.nome_completo }}</td>
                         <td class="lance-amount">{{ lance.get_valor_str() }}</td>
-                        <td class="lance-date">{{ lance.get_horario_str() }}</td>
+                        <td class="lance-date">{{ lance.horario.strftime("%d/%m/%Y %H:%M:%S") }}</td>
                     </tr>
                     {% endfor %}
                     

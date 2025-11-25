@@ -196,11 +196,36 @@ def logout():
 def perfil_user():
     usuario = UserModel.query.get(session['usuario_id'])
     leiloes_usuario = LeilaoModel.query.filter_by(id_user=session['usuario_id']).all()
+    print(leiloes_usuario)
     lances_usuario = LanceModel.query.filter_by(id_user=session['usuario_id']).all()
-    #leiloes_usuario_participou
-    #leiloes_usuario_ganhou
 
-    return render_template('perfil.html', usuario=usuario, leiloes=leiloes_usuario, lances=lances_usuario)
+    qtd_leiloes_criados = len(leiloes_usuario)
+
+    leiloes_participados = {}
+
+    for lance in lances_usuario:
+        leilao = lance.leilao
+        
+        if leilao.id not in leiloes_participados:
+            leiloes_participados[leilao.id] = {
+                "leilao": leilao,
+                "lances": []
+            }
+        
+        leiloes_participados[leilao.id]["lances"].append(lance)
+
+    qtd_leiloes_part = len(leiloes_participados)
+
+    return render_template(
+        'perfil.html',
+        usuario=usuario,
+        leiloes=leiloes_usuario,
+        leiloes_usuario=leiloes_usuario,
+        lances=lances_usuario,
+        leiloes_participados=leiloes_participados,
+        qtd_leiloes_criados=qtd_leiloes_criados,
+        qtd_leiloes_part=qtd_leiloes_part
+    )
 
 @bp.route('/categorias/<string:categoria>')
 def imoveis(categoria):
