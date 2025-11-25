@@ -68,7 +68,7 @@ class UserModel(db.Model):
     
     def verificar_senha(self, senha):
         caracteres_especiais = ['#', '@', '_']
-        if senha.length()<6:
+        if len(senha)<6:
             return False
         
         if not any(char in senha for char in caracteres_especiais):

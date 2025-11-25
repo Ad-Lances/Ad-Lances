@@ -49,7 +49,6 @@
         </a>
     </div>
 
-
     <br><br><br><br>
 
     <div id="conteudo-principal">
@@ -78,12 +77,17 @@
                                 <span id="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
                             </div>
 
-                            <span id="lance">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span>
+                            <span id="lance">Lance atual:
+                                {% if leilao.lances %}
+                                {{ (leilao.lances|sort(attribute='valor')|last).get_valor_str() }}
+                            {% else %}
+                                {{ leilao.get_lance_inicial_str() }}
+                            {% endif %}
+                            </span>
                             <span id="temporizador">{{ leilao.data_fim.strftime('%d/%m %H:%M') }}</span>
                         </div>
                     </a>
                     {% endfor %}
-
                 </div>
             {% else %}
                 <div class="sem-resultados">
@@ -105,7 +109,6 @@
                             <br>{{ leilao.nome }}
                             <br><p id="local">{{ leilao.cidade }}{% if leilao.uf %} - {{ leilao.uf }}{% endif %}</p><br>
 
-                            
                             <div id="infos-leiloeiro">
                                 <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
                                 <span id="leiloeiro-texto">{{ leilao.user.nome_completo if leilao.user else 'Leiloeiro' }}</span>
@@ -118,21 +121,39 @@
 
                             <br>
 
-                            <span id="lance">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span><br>
+                            <span id="lance">Lance atual: 
+                                {% if leilao.lances %}
+                                {{ (leilao.lances|sort(attribute='valor')|last).get_valor_str() }}
+                            {% else %}
+                                {{ leilao.get_lance_inicial_str() }}
+                            {% endif %}
+                            </span><br>
                             <span id="temporizador">Encerra em: {{ leilao.data_fim.strftime('%d/%m/%Y %H:%M') }}</span>
                         </div>
                     </a>
                     {% endfor %}
                 </div>
 
+                <!-- PAGINAÇÃO ESTILIZADA -->
                 {% if leiloes.pages > 1 %}
                 <div class="paginacao-container">
                     <div class="paginacao">
+                        <!-- Primeira página -->
                         {% if leiloes.has_prev %}
-                            <a href="{{ url_for('main.imoveis', categoria='Veiculos', subcategoria=subcategoria, pagina=leiloes.prev_num) }}" class="pagina-link">‹ Anterior</a>
+                            <a href="{{ url_for('main.imoveis', categoria='Veiculos', subcategoria=subcategoria, pagina=1) }}" class="pagina-link" title="Primeira página">«</a>
+                        {% else %}
+                            <span class="pagina-link disabled">«</span>
                         {% endif %}
 
-                        {% for num in leiloes.iter_pages() %}
+                        <!-- Página anterior -->
+                        {% if leiloes.has_prev %}
+                            <a href="{{ url_for('main.imoveis', categoria='Veiculos', subcategoria=subcategoria, pagina=leiloes.prev_num) }}" class="pagina-link">‹</a>
+                        {% else %}
+                            <span class="pagina-link disabled">‹</span>
+                        {% endif %}
+
+                        <!-- Páginas numeradas -->
+                        {% for num in leiloes.iter_pages(left_edge=2, left_current=2, right_current=2, right_edge=2) %}
                             {% if num %}
                                 {% if num == leiloes.page %}
                                     <span class="pagina-atual">{{ num }}</span>
@@ -144,12 +165,23 @@
                             {% endif %}
                         {% endfor %}
 
+                        <!-- Próxima página -->
                         {% if leiloes.has_next %}
-                            <a href="{{ url_for('main.imoveis', categoria='Veiculos', subcategoria=subcategoria, pagina=leiloes.next_num) }}" class="pagina-link">Próxima ›</a>
+                            <a href="{{ url_for('main.imoveis', categoria='Veiculos', subcategoria=subcategoria, pagina=leiloes.next_num) }}" class="pagina-link">›</a>
+                        {% else %}
+                            <span class="pagina-link disabled">›</span>
+                        {% endif %}
+
+                        <!-- Última página -->
+                        {% if leiloes.has_next %}
+                            <a href="{{ url_for('main.imoveis', categoria='Veiculos', subcategoria=subcategoria, pagina=leiloes.pages) }}" class="pagina-link" title="Última página">»</a>
+                        {% else %}
+                            <span class="pagina-link disabled">»</span>
                         {% endif %}
                     </div>
+                    
                     <div class="info-paginacao">
-                        Página {{ leiloes.page }} de {{ leiloes.pages }} - {{ leiloes.total }} leilões encontrados
+                        Página {{ leiloes.page }} de {{ leiloes.pages }} - {{ leiloes.total }} leilão{{ 'es' if leiloes.total != 1 }} encontrado{{ 's' if leiloes.total != 1 }}
                     </div>
                 </div>
                 {% endif %}
@@ -187,7 +219,11 @@
                                 <span id="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
                             </div>
 
-                            <span id="lance">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span>
+                            <span id="lance-atual">Lance atual: {% if leilao.lances %}
+                                {{ (leilao.lances|sort(attribute='valor')|last).get_valor_str() }}
+                            {% else %}
+                                {{ leilao.get_lance_inicial_str() }}
+                            {% endif %}</span>
                             <span id="temporizador">Encerra em: {{ leilao.data_fim.strftime('%d/%m %H:%M') }}</span>
                         </div>
                     </a>
@@ -226,21 +262,38 @@
                                 <span id="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
                             </div>
 
-                            <span id="lance">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span><br>
+                            <span id="lance-atual">Lance atual: 
+                                {% if leilao.lances %}
+                                {{ (leilao.lances|sort(attribute='valor')|last).get_valor_str() }}
+                            {% else %}
+                                {{ leilao.get_lance_inicial_str() }}
+                            {% endif %}</span><br>
                             <span id="temporizador">Encerra: {{ leilao.data_fim.strftime('%d/%m/%Y %H:%M') }}</span>
                         </div>
                     </a>
                     {% endfor %}
                 </div>
 
+                <!-- PAGINAÇÃO ESTILIZADA PARA TODOS OS VEÍCULOS -->
                 {% if leiloes.pages > 1 %}
                 <div class="paginacao-container">
                     <div class="paginacao">
+                        <!-- Primeira página -->
                         {% if leiloes.has_prev %}
-                            <a href="{{ url_for('main.imoveis', categoria='Veiculos', pagina=leiloes.prev_num) }}" class="pagina-link">‹ Anterior</a>
+                            <a href="{{ url_for('main.imoveis', categoria='Veiculos', pagina=1) }}" class="pagina-link" title="Primeira página">«</a>
+                        {% else %}
+                            <span class="pagina-link disabled">«</span>
                         {% endif %}
 
-                        {% for num in leiloes.iter_pages() %}
+                        <!-- Página anterior -->
+                        {% if leiloes.has_prev %}
+                            <a href="{{ url_for('main.imoveis', categoria='Veiculos', pagina=leiloes.prev_num) }}" class="pagina-link">‹</a>
+                        {% else %}
+                            <span class="pagina-link disabled">‹</span>
+                        {% endif %}
+
+                        <!-- Páginas numeradas -->
+                        {% for num in leiloes.iter_pages(left_edge=2, left_current=2, right_current=2, right_edge=2) %}
                             {% if num %}
                                 {% if num == leiloes.page %}
                                     <span class="pagina-atual">{{ num }}</span>
@@ -252,12 +305,23 @@
                             {% endif %}
                         {% endfor %}
 
+                        <!-- Próxima página -->
                         {% if leiloes.has_next %}
-                            <a href="{{ url_for('main.imoveis', categoria='Veiculos', pagina=leiloes.next_num) }}" class="pagina-link">Próxima ›</a>
+                            <a href="{{ url_for('main.imoveis', categoria='Veiculos', pagina=leiloes.next_num) }}" class="pagina-link">›</a>
+                        {% else %}
+                            <span class="pagina-link disabled">›</span>
+                        {% endif %}
+
+                        <!-- Última página -->
+                        {% if leiloes.has_next %}
+                            <a href="{{ url_for('main.imoveis', categoria='Veiculos', pagina=leiloes.pages) }}" class="pagina-link" title="Última página">»</a>
+                        {% else %}
+                            <span class="pagina-link disabled">»</span>
                         {% endif %}
                     </div>
+                    
                     <div class="info-paginacao">
-                        Página {{ leiloes.page }} de {{ leiloes.pages }} - {{ leiloes.total }} leilões encontrados
+                        Página {{ leiloes.page }} de {{ leiloes.pages }} - {{ leiloes.total }} leilão{{ 'es' if leiloes.total != 1 }} encontrado{{ 's' if leiloes.total != 1 }}
                     </div>
                 </div>
                 {% endif %}

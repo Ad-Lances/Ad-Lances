@@ -84,8 +84,12 @@
                                 <span id="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
                             </div>
 
-                            <span id="lance">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span><br>
-                            <span id="temporizador">{{ leilao.data_fim.strftime('%d/%m %H:%M') }}</span>
+                            <span id="lance-atual">Lance atual: {% if leilao.lances %}
+                                {{ (leilao.lances|sort(attribute='valor')|last).get_valor_str() }}
+                            {% else %}
+                                {{ leilao.get_lance_inicial_str() }}
+                            {% endif %}</span><br>
+                            <span id="temporizador">Encerra em: {{ leilao.data_fim.strftime('%d/%m %H:%M') }}</span>
                         </div>
                     </a>
                     {% endfor %}
@@ -124,8 +128,13 @@
 
                             <br>
 
-                            <span id="lance">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span><br>
-                            <span id="temporizador">Encerra: {{ leilao.data_fim.strftime('%d/%m/%Y %H:%M') }}</span>
+                            <span id="lance-atual">Lance atual: 
+                                {% if leilao.lances %}
+                                {{ (leilao.lances|sort(attribute='valor')|last).get_valor_str() }}
+                            {% else %}
+                                {{ leilao.get_lance_inicial_str() }}
+                            {% endif %}</span><br>
+                            <span id="temporizador">Encerra em: {{ leilao.data_fim.strftime('%d/%m/%Y %H:%M') }}</span>
                         </div>
                     </a>
                     {% endfor %}
@@ -193,8 +202,12 @@
                                 <span id="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
                             </div>
 
-                            <span id="lance">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span><br>
-                            <span id="temporizador">{{ leilao.data_fim.strftime('%d/%m %H:%M') }}</span>
+                            <span id="lance-atual">Lance atual: {% if leilao.lances %}
+                                {{ (leilao.lances|sort(attribute='valor')|last).get_valor_str() }}
+                            {% else %}
+                                {{ leilao.get_lance_inicial_str() }}
+                            {% endif %}</span><br>
+                            <span id="temporizador">Encerra em: {{ leilao.data_fim.strftime('%d/%m %H:%M') }}</span>
                         </div>
                     </a>
                     {% endfor %}
@@ -232,8 +245,12 @@
                                 <span id="views-count">{{ leilao.lances|length }} participante{{ 's' if leilao.lances|length != 1 }}</span>
                             </div>
 
-                            <span id="lance">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span><br>
-                            <span id="temporizador">Encerra: {{ leilao.data_fim.strftime('%d/%m/%Y %H:%M') }}</span>
+                            <span id="lance-atual">Lance atual: {% if leilao.lances %}
+                                {{ (leilao.lances|sort(attribute='valor')|last).get_valor_str() }}
+                            {% else %}
+                                {{ leilao.get_lance_inicial_str() }}
+                            {% endif %}</span><br>
+                            <span id="temporizador">Encerra em: {{ leilao.data_fim.strftime('%d/%m/%Y %H:%M') }}</span>
                         </div>
                     </a>
                     {% endfor %}

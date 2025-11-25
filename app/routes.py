@@ -60,7 +60,7 @@ def captcha(ip, email):
 def index():
     pagina_encerrando = request.args.get('pagina_encerrando', 1, type=int)
     pagina_recentes = request.args.get('pagina_recentes', 1, type=int)
-    por_pagina = 5  
+    por_pagina = 8  
 
     agora = datetime.now(ZoneInfo("America/Sao_Paulo"))
     amanha = agora + timedelta(hours=24)
@@ -277,12 +277,10 @@ def imoveis(categoria):
     if not categoria_exist:
         return redirect(url_for('main.index'))
 
-    # Query base para leilões ativos
     query_base = LeilaoModel.query.filter(
         LeilaoModel.data_fim > datetime.now(ZoneInfo("America/Sao_Paulo"))
     )
 
-    # Filtrar por subcategoria se fornecida
     if subcategoria:
         subcategoria_obj = SubcategoriaModel.query.filter_by(
             id_categoria=categoria_exist.id,
@@ -290,17 +288,14 @@ def imoveis(categoria):
         ).first()
         
         if subcategoria_obj:
-            # Aplicar filtro da subcategoria
             query_base = query_base.filter(LeilaoModel.id_subcategoria == subcategoria_obj.id)
             
-            # Leilões encerrando em breve (próximas 24h) para a subcategoria
             leiloes_encerrando = query_base.filter(
                 LeilaoModel.data_fim <= datetime.now(ZoneInfo("America/Sao_Paulo")) + timedelta(hours=24)
             ).order_by(
                 LeilaoModel.data_fim.asc()
-            ).limit(6).all()
+            ).limit(5).all()
 
-            # Todos os leilões da subcategoria (com paginação)
             leiloes = query_base.order_by(
                 LeilaoModel.data_inicio.desc()
             ).paginate(
@@ -309,7 +304,6 @@ def imoveis(categoria):
                 error_out=False
             )
         else:
-            # Subcategoria não encontrada - mostrar todos da categoria
             subcategoria = ''
             leiloes_encerrando = []
             leiloes = query_base.filter(
@@ -322,19 +316,16 @@ def imoveis(categoria):
                 error_out=False
             )
     else:
-        # Sem subcategoria específica - mostrar todos da categoria
         query_base = query_base.filter(
             LeilaoModel.id_subcategoria.in_([sub.id for sub in categoria_exist.subcategorias])
         )
         
-        # Leilões encerrando em breve (próximas 24h) para toda a categoria
         leiloes_encerrando = query_base.filter(
             LeilaoModel.data_fim <= datetime.now(ZoneInfo("America/Sao_Paulo")) + timedelta(hours=24)
         ).order_by(
             LeilaoModel.data_fim.asc()
-        ).limit(6).all()
+        ).limit(5).all()
 
-        # Todos os leilões da categoria (com paginação)
         leiloes = query_base.order_by(
             LeilaoModel.data_inicio.desc()
         ).paginate(
@@ -702,9 +693,9 @@ def erro_401(error):
 def page_not_found(error):
     return render_template('error-pages/404.html'), 404
 
-@bp.errorhandler(429)
-def too_many_requests(e):
-    return jsonify({'erro': f'Você fez muitas tentativas. Tente novamente mais tarde.'}), 429
+#@bp.errorhandler(429)
+#def too_many_requests(e):
+#    return jsonify({'erro': f'Você fez muitas tentativas. Tente novamente mais tarde.'}), 429
 
 @bp.errorhandler(500)
 def erro_500(error):

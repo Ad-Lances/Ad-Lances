@@ -35,7 +35,7 @@
             <div class="dado-item">
                 <span class="dado-label">Telefone:</span>
                 <div class="dado-content">
-                    <span class="dado-valor" id="telefone">{{ usuario.telefone or "Não informado" }}</span>
+                    <span class="dado-valor" id="telefone">{{ usuario.telefone_res if usuario.telefone_cel else "Não informado" }}</span>
                     <input type="tel" class="dado-input" id="input-telefone" value="{{ usuario.telefone }}" style="display: none;">
                 </div>
             </div>
@@ -125,7 +125,7 @@
                                 {% endif %}
                             </span><br>
                             <span id="temporizador" data-fim="{{ leilao.data_fim }}">
-                                Encerra em:
+                                Encerra em: {{ leilao.data_fim }}
                             </span>
                             <p id="temp"></p>
                         </div>
@@ -172,59 +172,14 @@
                     {% else %}
                         {{ item.leilao.get_lance_inicial_str() }}
                     {% endif %}</span>
-                    <span id="temporizador">Encerra em: {{ item.data_fim }}</span>
+                    <span id="temporizador" data-fim="{{ item.data_fim }}">Encerra em: {{ item.data_fim }}</span>
                 </div>
                 </a>
             {% endfor %}
             </div>
         </div>
 
-        <div id="leiloes-arrematados">
-            <section id="msg-leiloes">
-                Leilões arrematados
-                <hr>
-            </section>
-
-            <div class="carrossel-leiloes">
-                <div class="leilao-card">
-                    <img src="{{ url_for('static', filename='img/veiculos-img/tcross.webp ')}}"><br>
-                    Volkswagen T-Cross 1.0 200 TSI 12V Total Flex Automatico 2024 - (Seminovo)
-                    <br><p id="local">São Paulo - SP</p><br>
-
-                    <div id="infos-leiloeiro">
-                        <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                        <span id="leiloeiro-texto">Localiza Seminovos</span>
-                    </div>
-                
-                    <div id="views-img">
-                        <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                        <span id="views-count">1000 participantes</span>
-                    </div><br>
-                
-                    <span id="lance-atual">Lance atual: </span><br>
-                    <span id="temporizador">Encerra em: </span>
-                </div>
-
-                <div class="leilao-card">
-                    <img src="{{ url_for('static', filename='img/eletronicos-img/ps4.webp ')}}"><br>
-                    Console PS4 PRO - 1TB +2 controles + 1 jogo com 2 Anos de Garantia - Sony
-                    <br><p id="local">São Paulo - SP</p><br>
-
-                    <div id="infos-leiloeiro">
-                        <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                        <span id="leiloeiro-texto">JF Games</span>
-                    </div>
-                
-                    <div id="views-img">
-                        <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                        <span id="views-count">1000 participantes</span>
-                    </div><br>
-                
-                    <span id="lance-atual">Lance atual: </span><br>
-                    <span id="temporizador" data-fim="{{ data_fim }}"><p id="temp"></p></span>
-                </div>
-            </div>
-        </div>
+        
     </div>
 
     <div id="historico-leiloes">
