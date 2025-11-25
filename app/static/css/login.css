@@ -102,7 +102,7 @@ body {
 h1 {
     text-align: center;
     margin-bottom: 30px;
-    color: #034660;
+    color: var(--cor-primaria);
     font-size: 2rem;
 }
 
@@ -111,7 +111,7 @@ h1 {
     display: block;
     margin: 70px auto;
     padding: 70px;
-    background: #FFFFFF;
+    background: var(--cor-fundo);
     width: 95%;
     max-width: 1000px;
     border-radius: 12px;
@@ -135,7 +135,7 @@ h1 {
 }
 
 #cadastro-text {
-    color: #034660;
+    color: var(--cor-primaria);
 }
 
 #descricao {
@@ -147,7 +147,7 @@ h1 {
 }
 
 h3 {
-    color: #034660;
+    color: var(--cor-primaria);
     margin: 0 0 8px 0;
     font-size: 1.3rem;
     font-weight: 600;
@@ -186,7 +186,7 @@ hr {
 
 #formularioLogin input:focus,
 #formularioLogin select:focus {
-    border-color: #034660;
+    border-color: var(--cor-primaria);
     outline: none;
     box-shadow: 0 0 0 3px rgba(3, 70, 96, 0.1);
 }
@@ -194,7 +194,7 @@ hr {
 #formularioLogin label {
     font-size: 15px;
     font-weight: 600;
-    color: #333;
+    color: var(--cor-texto-suave);
     margin-bottom: 5px;
     display: block;
 }
@@ -205,7 +205,7 @@ hr {
 
 /* Botão de login atualizado */
 #botao-login {
-    background: linear-gradient(135deg, #034660, #046d92);
+    background: linear-gradient(135deg, var(--cor-primaria), #046d92);
     color: #fff;
     padding: 16px;
     border: none;
@@ -219,7 +219,7 @@ hr {
 }
 
 #botao-login:hover {
-    background: linear-gradient(135deg, #046d92, #034660);
+    background: linear-gradient(135deg, #046d92, var(--cor-primaria));
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(3, 70, 96, 0.3);
 }
@@ -263,7 +263,7 @@ hr {
 
 #orientacao-senha li::before {
     content: "•";
-    color: #034660;
+    color: var(--cor-primaria);
     font-weight: bold;
     position: absolute;
     left: 0;
@@ -276,7 +276,7 @@ hr {
 }
 
 #link-cadastro a {
-    color: #034660;
+    color: var(--cor-primaria);
     text-decoration: none;
     font-weight: 500;
     font-size: 15px;
@@ -334,7 +334,7 @@ hr {
     padding: 8px;
     margin: 0;
     font-size: 1.2rem;
-    color: #034660;
+    color: var(--cor-primaria);
     transition: color 0.3s ease;
     z-index: 10;
 }
@@ -371,7 +371,7 @@ hr {
 }
 
 #footer {
-    background-color: #034660;
+    background-color: var(--cor-primaria);
     color: #fff;
     padding: 40px 20px 20px;
     margin-top: 250px;

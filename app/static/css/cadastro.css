@@ -40,7 +40,7 @@
 
 .campo-invalido {
     border: 2px solid #d63031 !important;
-    background-color: #fff8f8;
+    background-color: var(--cor-input-fundo);
 }
 
 .campo-valido {
@@ -51,7 +51,7 @@
 h1 {
     text-align: center;
     margin-bottom: 30px;
-    color: #034660;
+    color: var(--cor-primaria);
     font-size: 2rem;
 }
 
@@ -59,7 +59,7 @@ h1 {
     display: block;
     margin: 70px auto;
     padding: 70px;
-    background: #FFFFFF;
+    background: var(--cor-fundo);
     width: 95%;
     max-width: 1000px;
     border-radius: 12px;
@@ -75,19 +75,19 @@ h1 {
 }
 
 #cadastro-text{
-    color: #034660;
+    color: var(--cor-primaria);
 }
 
 #descricao{
     display: contents;
     justify-content: center;
     align-items: center;
-    color: white;
+    color: var(--cor-texto-suave);
     font-size: 16px;
 }
 
 h3 {
-    color: #034660;
+    color: var(--cor-primaria);
     margin: 0 0 8px 0;
     font-size: 1.3rem;
     font-weight: 600;
@@ -96,7 +96,7 @@ h3 {
 hr {
     border: none;
     height: 1px;
-    background: linear-gradient(90deg, #034660, #046d92);
+    background: linear-gradient(90deg, var(--cor-primaria), #046d92);
     margin: 0 0 20px 0;
 }
 
@@ -129,7 +129,7 @@ hr {
 
 #formularioCadastro input:focus,
 #formularioCadastro select:focus {
-    border-color: #034660;
+    border-color: var(--cor-primaria);
     outline: none;
     box-shadow: 0 0 0 3px rgba(3, 70, 96, 0.1);
 }
@@ -137,7 +137,7 @@ hr {
 #formularioCadastro label {
     font-size: 15px;
     font-weight: 600;
-    color: #333;
+    color: var(--cor-texto-suave);
     margin-bottom: 5px;
     display: block;
 }
@@ -163,12 +163,12 @@ hr {
 
 #orientacao-senha {
     font-size: 13px;
-    color: #555;
+    color: var(--cor-texto-suave);
     margin-top: 5px;
     padding: 15px;
-    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    background: var(--cor-borda);
     border-radius: 8px;
-    border-left: 4px solid #034660;
+    border-left: 4px solid var(--cor-primaria);
     grid-column: 1 / -1;
 }
 
@@ -185,14 +185,14 @@ hr {
 
 #orientacao-senha li::before {
     content: "•";
-    color: #034660;
+    color: var(--cor-primaria);
     font-weight: bold;
     position: absolute;
     left: 0;
 }
 
 #botao-enviar {
-    background: linear-gradient(135deg, #034660, #046d92);
+    background: linear-gradient(135deg, var(--cor-primaria), #046d92);
     color: #fff;
     padding: 16px;
     border: none;
@@ -206,7 +206,7 @@ hr {
 }
 
 #botao-enviar:hover {
-    background: linear-gradient(135deg, #046d92, #034660);
+    background: linear-gradient(135deg, #046d92, var(--cor-primaria));
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(3, 70, 96, 0.3);
 }
@@ -222,7 +222,7 @@ hr {
 }
 
 #link-login a {
-    color: #034660;
+    color: var(--cor-primaria);
     text-decoration: none;
     font-weight: 500;
     font-size: 15px;
@@ -263,7 +263,7 @@ hr {
 .form-section hr {
     border: none;
     height: 1px;
-    background: linear-gradient(90deg, #034660, #046d92);
+    background: linear-gradient(90deg, var(--cor-primaria), #046d92);
     margin: 19px 0 19px 0; 
 }
 
@@ -287,7 +287,7 @@ hr {
     cursor: pointer;
     padding: 5px;
     font-size: 1.2rem;
-    color: #034660;
+    color: var(--cor-primaria);
     z-index: 10;
     width: 30px;
     height: 30px;
@@ -421,6 +421,7 @@ hr {
         padding: 25px 20px;
         margin: 10px auto;
         width: 98%;
+        background-color: var(--cor-fundo);
     }
     
     #formularioCadastro input,
