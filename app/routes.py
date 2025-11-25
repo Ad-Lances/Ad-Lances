@@ -183,7 +183,10 @@ def logar():
     senha = dados.get('senha')
     ip = request.remote_addr
     g_captcha = dados.get('captcha')
-
+    tentativas = red.get(chave(ip, email))
+    if tentativas:
+        if int(tentativas) >= 15:
+            return jsonify({'erro': f'Você fez muitas tentativas. Tente novamente mais tarde.'}), 429
     erro = verificar_camposlog(email, senha)
     if erro:
         return jsonify({'erro': erro})
@@ -227,10 +230,12 @@ def logout():
     
 @bp.route('/perfil')
 def perfil_user():
-    usuario = UserModel.query.get(session['usuario_id'])
-    leiloes_usuario = LeilaoModel.query.filter_by(id_user=session['usuario_id']).all()
+    usuario = UserModel.query.get(session.get('usuario_id'))
+    if not usuario:
+        return redirect(url_for("main.login"))
+    leiloes_usuario = usuario.leiloes
     print(leiloes_usuario)
-    lances_usuario = LanceModel.query.filter_by(id_user=session['usuario_id']).all()
+    lances_usuario = usuario.lances
 
     qtd_leiloes_criados = len(leiloes_usuario)
 
@@ -398,11 +403,16 @@ def detalhes_leilao(hashid):
 
     if leilao:
         horas = datetime.now(ZoneInfo("America/Sao_Paulo")).replace(microsecond=0)
+        data_inicio = leilao.data_inicio.replace(tzinfo=ZoneInfo("America/Sao_Paulo"))
         data_fim = leilao.data_fim.replace(tzinfo=ZoneInfo("America/Sao_Paulo"))
         
-        if horas >= data_fim and leilao.status == "Aberto":
-            leilao.status = "Encerrado"
-            db.session.commit
+        if horas >= data_inicio and horas < data_fim and leilao.status == "Não aberto":
+            leilao.status = "Aberto"
+            db.session.commit()
+        if horas >= data_fim:
+            if leilao.status == "Aberto" or leilao.status == "Não aberto":
+                leilao.status = "Encerrado"
+                db.session.commit
         if len(leilao.lances) == 0:
             return render_template('detalhes_leilao.html', leilao=leilao, data_fim=data_fim.isoformat())
         lance_atual = LanceModel.get_ultimo_lance(leilao.id)
@@ -434,7 +444,7 @@ def edit_leilao(hashid):
 def verificar_stripe():
     if session.get('usuario_id') is None:
         return redirect(url_for('main.login'))
-    usuario = UserModel.query.get(session['usuario_id'])
+    usuario = UserModel.query.get(session.get('usuario_id'))
     if usuario is None:
         return redirect(url_for('main.login'))
     if usuario.id_stripe is None:
@@ -456,6 +466,9 @@ def sucesso_stripe():
 
 @bp.post('/criarleilao')
 def criar_leilao():
+    user = UserModel.query.get(session.get("usuario_id"))
+    if not user:
+        return redirect(url_for("main.login"))
     dados = {
         "nome": request.form.get("nome"),
         "descricao": request.form.get("descricao"),
@@ -527,7 +540,7 @@ def encerrar_leilao(hashid):
     leilao = get_leilao(hashid)
     if leilao:
         if leilao.id_user == session.get('usuario_id'):
-            if leilao.status == "Aberto" or leilao.status == "Não iniciado":
+            if leilao.status == "Aberto" or leilao.status == "Não aberto":
                 leilao.status = "Encerrado"
                 db.session.commit()
                 return jsonify({"sucesso": f"Leilão {leilao.nome} encerrado com sucesso."})
@@ -541,14 +554,19 @@ def novo_lance(hashid):
     dados = request.get_json()
     horas = datetime.now(ZoneInfo("America/Sao_Paulo"))
     leilao = get_leilao(hashid)
+    user = UserModel.query.get(session.get("usuario_id"))
     
     if leilao is None:
         return jsonify({'erro': 'Leilão não encontrado.'})
     
-    if leilao.data_fim.replace(tzinfo=ZoneInfo("America/Sao_Paulo")) < horas and leilao.status == "Aberto":
-        leilao.status = 'Encerrado'
-        db.session.commit()
-        return jsonify({'erro': 'Leilão já encerrado.'})
+    if not user:
+        return redirect(url_for("main.login"))
+    
+    if leilao.data_fim.replace(tzinfo=ZoneInfo("America/Sao_Paulo")) < horas:
+        if leilao.status == "Não aberto" or leilao.status == "Aberto":
+            leilao.status = 'Encerrado'
+            db.session.commit()
+            return jsonify({'erro': 'Leilão já encerrado.'})
     if leilao.status == "Encerrado":
         return jsonify({"erro": "Leilão já encerrado."})
     
@@ -610,36 +628,38 @@ def novo_lance(hashid):
         
 @bp.post('/<hashid>/criarpagamento')
 def criar_pagamento(hashid):
-    user = UserModel.query.get(session['usuario_id'])
+    user = UserModel.query.get(session.get('usuario_id'))
     leilao = get_leilao(hashid)
     
     if user and leilao:
-        ultimo_lance = LanceModel.get_ultimo_lance(leilao.id)
-        session_stripe = stripe.checkout.Session.create(
-            payment_method_types=['card'],
-            line_items=[{
-                'price_data': {
-                    'currency': 'brl',
-                    'product_data': {
-                        'name': leilao.nome,
-                        'description': leilao.descricao,
+        if leilao.status == "Encerrado":
+            ultimo_lance = LanceModel.get_ultimo_lance(leilao.id)
+            session_stripe = stripe.checkout.Session.create(
+                payment_method_types=['card'],
+                line_items=[{
+                    'price_data': {
+                        'currency': 'brl',
+                        'product_data': {
+                            'name': leilao.nome,
+                            'description': leilao.descricao,
+                        },
+                        'unit_amount': int(ultimo_lance.valor * 100),
                     },
-                    'unit_amount': int(ultimo_lance.valor * 100),
+                    'quantity': 1,
+                }],
+                mode='payment',
+                payment_intent_data={
+                    'transfer_data': {
+                        'destination': leilao.user.id_stripe,
+                    },
                 },
-                'quantity': 1,
-            }],
-            mode='payment',
-            payment_intent_data={
-                'transfer_data': {
-                    'destination': leilao.user.id_stripe,
-                },
-            },
-            customer_email=user.email,
-            success_url=url_for('main.perfil_user', _external=True) + '?payment_success=true',
-            cancel_url=url_for('main.perfil_user', _external=True) + '?payment_canceled=true',
-        )
-        return jsonify({'url': session_stripe.url})
-    return jsonify({'erro': 'Usuário ou leilão não encontrado.'})
+                customer_email=user.email,
+                success_url=url_for('main.perfil_user', _external=True) + '?payment_success=true',
+                cancel_url=url_for('main.perfil_user', _external=True) + '?payment_canceled=true',
+            )
+            return jsonify({'url': session_stripe.url})
+        abort(401)
+    return jsonify({'erro': 'Usuário ou leilão não encontrado.'}), 404
 
 @bp.post('/webhook')
 def webhook():
