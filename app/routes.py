@@ -640,6 +640,7 @@ def criar_pagamento(hashid):
                         },
                         'quantity': 1,
                     }],
+                    metadata={"leilao_id": str(leilao.id)},
                     mode='payment',
                     payment_intent_data={
                         'transfer_data': {
@@ -673,7 +674,21 @@ def webhook():
         
     if event["type"]=="checkout.session.completed":
         payment = event["data"]["object"]
+        horario = datetime.fromtimestamp(float(payment["expires_at"]), tz=ZoneInfo("America/Sao_Paulo"))
+        user = UserModel.query.filter_by(email=payment["customer_email"]).first()
+        id_leilao = payment["metadata"].get("leilao_id")
+        novo_comprovante = ComprovanteModel(
+            horario=horario,
+            valor=payment["amount_total"]/100,
+            id_user=user.id,
+            id_leilao=id_leilao
+        )
         print(payment)
+        if salvar_dados(novo_comprovante):
+            return redirect(url_for("main.perfil_user"))
+        else:
+            abort(500)
+        
         
     if event["type"]=="v2.core.account.created":
         account = event["data"]["object"]
