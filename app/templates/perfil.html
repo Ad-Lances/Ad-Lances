@@ -151,6 +151,7 @@
 
             <div class="carrossel-leiloes">
             {% for item in leiloes_participados.values() %}
+            {% if item.leilao.status == "Aberto" %}
                 <a href="{{ url_for('main.detalhes_leilao', hashid=item.leilao.hashid)}}" class="leilao-link">
                 <div class="leilao-card">
                     <img src="{{ item.leilao.get_foto() }}"><br>
@@ -175,11 +176,41 @@
                     <span id="temporizador" data-fim="{{ item.data_fim }}">Encerra em: {{ item.data_fim }}</span>
                 </div>
                 </a>
+            {% endif %}
             {% endfor %}
             </div>
         </div>
 
-        
+        <div id="leiloes-arrematados">
+            <section id="msg-leiloes">
+                Leilões arrematados
+                <hr>
+            </section>
+
+            <div class="carrossel-leiloes">
+                {% if usuario.comprovantes %}
+                {% for comprovante in usuario.comprovantes %}
+                <div class="leilao-card">
+                    <img src="{{ comprovante.leilao.foto }}"><br>
+                    {{ comprovante.leilao.nome }}
+                    <br><p id="local">{{ comprovante.leilao.cidade }} - {{ comprovante.leilao.uf }}</p><br>
+
+                    <div id="infos-leiloeiro">
+                        <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                        <span id="leiloeiro-texto">{{ comprovante.leilao.user.nome_completo }}</span>
+                    </div>
+                
+                    <div id="views-img">
+                        <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                        <span id="views-count">{{ comprovante.leilao.lances|length }} Lances</span>
+                    </div><br>
+                </div>
+                {% endfor %}
+                {% else %}
+                <h3>Não há leilões arrematados</h3>
+                {% endif %}
+            </div>
+        </div>
     </div>
 
     <div id="historico-leiloes">

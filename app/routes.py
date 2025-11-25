@@ -5,7 +5,7 @@ from .utils.email_utils import *
 from datetime import datetime, date, timedelta
 from zoneinfo import ZoneInfo
 import cloudinary.uploader
-from sqlalchemy import select, or_
+from sqlalchemy import select, func
 from app import stripe, socketio, sqids, limiter, red
 import requests
 from config import Config
@@ -65,7 +65,9 @@ def index():
     uma_hora_atras = agora - timedelta(hours=1)
 
     leiloes_encerrando = LeilaoModel.query.filter(
-        LeilaoModel.data_fim.between(uma_hora_atras, amanha)
+        LeilaoModel.data_fim.between(uma_hora_atras, amanha),
+        LeilaoModel.status != "Pago",
+        LeilaoModel.status != "Encerrado"
     ).order_by(
         LeilaoModel.data_fim.asc()
     ).paginate(
@@ -75,7 +77,9 @@ def index():
     )
 
     leiloes_recentes = LeilaoModel.query.filter(
-        LeilaoModel.data_fim > agora
+        LeilaoModel.data_fim > agora,
+        LeilaoModel.status != "Encerrado",
+        LeilaoModel.status != "Pago"
     ).order_by(
         LeilaoModel.data_inicio.desc()
     ).paginate(
@@ -92,20 +96,16 @@ def index():
 
 @bp.route('/pesquisar')
 def pesquisar():
-    busca = request.args.get('p', '').lower()
-
+    busca = request.args.get("p", "").strip()
     if not busca:
-        return jsonify([])
+        abort(404)
     
-    resultados = LeilaoModel.query.filter(
-        or_(
-            LeilaoModel.nome.ilike(f'%{busca}%'),
-            LeilaoModel.descricao.ilike(f'%{busca}%')
-        )
-    ).limit(10).all()
+    resultado = LeilaoModel.query.join(LeilaoModel.subcategoria).join(SubcategoriaModel.categoria).filter(func.lower(CategoriaModel.slug).like(f"%{busca}%")).first()
     
-    dados_results = [{"hashid": leilao.hashid, "nome": leilao.nome, "descricao": leilao.descricao} for leilao in resultados]
-    return jsonify(dados_results)
+    if resultado:
+        categoria = resultado.subcategoria.categoria
+        return redirect(f"/categorias/{categoria.slug}")
+    abort(404)
 
 @bp.route('/cadastro')
 def cadastro():
@@ -638,7 +638,7 @@ def criar_pagamento(hashid):
                         },
                         'quantity': 1,
                     }],
-                    metadata={"leilao_id": str(leilao.id)},
+                    metadata={"leilao_id": str(leilao.id), "usuario_id": str(user.id)},
                     mode='payment',
                     payment_intent_data={
                         'transfer_data': {
@@ -670,13 +670,13 @@ def webhook():
         
     if event["type"]=="checkout.session.completed":
         payment = event["data"]["object"]
-        horario = datetime.fromtimestamp(float(payment["expires_at"]), tz=ZoneInfo("America/Sao_Paulo"))
-        user = UserModel.query.filter_by(email=payment["customer_email"]).first()
+        horario = datetime.fromtimestamp(float(payment["created"]), tz=ZoneInfo("America/Sao_Paulo"))
+        id_user = payment["metadata"].get("usuario_id")
         id_leilao = payment["metadata"].get("leilao_id")
         novo_comprovante = ComprovanteModel(
             horario=horario,
             valor=payment["amount_total"]/100,
-            id_user=user.id,
+            id_user=id_user,
             id_leilao=id_leilao
         )
         print(payment)
