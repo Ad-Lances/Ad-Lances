@@ -1,4 +1,4 @@
-from . import mail, serial
+from .. import mail, serial
 from flask import url_for
 from flask_mail import Message
 from urllib.parse import quote

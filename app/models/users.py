@@ -10,6 +10,7 @@ class UserModel(db.Model):
         nome_completo (str): Nome completo do usuário.
         tipo_pessoa (str): Tipo de pessoa (física ou jurídica).
         cpf (str): CPF do usuário.
+        cnpj (str): CNPJ do usuário.
         datanasc (date): Data de nascimento do usuário.
         cep (str): CEP do endereço do usuário.
         unid_federativa (str): Unidade federativa do endereço do usuário.
@@ -20,6 +21,8 @@ class UserModel(db.Model):
         email (str): Email do usuário.
         senha_hash (str): Hash da senha do usuário.
         id_stripe (str): Identificador da conta Stripe do usuário.
+        telefone_cel (str): Telefone celular.
+        telefone_res (str): Telefone residencial.
         leiloes (list): Relação com os leilões criados pelo usuário.
         lances (list): Relação com os lances feitos pelo usuário.   
     Methods:
@@ -46,6 +49,8 @@ class UserModel(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     senha_hash = db.Column(db.String(255), nullable=False)
     id_stripe = db.Column(db.String(255), nullable=True)
+    telefone_cel = db.Column(db.String(15), nullable=True)
+    telefone_res = db.Column(db.String(15), nullable=True)
     
     lances = db.relationship('LanceModel', back_populates='user')
     leiloes = db.relationship('LeilaoModel', back_populates='user')
