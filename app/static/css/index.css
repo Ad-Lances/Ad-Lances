@@ -385,15 +385,15 @@
 }
 
 .pagina-link:hover {
-    background: #034660;
+    background: var(--cor-primaria);
     color: white;
-    border-color: #034660;
+    border-color: var(--cor-primaria);
 }
 
 .pagina-atual {
     padding: 8px 12px;
-    background: #034660;
-    border: 1px solid #034660;
+    background: var(--cor-primaria);
+    border: 1px solid var(--cor-primaria);
     border-radius: 4px;
     color: white;
     font-weight: 600;
