@@ -9,13 +9,7 @@ from sqlalchemy import select, func
 from app import stripe, socketio, sqids, limiter, red
 import requests
 from config import Config
-from app.utils.user_utils import (
-    verificar_idade,
-    verificar_email,
-    verificar_senha,
-    verificar_campos,
-    verificar_camposlog
-)
+from app.utils.user_utils import *
 
 bp = Blueprint('main', __name__)
 
@@ -135,7 +129,8 @@ def cadastrar():
     erro = verificar_senha(dados.get('senha'))
     if erro:
         return jsonify({'erro': erro})
-    
+    if cpf_valido(dados.get("cpf")) == False:
+        return jsonify({'erro': 'Digite um cpf válido.'})
     
     if not usuario_exist:
         novo_usuario = UserModel(

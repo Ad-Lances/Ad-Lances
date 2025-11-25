@@ -40,6 +40,23 @@ def verificar_senha(senha: str):
 
     return None
 
+def cpf_valido(cpf:str) -> bool:    
+    if len(cpf) != 11:
+        return False
+
+    if cpf == cpf[0] * 11:
+        return False
+
+    def calc_digito(cpf_parcial):
+        soma = sum(int(d) * peso for d, peso in zip(cpf_parcial, range(len(cpf_parcial)+1, 1, -1)))
+        resto = (soma * 10) % 11
+        return 0 if resto == 10 else resto
+
+    d1 = calc_digito(cpf[:9])
+    d2 = calc_digito(cpf[:9] + str(d1))
+
+    return cpf == cpf[:9] + str(d1) + str(d2)
+
 def verificar_campos(dados):
 
     nome = dados.get('nome')
