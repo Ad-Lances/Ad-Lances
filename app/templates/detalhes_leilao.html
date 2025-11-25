@@ -71,7 +71,14 @@
                         document.getElementById('bloco-temporizador').innerHTML = ""
                         document.getElementById('mensagem-encerramento').style.color = "red"
                     </script>
-
+                {% elif leilao.status == "Não aberto" %}
+                    <div class="mensagem-encerramento">
+                        <h3 id="mensagem-encerramento">Leilão a iniciar</h3>
+                    </div>
+                    <script>
+                        document.getElementById('bloco-temporizador').innerHTML = ""
+                        document.getElementById('mensagem-encerramento').style.color = "green"
+                    </script>
                 {% else %}
                     <div id="mensagem-login">
                         <h3>Você está quase lá!</h3>

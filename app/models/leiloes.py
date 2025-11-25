@@ -42,7 +42,7 @@ class LeilaoModel(db.Model):
     foto = db.Column(db.String(255), nullable=False)
     id_user = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     hashid = db.Column(db.String(16), nullable=True)
-    status = db.Column(db.String(10), nullable=False, server_default="Aberto")
+    status = db.Column(db.String(10), nullable=False, server_default="Não aberto")
     cep = db.Column(db.String(9), nullable=False)
     uf = db.Column(db.String(2), nullable=False)
     cidade = db.Column(db.String(70), nullable=False)
