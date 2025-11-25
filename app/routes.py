@@ -700,9 +700,9 @@ def erro_401(error):
 def page_not_found(error):
     return render_template('error-pages/404.html'), 404
 
-#@bp.errorhandler(429)
-#def too_many_requests(e):
-#    return jsonify({'erro': f'Você fez muitas tentativas. Tente novamente mais tarde.'}), 429
+@bp.errorhandler(429)
+def too_many_requests(e):
+    return jsonify({'erro': f'Você fez muitas tentativas. Tente novamente mais tarde.'}), 429
 
 @bp.errorhandler(500)
 def erro_500(error):
