@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const mensagem = document.getElementById('mensagem');
     const cepInput = document.getElementById('input-editar-cep-leilao');
     const lanceInput = document.getElementById('novo-lance-input');
+    const socketio = io.connect("/")
+
     if (cepInput) {
         cepInput.addEventListener('input', function() {
             const cepNumeros = this.value.replace(/\D/g, '');
@@ -107,7 +109,14 @@ document.addEventListener('DOMContentLoaded', function() {
         enviarLanceBtn.disabled = false
         enviarLanceBtn.innerText = 'Lançar'
     });
-
+    const lanceatual = document.getElementById('lance-atual')
+    const totallances = document.getElementById('total-lances')
+    
+    socketio.on("novo_lance", (lance_atual, total_lances) => {
+        const valor = Number(lance_atual);
+        lanceatual.innerHTML = valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        totallances.innerHTML = 'Total de lances: ' + total_lances
+    })
     
 });
 
@@ -183,16 +192,8 @@ function validarCEP() {
     return cepErro;
 }
 
-const socketio = io.connect("/")
-const lanceatual = document.getElementById('lance-atual')
-const totallances = document.getElementById('total-lances')
-const temp = document.getElementById('temp')
-socketio.on("novo_lance", (lance_atual, total_lances) => {
-    const valor = Number(lance_atual);
-    lanceatual.innerHTML = valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-    totallances.innerHTML = 'Total de lances: ' + total_lances
-})
 
+const temp = document.getElementById('temp')
 let horaapi = null;
 let ultsinc = null;
 const data_fim = new Date(document.getElementById('temporizador').dataset.fim)
