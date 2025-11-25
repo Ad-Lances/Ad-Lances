@@ -15,20 +15,21 @@ function verificar_email(email){
 
     return null;
 }
-let captchavisible = false;
-let btnCaptcha = null;
-function mostrarCaptcha() {
-    if (!captchavisible) {
-        captchavisible = true;
-        document.getElementById("captcha-area").style.display = "block";
-        btnCaptcha = grecaptcha.render("g-recaptcha", {
-            sitekey: "6LfyOxYsAAAAAJnowmln6KG34CtnAooeHKMbDcsY"
-        })
-    }
-}
+
 
 document.addEventListener('DOMContentLoaded', function(){
     adicionarToggleSenha();
+    let captchavisible = false;
+    let btnCaptcha = null;
+    function mostrarCaptcha() {
+        if (!captchavisible) {
+            captchavisible = true;
+            document.getElementById("captcha-area").style.display = "block";
+            btnCaptcha = grecaptcha.render("g-recaptcha", {sitekey: "6LfyOxYsAAAAAJnowmln6KG34CtnAooeHKMbDcsY"})
+        } else {
+            grecaptcha.reset(btnCaptcha)
+        }
+    }
     
     const formularioLogin = document.getElementById('formularioLogin');
     const mensagem = document.getElementById('mensagem');
@@ -96,12 +97,12 @@ document.addEventListener('DOMContentLoaded', function(){
                window.location.href = '/';
             }, 1500); 
         } 
+        console.log(resultado)
         if (resultado.erro == "Faça o captcha.") {
             setTimeout(() => {
                 mensagem.innerHTML = resultado.erro   
             }, 3000)
             mostrarCaptcha()
-            grecaptcha.reset(btnCaptcha)
         } else{
             setTimeout(() => {
                 mensagem.innerHTML = resultado.erro
