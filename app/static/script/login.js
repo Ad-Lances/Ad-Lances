@@ -30,7 +30,9 @@ document.addEventListener('DOMContentLoaded', function(){
             grecaptcha.reset(btnCaptcha)
         }
     }
-    
+    function captchaCarregado() {
+        console.log("captcha carregado")   
+    }
     const formularioLogin = document.getElementById('formularioLogin');
     const mensagem = document.getElementById('mensagem');
     
@@ -97,7 +99,11 @@ document.addEventListener('DOMContentLoaded', function(){
                window.location.href = '/';
             }, 1500); 
         } 
-        console.log(resultado)
+        if (resultado.erro) {
+            if (captchavisible){
+                grecaptcha.reset()
+            }
+        }
         if (resultado.erro == "Faça o captcha.") {
             setTimeout(() => {
                 mensagem.innerHTML = resultado.erro   
