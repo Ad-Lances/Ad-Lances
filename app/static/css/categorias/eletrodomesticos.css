@@ -1,7 +1,7 @@
 #nav-categorias {
-    background-color: #FFFFFF;
+    background-color: var(--cor-fundo);
     width: 100%;
-    color: black;
+    color: var(--cor-texto);
     position: fixed;
     top: 80px;
     left: 0;
@@ -58,11 +58,11 @@
 }
 
 #secaotitulo hr{
-    color: #034660;
+    color: var(--cor-primaria);
     width: 200px;
     margin: 5px auto 0 auto;
     height: 2px;
-    background-color: #034660;
+    background-color: var(--cor-primaria);
     border: none;
 }
 
@@ -110,7 +110,7 @@
     transform: translateX(-50%);
     width: 90%;
     height: 4px;
-    background: #034660;
+    background: var(--cor-primaria);
     border-radius: 2px;
 }
 
@@ -119,7 +119,7 @@
     padding: 30px 25px;
     border-radius: 15px;
     transition: all 0.3s ease;
-    background: white;
+    background: var(--cor-card);
     box-shadow: 0 6px 20px rgba(0,0,0,0.1);
     width: 200px;
     height: 200px;
@@ -139,7 +139,7 @@
 .btn-subcategoria.ativo #item-cat {
     background: rgba(3, 70, 96, 0.1);
     box-shadow: 0 10px 30px rgba(3, 70, 96, 0.2);
-    border-color: #034660;
+    border-color: var(--cor-primaria);
 }
 
 #item-cat img {
@@ -151,7 +151,7 @@
 
 #texto-cat {
     font-weight: 600;
-    color: #034660;
+    color: var(--cor-primaria);
     font-size: 16px;
     text-align: center;
 }
@@ -170,7 +170,7 @@
 
 .item {
     width: 300px;
-    background-color: white;
+    background-color: var(--cor-card);
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -180,7 +180,7 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    border: 1px solid #e0e0e0;
+    border: 1px solid var(--cor-borda);
 }
 
 .item:hover {
@@ -192,7 +192,7 @@
     width: 100%;
     height: 200px;
     object-fit: contain;
-    background-color: #f8f9fa;
+    background-color: var(--cor-card);
     border-radius: 6px;
     margin-bottom: 12px;
 }
@@ -303,7 +303,7 @@
     border: 1px solid #dee2e6;
     border-radius: 4px;
     text-decoration: none;
-    color: #034660;
+    color: var(--cor-primaria);
     font-weight: 500;
     transition: all 0.3s ease;
     min-width: 40px;
@@ -311,15 +311,15 @@
 }
 
 .pagina-link:hover {
-    background: #034660;
+    background: var(--cor-primaria);
     color: white;
-    border-color: #034660;
+    border-color: var(--cor-primaria);
 }
 
 .pagina-atual {
     padding: 8px 12px;
-    background: #034660;
-    border: 1px solid #034660;
+    background: var(--cor-primaria);
+    border: 1px solid var(--cor-primaria);
     border-radius: 4px;
     color: white;
     font-weight: 600;

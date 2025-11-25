@@ -29,16 +29,16 @@
 #main-block {
     width: 100%;
     max-width: 500px;
-    border: #000 solid 0.5px;
+    border: var(--cor-borda) solid 0.5px;
     border-radius: 8px;
     padding: 25px;
-    background: white;
+    background: var(--cor-card);
 }
 
 #nome-produto h2 {
     font-size: 20px;
     font-weight: 600;
-    color: #000;
+    color: var(--cor-texto);
     margin-bottom: 15px;
     text-align: center;
 }
@@ -72,20 +72,20 @@
     font-weight: 500;
     margin-bottom: 4px;
     display: block;
-    color: #333;
+    color: var(--cor-texto-suave);
     font-size: 13px;
 }
 
 .info-value {
     font-weight: 400;
-    color: #000;
+    color: var(--cor-texto-suave);
     font-size: 13px;
 }
 
 .lance-atual {
     font-size: 22px;
     font-weight: 700;
-    color: #034660;
+    color: var(--cor-primaria);
     margin: 8px 0;
     text-align: center;
 }
@@ -94,7 +94,7 @@
     margin-top: 20px;
     margin-bottom: 10px;
     padding-top: 15px;
-    border-top: 2px solid #034660;
+    border-top: 2px solid var(--cor-primaria);
 }
 
 .lance-input-group {
@@ -107,7 +107,7 @@
 
 #novo-lance-input {
     padding: 12px 15px;
-    border: 2px solid #034660;
+    border: 2px solid var(--cor-primaria);
     border-radius: 6px;
     font-size: 16px;
     width: 100%;
@@ -120,7 +120,7 @@
 }
 
 #botao-lance {
-    background: #034660;
+    background: var(--cor-primaria);
     color: white;
     border: none;
     padding: 12px 25px;
@@ -134,7 +134,7 @@
 }
 
 #botao-lance:hover {
-    background: #046d92;
+    background: var(--cor-primaria-hover);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(3, 70, 96, 0.3);
 }
@@ -148,10 +148,10 @@
 }
 
 #infos-leiloeiro {
-    background: white;
+    background: var(--cor-card);
     border-radius: 8px;
     padding: 20px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--cor-borda);
     width: 100%;
     max-width: 500px;
     margin: 0 auto;
@@ -171,14 +171,14 @@
 #titulo {
     font-size: 18px;
     font-weight: 600;
-    color: #034660;
+    color: var(--cor-primaria);
     margin-bottom: 0;
 }
 
 #nome-leiloeiro {
     font-size: 16px;
     font-weight: 500;
-    color: #000;
+    color: var(--cor-texto-suave);
 }
 
 .leiloeiro-contato {
@@ -194,10 +194,10 @@
 }
 
 .info-section {
-    background: white;
+    background: var(--cor-card);
     border-radius: 16px;
     padding: 25px;
-    border: 1px solid #e8f4f8;
+    border: 1px solid var(--cor-borda);
     box-shadow: 0 4px 20px rgba(3, 70, 96, 0.08);
     width: 100%;
     max-width: 500px;
@@ -207,10 +207,10 @@
 .section-title {
     font-size: 20px;
     font-weight: 700;
-    color: #034660;
+    color: var(--cor-primaria);
     margin-bottom: 20px;
     padding-bottom: 12px;
-    border-bottom: 2px solid #f0f7fa;
+    border-bottom: 2px solid var(--cor-borda);
     text-align: center;
     position: relative;
 }
@@ -223,12 +223,12 @@
     transform: translateX(-50%);
     width: 60px;
     height: 2px;
-    background: linear-gradient(90deg, #034660, #046d92);
+    background: linear-gradient(90deg, var(--cor-primaria), #046d92);
 }
 
 .description-text {
     line-height: 1.6;
-    color: #444;
+    color: var(--cor-texto-suave);
     font-size: 14px;
     text-align: center;
 }
@@ -258,16 +258,16 @@
 
 .location-info {
     padding: 15px;
-    background: #f8f9fa;
+    background: var(--cor-card);
     border-radius: 6px;
-    border-left: 4px solid #034660;
+    border-left: 4px solid var(--cor-primaria);
     text-align: center;
 }
 
 .location-info p {
     margin: 0;
     font-size: 14px;
-    color: #333;
+    color: var(--cor-texto-suave);
 }
 
 .conditions-grid {
@@ -277,8 +277,8 @@
 }
 
 .condition-item {
-    background: linear-gradient(135deg, #f8fbfd, #ffffff);
-    border: 1px solid #e3f2f7;
+    background: linear-gradient(135deg, var(--cor-card), var(--cor-borda));
+    border: 1px solid var(--cor-borda);
     border-radius: 12px;
     padding: 20px;
     text-align: center;
@@ -294,7 +294,7 @@
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, #034660, #046d92);
+    background: linear-gradient(90deg, var(--cor-primaria), var(--cor-primaria-hover));
     opacity: 0;
     transition: opacity 0.3s ease;
 }
@@ -302,7 +302,7 @@
 .condition-item:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 25px rgba(3, 70, 96, 0.12);
-    border-color: #034660;
+    border-color: var(--cor-primaria);
 }
 
 .condition-item:hover::before {
@@ -310,7 +310,7 @@
 }
 
 .condition-item strong {
-    color: #034660;
+    color: var(--cor-primaria);
     font-size: 16px;
     font-weight: 600;
     display: flex;
@@ -328,8 +328,8 @@
 }
 
 .pagamento-tag {
-    background: #034660;
-    color: white;
+    background: var(--cor-primaria);
+    color: #FFFFFF;
     padding: 8px 16px;
     border-radius: 20px;
     font-size: 14px;
@@ -347,14 +347,14 @@
 .pagamento-tag.amex,
 .pagamento-tag.mastercard,
 .pagamento-tag.visa{
-    background: #034366;
+    background: var(--cor-primaria);
 }
 
 .lance-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 15px;
-    background: white;
+    background: var(--cor-borda);
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -362,7 +362,7 @@
 }
 
 .lance-table th {
-    background: #034660;
+    background: var(--cor-primaria);
     color: white;
     padding: 12px 8px;
     text-align: left;
@@ -372,7 +372,7 @@
 
 .lance-table td {
     padding: 12px 8px;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid var(--cor-card);
     font-size: 12px;
 }
 
@@ -381,17 +381,17 @@
 }
 
 .lance-table tr:hover {
-    background: #e3f2fd;
+    background: var(--cor-fundo);
 }
 
 .lance-amount {
     font-weight: 600;
-    color: #034660;
+    color: var(--cor-primaria);
     font-size: 13px;
 }
 
 .lance-date {
-    color: #666;
+    color: var(--cor-texto-suave);
 }
 
 .lance-installments {
@@ -403,15 +403,15 @@
     max-width: 350px;
     margin: 50px auto;
     padding: 25px;
-    background: white;
+    background: var(--cor-fundo);
     border-radius: 8px;
     text-align: center;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    border: 1px solid #ddd;
+    border: 1px solid var(--cor-borda);
 }
 
 #mensagem-login h3 {
-    color: #034660;
+    color: var(--cor-primaria);
     font-size: 20px;
     margin-bottom: 12px;
 }
@@ -419,19 +419,19 @@
 #mensagem-login hr {
     border: none;
     height: 1px;
-    background: #034660;
+    background: var(--cor-primaria);
     margin: 15px 0;
 }
 
 #descricao-mensagem-login {
-    color: #666;
+    color: var(--cor-texto-suave);
     font-size: 14px;
     margin-bottom: 20px;
     line-height: 1.4;
 }
 
 #redirect-login {
-    background: #034660;
+    background: var(--cor-primaria);
     color: white;
     border: none;
     padding: 12px 25px;
@@ -466,7 +466,7 @@
 }
 
 #botao-editar-leilao {
-    background: #034366;
+    background: var(--cor-primaria);
     color: #FFFFFF;
 }
 
@@ -478,12 +478,12 @@
 
 #botao-encerrar-leilao {
     background: #FFFFFF;
-    color: #034366;
-    border: 1px solid #034366;
+    color: var(--cor-primaria);
+    border: 1px solid var(--cor-primaria);
 }
 
 #botao-encerrar-leilao:hover {
-    background: #034366;
+    background: var(--cor-primaria);
     color: #FFFFFF;
     transform: translateY(-1px);
     box-shadow: 0 2px 8px rgba(3, 67, 102, 0.3);
@@ -520,13 +520,13 @@
     font-family: 'Poppins', sans-serif;
     font-size: 14px;
     font-weight: 500;
-    color: #034366;
+    color: var(--cor-primaria);
     margin-bottom: 2px;
 }
 
 #form-editar-leilao input {
     padding: 10px 12px;
-    border: 1px solid #034366;
+    border: 1px solid var(--cor-primaria);
     border-radius: 6px;
     font-family: 'Poppins', sans-serif;
     font-size: 14px;
