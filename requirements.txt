@@ -24,4 +24,6 @@ flask-mail
 gevent
 sqids
 tzdata
+flask-limiter
+redis
 gunicorn

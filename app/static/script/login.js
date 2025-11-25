@@ -16,8 +16,20 @@ function verificar_email(email){
     return null;
 }
 
+
 document.addEventListener('DOMContentLoaded', function(){
     adicionarToggleSenha();
+
+    let captchavisible = false;
+    let btnCaptcha = null;
+
+    function mostrarCaptcha() {
+        if (!captchavisible) {
+            captchavisible = true;
+            document.getElementById("captcha-area").style.display = "block";
+            btnCaptcha = grecaptcha.render("g-recaptcha", {sitekey: "6LfyOxYsAAAAAJnowmln6KG34CtnAooeHKMbDcsY"})
+        }
+    }
 
     const formularioLogin = document.getElementById('formularioLogin');
     const mensagem = document.getElementById('mensagem');
@@ -47,7 +59,15 @@ document.addEventListener('DOMContentLoaded', function(){
             email: email,
             senha: senha
         }
-    
+        if (captchavisible) {
+            const g_recaptcha = grecaptcha.getResponse();
+            if (!g_recaptcha) {
+                mensagem.innerHTML = "Faça o captcha.";
+                return;
+            }
+            dados.captcha = g_recaptcha   
+        }
+
         const resposta = await fetch('/logar', {
             method: 'POST',
             headers: {
@@ -69,13 +89,27 @@ document.addEventListener('DOMContentLoaded', function(){
         if (resultado.sucesso) {
             estilizarMensagemSucesso();
             mensagem.innerHTML = resultado.sucesso;
+            captchavisible = false;
+            document.getElementById('captcha-area').style.display = "none";
             setTimeout(() => {
                window.location.href = '/';
             }, 1500); 
-        } else {
-            scrollerro();
-            estilizarmensagem(mensagem);
-            mensagem.innerHTML = resultado.erro;
+        } 
+        if (resultado.erro) {
+            if (captchavisible){
+                grecaptcha.reset()
+            }
+        }
+        if (resultado.erro == "Faça o captcha.") {
+            setTimeout(() => {
+                mensagem.innerHTML = resultado.erro   
+            }, 3000)
+            mostrarCaptcha()
+        } else{
+            setTimeout(() => {
+                mensagem.innerHTML = resultado.erro
+            }, 3000)
+            
         }
         
 });
