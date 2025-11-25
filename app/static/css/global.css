@@ -15,6 +15,9 @@
 
     --cor-erro: #C62828;
     --cor-sucesso: #2E7D32;
+
+    --cor-temp: #fff3cd;
+    --cor-temp-borda: #ffeaa7;
 }
 
 
@@ -35,6 +38,9 @@
 
     --cor-erro: #EF5350;
     --cor-sucesso: #66BB6A;
+
+    --cor-temp: #b8a76a;
+    --cor-temp-borda: #d4b670;
 }
 
 
