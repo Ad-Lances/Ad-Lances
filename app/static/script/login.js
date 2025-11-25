@@ -62,6 +62,7 @@ document.addEventListener('DOMContentLoaded', function(){
             const g_recaptcha = grecaptcha.getResponse();
             if (!g_recaptcha) {
                 mensagem.innerHTML = "Faça o captcha.";
+                console.log("testestestst")
                 return;
             }
             dados.captcha = g_recaptcha   
@@ -95,19 +96,16 @@ document.addEventListener('DOMContentLoaded', function(){
                window.location.href = '/';
             }, 1500); 
         } 
-        if (resultado.erro === "Faça o captcha.") {
+        if (resultado.erro == "Faça o captcha.") {
             setTimeout(() => {
                 mensagem.innerHTML = resultado.erro   
             }, 3000)
             mostrarCaptcha()
-
-            if (captchavisible) {
-                btnCaptcha = grecaptcha.render("g-recaptcha", {sitekey: "6LfyOxYsAAAAAJnowmln6KG34CtnAooeHKMbDcsY"})
-            }
+            grecaptcha.reset(btnCaptcha)
         } else{
             setTimeout(() => {
                 mensagem.innerHTML = resultado.erro
-            }, 5000)
+            }, 3000)
             
         }
         
