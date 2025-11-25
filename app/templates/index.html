@@ -81,7 +81,7 @@
                             <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
                             <span>
                                 {% set total_lances = leilao.lances|length %}
-                                {{ total_lances }} participante{% if total_lances != 1 %}s{% endif %}
+                                {{ total_lances }} Lance{% if total_lances != 1 %}s{% endif %}
                             </span>
                         </div>
                         <div class="lance-atual">
@@ -301,6 +301,7 @@
 {% endblock %}
 
 {% block scripts %}
+    <script src="{{ url_for('static', filename='script/pesquisa.js') }}"></script>
     <script src="{{ url_for('static', filename='script/carrossel.js') }}"></script>
     <script src="{{ url_for('static', filename='script/style.js') }}"></script>
 {% endblock %}

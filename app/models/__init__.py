@@ -5,3 +5,4 @@ from app.models.users import UserModel
 from app.models.subcategorias import SubcategoriaModel
 from app.models.pagamentos import PagamentoModel
 from app.models.leiloes_pagamentos import LeilaoPagamentoModel
+from app.models.comprovantes import ComprovanteModel

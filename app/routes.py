@@ -5,7 +5,7 @@ from .utils.email_utils import *
 from datetime import datetime, date, timedelta
 from zoneinfo import ZoneInfo
 import cloudinary.uploader
-from sqlalchemy import select, or_
+from sqlalchemy import select, func
 from app import stripe, socketio, sqids, limiter, red
 import requests
 from config import Config
@@ -18,8 +18,6 @@ from app.utils.user_utils import (
 )
 
 bp = Blueprint('main', __name__)
-
-ENDPOINTS = [Config.STRIPE_WEBHOOK_ACCOUNT, Config.STRIPE_WEBHOOK_PAYMENT]
 
 # Funções importantes para o funcionamento e fácil manuseio do código
 def salvar_dados(dados: object) -> bool:
@@ -67,7 +65,9 @@ def index():
     uma_hora_atras = agora - timedelta(hours=1)
 
     leiloes_encerrando = LeilaoModel.query.filter(
-        LeilaoModel.data_fim.between(uma_hora_atras, amanha)
+        LeilaoModel.data_fim.between(uma_hora_atras, amanha),
+        LeilaoModel.status != "Pago",
+        LeilaoModel.status != "Encerrado"
     ).order_by(
         LeilaoModel.data_fim.asc()
     ).paginate(
@@ -77,7 +77,9 @@ def index():
     )
 
     leiloes_recentes = LeilaoModel.query.filter(
-        LeilaoModel.data_fim > agora
+        LeilaoModel.data_fim > agora,
+        LeilaoModel.status != "Encerrado",
+        LeilaoModel.status != "Pago"
     ).order_by(
         LeilaoModel.data_inicio.desc()
     ).paginate(
@@ -94,20 +96,16 @@ def index():
 
 @bp.route('/pesquisar')
 def pesquisar():
-    busca = request.args.get('p', '').lower()
-
+    busca = request.args.get("p", "").strip()
     if not busca:
-        return jsonify([])
+        abort(404)
     
-    resultados = LeilaoModel.query.filter(
-        or_(
-            LeilaoModel.nome.ilike(f'%{busca}%'),
-            LeilaoModel.descricao.ilike(f'%{busca}%')
-        )
-    ).limit(10).all()
+    resultado = LeilaoModel.query.join(LeilaoModel.subcategoria).join(SubcategoriaModel.categoria).filter(func.lower(CategoriaModel.slug).like(f"%{busca}%")).first()
     
-    dados_results = [{"hashid": leilao.hashid, "nome": leilao.nome, "descricao": leilao.descricao} for leilao in resultados]
-    return jsonify(dados_results)
+    if resultado:
+        categoria = resultado.subcategoria.categoria
+        return redirect(f"/categorias/{categoria.slug}")
+    abort(404)
 
 @bp.route('/cadastro')
 def cadastro():
@@ -618,7 +616,7 @@ def novo_lance(hashid):
     return jsonify({'sucesso': 'Lance registrado com sucesso!'})
     
         
-@bp.post('/<hashid>/criarpagamento')
+@bp.get('/<hashid>/criarpagamento')
 def criar_pagamento(hashid):
     user = UserModel.query.get(session.get('usuario_id'))
     leilao = get_leilao(hashid)
@@ -626,30 +624,32 @@ def criar_pagamento(hashid):
     if user and leilao:
         if leilao.status == "Encerrado":
             ultimo_lance = LanceModel.get_ultimo_lance(leilao.id)
-            session_stripe = stripe.checkout.Session.create(
-                payment_method_types=['card'],
-                line_items=[{
-                    'price_data': {
-                        'currency': 'brl',
-                        'product_data': {
-                            'name': leilao.nome,
-                            'description': leilao.descricao,
+            if ultimo_lance.id_user == user.id:
+                session_stripe = stripe.checkout.Session.create(
+                    payment_method_types=['card'],
+                    line_items=[{
+                        'price_data': {
+                            'currency': 'brl',
+                            'product_data': {
+                                'name': leilao.nome,
+                                'description': leilao.descricao,
+                            },
+                            'unit_amount': int(ultimo_lance.valor * 100),
                         },
-                        'unit_amount': int(ultimo_lance.valor * 100),
+                        'quantity': 1,
+                    }],
+                    metadata={"leilao_id": str(leilao.id), "usuario_id": str(user.id)},
+                    mode='payment',
+                    payment_intent_data={
+                        'transfer_data': {
+                            'destination': leilao.user.id_stripe,
+                        },
                     },
-                    'quantity': 1,
-                }],
-                mode='payment',
-                payment_intent_data={
-                    'transfer_data': {
-                        'destination': leilao.user.id_stripe,
-                    },
-                },
-                customer_email=user.email,
-                success_url=url_for('main.perfil_user', _external=True) + '?payment_success=true',
-                cancel_url=url_for('main.perfil_user', _external=True) + '?payment_canceled=true',
-            )
-            return jsonify({'url': session_stripe.url})
+                    customer_email=user.email,
+                    success_url=url_for('main.perfil_user', _external=True) + '?payment_success=true',
+                    cancel_url=url_for('main.perfil_user', _external=True) + '?payment_canceled=true',
+                )
+                return jsonify({'url': session_stripe.url})
         abort(401)
     return jsonify({'erro': 'Usuário ou leilão não encontrado.'}), 404
 
@@ -658,21 +658,33 @@ def webhook():
     data = request.data
     header_ass = request.headers.get('Stripe-Signature')
     
-    for endpoint in ENDPOINTS:
-        try:
-            event = stripe.Webhook.construct_event(
-                data, header_ass, endpoint
-            )
-            break
-        except Exception:
-            continue
+    try:
+        event = stripe.Webhook.construct_event(
+            data, header_ass, Config.STRIPE_WEBHOOK_PAYMENT
+        )
+    except Exception as e:
+        print(e)
         
     if event is None:
         return "", 400
         
     if event["type"]=="checkout.session.completed":
         payment = event["data"]["object"]
+        horario = datetime.fromtimestamp(float(payment["created"]), tz=ZoneInfo("America/Sao_Paulo"))
+        id_user = payment["metadata"].get("usuario_id")
+        id_leilao = payment["metadata"].get("leilao_id")
+        novo_comprovante = ComprovanteModel(
+            horario=horario,
+            valor=payment["amount_total"]/100,
+            id_user=id_user,
+            id_leilao=id_leilao
+        )
         print(payment)
+        if salvar_dados(novo_comprovante):
+            return redirect(url_for("main.perfil_user"))
+        else:
+            abort(500)
+        
         
     if event["type"]=="v2.core.account.created":
         account = event["data"]["object"]

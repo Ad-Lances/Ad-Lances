@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const cepInput = document.getElementById('input-editar-cep-leilao');
     const lanceInput = document.getElementById('novo-lance-input');
     const socketio = io.connect("/")
+    const pagarBtn = document.getElementById('botao-pagar-leilao');
 
     if (cepInput) {
         cepInput.addEventListener('input', function() {
@@ -80,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
             mensagem.innerHTML = 'Erro no banco de dados.';
         }
     })}
-
+    if (enviarLanceBtn) {
     enviarLanceBtn.addEventListener('click', async (e) => {
         e.preventDefault();
         enviarLanceBtn.disabled = true
@@ -109,6 +110,8 @@ document.addEventListener('DOMContentLoaded', function() {
         enviarLanceBtn.disabled = false
         enviarLanceBtn.innerText = 'Lançar'
     });
+    }
+
     const lanceatual = document.getElementById('lance-atual')
     const totallances = document.getElementById('total-lances')
     
@@ -118,6 +121,16 @@ document.addEventListener('DOMContentLoaded', function() {
         totallances.innerHTML = 'Total de lances: ' + total_lances
     })
     
+    pagarBtn.addEventListener("click", async () => {
+        const resposta = await fetch(window.location.pathname + "/criarpagamento")
+        const resultado = await resposta.json()
+
+        if (resultado.url) {
+            window.location.href = resultado.url
+        } else {
+            mensagem.innerHTML = resultado.erro
+        }
+    })
 });
 
 let cepErro = null;
