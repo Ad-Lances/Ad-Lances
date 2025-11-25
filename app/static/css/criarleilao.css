@@ -101,7 +101,7 @@
 
 .file-upload-subtext {
     font-size: 14px;
-    color: #6c757d;
+    color: var(--cor-texto-suave);
 }
 
 .file-list-container {
@@ -202,7 +202,7 @@
     border-radius: 8px;
     padding: 40px 20px;
     text-align: center;
-    background-color: #f8f9fa;
+    background-color: var(--cor-card);
     transition: all 0.3s ease;
 }
 
@@ -325,7 +325,7 @@
     color: var(--cor-texto-suave);
     margin-top: 3px;
     padding: 10px;
-    background: var(--cor-borda);
+    background: var(--cor-fundo);
     border-radius: 6px;
     border-left: 3px solid var(--cor-primaria);
     grid-column: 1 / -1;
