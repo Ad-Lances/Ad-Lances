@@ -1,408 +1,113 @@
-function initCarousel() {
-    console.log('=== INICIANDO CARROSSEL RESPONSIVO ===');
-    
-    const sections = [
-        'encerrando-em-breve', 'carrossel-container',
-        'maquinas-equipamentos-pesados', 'materiais-e-insumos', 'ferramentas-equipamentos',
-        'mais-recentes',
-        'casas', 'apartamentos', 'comerciais', 'industriais-e-galpoes', 'terrenos',
-        'carros', 'motos', 'caminhoes',
-        'cozinha', 'limpeza', 'eletroportateis',
-        'computadores', 'audio-e-video', 'videogames', 'componentes',
-        'sala-de-estar', 'cozinha', 'banheiro', 'quarto', 'escritorio'
-    ];
 
-    sections.forEach(sectionId => {
-        const section = document.getElementById(sectionId);
-        if (!section) return;
+function iniciarCarrosseis() {
+    // Seleciona cada seção que tenha itens e setas
+    const secoes = document.querySelectorAll("div[id]");
 
-        // Configuração base responsiva
-        section.style.display = 'flex';
-        section.style.alignItems = 'center';
-        section.style.gap = '15px';
-        section.style.overflow = 'hidden';
-        section.style.position = 'relative';
-        section.style.width = '100%';
-        section.style.maxWidth = '1200px';
-        section.style.margin = '30px auto';
-        section.style.padding = '10px 0';
+    secoes.forEach(secao => {
+        const leftArrow = secao.querySelector(".arrow-left");
+        const rightArrow = secao.querySelector(".arrow-right");
+        const items = secao.querySelectorAll("#item");
 
-        const arrows = section.querySelectorAll('#arrow-img');
-        const items = section.querySelectorAll('#item');
-        
-        if (arrows.length < 2) {
-            console.log(`Atenção: ${sectionId} tem apenas ${arrows.length} setas`);
-            return;
+        if (!leftArrow || !rightArrow || items.length === 0) return;
+
+        // Criar container se não existir
+        let container = secao.querySelector(".items-container");
+        if (!container) {
+            container = document.createElement("div");
+            container.classList.add("items-container");
+
+            items.forEach(item => container.appendChild(item));
+
+            leftArrow.remove();
+            rightArrow.remove();
+
+            secao.prepend(leftArrow);
+            secao.appendChild(container);
+            secao.appendChild(rightArrow);
         }
 
-        const leftArrow = arrows[0];
-        const rightArrow = arrows[1];
+        let posicao = 0;
 
-        let itemsContainer = section.querySelector('.items-container');
-        if (!itemsContainer) {
-            itemsContainer = document.createElement('div');
-            itemsContainer.className = 'items-container';
-            itemsContainer.style.display = 'flex';
-            itemsContainer.style.gap = '15px';
-            itemsContainer.style.transition = 'transform 0.4s ease';
-            
-            items.forEach(item => {
-                itemsContainer.appendChild(item.cloneNode(true));
-            });
-            
-            section.innerHTML = '';
-            section.appendChild(leftArrow);
-            section.appendChild(itemsContainer);
-            section.appendChild(rightArrow);
+        function larguraItem() {
+            const item = container.querySelector("#item");
+            if (!item) return 300;
+            const estilo = window.getComputedStyle(item);
+            return item.offsetWidth + parseInt(estilo.marginRight || 15);
         }
 
-        function setupArrows() {
-            const isMobile = window.innerWidth < 768;
-            const arrowSize = isMobile ? '35px' : '40px';
-            const iconSize = isMobile ? '16px' : '20px';
-            const arrowPosition = isMobile ? '5px' : '10px';
+        function atualizar() {
+            container.style.transform = `translateX(-${posicao}px)`;
 
-            leftArrow.style.cssText = `
-                display: flex !important;
-                align-items: center !important;
-                justify-content: center !important;
-                width: ${arrowSize} !important;
-                height: ${arrowSize} !important;
-                background: white !important;
-                border-radius: 50% !important;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.2) !important;
-                cursor: pointer !important;
-                z-index: 10 !important;
-                position: absolute !important;
-                left: ${arrowPosition} !important;
-                top: 50% !important;
-                transform: translateY(-50%) !important;
-                transition: all 0.3s ease !important;
-            `;
+            const max = container.scrollWidth - secao.offsetWidth;
 
-            rightArrow.style.cssText = `
-                display: flex !important;
-                align-items: center !important;
-                justify-content: center !important;
-                width: ${arrowSize} !important;
-                height: ${arrowSize} !important;
-                background: white !important;
-                border-radius: 50% !important;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.2) !important;
-                cursor: pointer !important;
-                z-index: 10 !important;
-                position: absolute !important;
-                right: ${arrowPosition} !important;
-                top: 50% !important;
-                transform: translateY(-50%) !important;
-                transition: all 0.3s ease !important;
-            `;
+            leftArrow.style.opacity = posicao <= 0 ? .3 : 1;
+            rightArrow.style.opacity = posicao >= max ? .3 : 1;
 
-            [leftArrow, rightArrow].forEach(arrow => {
-                const img = arrow.querySelector('img');
-                if (img) {
-                    img.style.width = iconSize;
-                    img.style.height = iconSize;
-                }
-            });
+            leftArrow.style.pointerEvents = posicao <= 0 ? "none" : "auto";
+            rightArrow.style.pointerEvents = posicao >= max ? "none" : "auto";
         }
 
-        function setupItems() {
-            const isMobile = window.innerWidth < 768;
-            const isTablet = window.innerWidth < 1024;
-            
-            let itemWidth;
-            if (isMobile) {
-                itemWidth = '250px'; 
-            } else if (isTablet) {
-                itemWidth = '280px'; 
-            } else {
-                itemWidth = '300px';
-            }
-
-            const currentItems = itemsContainer.querySelectorAll('#item');
-            currentItems.forEach(item => {
-                item.style.flex = '0 0 auto';
-                item.style.width = itemWidth;
-                item.style.minHeight = 'auto';
-
-                item.style.padding = isMobile ? '12px' : '15px';
-
-                const img = item.querySelector('img');
-                if (img) {
-                    img.style.height = isMobile ? '150px' : '180px';
-                }
-                
-                const title = item.childNodes[2];
-                if (title && title.style) {
-                    title.style.fontSize = isMobile ? '13px' : '14px';
-                }
-                
-                const local = item.querySelector('#local');
-                if (local) {
-                    local.style.fontSize = isMobile ? '11px' : '12px';
-                }
-                
-                const viewsCount = item.querySelector('#views-count');
-                if (viewsCount) {
-                    viewsCount.style.fontSize = isMobile ? '11px' : '12px';
-                }
-            });
+        function moverDireita() {
+            posicao += larguraItem() * itensVisiveis();
+            limitar();
         }
 
-        let currentPosition = 0;
-        
-        function updateCarousel() {
-            setupArrows();
-            setupItems();
-            
-            const itemWidth = parseInt(itemsContainer.querySelector('#item').style.width) + 15; // width + gap
-            const visibleItems = Math.max(1, Math.floor(section.offsetWidth / itemWidth));
-            const totalItems = itemsContainer.querySelectorAll('#item').length;
-            const maxPosition = Math.max(0, (totalItems - visibleItems) * itemWidth);
-            
-            currentPosition = Math.max(0, Math.min(currentPosition, maxPosition));
-            
-            itemsContainer.style.transform = `translateX(-${currentPosition}px)`;
-            
-            // Atualizar visibilidade das setas
-            leftArrow.style.opacity = currentPosition === 0 ? '0.4' : '1';
-            rightArrow.style.opacity = currentPosition >= maxPosition ? '0.4' : '1';
-            leftArrow.style.pointerEvents = currentPosition === 0 ? 'none' : 'auto';
-            rightArrow.style.pointerEvents = currentPosition >= maxPosition ? 'none' : 'auto';
+        function moverEsquerda() {
+            posicao -= larguraItem() * itensVisiveis();
+            limitar();
         }
 
-        function moveLeft() {
-            const itemWidth = parseInt(itemsContainer.querySelector('#item').style.width) + 15;
-            const visibleItems = Math.max(1, Math.floor(section.offsetWidth / itemWidth));
-            const moveBy = visibleItems * itemWidth;
-            
-            currentPosition = Math.max(0, currentPosition - moveBy);
-            updateCarousel();
+        function limitar() {
+            const max = container.scrollWidth - secao.offsetWidth;
+            if (posicao < 0) posicao = 0;
+            if (posicao > max) posicao = max;
+            atualizar();
         }
 
-        function moveRight() {
-            const itemWidth = parseInt(itemsContainer.querySelector('#item').style.width) + 15;
-            const visibleItems = Math.max(1, Math.floor(section.offsetWidth / itemWidth));
-            const totalItems = itemsContainer.querySelectorAll('#item').length;
-            const maxPosition = Math.max(0, (totalItems - visibleItems) * itemWidth);
-            const moveBy = visibleItems * itemWidth;
-            
-            currentPosition = Math.min(maxPosition, currentPosition + moveBy);
-            updateCarousel();
+        function itensVisiveis() {
+            return Math.max(1, Math.floor(secao.offsetWidth / larguraItem()));
         }
 
-        // Event listeners
-        leftArrow.addEventListener('click', moveLeft);
-        rightArrow.addEventListener('click', moveRight);
+        leftArrow.addEventListener("click", moverEsquerda);
+        rightArrow.addEventListener("click", moverDireita);
 
-        // Swipe para mobile
+        // Swipe mobile
         let startX = 0;
-        let currentX = 0;
-        let isDragging = false;
+        let moveX = 0;
+        let moving = false;
 
-        itemsContainer.addEventListener('touchstart', (e) => {
+        container.addEventListener("touchstart", (e) => {
             startX = e.touches[0].clientX;
-            isDragging = true;
-            itemsContainer.style.transition = 'none';
+            moving = true;
+            container.style.transition = "none";
         });
 
-        itemsContainer.addEventListener('touchmove', (e) => {
-            if (!isDragging) return;
-            currentX = e.touches[0].clientX;
-            const diff = startX - currentX;
-            itemsContainer.style.transform = `translateX(-${currentPosition + diff}px)`;
+        container.addEventListener("touchmove", (e) => {
+            if (!moving) return;
+            moveX = e.touches[0].clientX;
+            const diff = startX - moveX;
+            container.style.transform = `translateX(-${posicao + diff}px)`;
         });
 
-        itemsContainer.addEventListener('touchend', (e) => {
-            if (!isDragging) return;
-            isDragging = false;
-            itemsContainer.style.transition = 'transform 0.4s ease';
-            
-            const diff = startX - currentX;
-            const swipeThreshold = 50;
-            
-            if (Math.abs(diff) > swipeThreshold) {
-                if (diff > 0) {
-                    moveRight();
-                } else {
-                    moveLeft();
-                }
+        container.addEventListener("touchend", () => {
+            moving = false;
+            container.style.transition = "transform .3s ease";
+            const diff = startX - moveX;
+
+            if (Math.abs(diff) > 50) {
+                diff > 0 ? moverDireita() : moverEsquerda();
             } else {
-                updateCarousel();
+                atualizar();
             }
         });
 
-        // Inicializar
-        updateCarousel();
-        
-        // Atualizar no resize com debounce
-        let resizeTimeout;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(updateCarousel, 250);
-        });
+        atualizar();
+        window.addEventListener("resize", atualizar);
     });
 }
 
-// Adicionar seta faltante
-function addMissingArrow() {
-    const section = document.getElementById('ferramentas-equipamentos');
-    if (!section) return;
-
-    const arrows = section.querySelectorAll('#arrow-img');
-    if (arrows.length === 1) {
-        const rightArrow = document.createElement('div');
-        rightArrow.id = 'arrow-img';
-        rightArrow.innerHTML = '<img src="{{ url_for("static", filename="img/icons-img/seta-direita.png") }}">';
-        section.appendChild(rightArrow);
-    }
-}
-
-function addResponsiveStyles() {
-    if (!document.querySelector('#carousel-responsive-styles')) {
-        const style = document.createElement('style');
-        style.id = 'carousel-responsive-styles';
-        style.textContent = `
-            /* Estilos responsivos do carrossel */
-            
-            /* Mobile */
-            @media (max-width: 767px) {
-                #encerrando-em-breve, #maquinas-equipamentos-pesados, #materiais-e-insumos, #ferramentas-equipamentos,
-                #mais-recentes,
-                #casas, #apartamentos#, #comerciais, #industriais-e-galpoes, #terrenos,
-                #carros, #motos, #caminhoes,
-                #cozinha, #limpeza, #eletroportateis,
-                #computadores, #audio-e-video, #videogames, #componentes,
-                #sala-de-estar, #cozinha, #banheiro, #quarto, #escritorio{
-                    gap: 12px !important;
-                    margin: 12px auto !important;
-                    padding: 5px 0 !important;
-                }
-                
-                .items-container {
-                    gap: 12px !important;
-                }
-                
-                #item {
-                    padding: 12px !important;
-                }
-                
-                #item img {
-                    height: 150px !important;
-                }
-                
-                /* Texto responsivo */
-                #item > div:first-of-type {
-                    font-size: 13px !important;
-                    line-height: 1.3 !important;
-                }
-                
-                #local {
-                    font-size: 13px !important;
-                }
-                
-                #views-count {
-                    font-size: 13px !important;
-                }
-                
-                #lance, #temporizador {
-                    font-size: 13px !important;
-                }
-            }
-            
-            /* Tablet */
-            @media (min-width: 768px) and (max-width: 1023px) {
-                 #encerrando-em-breve, #maquinas-equipamentos-pesados, #materiais-e-insumos, #ferramentas-equipamentos,
-                #mais-recentes,
-                #casas, #apartamentos#, #comerciais, #industriais-e-galpoes, #terrenos,
-                #carros, #motos, #caminhoes,
-                #cozinha, #limpeza, #eletroportateis,
-                #computadores, #audio-e-video, #videogames, #componentes,
-                #sala-de-estar, #cozinha, #banheiro, #quarto, #escritorio{
-                    gap: 15px !important;
-                    margin: 25px auto !important;
-                    margin-top: 25px;
-                    margin-bottom: 20px;
-                }
-                
-                .items-container {
-                    gap: 15px !important;
-                }
-                
-                #item {
-                    padding: 14px !important;
-                }
-            }
-            
-            /* Desktop */
-            @media (min-width: 1024px) {
-                #encerrando-em-breve, #maquinas-equipamentos-pesados, #materiais-e-insumos, #ferramentas-equipamentos,
-                #mais-recentes,
-                #casas, #apartamentos#, #comerciais, #industriais-e-galpoes, #terrenos,
-                #carros, #motos, #caminhoes,
-                #cozinha, #limpeza, #eletroportateis,
-                #computadores, #audio-e-video, #videogames, #componentes,
-                #sala-de-estar, #cozinha, #banheiro, #quarto, #escritorio{
-                    gap: 30px !important;
-                }
-                
-                .items-container {
-                    gap: 20px !important;
-                }
-            }
-            
-            /* Setas sempre visíveis */
-            #arrow-img {
-                z-index: 100 !important;
-            }
-            
-            /* Hover effects apenas para desktop */
-            @media (hover: hover) {
-                #arrow-img:hover {
-                    background: #f8f8f8 !important;
-                    transform: translateY(-50%) scale(1.1) !important;
-                }
-                
-                #item:hover {
-                    transform: translateY(-5px) !important;
-                }
-            }
-            
-            /* Garantir que o carrossel funcione em telas muito pequenas */
-            @media (max-width: 480px) {
-                 #encerrando-em-breve, #maquinas-equipamentos-pesados, #materiais-e-insumos, #ferramentas-equipamentos,
-                #mais-recentes,
-                #casas, #apartamentos#, #comerciais, #industriais-e-galpoes, #terrenos,
-                #carros, #motos, #caminhoes,
-                #cozinha, #limpeza, #eletroportateis,
-                #computadores, #audio-e-video, #videogames, #componentes,
-                #sala-de-estar, #cozinha, #banheiro, #quarto, #escritorio{
-                    max-width: 95% !important;
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    }
-}
-
-// Inicializar
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('Iniciando carrossel responsivo...');
-    
-    addResponsiveStyles();
-    
-    setTimeout(addMissingArrow, 100);
-    
-    setTimeout(initCarousel, 200);
-});
-
-window.addEventListener('resize', function() {
-    setTimeout(initCarousel, 300);
-});
-
-window.addEventListener('orientationchange', function() {
-    setTimeout(initCarousel, 500);
+document.addEventListener("DOMContentLoaded", function () {
+    iniciarCarrosseis();
 });
 
 // script-carrosseis.js

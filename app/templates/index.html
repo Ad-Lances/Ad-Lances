@@ -51,64 +51,64 @@
     </div>
 
     <div id="encerrando-em-breve">
-        <div id="arrow-img" class="arrow-left">
-            <img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}" alt="Anterior">
-        </div>
-        
-        <div class="carrossel-container">
+        <div class="items-container">
+             <div id="arrow-img" class="arrow-left">
+                <img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}" alt="Anterior">
+            </div>
             {% if leiloes_encerrando %}
-                {% for leilao in leiloes_encerrando.items %}
-                <a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="leilao-link">
-                    <div id="item">
-                        <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
-                        <br><strong>{{ leilao.nome }}</strong>
-                        <br><p id="local">
-                            {% if leilao.subcategoria and leilao.subcategoria.categoria %}
-                                {{ leilao.subcategoria.categoria.nome }}
-                            {% else %}
-                                Categoria não definida
-                            {% endif %}
-                        </p>
-
-                        <div id="infos-leiloeiro">
-                            <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
-                            <span id="leiloeiro-texto">
-                                {% if leilao.user %}
-                                    {{ leilao.user.nome_completo }}
+                    {% for leilao in leiloes_encerrando.items %}
+                    <a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="leilao-link">
+                        <div id="item">
+                            <img src="{{ leilao.foto or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ leilao.nome }}">
+                            <br><strong>{{ leilao.nome }}</strong>
+                            <br><p id="local">
+                                {% if leilao.subcategoria and leilao.subcategoria.categoria %}
+                                    {{ leilao.subcategoria.categoria.nome }}
                                 {% else %}
-                                    Anônimo
+                                    Categoria não definida
                                 {% endif %}
-                            </span>
-                        </div>
+                            </p>
 
-                        <div id="views-img">
-                            <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
-                            <span id="views-count">
-                                {% set total_lances = leilao.lances|length %}
-                                {{ total_lances }} participante{% if total_lances != 1 %}s{% endif %}
-                            </span>
-                        </div>
+                            <div id="infos-leiloeiro">
+                                <img src="{{ url_for('static', filename='img/icons-img/profile.png')}}">
+                                <span id="leiloeiro-texto">
+                                    {% if leilao.user %}
+                                        {{ leilao.user.nome_completo }}
+                                    {% else %}
+                                        Anônimo
+                                    {% endif %}
+                                </span>
+                            </div>
 
-                        <span id="lance">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span><br>
-                        <span id="temporizador">Encerra em: {{ leilao.data_fim.strftime('%d/%m/%Y %H:%M') }}</span>
-                        
-                        <div class="btn-ver-detalhes-container">
-                            <a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="btn-ver-detalhes">
-                                Ver detalhes
-                            </a>
+                            <div id="views-img">
+                                <img src="{{ url_for('static', filename='img/icons-img/views-icon.png') }}">
+                                <span id="views-count">
+                                    {% set total_lances = leilao.lances|length %}
+                                    {{ total_lances }} participante{% if total_lances != 1 %}s{% endif %}
+                                </span>
+                            </div>
+
+                            <span id="lance-atual">Lance atual: 
+                                {% if leilao.lances %}
+                                    {{ (leilao.lances|sort(attribute='valor')|last).get_valor_str() }}
+                                {% else %}
+                                    {{ leilao.get_lance_inicial_str() }}
+                                {% endif %}                        
+                            </span><br>
+                            <span id="temporizador">Encerra em: {{ leilao.data_fim.strftime('%d/%m/%Y %H:%M') }}</span>
+
                         </div>
+                    </a>
+                    {% endfor %}
+                {% else %}
+                    <div id="item">
+                        <p>Nenhum leilão encerrando em breve</p>
                     </div>
-                </a>
-                {% endfor %}
-            {% else %}
-                <div id="item">
-                    <p>Nenhum leilão encerrando em breve</p>
-                </div>
-            {% endif %}
-        </div>
+                {% endif %}
 
-        <div id="arrow-img" class="arrow-right">
-            <img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}" alt="Próximo">
+            <div id="arrow-img" class="arrow-right">
+                <img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}" alt="Próximo">
+            </div>
         </div>
     </div>
 
@@ -156,11 +156,11 @@
     </div>
 
     <div id="mais-recentes">
+        <div class="items-container">
         <div id="arrow-img" class="arrow-left">
             <img src="{{ url_for('static', filename='img/icons-img/seta-esquerda.png') }}" alt="Anterior">
         </div>
         
-        <div class="carrossel-container">
             {% if leiloes_recentes %}
                 {% for leilao in leiloes_recentes.items %}
                 <a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="leilao-link">
@@ -194,15 +194,12 @@
                             </span>
                         </div>
 
-                        <span id="lance">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span>
+                        <span id="lance-atual">Lance atual: {% if lance_atual %}{{ lance_atual.get_valor_str() }}{% else %}{{ leilao.get_lance_inicial_str() }}{% endif %}</span>
                         <span id="temporizador">Encerra em: {{ leilao.data_fim.strftime('%d/%m/%Y %H:%M') }}</span>
                         
-                        <div class="btn-ver-detalhes-container">
-                            <a href="{{ url_for('main.detalhes_leilao', hashid=leilao.hashid) }}" class="btn-ver-detalhes">
-                                Ver detalhes
-                            </a>
-                        </div>
                     </div>
+
+                    
                 </a>
                 {% endfor %}
             {% else %}
@@ -210,10 +207,10 @@
                     <p>Nenhum leilão recente</p>
                 </div>
             {% endif %}
-        </div>
 
         <div id="arrow-img" class="arrow-right">
             <img src="{{ url_for('static', filename='img/icons-img/seta-direita.png') }}" alt="Próximo">
+        </div>
         </div>
     </div>
 

@@ -116,7 +116,7 @@
                                 <span id="views-count">{{ leilao.lances|length }} lances</span>
                             </div><br>
                         
-                            <span id="lance">
+                            <span id="lance-atual">
                                 Lance atual: 
                                 {% if leilao.lances %}
                                     {{ (leilao.lances|sort(attribute='valor')|last).get_valor_str() }}
@@ -124,7 +124,10 @@
                                     {{ leilao.get_lance_inicial_str() }}
                                 {% endif %}
                             </span><br>
-                            <span id="temporizador">Encerra em: {{ leilao.data_fim }}</span>
+                            <span id="temporizador" data-fim="{{ leilao.data_fim }}">
+                                Encerra em:
+                            </span>
+                            <p id="temp"></p>
                         </div>
                         </a>
                     {% endfor %}
@@ -164,7 +167,7 @@
                         <span id="views-count">{{ item.lances|length }} lances</span>
                     </div><br>
                 
-                    <span id="lance">Lance atual: {% if item.leilao.lances %}
+                    <span id="lance-atual">Lance atual: {% if item.leilao.lances %}
                         {{ (item.leilao.lances|sort(attribute='valor')|last).get_valor_str() }}
                     {% else %}
                         {{ item.leilao.get_lance_inicial_str() }}
@@ -198,7 +201,7 @@
                         <span id="views-count">1000 participantes</span>
                     </div><br>
                 
-                    <span id="lance">Lance atual: </span><br>
+                    <span id="lance-atual">Lance atual: </span><br>
                     <span id="temporizador">Encerra em: </span>
                 </div>
 
@@ -217,8 +220,8 @@
                         <span id="views-count">1000 participantes</span>
                     </div><br>
                 
-                    <span id="lance">Lance atual: </span><br>
-                    <span id="temporizador">Encerra em: </span>
+                    <span id="lance-atual">Lance atual: </span><br>
+                    <span id="temporizador" data-fim="{{ data_fim }}"><p id="temp"></p></span>
                 </div>
             </div>
         </div>
