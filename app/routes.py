@@ -618,7 +618,7 @@ def novo_lance(hashid):
     return jsonify({'sucesso': 'Lance registrado com sucesso!'})
     
         
-@bp.post('/<hashid>/criarpagamento')
+@bp.get('/<hashid>/criarpagamento')
 def criar_pagamento(hashid):
     user = UserModel.query.get(session.get('usuario_id'))
     leilao = get_leilao(hashid)
@@ -626,30 +626,31 @@ def criar_pagamento(hashid):
     if user and leilao:
         if leilao.status == "Encerrado":
             ultimo_lance = LanceModel.get_ultimo_lance(leilao.id)
-            session_stripe = stripe.checkout.Session.create(
-                payment_method_types=['card'],
-                line_items=[{
-                    'price_data': {
-                        'currency': 'brl',
-                        'product_data': {
-                            'name': leilao.nome,
-                            'description': leilao.descricao,
+            if ultimo_lance.id_user == user.id:
+                session_stripe = stripe.checkout.Session.create(
+                    payment_method_types=['card'],
+                    line_items=[{
+                        'price_data': {
+                            'currency': 'brl',
+                            'product_data': {
+                                'name': leilao.nome,
+                                'description': leilao.descricao,
+                            },
+                            'unit_amount': int(ultimo_lance.valor * 100),
                         },
-                        'unit_amount': int(ultimo_lance.valor * 100),
+                        'quantity': 1,
+                    }],
+                    mode='payment',
+                    payment_intent_data={
+                        'transfer_data': {
+                            'destination': leilao.user.id_stripe,
+                        },
                     },
-                    'quantity': 1,
-                }],
-                mode='payment',
-                payment_intent_data={
-                    'transfer_data': {
-                        'destination': leilao.user.id_stripe,
-                    },
-                },
-                customer_email=user.email,
-                success_url=url_for('main.perfil_user', _external=True) + '?payment_success=true',
-                cancel_url=url_for('main.perfil_user', _external=True) + '?payment_canceled=true',
-            )
-            return jsonify({'url': session_stripe.url})
+                    customer_email=user.email,
+                    success_url=url_for('main.perfil_user', _external=True) + '?payment_success=true',
+                    cancel_url=url_for('main.perfil_user', _external=True) + '?payment_canceled=true',
+                )
+                return jsonify({'url': session_stripe.url})
         abort(401)
     return jsonify({'erro': 'Usuário ou leilão não encontrado.'}), 404
 
