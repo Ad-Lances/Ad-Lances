@@ -100,7 +100,7 @@
     align-items: flex-start;
     gap: 10px;
     padding: 10px 0;
-    border-bottom: 1px solid #f1f3f4;
+    border-bottom: 1px solid var(--cor-card);
     width: 100%;
 }
 
@@ -139,9 +139,9 @@
 .dado-input {
     font-size: 0.95em;
     padding: 8px 12px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--cor-input-borda);
     border-radius: 6px;
-    background: white;
+    background: var(--cor-input-fundo);
     width: 100%;
     text-align: left;
     max-width: 250px;
@@ -271,7 +271,7 @@
     background-color: var(--cor-primaria);
     font-weight: 600;
     font-size: 14px;
-    border: 1px solid;
+    border: 1px solid var(--cor-borda);
     border-radius: 6px;
     padding: 10px 16px;
     color: white;

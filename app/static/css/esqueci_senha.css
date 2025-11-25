@@ -5,20 +5,20 @@
 }
 
 #titulo h2 {
-    color: #034660;
+    color: var(--cor-primaria);
     font-size: 28px;
     font-weight: 600;
     margin-bottom: 10px;
 }
 
 #formulario-div {
-    background: white;
+    background: var(--cor-card);
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     max-width: 450px;
     margin: 0 auto 30px;
-    border: 1px solid #e9ecef;
+    border: 1px solid var(--cor-borda);
 }
 
 #formulario-redefinir {
@@ -33,7 +33,7 @@
 #confirmar_nova_senha_label {
     font-weight: 500;
     margin-bottom: 2px;
-    color: black;
+    color: var(--cor-texto);
     display: block;
 }
 
@@ -48,7 +48,7 @@
 #confirmar_ns_input,
 #email_input {
     padding: 12px 40px 12px 12px; /* Espaço para o ícone */
-    border: 2px solid #ddd;
+    border: 2px solid var(--cor-borda);
     border-radius: 5px;
     font-size: 16px;
     width: 100%;
@@ -58,8 +58,8 @@
 #confirmar_ns_input:focus,
 #email_input:focus {
     outline: none;
-    border-color: #034660;
-    background-color: white;
+    border-color: var(--cor-primaria);
+    background-color: var(--cor-input-fundo);
     box-shadow: 0 0 0 3px rgba(3, 70, 96, 0.1);
 }
 
@@ -87,12 +87,12 @@
 }
 
 .toggle-password:hover {
-    color: #034660;
+    color: var(--cor-primaria);
 }
 
 
 #botao-redefinir {
-    background-color: #034660;
+    background-color: var(--cor-primaria);
     color: white;
     padding: 12px;
     border: none;
@@ -104,7 +104,7 @@
 }
 
 #botao-redefinir:hover {
-    background-color: #02344d;
+    background-color: var(--cor-primaria-hover);
 }
 
 
