@@ -19,8 +19,6 @@ from app.utils.user_utils import (
 
 bp = Blueprint('main', __name__)
 
-ENDPOINTS = [Config.STRIPE_WEBHOOK_ACCOUNT, Config.STRIPE_WEBHOOK_PAYMENT]
-
 # Funções importantes para o funcionamento e fácil manuseio do código
 def salvar_dados(dados: object) -> bool:
     try:
@@ -660,14 +658,12 @@ def webhook():
     data = request.data
     header_ass = request.headers.get('Stripe-Signature')
     
-    for endpoint in ENDPOINTS:
-        try:
-            event = stripe.Webhook.construct_event(
-                data, header_ass, endpoint
-            )
-            break
-        except Exception:
-            continue
+    try:
+        event = stripe.Webhook.construct_event(
+            data, header_ass, Config.STRIPE_WEBHOOK_PAYMENT
+        )
+    except Exception as e:
+        print(e)
         
     if event is None:
         return "", 400
